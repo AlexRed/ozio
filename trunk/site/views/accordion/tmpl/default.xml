@@ -21,6 +21,10 @@
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
+		<param name="ordinamento" type="list" default="1" label="Ordine immagini" description="Ordine immagini desc" >
+          <option value="0">Per Nome file A-Z</option>
+          <option value="1">Per Data</option>
+        </param>		
 		<param name="accordiontitle" type="list" default="1" label="Titolo" description="Titolo desc" >
           <option value="0">No</option>
           <option value="1">Yes</option>

@@ -20,6 +20,10 @@
           <option value="0">Manual / XML</option>
           <option value="1">Flickr</option>
         </param>
+		<param name="ordinamento" type="list" default="1" label="Ordine immagini" description="Ordine immagini desc" >
+          <option value="0">Per Nome file A-Z</option>
+          <option value="1">Per Data</option>
+        </param>		
 		<param name="user_id" type="text" default="" label="User ID Flickr" size="20" description="User ID Flickr" />
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Cartella desc"/>		

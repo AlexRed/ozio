@@ -30,7 +30,8 @@ class OzioGalleryViewImageRotator extends JView
 		$folder			= $params->def('folder');
 		$modifiche 		= (int) $params->def('modifiche', 0);
 		$debug 			= (int) $params->def('debug');		
-
+		$ordinamento 	= (int) $params->def('ordinamento');
+		
 		$screencolor = str_replace( '#', '', $screencolor );
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -186,7 +187,7 @@ if( $flickr == 0 ) :
 		
 		
 		if(count($files)) {
-			arsort($files);
+			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;	
 			$filehandle = fopen($filename, 'w');
 			$string = '<playlist version="1.0" encoding="UTF-8">'."\n";	
 			$string .= '<trackList>'."\n";

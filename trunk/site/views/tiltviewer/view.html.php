@@ -21,7 +21,7 @@ class OzioGalleryViewTiltViewer extends JView
 		$bkgndretro			= $params->def('bkgndretro');
 		$bkgndinnercolor	= $params->def('bkgndinnercolor');		
 		$bkgndoutercolor	= $params->def('bkgndoutercolor');		
-
+		$ordinamento 		= (int) $params->def('ordinamento');
 		$columns 			= (int) $params->def('columns', 5);	
 		$rows 				= (int) $params->def('rows', 5);			
 		$downloads 			= (int) $params->def('downloads', 0);
@@ -164,9 +164,11 @@ class OzioGalleryViewTiltViewer extends JView
 		{	
 		
 		$thumb_sufix = ".th.";
+// per nome file
 	
 		$files = array();
 		if ($hd = opendir($path)) {
+		  $files = array();
 			while (false !== ($file = readdir($hd))) { 
 				if($file != '.' && $file != '..') {
 					if (strpos($file, $thumb_sufix) === false) {
@@ -178,9 +180,11 @@ class OzioGalleryViewTiltViewer extends JView
 		}
 			closedir($hd);
 	}
+
+	
 		
 		if(count($files)) {
-			arsort($files);
+			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;		
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<tiltviewergallery>'."\n";

@@ -43,4 +43,5 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<?php echo $this->oziodebug ?> 
 	</td></tr></table> 
 <?php endif; ?>
-<?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."css".DS."ozio.css");  ?>	 
+<?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."css".DS."ozio.css");  ?>	
+<div class="clr"><br /></div> 

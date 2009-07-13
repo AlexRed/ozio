@@ -37,3 +37,4 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</td></tr></table> 
 <?php endif; ?>	
 <?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."css".DS."ozio.css");  ?> 
+<div class="clr"><br /></div>	

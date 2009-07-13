@@ -51,7 +51,7 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 		JToolBarHelper::customX( 'faq',  'faq', 'alt', 'FAQ', false );	
 		JToolBarHelper::customX( 'reset',  'reset', 'alt', 'Reset', false );		
 			JSubMenuHelper::addEntry( JText::_( 'OzioGallery 2 - Cpanel' ), 'index.php?option=com_oziogallery2', true);
-			JSubMenuHelper::addEntry( JText::_( 'Reset' ), 'index.php?option=com_oziogallery2&amp;task=reset');			
+			JSubMenuHelper::addEntry( JText::_( 'Reset XML' ), 'index.php?option=com_oziogallery2&amp;task=reset');			
 			JSubMenuHelper::addEntry( JText::_( 'F.A.Q.' ), 'index.php?option=com_oziogallery2&amp;task=faq');
 			HTML_oziogallery2::showIntro( $option );
 		}
@@ -68,7 +68,7 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 		JToolBarHelper::title( JText::_( 'Ozio Gallery 2 - Frequently Asked Questions' ),'logo' );  
 		JToolBarHelper::cancel();				
 			JSubMenuHelper::addEntry( JText::_( 'OzioGallery - Cpanel' ), 'index.php?option=com_oziogallery2');
-			JSubMenuHelper::addEntry( JText::_( 'Reset' ), 'index.php?option=com_oziogallery2&amp;task=reset');				
+			JSubMenuHelper::addEntry( JText::_( 'Reset XML' ), 'index.php?option=com_oziogallery2&amp;task=reset');				
 			JSubMenuHelper::addEntry( JText::_( 'F.A.Q.' ), 'index.php?option=com_oziogallery2&amp;task=faq', true);			
 			HTML_oziogallery2::showFAQ( $option, $lists );
 		}
@@ -79,7 +79,7 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 		JToolBarHelper::title( JText::_( 'Ozio Gallery 2 - Reset' ),'logo' );  
 		JToolBarHelper::cancel();	
 			JSubMenuHelper::addEntry( JText::_( 'OzioGallery - Cpanel' ), 'index.php?option=com_oziogallery2');
-			JSubMenuHelper::addEntry( JText::_( 'Reset' ), 'index.php?option=com_oziogallery2&amp;task=reset', true);				
+			JSubMenuHelper::addEntry( JText::_( 'Reset XML' ), 'index.php?option=com_oziogallery2&amp;task=reset', true);				
 			JSubMenuHelper::addEntry( JText::_( 'F.A.Q.' ), 'index.php?option=com_oziogallery2&amp;task=faq');
 			HTML_oziogallery2::showReset( $option );
 		}	
