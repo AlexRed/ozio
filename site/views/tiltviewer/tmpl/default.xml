@@ -10,14 +10,14 @@
 		<description>Ozio Tiltviewer skin Desc</description>
 	<params addpath="/components/com_oziogallery2/elements">
 		<param name="" type="scriptloader" default="" label="" description="" />
-			<param name="introtext" type="textarea" default="" label="Testo desc" rows="5" cols="30" description="Testo desc"/>
+			<param name="introtext" type="textarea" default="" label="Introduzione" rows="5" cols="30" description="Introduzione desc"/>
 			<param name="showintrotext" type="radio" default="0" label="Mostra testo" description="Mostra testo desc">
 				<option value="0">Hide</option>
 				<option value="1">Show</option>
 			</param>
 		<param name="xmlnamesuff" type="text" default="" label="Suffisso nome XML" size="30" description="Suffisso nome XML desc" />		
-			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Metodo&lt;/div&gt;" label="" description="" />
-		<param name="flickr" type="list" default="0" label="Seleziona Metodo" description="Flickr desc" >
+			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Method&lt;/div&gt;" label="" description="" />
+		<param name="flickr" type="list" default="0" label="Seleziona Metodo" description="Seleziona Metodo desc" >
           <option value="0">XML</option>
           <option value="1">Flickr</option>
         </param>
@@ -40,36 +40,36 @@
 		<param name="tags" type="text" default="" label="Tags" size="40" description="Tags desc" />		
 		<param name="text" type="text" default="" label="Testo" size="40" description="Testo desc" />			
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
-		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Cartella desc"/>		
+		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Tilt Viewer Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="maximagesize" type="text" default="640" label="Max Image size" size="4" description="Max Image size Desc" />
 		<param name="framecolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Colore bordo immagini" description="Colore bordo immagini desc" />
 		<param name="bkgndretro" type="colorpicker" class="color {hash:true,required:false}" default="#FFFF66" size="10" label="Colore retro immagine" description="Colore retro immagine desc" />
-		<param name="bkgndinnercolor" type="colorpicker" class="color {hash:true,required:false}" default="#333333" size="10" label="Bkgr inner color" description="Bkgr inner color desc" />
-		<param name="bkgndoutercolor" type="colorpicker" class="color {hash:true,required:false}" default="#000000" size="10" label="Bkgr outer color" description="Bkgr outer color desc" />
-		<param name="columns" type="text" default="3" label="Colonne" size="2" description="Colonne desc" />
-		<param name="rows" type="text" default="3" label="Righe" size="2" description="Righe desc" />		
+		<param name="bkgndinnercolor" type="colorpicker" class="color {hash:true,required:false}" default="#333333" size="10" label="BACKGROUND GRADIENT CENTER" description="BACKGROUND GRADIENT CENTER DESC" />
+		<param name="bkgndoutercolor" type="colorpicker" class="color {hash:true,required:false}" default="#000000" size="10" label="BACKGROUND GRADIENT EDGE" description="BACKGROUND GRADIENT EDGE DESC" />
+		<param name="columns" type="text" default="3" label="COLUMNS" size="2" description="COLUMNS DESC" />
+		<param name="rows" type="text" default="3" label="ROWS" size="2" description="ROWS DESC" />		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
-          <option value="2">Centrato</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+          <option value="2">Centered</option>
         </param>		
 		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
-          <option value="2">inherit</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+          <option value="2">Inherit</option>
         </param>
 			
-		<param name="downloads" type="radio" default="1" label="Download" description="Download desc" >
+		<param name="downloads" type="radio" default="1" label="USE DOWNLOAD" description="USE DOWNLOAD DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
-		<param name="downloadtxt" type="text" default="Scarica" label="Pulsante Download" size="25" description="Pulsante Download desc" />		
+		<param name="downloadtxt" type="text" default="Scarica" label="DOWNLOADTXT" size="25" description="DOWNLOADTXT DESC" />		
 		<param name="retrotext" type="textarea" default="Ozio Gallery - Componente Joomla! by www.joomla.it" label="Testo immagini" rows="5" cols="30" description="Testo immagini desc"/>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />		
-		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Visualizza data e ora ultima modifica" >
+		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Data e Ora modifiche desc" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
