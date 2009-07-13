@@ -107,7 +107,7 @@ class OzioGalleryViewCarousel extends JView
 		{
 			case '0': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel.xml';		
+			case '1': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/manual-xml/carousel.xml';		
 				break;
 			
 		}			

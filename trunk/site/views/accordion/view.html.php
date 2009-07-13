@@ -113,7 +113,7 @@ class OzioGalleryViewAccordion extends JView
 		{
 			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion.xml';							
+			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml';							
 				break;
 	
 		}			
