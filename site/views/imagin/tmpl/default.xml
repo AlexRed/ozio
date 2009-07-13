@@ -10,8 +10,8 @@
 		<description>Ozio Imagin Skin desc</description>
 	<params addpath="/components/com_oziogallery2/elements">
 		<param name="" type="scriptloader" default="" label="" description="" />
-			<param name="introtext" type="textarea" default="" label="Testo desc" rows="5" cols="30" description="Testo desc"/>
-			<param name="showintrotext" type="radio" default="0" label="Mostra testo" description="Mostra testo desc">
+			<param name="introtext" type="textarea" default="" label="Intro" rows="5" cols="30" description="Intro desc"/>
+			<param name="showintrotext" type="radio" default="0" label="Mostra intro" description="Mostra intro desc">
 				<option value="0">Hide</option>
 				<option value="1">Show</option>
 			</param>
@@ -19,15 +19,15 @@
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="colore" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Loader color" description="Loader color desc" />		
-		<param name="folder" type="text" default="images/oziogallery2/" label="Percoso Galleria" size="30" description="Percorso alla cartella immagini" />			
+		<param name="folder" type="text" default="images/oziogallery2/" label="Percorso Cartella" size="30" description="Percorso Cartella desc" />			
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
           <option value="2">Centrato</option>
         </param>		
 		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
           <option value="2">inherit</option>
         </param>
 		</params>
