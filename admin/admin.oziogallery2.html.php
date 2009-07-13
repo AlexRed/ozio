@@ -220,12 +220,25 @@ Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank
 		$link3 = 'index.php?option=com_oziogallery2&task=accordion';
 		$link4 = 'index.php?option=com_oziogallery2&task=carousel';		
 		$link5 = 'index.php?option=com_oziogallery2&task=flashgallery';
-        $img = JURI::root().'administrator/images/delete_f2.png';		
+        $img = JURI::root().'administrator/images/delete_f2.png';
+		$VAMBpathAssoluto = JPATH_SITE;
+		$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+		$Directory = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/imagerotator/xml/';
+		$Directory1 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/carousel/xml/';		
+		$Directory2 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/accordion/xml/';
+		$Directory3 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/flashgallery/xml/';
+		$Directory4 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/tiltviewer/xml/';		
 		?>
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 		<fieldset class="adminform">
 		<legend><?php echo JText::_( 'Reset' ); ?></legend>
 		<table  class="admintable">
+		<th align="center"><?php echo JText::_( 'Galleria' ); ?></th>
+		<th></th>
+		<th></th>
+		<th><?php echo JText::_( 'File' ); ?></th>	
+		<th align="right"><?php echo JText::_( 'Comando' ); ?></th>
+		<th></th>			
 		<tr>
 			<td class="key">
 				<label for="title">
@@ -235,63 +248,247 @@ Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank
 				</label>
 			</td>
 			<td>
-				<a href="<?php echo $link3 ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
 			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Actual Files' ).':'; ?>
+				</label>
+			</td>
+			<td valign="top" width="50%">
+<?php
+      if(is_dir($Directory2))
+      {
+          $dir = opendir($Directory2);
+          echo "<pre>";
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory2 ."/". $file);
+              echo "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          echo "</pre>";
+      }
+      else
+      {
+          echo $Directory2 .  JText::_ ( 'La directory non esiste' );
+      }	
+
+?>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Click for Reset' ).':'; ?>
+				</label>
+			</td>
+			<td>
+				<a href="<?php echo $link3 ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
+			</td>			
 		</tr>
 		<tr>
 			<td class="key">
 				<label for="title">
-					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Carousel Reset' );?>">				
-						<?php echo JText::_( 'Carousel' ).':'; ?>
-					</span>							
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Carousel Reset' );?>">						
+							<?php echo JText::_( 'Carousel' ).':'; ?>
+					</span>				
+				</label>
+			</td>
+			<td>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Actual Files' ).':'; ?>
+				</label>
+			</td>
+			<td valign="top">
+<?php
+      if(is_dir($Directory1))
+      {
+          $dir = opendir($Directory1);
+          echo "<pre>";
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory1 ."/". $file);
+              echo "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          echo "</pre>";
+      }
+      else
+      {
+          echo $Directory1 . JText::_ ( 'La directory non esiste' );
+      }	
+
+?>
+			</td>
+			<td class="key" >
+				<label for="title">
+							<?php echo JText::_( 'Click for Reset' ).':'; ?>
 				</label>
 			</td>
 			<td>
 				<a href="<?php echo $link4 ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
-			</td>
-		</tr>
+			</td>			
+		</tr>		
 		<tr>
 			<td class="key">
 				<label for="title">
-					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Flashgallery Reset' );?>">				
-						<?php echo JText::_( 'Flashgallery' ).':'; ?>
-					</span>							
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'FlashGallery Reset' );?>">						
+							<?php echo JText::_( 'FlashGallery' ).':'; ?>
+					</span>				
+				</label>
+			</td>
+			<td>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Actual Files' ).':'; ?>
+				</label>
+			</td>
+			<td valign="top">
+<?php
+      if(is_dir($Directory3))
+      {
+          $dir = opendir($Directory3);
+          echo "<pre>";
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory3 ."/". $file);
+              echo "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          echo "</pre>";
+      }
+      else
+      {
+          echo $Directory3 . JText::_ ( 'La directory non esiste' );
+      }	
+
+?>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Click for Reset' ).':'; ?>
 				</label>
 			</td>
 			<td>
 				<a href="<?php echo $link5 ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
-			</td>
-		</tr>		
+			</td>			
+		</tr>
+
 		<tr>
 			<td class="key">
 				<label for="title">
-					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Imagerotator Reset' );?>">				
-						<?php echo JText::_( 'Imagerotator' ).':'; ?>
-					</span>							
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Imagerotator Reset' );?>">						
+							<?php echo JText::_( 'Imagerotator' ).':'; ?>
+					</span>				
+				</label>
+			</td>
+			<td>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Actual Files' ).':'; ?>
+				</label>
+			</td>
+			<td valign="top">
+<?php
+      if(is_dir($Directory))
+      {
+          $dir = opendir($Directory);
+          echo "<pre>";
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory ."/". $file);
+              echo "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          echo "</pre>";
+      }
+      else
+      {
+          echo $Directory . JText::_ ( 'La directory non esiste' );
+      }	
+
+?>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Click for Reset' ).':'; ?>
 				</label>
 			</td>
 			<td>
 				<a href="<?php echo $link ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
-			</td>
+			</td>			
 		</tr>
 		<tr>
 			<td class="key">
 				<label for="title">
-					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Tild 3D Gallery Reset' );?>">				
-						<?php echo JText::_( 'Tild 3D Gallery' ).':'; ?>
-					</span>							
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Tild 3D Gallery Reset' );?>">						
+							<?php echo JText::_( 'Tild 3D Gallery' ).':'; ?>
+					</span>				
+				</label>
+			</td>
+			<td>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Actual Files' ).':'; ?>
+				</label>
+			</td>
+			<td valign="top">
+<?php
+      if(is_dir($Directory4))
+      {
+          $dir = opendir($Directory4);
+          echo "<pre>";
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory4 ."/". $file);
+              echo "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          echo "</pre>";
+      }
+      else
+      {
+          echo $Directory4 . JText::_ ( 'La directory non esiste' );
+      }	
+
+?>
+			</td>
+			<td class="key">
+				<label for="title">
+							<?php echo JText::_( 'Click for Reset' ).':'; ?>
 				</label>
 			</td>
 			<td>
 				<a href="<?php echo $link2 ?>"> <img src="<?php echo $img?>" alt="<?php echo JText::_( 'Svuota' ); ?>" title="<?php echo JText::_( 'Svuota' ); ?>"> </a>
-			</td>
+			</td>			
 		</tr>		
+	
 		</table>
 		</fieldset>		
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
 		</form>
 		<?php	
+
+	
 	}	
 	
 }
