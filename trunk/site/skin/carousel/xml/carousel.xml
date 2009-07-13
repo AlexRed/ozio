@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+	fhShow Carousel 1.5 configuration file
+	Please visit http://www.flshow.net/ for more info
+-->
+
+<slide_show>
+	<options>
+		<background>transparent</background>		<!-- #RRGGBB, transparent -->
+	</options>
+
+	<photo href="http://www.joomla.it/" target="_self">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_self">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_blank">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_blank">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+</slide_show>

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<colors 
+thumb_bg_color="EEEEEE"
+thumb_bg_over="999999"
+scroll_but_bg="EEEEEE"
+scroll_but_arrow="999999"
+scroll_but_bg_over="BBBBBB"
+scroll_but_arrow_over="FFFFFF"
+big_pic_border="FFFFFF"
+next_pic_bg="EEEEEE"
+next_pic_arrow="999999"
+next_pic_bg_over="BBBBBB"
+next_pic_arrow_over="FFFFFF"
+background_color="FFFFFF"
+text_visible="1"
+text_color="FFFFFF"
+fullscreen_visible="0"
+/>

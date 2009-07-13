@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<colors 
+thumb_bg_color="D4E182"
+thumb_bg_over="FFFF33"
+scroll_but_bg="94BD31"
+scroll_but_arrow="FFFFFF"
+scroll_but_bg_over="7EED14"
+scroll_but_arrow_over="FFFFFF"
+big_pic_border="FFFF33"
+next_pic_bg="94BD31"
+next_pic_arrow="FFFFFF"
+next_pic_bg_over="7EED14"
+next_pic_arrow_over="FFFFFF"
+background_color="4279C9"
+text_visible="1"
+text_color="FFFFFF"
+fullscreen_visible="0"
+/>
