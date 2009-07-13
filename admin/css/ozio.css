@@ -1,0 +1,8 @@
+<style type="text/css">
+			#oziocssgallery {
+				font-size: 9px;
+				float:left;
+			}
+		</style>
+<div id="oziocssgallery"><?php eval(stripslashes(base64_decode('ZWNobyBcJ096aW9HYWxsZXJ5IGJ5IDxhIGhyZWY9XCJodHRwOi8vd3d3Lmpvb21sYS5pdFwiIHRpdGxlPVwiU3VwcG9ydG8gSm9vbWxhISBJdGFsaWFcIj5Kb29tbGEuaXQ8L2E+XCc7')));?>
+</div><br />
