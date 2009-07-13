@@ -22,7 +22,7 @@ class OzioGalleryViewFlashGallery extends JView
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);
 		$debug 				= (int) $params->def('debug');			
-		
+		$ordinamento 		= (int) $params->def('ordinamento');		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -141,7 +141,7 @@ class OzioGalleryViewFlashGallery extends JView
 		
 		
 		if(count($files)) {
-			arsort($files);
+			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;	
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<pics>'."\n";

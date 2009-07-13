@@ -24,8 +24,9 @@ class OzioGalleryViewCarousel extends JView
 		$carousellink		= $params->def('carousellink', 0);
 		$indirizzo			= $params->def('indirizzo');
 		$debug 				= (int) $params->def('debug');		
-		
-
+		$ordinamento 		= (int) $params->def('ordinamento');		
+		$speed				= $params->def('speed');
+		$titoli				= $params->def('titoli');
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -154,14 +155,24 @@ class OzioGalleryViewCarousel extends JView
 	}
 		
 		if(count($files)) {
-			arsort($files);
+			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;	
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
 			$string .= '<slide_show>'."\n";
 			$string .= '<options>'."\n";
 			$string .= '<background>transparent</background>'."\n";
-			$string .= '</options>'."\n";			
+			$string .= '<interaction>'."\n";
+			$string .= '<speed>' . $speed . '</speed>'."\n";			
+			$string .= '</interaction>'."\n";
+			$string .= '<titles>'."\n";
+			$string .= '<style>'."\n";
+			$string .= 'font-size: 14px; font-family: Verdana, _serif; color: ' . $titoli . ';'."\n";
+			$string .= '</style>'."\n";			
+			$string .= '</titles>'."\n";
+			$string .= '</options>'."\n";
+
+		
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{

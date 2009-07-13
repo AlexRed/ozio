@@ -15,7 +15,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </tr>
 </table>
 <?php endif; ?>
-   <table align="<?php echo $this->table ?>"><tr><td>
+   <table width="100%" align="<?php echo $this->table ?>"><tr><td>
 	<div id="ozioflashcontent" class="oziofloat">
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
@@ -94,3 +94,4 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</td></tr></table> 
 <?php endif; ?>
 <?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."css".DS."ozio.css");  ?> 
+<div class="clr"><br /></div>	

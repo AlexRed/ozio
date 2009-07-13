@@ -21,10 +21,16 @@
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
+		<param name="ordinamento" type="list" default="1" label="Ordine immagini" description="Ordine immagini desc" >
+          <option value="0">Per Nome file A-Z</option>
+          <option value="1">Per Data</option>
+        </param>		
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Cartella desc"/>		
 		<param name="width" type="text" default="720" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="340" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#9F9F9F" size="10" label="Colore loader" description="Colore loader desc" />		
+		<param name="titoli" type="colorpicker" class="color {hash:true,required:false}" default="#003366" size="10" label="Colore Titoli" description="Colore Titoli desc" />
+		<param name="speed" type="text" default="50" label="Speed Rotation" size="6" description="Speed Rotation Desc" />
 		<param name="target" type="list" default="2" label="Target" description="Target desc" >
           <option value="0">Stessa finestra</option>
           <option value="1">Nuova Finestra</option>

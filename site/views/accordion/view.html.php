@@ -19,7 +19,7 @@ class OzioGalleryViewAccordion extends JView
 		$larghezzaimmagine 	= $params->def('widthi', 640);
 		$altezzaimmagine 	= $params->def('heighti', 480);
 		$bkgndoutercolora	= $params->def('bkgndoutercolora', '004080');
-		
+		$ordinamento 		= (int) $params->def('ordinamento');		
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
@@ -159,7 +159,7 @@ class OzioGalleryViewAccordion extends JView
 		
 		
 		if(count($files)) {
-			arsort($files);
+			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;	
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
