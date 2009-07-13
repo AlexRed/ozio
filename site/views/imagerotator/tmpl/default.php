@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php elseif  ( $this->xml_moder == 0 ) : ?>
 					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery2/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.xml"); 
 <?php elseif  ( $this->xml_moder == 1 ) : ?>
-					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery2/skin/imagerotator/xml/imagerotator.xml");
+					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery2/skin/imagerotator/manual-xml/imagerotator.xml");
 <?php endif; ?>
 					s1.addVariable("width","<?php echo $this->larghezza ?>");
 					s1.addVariable("height","<?php echo $this->altezza ?>");
