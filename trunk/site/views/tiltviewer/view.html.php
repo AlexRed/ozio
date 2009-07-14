@@ -87,8 +87,17 @@ class OzioGalleryViewTiltViewer extends JView
 			case '0': $flickrs		= 'false'; 		break;
 			case '1': $flickrs		= 'true';		break;
 			default:  $flickrs		= 'false'; 		break;				
+		}	
+/*
+		switch ($params->get( 'ordinamento' ))
+		{
+			case '0': $ordinamento		= 'arsort($files)'; 	break;
+			case '1': $ordinamento		= 'sort($files)';		break;
+			case '2': $ordinamento		= 'asort($files)';		break;
+			case '3': $ordinamento		= 'rsort($files)';		break;	
+			case '4': $ordinamento		= 'shuffle($files)';	break;				
 		}		
-		
+*/		
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
 		$document->addCustomTag('
 		<style type="text/css">
@@ -166,14 +175,21 @@ class OzioGalleryViewTiltViewer extends JView
 		$thumb_sufix = ".th.";
 // per nome file
 	
-		$files = array();
 		if ($hd = opendir($path)) {
 		  $files = array();
 			while (false !== ($file = readdir($hd))) { 
 				if($file != '.' && $file != '..') {
 					if (strpos($file, $thumb_sufix) === false) {
 						if(is_file($path . $file) && preg_match('/\.(jpg|png|gif)$/i',$file)) {
+						
+						if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) { 
 							$files[] = array(filemtime($path.$file), $file);
+						}
+						if( $ordinamento == 0 OR $ordinamento == 1) { 
+							$files[] = array(($path.$file), $file);
+						}							
+							
+							
 					}
 				}
 			}
@@ -181,10 +197,17 @@ class OzioGalleryViewTiltViewer extends JView
 			closedir($hd);
 	}
 
-	
 		
 		if(count($files)) {
-			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;		
+		
+			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
+					sort($files);  
+			}else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
+					rsort($files);
+            }else {  
+					shuffle($files);			
+			}	
+				
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<tiltviewergallery>'."\n";

@@ -25,9 +25,12 @@
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
-		<param name="ordinamento" type="list" default="1" label="Ordine immagini" description="Ordine immagini desc" >
-          <option value="0">Per Nome file A-Z</option>
-          <option value="1">Per Data</option>
+		<param name="ordinamento" type="list" default="2" label="Ordine immagini" description="Ordine immagini desc" >
+          <option value="0">Per Nome ordine alfabetico</option>
+          <option value="1">Per Nome ordine alfabetico inverso</option>		  
+          <option value="2">Per Data - Prima i recenti</option>
+          <option value="3">Per Data - Prima i meno recenti</option>	
+          <option value="4">Casuale</option>		  
         </param>	
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Flickr Settings&lt;/div&gt;" label="" description="" />		
 		<param name="user_id" type="text" default="" label="Id Utente flickr" size="30" description="Id Utente flickr desc" />

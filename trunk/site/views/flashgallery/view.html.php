@@ -125,13 +125,21 @@ class OzioGalleryViewFlashGallery extends JView
 	
 		$thumb_sufix = ".th.";
 	
-		$files = array();
 		if ($hd = opendir($path)) {
+		  $files = array();
 			while (false !== ($file = readdir($hd))) { 
 				if($file != '.' && $file != '..') {
 					if (strpos($file, $thumb_sufix) === false) {
 						if(is_file($path . $file) && preg_match('/\.(jpg|png|gif)$/i',$file)) {
+						
+						if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) { 
 							$files[] = array(filemtime($path.$file), $file);
+						}
+						if( $ordinamento == 0 OR $ordinamento == 1) { 
+							$files[] = array(($path.$file), $file);
+						}							
+							
+							
 					}
 				}
 			}
@@ -141,7 +149,15 @@ class OzioGalleryViewFlashGallery extends JView
 		
 		
 		if(count($files)) {
-			if( $ordinamento == 0 ) :	arsort($files);  else:   sort($files); endif;	
+		
+			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
+					sort($files);  
+			}else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
+					rsort($files);
+            }else {  
+					shuffle($files);			
+			}	
+				
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<pics>'."\n";
