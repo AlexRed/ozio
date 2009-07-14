@@ -21,8 +21,43 @@ class OzioGalleryViewFlashGallery extends JView
 		$user_id 			= $params->def('user_id', 0);
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);
-		$debug 				= (int) $params->def('debug');			
-		$ordinamento 		= (int) $params->def('ordinamento');		
+		$debug 				= (int) $params->def('debug');
+		$ordinamento 		= (int) $params->def('ordinamento');
+
+		//inizio parametri settings
+		$thumb_bg_color				= $params->def('thumb_bg_color');
+		$thumb_bg_over				= $params->def('thumb_bg_over');
+		$scroll_but_bg				= $params->def('scroll_but_bg');
+		$scroll_but_arrow			= $params->def('scroll_but_arrow');
+		$scroll_but_bg_over			= $params->def('scroll_but_bg_over');
+		$scroll_but_arrow_over		= $params->def('scroll_but_arrow_over');
+		$big_pic_border				= $params->def('big_pic_border');
+		$next_pic_bg				= $params->def('next_pic_bg');
+		$next_pic_arrow				= $params->def('next_pic_arrow');
+		$next_pic_bg_over			= $params->def('next_pic_bg_over');
+		$next_pic_arrow_over		= $params->def('next_pic_arrow_over');
+		$background_color			= $params->def('background_color');
+		$text_visible				= (int) $params->def('text_visible');
+		$text_color					= $params->def('text_color');
+		$fullscreen_visible			= (int) $params->def('fullscreen_visible');
+
+		$thumb_bg_color				= str_replace( '#', '', $thumb_bg_color );
+		$thumb_bg_over				= str_replace( '#', '', $thumb_bg_over );
+		$scroll_but_bg				= str_replace( '#', '', $scroll_but_bg );
+		$scroll_but_arrow			= str_replace( '#', '', $scroll_but_arrow );
+		$scroll_but_bg_over			= str_replace( '#', '', $scroll_but_bg_over );
+		$scroll_but_arrow_over		= str_replace( '#', '', $scroll_but_arrow_over );
+		$big_pic_border				= str_replace( '#', '', $big_pic_border );
+		$next_pic_bg				= str_replace( '#', '', $next_pic_bg );
+		$next_pic_arrow				= str_replace( '#', '', $next_pic_arrow	 );
+		$next_pic_bg_over			= str_replace( '#', '', $next_pic_bg_over );
+		$next_pic_arrow_over		= str_replace( '#', '', $next_pic_arrow_over );
+		$background_color			= str_replace( '#', '', $background_color );
+		$text_color					= str_replace( '#', '', $text_color );
+
+		
+
+		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -39,16 +74,7 @@ class OzioGalleryViewFlashGallery extends JView
 			case '2': $table		= 'center';		break;			
 			default:  $table		= 'center'; 	break;				
 		}		
-
-		switch ($params->get( 'xmlcolor' ))
-		{
-			case '0': $xmlcolor		= 'default.xml'; 				break;
-			case '1': $xmlcolor		= 'blue.xml';					break;
-			case '2': $xmlcolor		= 'black.xml'; 					break;
-			case '3': $xmlcolor		= 'defaultnotitle.xml'; 		break;			
-			default:  $xmlcolor		= 'default.xml'; 		break;				
-		}
-		
+	
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
 		$document->addCustomTag('
 		<style type="text/css">
@@ -114,6 +140,33 @@ class OzioGalleryViewFlashGallery extends JView
 		endif;
 		// nome del file creato
 		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/flashgallery_'. $xmlname .'.xml';
+		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/settings/settings_'. $xmlname .'.xml';
+		
+			//inizio sezione  XML setting
+			$generasetting = fopen($settings, 'w');
+
+			$linea = '<?xml version="1.0" ?>'."\n";	
+			$linea .= '<colors'."\n";
+			$linea .= 'thumb_bg_color="'. $thumb_bg_color . '"'."\n";
+			$linea .= 'thumb_bg_over="'. $thumb_bg_over . '"'."\n";
+			$linea .= 'scroll_but_bg="'. $scroll_but_bg . '"'."\n";
+			$linea .= 'scroll_but_arrow="'. $scroll_but_arrow . '"'."\n";
+			$linea .= 'scroll_but_bg_over="'. $scroll_but_bg_over . '"'."\n";
+			$linea .= 'scroll_but_arrow_over="'. $scroll_but_arrow_over . '"'."\n";
+			$linea .= 'big_pic_border="'. $big_pic_border . '"'."\n";
+			$linea .= 'next_pic_bg="'. $next_pic_bg . '"'."\n";			
+			$linea .= 'next_pic_arrow="'. $next_pic_arrow . '"'."\n";
+			$linea .= 'next_pic_bg_over="'. $next_pic_bg_over . '"'."\n";
+			$linea .= 'next_pic_arrow_over="'. $next_pic_arrow_over . '"'."\n";
+			$linea .= 'background_color="'. $background_color . '"'."\n";
+			$linea .= 'text_visible="'. $text_visible . '"'."\n";
+			$linea .= 'text_color="'. $text_color . '"'."\n";
+			$linea .= 'fullscreen_visible="'. $fullscreen_visible . '"'."\n";
+			$linea .= '/>'."\n";				
+			fwrite($generasetting, $linea);
+			fclose($generasetting);			
+		
+		
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 
@@ -157,7 +210,8 @@ class OzioGalleryViewFlashGallery extends JView
             }else {  
 					shuffle($files);			
 			}	
-				
+			
+			//inizio sezione  XML galleria	
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<pics>'."\n";
@@ -177,6 +231,8 @@ class OzioGalleryViewFlashGallery extends JView
 						
 			}	
 			$string .= '</pics>'."\n";
+			
+		
 			fwrite($filehandle, $string);
 			fclose($filehandle);
 			}			
@@ -226,7 +282,7 @@ else:
 endif;
 		
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  titlegall :   ' .$titlegall  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xmlcolor :     '.$xmlcolor  .'</pre>';
+//		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xmlcolor :     '.$xmlcolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 if( $flickr == 0 ) :		
@@ -240,6 +296,11 @@ if( $flickr == 0 ) :
         else:
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;
+		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'flashgallery'.DS.'settings')):
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/settings :     '. JText::_( 'Writable' )  .'</pre>';
+        else:
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/settings :     '.  JText::_( 'Unwritable' )  .'</pre>';			
+		endif;		
 endif;		
 		//fine debug
 
