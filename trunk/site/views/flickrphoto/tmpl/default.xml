@@ -9,8 +9,8 @@
 		<name>Ozio Flickr Photo Skin</name>
 		<description>Ozio Flickr Photo Skin desc</description>
 		<params>
-			<param name="introtext" type="textarea" default="" label="Testo desc" rows="5" cols="30" description="Testo desc"/>
-			<param name="showintrotext" type="radio" default="0" label="Mostra testo" description="Mostra testo desc">
+			<param name="introtext" type="textarea" default="" label="Intro" rows="5" cols="30" description="Intro desc"/>
+			<param name="showintrotext" type="radio" default="0" label="Mostra Intro" description="Mostra Intro desc">
 				<option value="0">Hide</option>
 				<option value="1">Show</option>
 			</param>
