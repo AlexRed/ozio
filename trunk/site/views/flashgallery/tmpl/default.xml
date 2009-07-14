@@ -9,15 +9,15 @@
 		<name>Ozio Flashgallery Skin</name>
 		<description>Ozio Flashgallery Skin desc</description>
 		<params>
-			<param name="introtext" type="textarea" default="" label="Testo desc" rows="5" cols="30" description="Testo desc"/>
-			<param name="showintrotext" type="radio" default="0" label="Mostra testo" description="Mostra testo desc">
+			<param name="introtext" type="textarea" default="" label="Intro" rows="5" cols="30" description="Intro desc"/>
+			<param name="showintrotext" type="radio" default="0" label="Mostra Intro" description="Mostra Intro desc">
 				<option value="0">Hide</option>
 				<option value="1">Show</option>
 			</param>
 			<param name="xmlnamesuff" type="text" default="" label="Suffisso nome XML" size="30" description="Suffisso nome XML desc" />			
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Metodo&lt;/div&gt;" label="" description="" />
 		<param name="flickr" type="list" default="0" label="Seleziona Metodo" description="Seleziona Metodo desc" >
-          <option value="0">Manual / XML</option>
+          <option value="0">XML</option>
           <option value="1">Flickr</option>
         </param>
 		<param name="ordinamento" type="list" default="2" label="Ordine immagini" description="Ordine immagini desc" >
@@ -27,9 +27,9 @@
           <option value="3">Per Data - Prima i meno recenti</option>	
           <option value="4">Casuale</option>		  
         </param>			
-		<param name="user_id" type="text" default="" label="User ID Flickr" size="20" description="User ID Flickr" />
+		<param name="user_id" type="text" default="" label="ID UTENTE FLICKR" size="20" description="ID UTENTE FLICKR DESC" />
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
-		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Cartella desc"/>		
+		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="PERCORSO CARTELLA DESC"/>		
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Flash Gallery Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
@@ -39,18 +39,18 @@
           <option value="2">Black</option>
           <option value="3">Default No Title</option>		  
         </param>			
-		<param name="titlegall" type="radio" default="0" label="Titolo" description="Titolo desc" >
+		<param name="titlegall" type="radio" default="0" label="Mostra titoli foto" description="Mostra titoli foto desc" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
-          <option value="2">Centrato</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+          <option value="2">Centered</option>
         </param>		
 		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
-          <option value="0">Sinistra</option>
-          <option value="1">Destra</option>
+          <option value="0">Left</option>
+          <option value="1">Right</option>
           <option value="2">inherit</option>
         </param>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />			
