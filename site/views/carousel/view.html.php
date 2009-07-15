@@ -51,19 +51,42 @@ class OzioGalleryViewCarousel extends JView
 	
 		}		
 
+
+	if( $carousellink == 2 ) :		
+		$document->addStyleSheet(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/css/lightbox.css');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/prototype.js');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/scriptaculous.js?load=effects,builder');		
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/lightbox.js');
+	endif;		
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/21/swfobject.js');
+	
+	if( $carousellink == 2 ) :			
+		$document->addCustomTag('		
+		<script type="text/javascript">
+		function aclick(anchor_id) {
+		var a = document.getElementById(anchor_id);
+		mainLightbox.start(a);
+		}
+		</script>
+		');	
+	endif;	
+	
 		$document->addCustomTag('
 		<style type="text/css">
-			.oziofloat {
-				width: '.$larghezza.';
-				height: '.$altezza.';
-				margin: 0px auto;
-				float:  '.$float.';
-				}
-			.oziotime {
-                font-size: 0.8em;
-				color:#ccc;	
-				}				
+		.oziofloat {
+		width: '.$larghezza.';
+		height: '.$altezza.';
+		margin: 0px auto;
+		float:  '.$float.';
+		}
+		.oziotime {
+        font-size: 0.8em;
+		color:#ccc;
+		}
+		.oziohide {
+		display: none;
+		visibility:hidden;
+		}
 		</style>
 		');		
 
@@ -192,13 +215,17 @@ class OzioGalleryViewCarousel extends JView
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
-				$row 	 = &$files[$i];
-				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
- if( $carousellink != 1 ) :				
+				$row	= &$files[$i];
+				$title	= preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
+				$js		= "javascript:aclick('ancor_".$title."_id')";
+				$jst	= "_self";
+	if( $carousellink == 0 ) {				
 			$string .= '<photo href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
-		else:
+	} else if( $carousellink == 1 ) {
 			$string .= '<photo href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
-	endif;			
+	} else if( $carousellink == 2 ) {
+			$string .= '<photo href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+	}			
 					
 			}	
 			$string .= '</slide_show>'."\n";
@@ -265,6 +292,37 @@ endif;
 
 
 		
+		//creazione ancore per lightbox - 
+		// Testato con successo sui templete di default di Joomla escluso JA purity che ha un suo Javascript che non fa funzionare l'effetto
+		//NOTA BENE possibile conflitto con alcuni template commerciali in questi casi l'effetto lightbox non va
+ if( $carousellink == 2 ) :		
+		$thumb_sufix = ".th.";
+		if ($hd = opendir($path)) {
+		echo '<div class="oziohide">'."\n";	
+		  $files = array();
+			while (false !== ($file = readdir($hd))) { 
+				if($file != '.' && $file != '..') {
+					if (strpos($file, $thumb_sufix) === false) {
+						if(is_file($path . $file) && preg_match('/\.(jpg|png|gif)$/i',$file)) {
+						
+						if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) { 
+							$files[] = array(filemtime($path.$file), $file);
+						}
+						if( $ordinamento == 0 OR $ordinamento == 1) { 
+							$files[] = array(($path.$file), $file);
+						}							
+						
+						$title	= preg_replace('/\.(jpg|png|gif)$/i','',$file);
+						echo '<a id="ancor_'.$title.'_id" href="' . $dir_images . $file . '" rel="lightbox[set1]"></a>'."\n";
+					}
+				}
+			}
+		}
+			closedir($hd);
+			echo '</div>'."\n";
+	}
+endif;
+
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
@@ -274,8 +332,11 @@ endif;
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);		
+		$this->assignRef('oziodebug' , 				$oziodebug);	
+
+	
 		parent::display($tpl);
 	}
 }
+		
 ?>
