@@ -220,14 +220,9 @@ class OzioGalleryViewFlashGallery extends JView
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
-				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-		if ( $titlegall == 1 ) : 				
-						$string .= '<pic src="' . $dir_images . $row[1] . '" title="'. $title . '">';
-						$string .= "</pic>\n";
-			else:
-						$string .= '<pic src="' . $dir_images . $row[1] . '" title="">';
-						$string .= "</pic>\n";			
-            endif;			
+				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);				
+						$string .= '<pic src="' . $dir_images . $row[1] . '" title="/'. $title . '"/>';
+						$string .= "\n";					
 						
 			}	
 			$string .= '</pics>'."\n";
