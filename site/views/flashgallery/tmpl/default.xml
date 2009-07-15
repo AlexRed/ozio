@@ -55,10 +55,6 @@
           <option value="1">Yes</option>
           <option value="0">No</option>
         </param>		
-		<param name="titlegall" type="radio" default="0" label="Mostra titoli foto" description="Mostra titoli foto desc" >
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </param>		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
           <option value="1">Right</option>
