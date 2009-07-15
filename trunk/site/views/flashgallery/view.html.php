@@ -16,12 +16,11 @@ class OzioGalleryViewFlashGallery extends JView
 		
 		$larghezza 			= $params->def('width', 640);
 		$altezza 			= $params->def('height', 480);
-		$titlegall 			= (int) $params->def('titlegall', 1);
 		$flickr 			= (int) $params->def('flickr', 0);
 		$user_id 			= $params->def('user_id', 0);
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);
-		$debug 				= (int) $params->def('debug');
+		$debug 				= (int) $params->def('debug');			
 		$ordinamento 		= (int) $params->def('ordinamento');
 
 		//inizio parametri settings
@@ -39,7 +38,7 @@ class OzioGalleryViewFlashGallery extends JView
 		$background_color			= $params->def('background_color');
 		$text_visible				= (int) $params->def('text_visible');
 		$text_color					= $params->def('text_color');
-		$fullscreen_visible			= (int) $params->def('fullscreen_visible');
+		$fullscreen_visible			= (int) $params->def('fullscreen_visible');	
 
 		$thumb_bg_color				= str_replace( '#', '', $thumb_bg_color );
 		$thumb_bg_over				= str_replace( '#', '', $thumb_bg_over );
@@ -140,7 +139,7 @@ class OzioGalleryViewFlashGallery extends JView
 		endif;
 		// nome del file creato
 		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/flashgallery_'. $xmlname .'.xml';
-		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/settings/settings_'. $xmlname .'.xml';
+		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/settings_'. $xmlname .'.xml';
 		
 			//inizio sezione  XML setting
 			$generasetting = fopen($settings, 'w');
@@ -220,9 +219,10 @@ class OzioGalleryViewFlashGallery extends JView
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
-				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);				
-						$string .= '<pic src="' . $dir_images . $row[1] . '" title="/'. $title . '"/>';
-						$string .= "\n";					
+				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
+		
+						$string .= '<pic src="' . $dir_images . $row[1] . '" title="'. $title . '"';
+						$string .= "/>\n";
 						
 			}	
 			$string .= '</pics>'."\n";
@@ -276,8 +276,7 @@ else:
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML :   ' .JText::_('ATTIVO') .'</pre>';
 endif;
 		
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  titlegall :   ' .$titlegall  .'</pre>';
-//		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xmlcolor :     '.$xmlcolor  .'</pre>';
+
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 if( $flickr == 0 ) :		
@@ -291,11 +290,6 @@ if( $flickr == 0 ) :
         else:
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;
-		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'flashgallery'.DS.'settings')):
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/settings :     '. JText::_( 'Writable' )  .'</pre>';
-        else:
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/settings :     '.  JText::_( 'Unwritable' )  .'</pre>';			
-		endif;		
 endif;		
 		//fine debug
 
@@ -304,8 +298,6 @@ endif;
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
-		$this->assignRef('xmlcolor' , 				$xmlcolor);
-		$this->assignRef('titlegall' , 				$titlegall);		
 		$this->assignRef('flickr' , 				$flickr);
 		$this->assignRef('user_id' , 				$user_id);
 		$this->assignRef('table' , 					$table);
