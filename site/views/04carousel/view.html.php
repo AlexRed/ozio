@@ -53,23 +53,49 @@ class OzioGalleryView04Carousel extends JView
 
 
 	if( $carousellink == 2 ) :		
-		$document->addStyleSheet(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/css/lightbox.css');
-		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/prototype.js');
-		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/scriptaculous.js?load=effects,builder');		
-		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/lightbox.js');
+		$document->addStyleSheet(JURI::root(true).'/components/com_oziogallery2/assets/highslide/highslide.css');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/highslide/highslide-with-gallery.js');
 	endif;		
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/21/swfobject.js');
 	
-	if( $carousellink == 2 ) :			
+	if( $carousellink == 2 ) :
+		$document->addCustomTag('		
+	<script type="text/javascript">
+	hs.graphicsDir = "'.JURI::root(true).'/components/com_oziogallery2/assets/highslide/graphics/";
+	hs.align = "center";
+	hs.transitions = ["expand", "crossfade"];
+	hs.outlineType = "rounded-white";
+	hs.fadeInOut = true;
+	hs.numberPosition = "caption";
+	hs.dimmingOpacity = 0.75;
+
+	// Add the controlbar
+	if (hs.addSlideshow) hs.addSlideshow({
+		//slideshowGroup: "group1",
+		interval: 5000,
+		repeat: false,
+		useControls: true,
+		fixedControls: true,
+		overlayOptions: {
+			opacity: .75,
+			position: "top center",
+			hideOnMouseOut: true
+		}
+	});
+</script>
+
+		');
+	
 		$document->addCustomTag('		
 		<script type="text/javascript">
 		function aclick(anchor_id) {
 		var a = document.getElementById(anchor_id);
-		mainLightbox.start(a);
+		hs.expand(a);
 		}
 		</script>
 		');	
 	endif;	
+
 	
 		$document->addCustomTag('
 		<style type="text/css">
@@ -293,8 +319,7 @@ endif;
 
 		
 		//creazione ancore per lightbox - 
-		// Testato con successo sui templete di default di Joomla escluso JA purity che ha un suo Javascript che non fa funzionare l'effetto
-		//NOTA BENE possibile conflitto con alcuni template commerciali in questi casi l'effetto lightbox non va
+		// Testato con successo sui templete di default di Joomla 
  if( $carousellink == 2 ) :		
 		$thumb_sufix = ".th.";
 		if ($hd = opendir($path)) {
@@ -313,7 +338,10 @@ endif;
 						}							
 						
 						$title	= preg_replace('/\.(jpg|png|gif)$/i','',$file);
-						echo '<a id="ancor_'.$title.'_id" href="' . $dir_images . $file . '" rel="lightbox[set1]"></a>'."\n";
+						echo '<a id="ancor_'.$title.'_id" href="' . $dir_images . $file . '" class="highslide" onclick="return hs.expand(this)"></a>'."\n";
+                        echo '<div class="highslide-caption">'."\n";
+                        echo $title."\n";
+						echo '</div>'."\n";
 					}
 				}
 			}

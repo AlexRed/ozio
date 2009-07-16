@@ -41,7 +41,7 @@
 		<param name="carousellink" type="list" default="2" label="Compilazione Link" description="Compilazione link desc" >
           <option value="1">Link Compilato</option>
           <option value="0">Link Foto</option>
-          <option value="2">Effetto Lightbox</option>		  
+          <option value="2">Effetto Ajax</option>		  
         </param>		
 		<param name="indirizzo" type="text" default="" label="Indirizzo web" size="30" description="Indirizzo web desc" />		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
