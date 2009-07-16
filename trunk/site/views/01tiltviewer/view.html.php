@@ -233,10 +233,9 @@ class OzioGalleryView01TiltViewer extends JView
 		}	
 		else//Folder  non esiste
 		{
-			$message = '<p><b><span style="color:#009933">Attenzione:<br />
-			Il percorso alla cartella immagini indicato nei parametri</span><br /> ' . $folder 
-						   .' <br /><span style="color:#009933">non e\' corretto. </span>
-						   <span style="color:#009933">Controlla se hai creato la cartella, se la cartella esiste controlla, ed eventualmente modifica, il percorso nei parametri.</span>
+			$message = '<p><b><span style="color:#009933">'.JText::_('Attenzione').'</span><br /> ' . $folder 
+						   .' <br /><span style="color:#009933">'.JText::_('Non corretto').'</span>
+						   <span style="color:#009933">'.JText::_('Controlla').'</span>
 						   </b></p>';
 			$error[] = 0;
 			
