@@ -27,6 +27,7 @@ class OzioGalleryView04Carousel extends JView
 		$ordinamento 		= (int) $params->def('ordinamento');		
 		$speed				= $params->def('speed');
 		$titoli				= $params->def('titoli');
+		$titolo				= (int) $params->def('titolo');		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -245,12 +246,24 @@ class OzioGalleryView04Carousel extends JView
 				$title	= preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
 				$js		= "javascript:aclick('ancor_".$title."_id')";
 				$jst	= "_self";
-	if( $carousellink == 0 ) {				
-			$string .= '<photo title="' . $title . '" href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+	if( $carousellink == 0 ) {
+			if( $titolo != 0 ) :	
+				$string .= '<photo title="' . $title . '" href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+			else:
+				$string .= '<photo href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";			
+			endif;
 	} else if( $carousellink == 1 ) {
-			$string .= '<photo title="' . $title . '" href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+			if( $titolo != 0 ) :	
+				$string .= '<photo title="' . $title . '" href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+			else:
+				$string .= '<photo href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";		
+			endif;
 	} else if( $carousellink == 2 ) {
-			$string .= '<photo title="' . $title . '" href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+			if( $titolo != 0 ) :	
+				$string .= '<photo title="' . $title . '" href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+			else:			
+				$string .= '<photo  href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+			endif;			
 	}			
 					
 			}	
