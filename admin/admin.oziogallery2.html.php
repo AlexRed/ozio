@@ -107,6 +107,13 @@ class HTML_oziogallery2
 			<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'tiltviewer'.DS.'xml') ? 
 			'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 			'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
+		</tr>	
+			<tr>
+			<td align="center">8</td>
+			<td align="center">components/com_oziogallery2/imagin</td>
+			<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'imagin') ? 
+			'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
+			'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
 		</tr>			
 	</tbody>
 </table>
