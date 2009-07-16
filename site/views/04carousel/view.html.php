@@ -2,7 +2,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 
-class OzioGalleryViewAccordion extends JView
+class OzioGalleryView04Carousel extends JView
 {
 	function display( $tpl = null )
 	{
@@ -12,22 +12,21 @@ class OzioGalleryViewAccordion extends JView
 		$menus		= & JSite::getMenu();
 		$menu		= $menus->getActive();
 
-		$params = $mainframe->getParams('com_oziogallery22');
+		$params = $mainframe->getParams('com_oziogallery2');
 		
-		$larghezza 			= $params->def('width', 640);
-		$altezza 			= $params->def('height', 480);
-		$larghezzaimmagine 	= $params->def('widthi', 640);
-		$altezzaimmagine 	= $params->def('heighti', 480);
-		$bkgndoutercolora	= $params->def('bkgndoutercolora', '004080');
-		$ordinamento 		= (int) $params->def('ordinamento');		
+		$larghezza 			= $params->def('width', 720);
+		$altezza 			= $params->def('height', 720);
+		$flickr 			= (int) $params->def('flickr', 0);
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
-		$debug 				= (int) $params->def('debug');		
-		$tuttochiuso		= (int) $params->def('tuttochiuso');	
-		$fotoiniziale		= (int) $params->def('fotoiniziale');			
+		$xml_moder 			= (int) $params->def('xml_moder', 1);
+		$loadercolor		= $params->def('loadercolor', '004080');
+		$carousellink		= $params->def('carousellink', 0);
 		$indirizzo			= $params->def('indirizzo');
-		
-
+		$debug 				= (int) $params->def('debug');		
+		$ordinamento 		= (int) $params->def('ordinamento');		
+		$speed				= $params->def('speed');
+		$titoli				= $params->def('titoli');
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -45,30 +44,49 @@ class OzioGalleryViewAccordion extends JView
 			default:  $table		= 'center'; 	break;				
 		}		
 
+		switch ($params->get( 'target' ))
+		{
+			case '0': $target		= '_self'; 		break;
+			case '1': $target		= '_blank';		break;
+	
+		}		
 
-		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
+
+	if( $carousellink == 2 ) :		
+		$document->addStyleSheet(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/css/lightbox.css');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/prototype.js');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/scriptaculous.js?load=effects,builder');		
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/lightbox/js/lightbox.js');
+	endif;		
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/21/swfobject.js');
+	
+	if( $carousellink == 2 ) :			
+		$document->addCustomTag('		
+		<script type="text/javascript">
+		function aclick(anchor_id) {
+		var a = document.getElementById(anchor_id);
+		mainLightbox.start(a);
+		}
+		</script>
+		');	
+	endif;	
+	
 		$document->addCustomTag('
 		<style type="text/css">
-			.oziofloat {
-				width: '.$larghezza.';
-				height: '.$altezza.';
-				margin: 0px auto;
-				float:  '.$float.';
-				}
-			.oziotime {
-                font-size: 0.8em;
-				color:#ccc;	
-				}
-			.oziopre pre {
-				padding: 10px 15px;
-				margin: 5px 0 15px;
-				border-left: 5px solid #004080;
-				background: #eee;
-				font: 0.8em/1.5 "Courier News", monospace;
-				}
-			.oziopre h2 {
-				font: 1em/1.5 "Courier News", monospace;
-				}				
+		.oziofloat {
+		width: '.$larghezza.';
+		height: '.$altezza.';
+		margin: 0px auto;
+		float:  '.$float.';
+		}
+		.oziotime {
+        font-size: 0.8em;
+		color:#ccc;
+		}
+		.oziohide {
+		display: none;
+		visibility:hidden;
+		}
 		</style>
 		');		
 
@@ -106,17 +124,18 @@ class OzioGalleryViewAccordion extends JView
 			$xmlname = $xmltitle . '_'. $xmlnamesuff;
 		else:
 			$xmlname = $xmltitle;
-		endif;
+		endif;		
 		
-		
+
 		switch ($params->get( 'xml_moder' ))
 		{
-			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
+			case '0': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml';							
+			case '1': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/manual-xml/carousel.xml';		
 				break;
-	
+			
 		}			
+
 		
 		
  if( $xml_moder != 1 ) :
@@ -130,8 +149,9 @@ class OzioGalleryViewAccordion extends JView
 		$dir_images = rtrim(JURI::root() . $folder . '/') ;
 		$dir_files = rtrim(JURI::root() . 'images/oziogallery2') . '/';
 
+
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 
@@ -165,7 +185,6 @@ class OzioGalleryViewAccordion extends JView
 			closedir($hd);
 	}
 		
-		
 		if(count($files)) {
 		
 			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
@@ -179,17 +198,37 @@ class OzioGalleryViewAccordion extends JView
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
-			$string .= '<options slideshow="true">'."\n";			
+			$string .= '<slide_show>'."\n";
+			$string .= '<options>'."\n";
+			$string .= '<background>transparent</background>'."\n";
+			$string .= '<interaction>'."\n";
+			$string .= '<speed>' . $speed . '</speed>'."\n";			
+			$string .= '</interaction>'."\n";
+			$string .= '<titles>'."\n";
+			$string .= '<style>'."\n";
+			$string .= 'font-size: 14px; font-family: Verdana, _serif; color: ' . $titoli . ';'."\n";
+			$string .= '</style>'."\n";			
+			$string .= '</titles>'."\n";
+			$string .= '</options>'."\n";
+
+		
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
-				$row 	 = &$files[$i];
-				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-			$string .= '<item link="'.$indirizzo.'" jpg="' . $dir_images . $row[1] . '" title="'.$title.'" color="0x000000" alphaColor="0"><![CDATA['.$title.']]>';
-			$string .= '</item>'."\n";			
+				$row	= &$files[$i];
+				$title	= preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
+				$js		= "javascript:aclick('ancor_".$title."_id')";
+				$jst	= "_self";
+	if( $carousellink == 0 ) {				
+			$string .= '<photo href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+	} else if( $carousellink == 1 ) {
+			$string .= '<photo href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+	} else if( $carousellink == 2 ) {
+			$string .= '<photo href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+	}			
 					
 			}	
-			$string .= '</options>'."\n";
+			$string .= '</slide_show>'."\n";
 			fwrite($filehandle, $string);
 			fclose($filehandle);
 			}			
@@ -206,9 +245,9 @@ class OzioGalleryViewAccordion extends JView
 						   </b></p>';
 			$error[] = 0;
 			
-			echo $message;
-			
+		 echo $message;			
 		}
+
 		 
 				$tempo = '<div>';
 				$tempo .= '<span class="oziotime">';	
@@ -229,59 +268,75 @@ class OzioGalleryViewAccordion extends JView
 endif;		
 		
 		
-
-
-		switch ($params->get( 'accordiontitle' ))
-		{
-			case '0': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview2.swf?xmlPath='; 		
-			break;
-			case '1': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview.swf?xmlPath=';		
-			break;
-	
-		}	
-
+		
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  accordiontitle :   ' .$accordiontitle .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xml_moder :   ' .$xml_moder .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tuttochiuso :   ' .$tuttochiuso .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  fotoiniziale :   ' .$fotoiniziale  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  bkgndoutercolora :     '.$bkgndoutercolora  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  loadercolor :     '.$loadercolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezzaimmagne :     '.$larghezzaimmagine  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezzaimmagine :     '.$altezzaimmagine  .'</pre>';	
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  indirizzo :     '.$indirizzo  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  carousellink  :     '.$carousellink  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  target :     '.$target  .'</pre>';
 		
 		if (is_writable(JPATH_SITE.DS . $folder)):
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '. JText::_( 'Writable' )  .'</pre>';
         else:
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;			
-		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'accordion'.DS.'xml')):
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/accordion/xml :     '. JText::_( 'Writable' )  .'</pre>';
+		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'carousel'.DS.'xml')):
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/carousel/xml :     '. JText::_( 'Writable' )  .'</pre>';
         else:
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/accordion/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/carousel/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;			
 		//fine debug
+
+
 		
+		//creazione ancore per lightbox - 
+		// Testato con successo sui templete di default di Joomla escluso JA purity che ha un suo Javascript che non fa funzionare l'effetto
+		//NOTA BENE possibile conflitto con alcuni template commerciali in questi casi l'effetto lightbox non va
+ if( $carousellink == 2 ) :		
+		$thumb_sufix = ".th.";
+		if ($hd = opendir($path)) {
+		echo '<div class="oziohide">'."\n";	
+		  $files = array();
+			while (false !== ($file = readdir($hd))) { 
+				if($file != '.' && $file != '..') {
+					if (strpos($file, $thumb_sufix) === false) {
+						if(is_file($path . $file) && preg_match('/\.(jpg|png|gif)$/i',$file)) {
+						
+						if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) { 
+							$files[] = array(filemtime($path.$file), $file);
+						}
+						if( $ordinamento == 0 OR $ordinamento == 1) { 
+							$files[] = array(($path.$file), $file);
+						}							
+						
+						$title	= preg_replace('/\.(jpg|png|gif)$/i','',$file);
+						echo '<a id="ancor_'.$title.'_id" href="' . $dir_images . $file . '" rel="lightbox[set1]"></a>'."\n";
+					}
+				}
+			}
+		}
+			closedir($hd);
+			echo '</div>'."\n";
+	}
+endif;
+
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
-		$this->assignRef('altezzaimmagine' , 		$altezzaimmagine);
-		$this->assignRef('larghezzaimmagine' , 		$larghezzaimmagine);		
 		$this->assignRef('xml_moder' , 				$xml_moder);
-		$this->assignRef('bkgndoutercolora' , 		$bkgndoutercolora);		
+		$this->assignRef('loadercolor' , 			$loadercolor);		
 		$this->assignRef('table' , 					$table);			
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
-		$this->assignRef('accordiontitle' , 		$accordiontitle);
-		$this->assignRef('tuttochiuso' , 			$tuttochiuso);
-		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);
-		
+		$this->assignRef('oziodebug' , 				$oziodebug);	
+
+	
 		parent::display($tpl);
 	}
 }
+		
 ?>

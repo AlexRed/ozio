@@ -2,7 +2,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 
-class OzioGalleryViewFlickrPhoto extends JView
+class OzioGalleryView08FlickrPhoto extends JView
 {
 	function display( $tpl = null )
 	{
