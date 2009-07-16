@@ -2,7 +2,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 
-class OzioGalleryViewFlashGallery extends JView
+class OzioGalleryView06Accordion extends JView
 {
 	function display( $tpl = null )
 	{
@@ -12,51 +12,22 @@ class OzioGalleryViewFlashGallery extends JView
 		$menus		= & JSite::getMenu();
 		$menu		= $menus->getActive();
 
-		$params = $mainframe->getParams('com_oziogallery2');
+		$params = $mainframe->getParams('com_oziogallery22');
 		
 		$larghezza 			= $params->def('width', 640);
 		$altezza 			= $params->def('height', 480);
-		$flickr 			= (int) $params->def('flickr', 0);
-		$user_id 			= $params->def('user_id', 0);
+		$larghezzaimmagine 	= $params->def('widthi', 640);
+		$altezzaimmagine 	= $params->def('heighti', 480);
+		$bkgndoutercolora	= $params->def('bkgndoutercolora', '004080');
+		$ordinamento 		= (int) $params->def('ordinamento');		
 		$folder				= $params->def('folder');
-		$modifiche 			= (int) $params->def('modifiche', 0);
-		$debug 				= (int) $params->def('debug');			
-		$ordinamento 		= (int) $params->def('ordinamento');
-
-		//inizio parametri settings
-		$thumb_bg_color				= $params->def('thumb_bg_color');
-		$thumb_bg_over				= $params->def('thumb_bg_over');
-		$scroll_but_bg				= $params->def('scroll_but_bg');
-		$scroll_but_arrow			= $params->def('scroll_but_arrow');
-		$scroll_but_bg_over			= $params->def('scroll_but_bg_over');
-		$scroll_but_arrow_over		= $params->def('scroll_but_arrow_over');
-		$big_pic_border				= $params->def('big_pic_border');
-		$next_pic_bg				= $params->def('next_pic_bg');
-		$next_pic_arrow				= $params->def('next_pic_arrow');
-		$next_pic_bg_over			= $params->def('next_pic_bg_over');
-		$next_pic_arrow_over		= $params->def('next_pic_arrow_over');
-		$background_color			= $params->def('background_color');
-		$text_visible				= (int) $params->def('text_visible');
-		$text_color					= $params->def('text_color');
-		$fullscreen_visible			= (int) $params->def('fullscreen_visible');	
-
-		$thumb_bg_color				= str_replace( '#', '', $thumb_bg_color );
-		$thumb_bg_over				= str_replace( '#', '', $thumb_bg_over );
-		$scroll_but_bg				= str_replace( '#', '', $scroll_but_bg );
-		$scroll_but_arrow			= str_replace( '#', '', $scroll_but_arrow );
-		$scroll_but_bg_over			= str_replace( '#', '', $scroll_but_bg_over );
-		$scroll_but_arrow_over		= str_replace( '#', '', $scroll_but_arrow_over );
-		$big_pic_border				= str_replace( '#', '', $big_pic_border );
-		$next_pic_bg				= str_replace( '#', '', $next_pic_bg );
-		$next_pic_arrow				= str_replace( '#', '', $next_pic_arrow	 );
-		$next_pic_bg_over			= str_replace( '#', '', $next_pic_bg_over );
-		$next_pic_arrow_over		= str_replace( '#', '', $next_pic_arrow_over );
-		$background_color			= str_replace( '#', '', $background_color );
-		$text_color					= str_replace( '#', '', $text_color );
-
+		$modifiche 			= (int) $params->def('modifiche', 0);	
+		$debug 				= (int) $params->def('debug');		
+		$tuttochiuso		= (int) $params->def('tuttochiuso');	
+		$fotoiniziale		= (int) $params->def('fotoiniziale');			
+		$indirizzo			= $params->def('indirizzo');
 		
 
-		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -73,7 +44,8 @@ class OzioGalleryViewFlashGallery extends JView
 			case '2': $table		= 'center';		break;			
 			default:  $table		= 'center'; 	break;				
 		}		
-	
+
+
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
 		$document->addCustomTag('
 		<style type="text/css">
@@ -86,6 +58,16 @@ class OzioGalleryViewFlashGallery extends JView
 			.oziotime {
                 font-size: 0.8em;
 				color:#ccc;	
+				}
+			.oziopre pre {
+				padding: 10px 15px;
+				margin: 5px 0 15px;
+				border-left: 5px solid #004080;
+				background: #eee;
+				font: 0.8em/1.5 "Courier News", monospace;
+				}
+			.oziopre h2 {
+				font: 1em/1.5 "Courier News", monospace;
 				}				
 		</style>
 		');		
@@ -108,19 +90,7 @@ class OzioGalleryViewFlashGallery extends JView
 				$mainframe->addMetaTag('title', $params->get('page_title'));
 		}
 
-
 		
- if( $flickr == 0 ) :
-
-		jimport('joomla.filesystem.file'); 
-		// creazione file xml al volo	
-    	$VAMBpathAssoluto = JPATH_SITE;
-		$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
-
-		$path  = $VAMBpathAssoluto .'/'. $folder . '/';
-		$dir_images = rtrim(JURI::root() . $folder . '/') ;
-		$dir_files = rtrim(JURI::root() . 'images/oziogallery2') . '/';
-
 		$xmltitle = $menu->name;
 		$xmltitle = str_replace( ' ', '', $xmltitle );
 		$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
@@ -137,35 +107,31 @@ class OzioGalleryViewFlashGallery extends JView
 		else:
 			$xmlname = $xmltitle;
 		endif;
-		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/flashgallery_'. $xmlname .'.xml';
-		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/settings_'. $xmlname .'.xml';
 		
-			//inizio sezione  XML setting
-			$generasetting = fopen($settings, 'w');
+		
+		switch ($params->get( 'xml_moder' ))
+		{
+			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
+				break;
+			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml';							
+				break;
+	
+		}			
+		
+		
+ if( $xml_moder != 1 ) :
 
-			$linea = '<?xml version="1.0" ?>'."\n";	
-			$linea .= '<colors'."\n";
-			$linea .= 'thumb_bg_color="'. $thumb_bg_color . '"'."\n";
-			$linea .= 'thumb_bg_over="'. $thumb_bg_over . '"'."\n";
-			$linea .= 'scroll_but_bg="'. $scroll_but_bg . '"'."\n";
-			$linea .= 'scroll_but_arrow="'. $scroll_but_arrow . '"'."\n";
-			$linea .= 'scroll_but_bg_over="'. $scroll_but_bg_over . '"'."\n";
-			$linea .= 'scroll_but_arrow_over="'. $scroll_but_arrow_over . '"'."\n";
-			$linea .= 'big_pic_border="'. $big_pic_border . '"'."\n";
-			$linea .= 'next_pic_bg="'. $next_pic_bg . '"'."\n";			
-			$linea .= 'next_pic_arrow="'. $next_pic_arrow . '"'."\n";
-			$linea .= 'next_pic_bg_over="'. $next_pic_bg_over . '"'."\n";
-			$linea .= 'next_pic_arrow_over="'. $next_pic_arrow_over . '"'."\n";
-			$linea .= 'background_color="'. $background_color . '"'."\n";
-			$linea .= 'text_visible="'. $text_visible . '"'."\n";
-			$linea .= 'text_color="'. $text_color . '"'."\n";
-			$linea .= 'fullscreen_visible="'. $fullscreen_visible . '"'."\n";
-			$linea .= '/>'."\n";				
-			fwrite($generasetting, $linea);
-			fclose($generasetting);			
-		
-		
+		jimport('joomla.filesystem.file'); 
+		// creazione file xml al volo	
+    	$VAMBpathAssoluto = JPATH_SITE;
+		$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+
+		$path  = $VAMBpathAssoluto .'/'. $folder . '/';
+		$dir_images = rtrim(JURI::root() . $folder . '/') ;
+		$dir_files = rtrim(JURI::root() . 'images/oziogallery2') . '/';
+
+		// nome del file creato
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 
@@ -209,25 +175,21 @@ class OzioGalleryViewFlashGallery extends JView
             }else {  
 					shuffle($files);			
 			}	
-			
-			//inizio sezione  XML galleria	
+				
 			$filehandle = fopen($filename, 'w');
 
-			$string = '<pics>'."\n";
-
+			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
+			$string .= '<options slideshow="true">'."\n";			
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-		
-						$string .= '<pic src="' . $dir_images . $row[1] . '" title="/'. $title . '"';
-						$string .= "/>\n";
-						
+			$string .= '<item link="'.$indirizzo.'" jpg="' . $dir_images . $row[1] . '" title="'.$title.'" color="0x000000" alphaColor="0"><![CDATA['.$title.']]>';
+			$string .= '</item>'."\n";			
+					
 			}	
-			$string .= '</pics>'."\n";
-			
-		
+			$string .= '</options>'."\n";
 			fwrite($filehandle, $string);
 			fclose($filehandle);
 			}			
@@ -243,11 +205,10 @@ class OzioGalleryViewFlashGallery extends JView
 						   <span style="color:#009933">Controlla se hai creato la cartella, se la cartella esiste controlla, ed eventualmente modifica, il percorso nei parametri.</span>
 						   </b></p>';
 			$error[] = 0;
-				 
-		echo $message;	
+			
+			echo $message;
 			
 		}
-
 		 
 				$tempo = '<div>';
 				$tempo .= '<span class="oziotime">';	
@@ -266,47 +227,59 @@ class OzioGalleryViewFlashGallery extends JView
 				$tempo .= '</div>';				
 			}		 
 endif;		
+		
+		
+
+
+		switch ($params->get( 'accordiontitle' ))
+		{
+			case '0': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview2.swf?xmlPath='; 		
+			break;
+			case '1': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview.swf?xmlPath=';		
+			break;
+	
+		}	
 
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
-if( $flickr == 1 ) :			
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  Flickr :   ' .JText::_('ATTIVO').'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  User_id :   ' .$user_id .'</pre>';
-else:
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML :   ' .JText::_('ATTIVO') .'</pre>';
-endif;
-		
-
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  accordiontitle :   ' .$accordiontitle .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xml_moder :   ' .$xml_moder .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tuttochiuso :   ' .$tuttochiuso .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  fotoiniziale :   ' .$fotoiniziale  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  bkgndoutercolora :     '.$bkgndoutercolora  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
-if( $flickr == 0 ) :		
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezzaimmagne :     '.$larghezzaimmagine  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezzaimmagine :     '.$altezzaimmagine  .'</pre>';	
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  indirizzo :     '.$indirizzo  .'</pre>';
+		
 		if (is_writable(JPATH_SITE.DS . $folder)):
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '. JText::_( 'Writable' )  .'</pre>';
         else:
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;			
-		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'flashgallery'.DS.'xml')):
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/xml :     '. JText::_( 'Writable' )  .'</pre>';
+		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'accordion'.DS.'xml')):
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/accordion/xml :     '. JText::_( 'Writable' )  .'</pre>';
         else:
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/flashgallery/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
-		endif;
-endif;		
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/accordion/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
+		endif;			
 		//fine debug
-
-
-
+		
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
-		$this->assignRef('flickr' , 				$flickr);
-		$this->assignRef('user_id' , 				$user_id);
-		$this->assignRef('table' , 					$table);
-		$this->assignRef('filename' , 				$filename);
-		$this->assignRef('foldername' , 			$foldername);	
+		$this->assignRef('altezzaimmagine' , 		$altezzaimmagine);
+		$this->assignRef('larghezzaimmagine' , 		$larghezzaimmagine);		
+		$this->assignRef('xml_moder' , 				$xml_moder);
+		$this->assignRef('bkgndoutercolora' , 		$bkgndoutercolora);		
+		$this->assignRef('table' , 					$table);			
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
+		$this->assignRef('accordiontitle' , 		$accordiontitle);
+		$this->assignRef('tuttochiuso' , 			$tuttochiuso);
+		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);		
+		$this->assignRef('oziodebug' , 				$oziodebug);
 		
 		parent::display($tpl);
 	}

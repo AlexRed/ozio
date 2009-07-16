@@ -2,7 +2,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 
-class OzioGalleryViewTiltViewer extends JView
+class OzioGalleryView01TiltViewer extends JView
 {
 	function display( $tpl = null )
 	{
