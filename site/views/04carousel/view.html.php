@@ -246,11 +246,11 @@ class OzioGalleryView04Carousel extends JView
 				$js		= "javascript:aclick('ancor_".$title."_id')";
 				$jst	= "_self";
 	if( $carousellink == 0 ) {				
-			$string .= '<photo href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+			$string .= '<photo title="' . $title . '" href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
 	} else if( $carousellink == 1 ) {
-			$string .= '<photo href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
+			$string .= '<photo title="' . $title . '" href="' . $indirizzo . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
 	} else if( $carousellink == 2 ) {
-			$string .= '<photo href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
+			$string .= '<photo title="' . $title . '" href="' . $js . '" target="' . $jst . '">' . $dir_images . $row[1] . '</photo>'."\n";	
 	}			
 					
 			}	
