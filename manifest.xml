@@ -2,7 +2,7 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 <name>Ozio Gallery 2</name>
-<creationDate>08/07/2009</creationDate>
+<creationDate>16/07/2009</creationDate>
 <author>Alexred</author>
 <copyright>(C) 2008</copyright>
 <authorEmail>info@joomla.it</authorEmail>
@@ -18,10 +18,15 @@
 	<filename>controller.php</filename>
 	<folder>assets</folder>
 	<folder>elements</folder>
+	<folder>language</folder>	
 	<folder>imagin</folder>
 	<folder>skin</folder>
 	<folder>views</folder>	
 </files>
+<languages folder="site/language">
+		<language tag="en-GB">en-GB.com_oziogallery2.ini</language>
+		<language tag="it-IT">it-IT.com_oziogallery2.ini</language>
+</languages>	
 <administration>
 	<menu img="components/com_oziogallery2/images/oziogallery2.png">Ozio Gallery 2</menu>
 	<menu link="option=com_oziogallery2">Ozio Gallery 2</menu>
@@ -31,11 +36,12 @@
 		<filename>admin.oziogallery2.php</filename>
 		<folder>css</folder>
 		<folder>images</folder>
+		<folder>language</folder>			
 	</files>
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.com_oziogallery2.ini</language>
-		<language tag="it-IT">language/it-IT/it-IT.com_oziogallery2.ini</language>
-	</languages>
+<languages folder="admin/language">
+		<language tag="en-GB">en-GB.com_oziogallery2.ini</language>
+		<language tag="it-IT">it-IT.com_oziogallery2.ini</language>
+</languages>	
 	<media folder="admin" destination="com_oziogallery2/images">
 		<filename>images/oziogallery2.png</filename>
 	</media>
