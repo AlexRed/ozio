@@ -18,14 +18,13 @@
 	<filename>controller.php</filename>
 	<folder>assets</folder>
 	<folder>elements</folder>
-	<folder>language</folder>	
 	<folder>imagin</folder>
 	<folder>skin</folder>
 	<folder>views</folder>	
 </files>
-<languages folder="site/language">
-		<language tag="en-GB">en-GB.com_oziogallery2.ini</language>
-		<language tag="it-IT">it-IT.com_oziogallery2.ini</language>
+<languages>
+		<language tag="en-GB">languages/site/en-GB.com_oziogallery2.ini</language>
+		<language tag="it-IT">languages/site/it-IT.com_oziogallery2.ini</language>
 </languages>	
 <administration>
 	<menu img="components/com_oziogallery2/images/oziogallery2.png">Ozio Gallery 2</menu>
@@ -35,12 +34,11 @@
 		<filename>admin.oziogallery2.html.php</filename>
 		<filename>admin.oziogallery2.php</filename>
 		<folder>css</folder>
-		<folder>images</folder>
-		<folder>language</folder>			
+		<folder>images</folder>		
 	</files>
-<languages folder="admin/language">
-		<language tag="en-GB">en-GB.com_oziogallery2.ini</language>
-		<language tag="it-IT">it-IT.com_oziogallery2.ini</language>
+<languages>
+		<language tag="en-GB">languages/admin/en-GB.com_oziogallery2.ini</language>
+		<language tag="it-IT">languages/admin/it-IT.com_oziogallery2.ini</language>
 </languages>	
 	<media folder="admin" destination="com_oziogallery2/images">
 		<filename>images/oziogallery2.png</filename>
