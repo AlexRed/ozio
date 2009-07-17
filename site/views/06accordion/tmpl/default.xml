@@ -54,7 +54,11 @@
 		<param name="tuttochiuso" type="list" default="0" label="Tutto chiuso" description="Tutto chiuso desc" >
           <option value="1">Si</option>
           <option value="0">No</option>
-        </param>	
+        </param>
+		<param name="slidershow" type="list" default="1" label="Slidershow" description="Slidershow desc" >
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </param>		
 		<param name="widthi" type="text" default="320" label="Larghezza Immagini" size="4" description="Larghezza Immagini Desc" />
 		<param name="heighti" type="text" default="300" label="Altezza Immagini" size="4" description="Altezza Immagini Desc" />		
 		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="LOADER COLOR" description="LOADER COLOR desc" />			

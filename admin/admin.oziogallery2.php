@@ -226,9 +226,6 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 		}		
 
 
-/////////////////////////////////////////////////7
-
-
 
 		function resetImg ($dir)
 		{
@@ -249,9 +246,11 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'imagerotator' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
-		 
-				$message = JText::_('Cartella XML Imagerotator svuotata correttamente');
-				$link = 'index3.php?option=com_oziogallery2&task=resetel&amp;tmpl=component';
+
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
+				$message .= JText::_('Cartella XML Imagerotator svuotata correttamente');
+				$message .= '</p>';				
+				$link = 'index.php?option=com_oziogallery2&task=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
 		}
 
@@ -275,9 +274,11 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'accordion' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
-		 
-				$message = JText::_('Cartella XML Accordion svuotata correttamente');
-				$link = 'index3.php?option=com_oziogallery2&task=resetel&amp;tmpl=component';
+
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
+				$message .= JText::_('Cartella XML Accordion svuotata correttamente');
+				$message .= '</p>';				
+				$link = 'index.php?option=com_oziogallery2&task=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
 		}		
 
@@ -300,9 +301,11 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'carousel' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
-		 
-				$message = JText::_('Cartella XML Carousel svuotata correttamente');
-				$link = 'index3.php?option=com_oziogallery2&task=resetel&amp;tmpl=component';
+
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
+				$message .= JText::_('Cartella XML Carousel svuotata correttamente');
+				$message .= '</p>';				
+				$link = 'index.php?option=com_oziogallery2&task=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
 		}
 
@@ -327,9 +330,11 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'flashgallery' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
-		 
-				$message = JText::_('Cartella XML FlashGallery svuotata correttamente');
-				$link = 'index3.php?option=com_oziogallery2&task=resetel&amp;tmpl=component';
+				
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';		 
+				$message .= JText::_('Cartella XML FlashGallery svuotata correttamente');
+				$message .= '</p>';				
+				$link = 'index.php?option=com_oziogallery2&task=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
 		}		
 	
@@ -353,8 +358,10 @@ require_once( JApplicationHelper::getPath( 'admin_html' ) );
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'tiltviewer' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML Tilt 3D svuotata correttamente');
-				$link = 'index3.php?option=com_oziogallery2&task=resetel&amp;tmpl=component';
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';
+				$message .= JText::_('Cartella XML Tilt 3D svuotata correttamente');
+				$message .= '</p>';
+				$link = 'index.php?option=com_oziogallery2&task=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
 		}		
 	
