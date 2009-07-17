@@ -37,6 +37,13 @@ class OzioGalleryView06Accordion extends JView
 			default:  $float		= 'inherit'; 	break;				
 		}
 		
+		switch ($params->get( 'slidershow' ))
+		{
+			case '0': $slidershow		= 'false'; 		break;
+			case '1': $slidershow		= 'true';		break;
+			default:  $slidershow		= 'true'; 		break;				
+		}		
+		
 		switch ($params->get( 'table' ))
 		{
 			case '0': $table		= 'left'; 		break;
@@ -179,7 +186,7 @@ class OzioGalleryView06Accordion extends JView
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
-			$string .= '<options slideshow="true">'."\n";			
+			$string .= '<options slideshow="'.$slidershow.'">'."\n";			
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
