@@ -31,23 +31,17 @@ class HTML_oziogallery2
 	
 	?>
 	<form action="index.php" method="post" name="adminForm" id="adminForm">
-		<h1><?php echo JText::_('TITLE');	?></h1><br />
-		<table cellspacing="0" cellpadding="0" bgcolor="#ffffcc"><tbody><tr><td>
-</td></tr></tbody></table>
-<?php
-        $pane = & JPane::getInstance('tabs');
-	    echo $pane->startPane( 'ozio-pane' );
-		echo $pane->startPanel( JText::_('Descrizione'), 'Nuovo-tab1' );
-?>
-<table class="admintable">
+<table class="adminlist">
 	<tr>
-		<td align="left"><?php echo JText::_('COMPONENT DESCRIPTION');?></td>
+		<td align="left" width="50%"><?php echo JText::_('COMPONENT DESCRIPTION');?></td>
+		<td align="left" width="50%"><?php echo JText::_('COMPONENT VOTE');	?></td>
+	</tr>
+	<tr>
+		<td align="left" ><?php echo JText::_('COMPONENT INSTRUCTIONS');	?></td>
+		<td align="left" ><?php echo JText::_('COMPONENT LANGUAGE');	?></td>
 	</tr>
 </table>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Info di sistema', 'Nuovo-tab2' );
-?>	
+
 <table class="admintable">
 	<tr>
 <h2><?php echo JText::_('SYSTEM INFORMATION');	?></h2>
@@ -119,58 +113,13 @@ class HTML_oziogallery2
 </table>
 	</tr>
 </table>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Istruzioni', 'Nuovo-tab3' );
-?>	
-<table class="admintable">
-	<tr>
-		<td align="left"><?php echo JText::_('COMPONENT INSTRUCTIONS');	?></td>
-	</tr>
-</table>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Modulo', 'Nuovo-tab4' );
-?>	
-<table class="admintable">
-	<tr>
-		<td align="left"><?php echo JText::_('COMPONENT CATEGORIES');	?></td>
-	</tr>
-</table>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Lingua', 'Nuovo-tab5' );
-?>	
-<table class="admintable">
-	<tr>
-		<td align="left"><?php echo JText::_('COMPONENT LANGUAGE');	?></td>
-	</tr>
-</table>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Voto', 'Nuovo-tab6' );
-?>	
-<table class="admintable">
-	<tr>
-		<td align="left"><?php echo JText::_('COMPONENT VOTE');	?></td>
-	</tr>
-</table>
-<?php
-	echo $pane->endPanel();
-?>
-<?php
-	echo $pane->endPanel();
-	echo $pane->startPanel( 'Crediti', 'Nuovo-tab67' );
-?>	
+
 <table class="admintable">
 	<tr>
 		<td align="left">
 <b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b><br /><br />
 Credits:
 <br />
-This component is based on:<br />
-Joomla WebcamXP Component for Joomla 1.5 by Jooglar <a href="http://jooglar.com" target='blank'> http://jooglar.com</a><br />
-WebcamXP Component for Joomla 1.0.x & Mambo 4.5.x by Andy Stewart (andy@troozers.com) <a href="http://www.troozers.com" target='blank'>http://www.troozers.com</a><br />
 <br />Flash is based on:
 <br />- <a href="http://www.airtightinteractive.com/projects/tiltviewer/" target='blank'>TiltViewer</a> Design/Development by <a href="http://www.airtightinteractive.com" target='blank'>Airtight</a>, Sound Design by <a href="http://www.earganic.com/" target='blank'>Earganic Studios</a>, <a href="http://blog.deconcept.com/flashobject/" target='blank'>FlashObject</a> Javascript embed code by Geoff Stearns.
 <br />TiltViewer-Pro is also available for purchase with increased customization options and the TiltViewer logo not included. To purchase it <a href="http://www.airtightinteractive.com/projects/tiltviewer/pro/" target='blank'>click here</a>. To upgrade existing TiltViewer galleries to TiltViewer-Pro, replace the TiltViewer.swf file in your existing folder (at components/com_oziogallery2/TiltViewer.swf) with the one that comes in the Pro download.
@@ -187,13 +136,11 @@ WebcamXP Component for Joomla 1.0.x & Mambo 4.5.x by Andy Stewart (andy@troozers
 <br /><br />
 Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
-<h3 align="right">July 04th, 2009. Component developed by AlexRed & Ste - <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
+<h3 align="right">July 04th, 2009. Component developed by AlexRed & Ste & Vamba- <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
 		</td>
 	</tr>
 </table>
-<?php
-	echo $pane->endPanel();
-?>	
+
 		<input type="hidden" name="option"value="<?php echo $option;?>" />
 		<input type="hidden" name="task"value="" />
 		</form>
