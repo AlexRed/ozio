@@ -17,24 +17,37 @@
 				<option value="1">Show</option>
 			</param>
 			<param name="xmlnamesuff" type="text" default="" label="Suffisso nome XML" size="30" description="Suffisso nome XML desc" />			
-			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Flash Category Settings&lt;/div&gt;" label="" description="" />			
+			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Method&lt;/div&gt;" label="" description="" />			
 		<param name="xml_moder" type="list" default="2" label="Metodo XML" description="Metodo XML desc" >
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
+				<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />
+		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
+		<param name="width" type="text" default="720" label="Larghezza" size="4" description="Larghezza Desc" />
+		<param name="height" type="text" default="340" label="Altezza" size="4" description="Altezza Desc" />
+		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+          <option value="2">Centered</option>
+        </param>		
+		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+          <option value="2">inherit</option>
+        </param>
+		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;XML Settings (reset XML to apply)&lt;/div&gt;" label="" description="" />	
 		<param name="ordinamento" type="list" default="3" label="Ordine immagini" description="Ordine immagini desc" >
           <option value="0">Per Nome ordine alfabetico</option>
           <option value="1">Per Nome ordine alfabetico inverso</option>		  
           <option value="2">Per Data - Prima i recenti</option>
           <option value="3">Per Data - Prima i meno recenti</option>	
           <option value="4">Casuale</option>		  
-        </param>			
-		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
-		<param name="width" type="text" default="720" label="Larghezza" size="4" description="Larghezza Desc" />
-		<param name="height" type="text" default="340" label="Altezza" size="4" description="Altezza Desc" />
-		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#9F9F9F" size="10" label="LOADER COLOR" description="LOADER COLOR desc" />		
-		<param name="titoli" type="colorpicker" class="color {hash:true,required:false}" default="#003366" size="10" label="Colore Titoli" description="Colore Titoli desc" />
+        </param>
 		<param name="speed" type="text" default="50" label="Speed Rotation" size="6" description="Speed Rotation Desc" />
+		<param name="titoli" type="colorpicker" class="color {hash:true,required:false}" default="#003366" size="10" label="Colore Titoli" description="Colore Titoli desc" />		
+		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Flash Category Settings&lt;/div&gt;" label="" description="" />	
+		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#9F9F9F" size="10" label="LOADER COLOR" description="LOADER COLOR desc" />		
 		<param name="target" type="list" default="2" label="Target" description="Target desc" >
           <option value="0">Stessa finestra</option>
           <option value="1">Nuova Finestra</option>
@@ -49,16 +62,6 @@
           <option value="1">Yes</option>
         </param>		
 		<param name="indirizzo" type="text" default="" label="Indirizzo web" size="30" description="Indirizzo web desc" />		
-		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
-          <option value="0">Left</option>
-          <option value="1">Right</option>
-          <option value="2">Centered</option>
-        </param>		
-		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
-          <option value="0">Left</option>
-          <option value="1">Right</option>
-          <option value="2">inherit</option>
-        </param>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />			
 		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Visualizza data e ora ultima modifica" >
           <option value="0">No</option>
