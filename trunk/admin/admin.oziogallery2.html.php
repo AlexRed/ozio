@@ -496,7 +496,14 @@ Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank
 		<?php	
 
 	
+	}
+	
+	
+	function showResetel( $option )
+	{
+	
 	}	
 	
 }
+
 ?>
