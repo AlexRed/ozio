@@ -31,10 +31,12 @@
 	<menu link="option=com_oziogallery2">Ozio Gallery 2</menu>
 	<files folder="admin">
 		<filename>index.html</filename>
-		<filename>admin.oziogallery2.html.php</filename>
-		<filename>admin.oziogallery2.php</filename>
-		<folder>css</folder>
-		<folder>images</folder>		
+		<filename>oziogallery2.php</filename>
+		<filename>controller.php</filename>
+		<folder>classes</folder>
+		<folder>css</folder>	
+		<folder>images</folder>	
+		<folder>views</folder>			
 	</files>
 <languages>
 		<language tag="en-GB">languages/admin/en-GB.com_oziogallery2.ini</language>
