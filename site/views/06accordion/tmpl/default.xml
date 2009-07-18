@@ -44,7 +44,11 @@
           <option value="3">Per Data - Prima i meno recenti</option>	
           <option value="4">Casuale</option>		  
         </param>
-		<param name="indirizzo" type="text" default="" label="Indirizzo web" size="30" description="Indirizzo web desc" />	
+		<param name="indirizzo" type="text" default="" label="Indirizzo web" size="30" description="Indirizzo web desc" />
+		<param name="slidershow" type="list" default="1" label="Slidershow" description="Slidershow desc" >
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </param>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Accordion Settings&lt;/div&gt;" label="" description="" />		
 		<param name="accordiontitle" type="list" default="1" label="Titolo" description="Titolo desc" >
           <option value="0">No</option>
@@ -54,10 +58,6 @@
 		<param name="tuttochiuso" type="list" default="0" label="Tutto chiuso" description="Tutto chiuso desc" >
           <option value="1">Si</option>
           <option value="0">No</option>
-        </param>
-		<param name="slidershow" type="list" default="1" label="Slidershow" description="Slidershow desc" >
-          <option value="0">No</option>
-          <option value="1">Yes</option>
         </param>		
 		<param name="widthi" type="text" default="320" label="Larghezza Immagini" size="4" description="Larghezza Immagini Desc" />
 		<param name="heighti" type="text" default="300" label="Altezza Immagini" size="4" description="Altezza Immagini Desc" />		
