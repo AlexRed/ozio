@@ -24,7 +24,7 @@ class ozio_helper
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'imagerotator' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML Imagerotator svuotata correttamente');
+				$message = JText::_('Cartella XML').' Imagerotator '.JText::_('svuotata correttamente');
 				$link = 'index.php?option=com_oziogallery2&view=reset';
 				$mainframe->redirect( $link, $message);
 		}
@@ -50,7 +50,7 @@ class ozio_helper
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'accordion' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML Accordion svuotata correttamente');
+				$message = JText::_('Cartella XML').' Accordion '.JText::_('svuotata correttamente');
 				$link = 'index.php?option=com_oziogallery2&view=reset';
 				$mainframe->redirect( $link, $message);
 		}		
@@ -75,7 +75,7 @@ class ozio_helper
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'carousel' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML Carousel svuotata correttamente');
+				$message = JText::_('Cartella XML').' Carousel '.JText::_('svuotata correttamente');
 				$link = 'index.php?option=com_oziogallery2&view=reset';
 				$mainframe->redirect( $link, $message);
 		}
@@ -100,7 +100,7 @@ class ozio_helper
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'flashgallery' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML FlashGallery svuotata correttamente');
+				$message = JText::_('Cartella XML').' FlashGallery '.JText::_('svuotata correttamente');
 				$link = 'index.php?option=com_oziogallery2&view=reset';
 				$mainframe->redirect( $link, $message);
 		}	
@@ -125,7 +125,7 @@ class ozio_helper
 				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'tiltviewer' . DS . 'xml' . DS;	
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
-				$message = JText::_('Cartella XML Tilt 3D svuotata correttamente');
+				$message = JText::_('Cartella XML').' Tilt 3D '.JText::_('svuotata correttamente');
 				$link = 'index.php?option=com_oziogallery2&view=reset';
 				$mainframe->redirect( $link, $message);
 		}			
@@ -151,7 +151,7 @@ class ozio_helper
 				@copy($source. DS .$file,$dest. DS .$file);
 
 				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
-				$message .= JText::_('Cartella XML Imagerotator svuotata correttamente');
+				$message .= JText::_('Cartella XML').' Imagerotator '.JText::_('svuotata correttamente');
 				$message .= '</p>';				
 				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
@@ -179,7 +179,7 @@ class ozio_helper
 				@copy($source. DS .$file,$dest. DS .$file);
 
 				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
-				$message .= JText::_('Cartella XML Accordion svuotata correttamente');
+				$message .= JText::_('Cartella XML').' Accordion '.JText::_('svuotata correttamente');
 				$message .= '</p>';				
 				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
@@ -206,7 +206,7 @@ class ozio_helper
 				@copy($source. DS .$file,$dest. DS .$file);
 
 				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';					
-				$message .= JText::_('Cartella XML Carousel svuotata correttamente');
+				$message .= JText::_('Cartella XML').' Carousel '.JText::_('svuotata correttamente');
 				$message .= '</p>';				
 				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
@@ -235,7 +235,7 @@ class ozio_helper
 				@copy($source. DS .$file,$dest. DS .$file);
 				
 				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';		 
-				$message .= JText::_('Cartella XML FlashGallery svuotata correttamente');
+				$message .= JText::_('Cartella XML').' FlashGallery '.JText::_('svuotata correttamente');
 				$message .= '</p>';				
 				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
@@ -262,7 +262,7 @@ class ozio_helper
 				@copy($source. DS .$file,$dest. DS .$file);
 		 
 				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';
-				$message .= JText::_('Cartella XML Tilt 3D svuotata correttamente');
+				$message .= JText::_('Cartella XML').' Tilt 3D '.JText::_('svuotata correttamente');
 				$message .= '</p>';
 				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
 				$mainframe->redirect( $link, $message);
