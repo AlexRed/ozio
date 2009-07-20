@@ -23,7 +23,7 @@
           <option value="1">XML manuale</option>
         </param>
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
-		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Cartella desc"/>		
+		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
 		<param name="width" type="text" default="590" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="300" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
@@ -63,7 +63,7 @@
 		<param name="heighti" type="text" default="300" label="Altezza Immagini" size="4" description="Altezza Immagini Desc" />		
 		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="LOADER COLOR" description="LOADER COLOR desc" />			
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />			
-		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Visualizza data e ora ultima modifica" >
+		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Data e Ora modifiche DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
