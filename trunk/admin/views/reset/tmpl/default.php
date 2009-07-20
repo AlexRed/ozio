@@ -6,7 +6,7 @@ JHTML::_('behavior.tooltip');
 		<tr>
 			<td valign="top">
 		<fieldset class="adminform">
-		<legend><?php echo JText::_( 'Reset XML Files' ); ?></legend>
+		<legend><?php echo JText::_( 'Reset XML' ); ?></legend>
 		<table class="adminlist">
 			<thead>
 				<tr>
@@ -106,13 +106,13 @@ JHTML::_('behavior.tooltip');
 		<tr>
 			<td width="20%" nowrap="nowrap"  >
 				<label for="title">
-					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Tild 3D Gallery Reset' );?>">						
-							<span style="font-size:16px; color:#004080; font-weight:bold;"><?php echo JText::_( 'Tild 3D Gallery' ); ?></span>	
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'Tilt 3D Gallery Reset' );?>">						
+							<span style="font-size:16px; color:#004080; font-weight:bold;"><?php echo JText::_( 'Tilt 3D Gallery' ); ?></span>	
 					</span>				
 				</label>
 			</td>
 			<th width="80" align="center">
-				<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'Svuota' ); ?>::<?php echo JText::_ ( 'Tild 3D Gallery' );?> <?php echo JText::_ ( 'XML' );?>">
+				<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'Svuota' ); ?>::<?php echo JText::_ ( 'Tilt 3D Gallery' );?> <?php echo JText::_ ( 'XML' );?>">
 					<a href="<?php echo $this->link5 ?>"> <img src="<?php echo $this->img?>" width="30"> </a>
 				</span>				
 			</td>
