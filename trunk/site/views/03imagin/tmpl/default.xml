@@ -23,7 +23,7 @@
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
           <option value="1">Right</option>
-          <option value="2">Centrato</option>
+          <option value="2">Centered</option>
         </param>		
 		<param name="rotatoralign" type="list" default="2" label="Allineamento contenuto" description="Allineamento contenuto desc" >
           <option value="0">Left</option>
