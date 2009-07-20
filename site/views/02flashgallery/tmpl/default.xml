@@ -55,7 +55,7 @@
 		<param name="next_pic_bg" type="colorpicker" class="color {hash:true,required:false}" default="#EEEEEE" size="10" label="FLASHGALLERY_next_pic_bg" description="FLASHGALLERY_next_pic_bg desc" />
 		<param name="next_pic_arrow" type="colorpicker" class="color {hash:true,required:false}" default="#999999" size="10" label="FLASHGALLERY_next_pic_arrow" description="FLASHGALLERY_next_pic_arrow desc" />
 		<param name="next_pic_bg_over" type="colorpicker" class="color {hash:true,required:false}" default="#BBBBBB" size="10" label="FLASHGALLERY_next_pic_bg_over" description="FLASHGALLERY_next_pic_bg_over desc" />
-		<param name="next_pic_arrow_over" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="FLASHGALLERY_next_pic_arrow_over" description="FLASHGALLERY_next_pic_arrow_over" />
+		<param name="next_pic_arrow_over" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="FLASHGALLERY_next_pic_arrow_over" description="FLASHGALLERY_NEXT_PIC_ARROW_OVER DESC" />
 		<param name="background_color" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="FLASHGALLERY_background_color" description="FLASHGALLERY_background_color desc" />
 		<param name="text_visible" type="list" default="1" label="FLASHGALLERY_text_visible" description="FLASHGALLERY_text_visible desc" >
           <option value="1">Yes</option>
@@ -67,7 +67,7 @@
           <option value="0">No</option>
         </param>		
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />			
-		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Visualizza data e ora ultima modifica" >
+		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="DATA E ORA MODIFICHE DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
