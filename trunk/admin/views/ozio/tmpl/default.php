@@ -91,7 +91,7 @@ JHTML::_('behavior.tooltip');
 <table class="admintable">
 	<tr>
 		<td align="left">
-<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b><br /><br />
+<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b> - <b><a href="http://code.google.com/p/oziogallery2/" target="blank">Ozio Gallery Google Code Project</a></b> - <b><a href="http://oziogallery.joomla.it/" target="blank">Ozio Gallery Site</a></b><br /><br />
 Credits:
 <br />
 <br />Flash is based on:
