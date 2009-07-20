@@ -63,7 +63,7 @@
         </param>		
 		<param name="indirizzo" type="text" default="" label="Indirizzo web" size="30" description="Indirizzo web desc" />		
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />			
-		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Visualizza data e ora ultima modifica" >
+		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Data e Ora modifiche DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
