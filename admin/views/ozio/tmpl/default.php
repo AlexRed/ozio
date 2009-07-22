@@ -124,15 +124,17 @@ JHTML::_('behavior.modal');
 					$img1		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-menu.png';					
 				?>
 					<tr>
-						<td width="40">
+						<td width="20">
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
 							<?php echo '<a href="'. $link .'"> '?>
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
+						</td>							
+						<td width="20">							
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Preview' ) .' - '. $row->name;?>::<?php echo JText::_( 'Anteprima Galleria' );?>">
 								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"							
-									<img style="margin-top:4px;" src="<?php echo $img1; ?>">
+									<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img1; ?>">
 							</span> 
 						</td>
                         <td width="90%">						
