@@ -1,32 +1,53 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 JHTML::_('behavior.tooltip');
+JHTML::_('behavior.modal');
 ?>
-	<table cellspacing="0" cellpadding="0" border="0" width="100%">
-		<tr>
-			<td valign="top">
-<table class="adminlist">
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
 	<tr>
-		<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT DESCRIPTION');?></td>
-		<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT VOTE');	?></td>
-	</tr>
-	<tr>
-		<td align="left" valign="top"><?php echo JText::_('COMPONENT INSTRUCTIONS');	?></td>
-		<td align="left" valign="top"><?php echo JText::_('COMPONENT LANGUAGE');	?></td>
-	</tr>
-</table>
+		<td valign="top">
+			<table class="adminlist">
+				<tr>
+					<td valign="top">
+						<div id="cpanel">
+							<table cellspacing="0" cellpadding="0" border="0" width="100%">
+								<tr>
+									<td valign="top">
+										<table class="adminlist">
+											<tr>
+												<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT DESCRIPTION');?></td>
+											</tr>
+											<tr>	
+												<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT VOTE');	?></td>
+											</tr>
+											<tr>
+												<td align="left" valign="top"><?php echo JText::_('COMPONENT INSTRUCTIONS');	?></td>
+											</tr>
+											<tr>
+												<td align="left" valign="top"><?php echo JText::_('COMPONENT LANGUAGE');	?></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>			
+					</td>
+					<td valign="top" width="50%" style="padding: 7px 0 0 5px">										
+						<?php
+							$title = JText::_( 'SYSTEM INFORMATION' );
+							echo $this->pane->startPane( 'stat-pane' );
+							echo $this->pane->startPanel( $title, 'System' );
+						?>
 
-<table class="admintable">
-	<tr>
-<h2><?php echo JText::_('SYSTEM INFORMATION');	?></h2>
-<?php echo JText::_('XML TEST1');	?>  <?php echo JText::_('XML TEST2');	?>
-<p><?php echo JText::_('MUST BE GREEN');	?></p>
 <table class="adminlist">
+	<?php echo JText::_('XML TEST1');	?>  
+	<?php echo JText::_('XML TEST2');	?>
+<p><?php echo JText::_('MUST BE GREEN');	?></p>
 	<thead>
 		<tr>
 			<th width="4%" class="title" align="center">#</th>
-			<th width="48%" class="title" align="center"><?php echo JText::_( 'CARTELLA' ); ?></th>
-			<th width="48%" class="title" align="center"><?php echo JText::_( 'PERMISSIONS' ); ?></th>
+			<th width="58%" class="title" align="center"><?php echo JText::_( 'CARTELLA' ); ?></th>
+			<th width="38%" class="title" align="center"><?php echo JText::_( 'PERMISSIONS' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -85,8 +106,100 @@ JHTML::_('behavior.tooltip');
 		</tr>			
 	</tbody>
 </table>
-	</tr>
-</table>
+				<?php
+				$title = JText::_( 'Gallerie Pubblicate' );
+				echo $this->pane->endPanel();
+				echo $this->pane->startPanel( $title, 'gallerie' );
+
+				?>	
+	<table class="adminlist">
+				<?php
+					$k = 0;
+					$n = count($this->pubblicate);
+					for ($i=0, $n; $i < $n; $i++) {
+					$row = $this->pubblicate[$i];
+					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
+					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
+					$img		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-config.png';
+					$img1		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-menu.png';					
+				?>
+					<tr>
+						<td width="40">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<?php echo '<a href="'. $link .'"> '?>
+								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
+							 </a> 
+							</span> 
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Preview' ) .' - '. $row->name;?>::<?php echo JText::_( 'Anteprima Galleria' );?>">
+								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"							
+									<img style="margin-top:4px;" src="<?php echo $img1; ?>">
+							</span> 
+						</td>
+                        <td width="90%">						
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span style="font-size:16px; padding: 0 0 0 5px; margin-top:-3px">
+								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
+								</a>
+							</span>	
+							</span>							
+						</td>
+					</tr>
+					<?php $k = 1 - $k; } ?>
+	</table>
+	
+				<?php
+				$title = JText::_( 'Gallerie Non Pubblicate' );
+				echo $this->pane->endPanel();
+				echo $this->pane->startPanel( $title, 'gallerie2' );
+
+				?>	
+	<table class="adminlist">
+				<?php
+					$k = 0;
+					$n = count($this->nonpubblicate);
+					for ($i=0, $n; $i < $n; $i++) {
+					$row = $this->nonpubblicate[$i];
+					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
+					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
+					$img		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-config.png';
+					$img1		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-menu.png';					
+				?>
+					<tr>
+						<td width="40">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<?php echo '<a href="'. $link .'"> '?>
+								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
+							 </a> 
+							</span> 
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Preview' ) .' - '. $row->name;?>::<?php echo JText::_( 'Anteprima Galleria' );?>">
+								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"							
+									<img style="margin-top:4px;" src="<?php echo $img1; ?>">
+							</span> 
+						</td>
+                        <td width="90%">						
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span style="font-size:16px; padding: 0 0 0 5px; margin-top:-3px">
+								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
+								</a>
+							</span>	
+							</span>							
+						</td>
+					</tr>
+					<?php $k = 1 - $k; } ?>
+	</table>	
+	
+	
+			<?php	
+				echo $this->pane->endPanel();
+				echo $this->pane->endPane();
+			?>
+
+
+			</td>
+		</tr>
+	</table>
+
+
 
 <table class="admintable">
 	<tr>
