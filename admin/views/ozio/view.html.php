@@ -18,7 +18,8 @@ class OzioViewOzio extends JView
 		$params 	= & JComponentHelper::getParams('com_oziogallery2');
 	
 		JToolBarHelper::title( JText::_( 'Ozio Gallery 2' ),'logo' );
-
+		$pubblicate		    = & $this->get( 'Pubblicate' );
+		$nonpubblicate		= & $this->get( 'Nonpubblicate' );		
 		$document->addStyleSheet('components/com_oziogallery2/css/default.css');
 
 
@@ -28,9 +29,9 @@ class OzioViewOzio extends JView
 		JSubMenuHelper::addEntry( JText::_( 'Reset XML' ), 'index.php?option=com_oziogallery2&amp;view=reset');			
 		JSubMenuHelper::addEntry( JText::_( 'F.A.Q.' ), 'index.php?option=com_oziogallery2&amp;view=faq');
 
-		$pathimage1   = JURI::root().'components/com_asso/images/film/medie/';		
-
-		$this->assignRef('pane'			, $pane);
+		$this->assignRef('pane'					, $pane);
+		$this->assignRef('pubblicate'			, $pubblicate);
+		$this->assignRef('nonpubblicate'		, $nonpubblicate);		
 
 		parent::display($tpl);
 
