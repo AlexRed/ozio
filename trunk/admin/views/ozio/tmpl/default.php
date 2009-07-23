@@ -17,11 +17,11 @@ JHTML::_('behavior.modal');
 											<tr>
 												<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT DESCRIPTION');?></td>
 											</tr>
-											<tr>	
-												<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT VOTE');	?></td>
-											</tr>
 											<tr>
 												<td align="left" valign="top"><?php echo JText::_('COMPONENT INSTRUCTIONS');	?></td>
+											</tr>											
+											<tr>	
+												<td align="left" width="50%" valign="top"><?php echo JText::_('COMPONENT VOTE');	?></td>
 											</tr>
 											<tr>
 												<td align="left" valign="top"><?php echo JText::_('COMPONENT LANGUAGE');	?></td>
@@ -103,6 +103,14 @@ JHTML::_('behavior.modal');
 			<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'imagin') ? 
 			'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 			'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
+		</tr>
+		</tr>	
+			<tr>
+			<td align="center">9</td>
+			<td align="center">plugins/content/ozio.php</td>
+			<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
+			'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
+			'<strong><font color="red">'. JText::_( 'Not Installed' ) .'</font></strong>'; ?></td>
 		</tr>			
 	</tbody>
 </table>
@@ -113,6 +121,10 @@ JHTML::_('behavior.modal');
 
 				?>	
 	<table class="adminlist">
+					<th></th>
+					<th></th>
+					<th><?php echo JText::_( 'Name' )?></th>
+					<th><?php echo JText::_( 'Plugin Code' )?></th>					
 				<?php
 					$k = 0;
 					$n = count($this->pubblicate);
@@ -120,6 +132,8 @@ JHTML::_('behavior.modal');
 					$row = $this->pubblicate[$i];
 					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
 					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
+					$pcode 		= $row->link .'&Itemid='. $row->id;
+					$pcode 		= str_replace( 'index.php?option=com_oziogallery2&view=', '', $pcode );
 					$img		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-config.png';
 					$img1		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-menu.png';					
 				?>
@@ -137,14 +151,21 @@ JHTML::_('behavior.modal');
 									<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img1; ?>">
 							</span> 
 						</td>
-                        <td width="90%">						
+                        <td width="50%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
-							<span style="font-size:16px; padding: 0 0 0 5px; margin-top:-3px">
+							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
 								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
 							</span>							
 						</td>
+                        <td width="49%">						
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Content Plugin Code' ) .' - '. $row->name;?>::<?php echo JText::_( 'Copia e incolla questo codice negli articoli' );?>">
+							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px;">
+								{oziogallery <?php echo $row->id; ?>}
+							</span>	
+							</span>							
+						</td>						
 					</tr>
 					<?php $k = 1 - $k; } ?>
 	</table>
@@ -174,7 +195,7 @@ JHTML::_('behavior.modal');
 						</td>
                         <td width="98%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
-							<span style="font-size:16px; padding: 0 0 0 5px; margin-top:-3px">
+							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
 								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
