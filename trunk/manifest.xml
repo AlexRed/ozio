@@ -35,7 +35,8 @@
 		<filename>controller.php</filename>
 		<folder>classes</folder>
 		<folder>css</folder>	
-		<folder>images</folder>	
+		<folder>images</folder>
+		<folder>models</folder>			
 		<folder>views</folder>			
 	</files>
 <languages>
