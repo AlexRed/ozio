@@ -1,9 +1,10 @@
+
 function doIframe(){
 	o = document.getElementsByTagName('iframe');
 	for(i=0;i<o.length;i++){
 		if (/\bautoHeight\b/.test(o[i].className)){
 			setHeight(o[i]);
-			addEvent(o[i],'load', doIframe);
+			addVambEve(o[i],'load', doIframe);
 		}
 	}
 }
@@ -16,7 +17,7 @@ function setHeight(e){
 	}
 }
 
-function addEvent(obj, evType, fn){
+function addVambEve(obj, evType, fn){
 	if(obj.addEventListener)
 	{
 	obj.addEventListener(evType, fn,false);
@@ -30,5 +31,5 @@ function addEvent(obj, evType, fn){
 }
 
 if (document.getElementById && document.createTextNode){
- addEvent(window,'load', doIframe);	
+ addVambEve(window,'load', doIframe);	
 }
