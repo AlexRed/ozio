@@ -2,7 +2,7 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 <name>Ozio Gallery 2</name>
-<creationDate>16/07/2009</creationDate>
+<creationDate>24/07/2009</creationDate>
 <author>Alexred</author>
 <copyright>(C) 2008</copyright>
 <authorEmail>info@joomla.it</authorEmail>
@@ -12,16 +12,16 @@
 <description>Ozio Gallery for Joomla! 1.5</description>
 <installfile>install.oziogallery2.php</installfile>
 <uninstallfile>uninstall.oziogallery2.php</uninstallfile>
-<files folder="site">
-	<filename>index.html</filename>
-	<filename>oziogallery2.php</filename>
-	<filename>controller.php</filename>
-	<folder>assets</folder>
-	<folder>elements</folder>
-	<folder>imagin</folder>
-	<folder>skin</folder>
-	<folder>views</folder>	
-</files>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>oziogallery2.php</filename>
+		<filename>controller.php</filename>
+		<folder>assets</folder>
+		<folder>elements</folder>
+		<folder>imagin</folder>
+		<folder>skin</folder>
+		<folder>views</folder>	
+	</files>
 <languages>
 		<language tag="en-GB">languages/site/en-GB.com_oziogallery2.ini</language>
 		<language tag="it-IT">languages/site/it-IT.com_oziogallery2.ini</language>
@@ -30,13 +30,16 @@
 	<menu img="components/com_oziogallery2/images/oziogallery2.png">Ozio Gallery 2</menu>
 	<menu link="option=com_oziogallery2">Ozio Gallery 2</menu>
 	<files folder="admin">
+		<filename>controller.php</filename>	
 		<filename>index.html</filename>
+		<filename>install.oziogallery2.php</filename>		
 		<filename>oziogallery2.php</filename>
-		<filename>controller.php</filename>
+		<filename>uninstall.oziogallery2.php</filename>		
 		<folder>classes</folder>
 		<folder>css</folder>	
 		<folder>images</folder>
-		<folder>models</folder>			
+		<folder>models</folder>
+		<folder>plugins</folder>		
 		<folder>views</folder>			
 	</files>
 <languages>
