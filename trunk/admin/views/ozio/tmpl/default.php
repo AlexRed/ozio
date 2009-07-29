@@ -47,13 +47,15 @@ JHTML::_('behavior.modal');
 					<th></th>
 					<th></th>
 					<th><?php echo JText::_( 'Name' )?></th>
-					<th><?php echo JText::_( 'Plugin Code' )?></th>					
+					<th><?php echo JText::_( 'Plugin Code' )?></th>						
+					<th><?php echo JText::_( 'Menu Group' )?></th>					
 				<?php
 					$k = 0;
 					$n = count($this->pubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->pubblicate[$i];
 					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
+					$link2 		= 'index.php?option=com_menus&task=view&menutype='. $row->menutype;					
 					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
 					$pcode 		= $row->link .'&Itemid='. $row->id;
 					$pcode 		= str_replace( 'index.php?option=com_oziogallery2&view=', '', $pcode );
@@ -74,18 +76,26 @@ JHTML::_('behavior.modal');
 									<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img1; ?>">
 							</span> 
 						</td>
-                        <td width="50%">						
+                        <td width="38%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Click to edit the menu item' );?>">
-							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
+							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px">
 								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
 							</span>							
 						</td>
-                        <td width="49%">						
+                        <td width="30%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Content Plugin Code' ) .' - '. $row->name;?>::<?php echo JText::_( 'Copy and paste this code in the articles' );?>">
 							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px;">
 								{oziogallery <?php echo $row->id; ?>}
+							</span>	
+							</span>							
+						</td>						
+                        <td width="34%">						
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->nomemenu;?>::<?php echo JText::_( 'Click to edit the menu group' );?>">
+							<span style="font-size:12px; padding: 0 0 0 5px; margin-top:-3px">
+								<?php echo '<a href="'. $link2 .'"> '  . htmlspecialchars($row->nomemenu, ENT_QUOTES, 'UTF-8'); ?>
+								</a>
 							</span>	
 							</span>							
 						</td>						
@@ -134,11 +144,9 @@ JHTML::_('behavior.modal');
 				echo $this->pane->endPane();
 			?>
 
-
 			</td>
 		</tr>
 	</table>
-	
 		<fieldset class="adminform">
 		<legend><?php echo JText::_( 'SYSTEM INFORMATION' ); ?></legend>	
 		<table class="adminlist">
