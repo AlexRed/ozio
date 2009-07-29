@@ -39,7 +39,7 @@ JHTML::_('behavior.modal');
 					</td>
 					<td valign="top" width="50%" style="padding: 7px 0 0 5px">										
 				<?php
-				$title = JText::_( 'Gallerie Pubblicate' );
+				$title = JText::_( 'GALLERIES PUBLISHED' );
 				echo $this->pane->startPane( 'stat-pane' );
 				echo $this->pane->startPanel( $title, 'gallerie' );
 				?>	
@@ -62,20 +62,20 @@ JHTML::_('behavior.modal');
 				?>
 					<tr>
 						<td width="20">
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Click to edit the menu item' );?>">
 							<?php echo '<a href="'. $link .'"> '?>
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
 						</td>							
 						<td width="20">							
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Preview' ) .' - '. $row->name;?>::<?php echo JText::_( 'Anteprima Galleria' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Preview' ) .' - '. $row->name;?>::<?php echo JText::_( 'Gallery preview' );?>">
 								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"							
 									<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img1; ?>">
 							</span> 
 						</td>
                         <td width="50%">						
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Click to edit the menu item' );?>">
 							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
 								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
@@ -83,7 +83,7 @@ JHTML::_('behavior.modal');
 							</span>							
 						</td>
                         <td width="49%">						
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Content Plugin Code' ) .' - '. $row->name;?>::<?php echo JText::_( 'Copia e incolla questo codice negli articoli' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Content Plugin Code' ) .' - '. $row->name;?>::<?php echo JText::_( 'Copy and paste this code in the articles' );?>">
 							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px;">
 								{oziogallery <?php echo $row->id; ?>}
 							</span>	
@@ -94,7 +94,7 @@ JHTML::_('behavior.modal');
 			</table>
 	
 				<?php
-				$title = JText::_( 'Gallerie Non Pubblicate' );
+				$title = JText::_( 'GALLERIES NOT PUBLISHED' );
 				echo $this->pane->endPanel();
 				echo $this->pane->startPanel( $title, 'gallerie2' );
 
@@ -110,14 +110,14 @@ JHTML::_('behavior.modal');
 				?>
 					<tr>
 						<td width="20">
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Click to edit the menu item' );?>">
 							<?php echo '<a href="'. $link .'"> '?>
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
 						</td>
                         <td width="98%">						
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Clicca per effetuare delle modifiche alla voce di menu' );?>">
+							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Edit' ) .' - '. $row->name;?>::<?php echo JText::_( 'Click to edit the menu item' );?>">
 							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
 								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
@@ -142,7 +142,6 @@ JHTML::_('behavior.modal');
 		<fieldset class="adminform">
 		<legend><?php echo JText::_( 'SYSTEM INFORMATION' ); ?></legend>	
 		<table class="adminlist">
-			<h1><?php echo JText::_( 'SYSTEM INFORMATION' ); ?></h1>
 			<?php echo JText::_('XML TEST1');	?>  
 			<?php echo JText::_('XML TEST2');	?>
 		<p><?php echo JText::_('MUST BE GREEN');	?></p>
@@ -223,7 +222,6 @@ JHTML::_('behavior.modal');
 		<table class="admintable">
 			<tr>
 				<td align="left">
-		<h1><?php echo JText::_( 'Credits' ); ?></h1>
 
 		<br />Flash is based on:
 		<br />- <a href="http://www.airtightinteractive.com/projects/tiltviewer/" target='blank'>TiltViewer</a> Design/Development by <a href="http://www.airtightinteractive.com" target='blank'>Airtight</a>, Sound Design by <a href="http://www.earganic.com/" target='blank'>Earganic Studios</a>, <a href="http://blog.deconcept.com/flashobject/" target='blank'>FlashObject</a> Javascript embed code by Geoff Stearns.
