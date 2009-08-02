@@ -86,9 +86,7 @@ JHTML::_('behavior.modal');
 						</td>
                         <td width="30%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'Content Plugin Code' ) .' - '. $row->name;?>::<?php echo JText::_( 'Copy and paste this code in the articles' );?>">
-							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px;">
-								{oziogallery <?php echo $row->id; ?>}
-							</span>	
+								<input class="text_area" type="text" size="30" value="{oziogallery <?php echo $row->id; ?>}" />
 							</span>							
 						</td>						
                         <td width="34%">						
