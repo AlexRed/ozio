@@ -66,13 +66,13 @@ function plgcontentloadozio( $galleriaozio )
 		$query = 'SELECT *'
 				. ' FROM #__menu'
 				. ' WHERE (link LIKE "index.php?option=com_oziogallery2&view=01tiltviewer" 
-						OR LIKE "index.php?option=com_oziogallery2&view=02flashgallery"
-						OR LIKE "index.php?option=com_oziogallery2&view=03imagin"
-						OR LIKE "index.php?option=com_oziogallery2&view=04carousel"
-						OR LIKE "index.php?option=com_oziogallery2&view=05imagerotator"
-						OR LIKE "index.php?option=com_oziogallery2&view=06accordion"	
-						OR LIKE "index.php?option=com_oziogallery2&view=07flickrslidershow"
-						OR LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"				
+						OR link LIKE "index.php?option=com_oziogallery2&view=02flashgallery"
+						OR link LIKE "index.php?option=com_oziogallery2&view=03imagin"
+						OR link LIKE "index.php?option=com_oziogallery2&view=04carousel"
+						OR link LIKE "index.php?option=com_oziogallery2&view=05imagerotator"
+						OR link LIKE "index.php?option=com_oziogallery2&view=06accordion"	
+						OR link LIKE "index.php?option=com_oziogallery2&view=07flickrslidershow"
+						OR link LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"				
 						)'
 				;				
 		$db->setQuery($query);
