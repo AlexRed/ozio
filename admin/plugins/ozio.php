@@ -65,7 +65,7 @@ function plgcontentloadozio( $galleriaozio )
 
 		$query = 'SELECT *'
 				. ' FROM #__menu'
-				. ' WHERE (link LIKE "index.php?option=com_oziogallery2&view=01tiltviewer" 
+				. ' WHERE (link LIKE "index.php?option=com_oziogallery2&view=01tilt3d" 
 						OR link LIKE "index.php?option=com_oziogallery2&view=02flashgallery"
 						OR link LIKE "index.php?option=com_oziogallery2&view=03imagin"
 						OR link LIKE "index.php?option=com_oziogallery2&view=04carousel"
