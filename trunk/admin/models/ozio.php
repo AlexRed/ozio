@@ -18,7 +18,7 @@ class OzioModelOzio extends JModel
 		$query = 'SELECT i.id, i.componentid, i.name, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
 				. ' FROM #__menu AS i'
 				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
-				. ' WHERE (i.link = "index.php?option=com_oziogallery2&view=01tiltviewer" 
+				. ' WHERE (i.link = "index.php?option=com_oziogallery2&view=01tilt3d" 
 						OR i.link = "index.php?option=com_oziogallery2&view=02flashgallery"
 						OR i.link = "index.php?option=com_oziogallery2&view=03imagin"
 						OR i.link = "index.php?option=com_oziogallery2&view=04carousel"
@@ -43,7 +43,7 @@ class OzioModelOzio extends JModel
 	
 		$query = 'SELECT id, componentid, name, link'
 				. ' FROM #__menu'
-				. ' WHERE (link = "index.php?option=com_oziogallery2&view=01tiltviewer" 
+				. ' WHERE (link = "index.php?option=com_oziogallery2&view=01tilt3d" 
 						OR link = "index.php?option=com_oziogallery2&view=02flashgallery"
 						OR link = "index.php?option=com_oziogallery2&view=03imagin"
 						OR link = "index.php?option=com_oziogallery2&view=04carousel"
