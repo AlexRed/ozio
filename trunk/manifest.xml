@@ -2,9 +2,9 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 <name>Ozio Gallery 2</name>
-<creationDate>24/07/2009</creationDate>
+<creationDate>10/08/2009</creationDate>
 <author>Alexred</author>
-<copyright>(C) 2008</copyright>
+<copyright>(C) 2008 - 2009</copyright>
 <authorEmail>info@joomla.it</authorEmail>
 <authorUrl>http://www.joomla.it</authorUrl>
 <version>2.1</version>
