@@ -19,7 +19,7 @@
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="colore" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Loader color" description="Loader color desc" />		
-		<param name="folder" type="text" default="images/oziogallery2/" label="Percorso Cartella" size="30" description="Percorso Cartella desc" />			
+		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="30" description="Percorso Cartella desc" />			
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
           <option value="1">Right</option>

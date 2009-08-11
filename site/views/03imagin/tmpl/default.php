@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	
 	<script language="JavaScript">
 		var imagin_scripts_path = "components/com_oziogallery2/imagin/scripts_ralcr/"; // a path relative to the html which embeds the swf
-		var imagin_photos_path = "../../../<?php echo $this->folder ?>"; // a path relative to "scripts_ralcr" parent		
+		var imagin_photos_path = "../../../<?php echo $this->folder ?>/"; // a path relative to "scripts_ralcr" parent		
 		var imagin_instance = "imagin_instance";
 		var imagin_swf_color = "<?php echo $this->colore ?>";
 		var imagin_swf_width = "<?php echo $this->larghezza ?>";
