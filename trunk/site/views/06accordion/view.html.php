@@ -26,7 +26,7 @@ class OzioGalleryView06Accordion extends JView
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
 		$fotoiniziale		= (int) $params->def('fotoiniziale');			
 		$indirizzo			= $params->def('indirizzo');
-		
+		$manualxmlname		= $params->def('manualxmlname', 'accordion');		
 
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -120,7 +120,7 @@ class OzioGalleryView06Accordion extends JView
 		{
 			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml';							
+			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/'. $manualxmlname .'.xml';							
 				break;
 	
 		}			
@@ -258,7 +258,7 @@ endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezzaimmagne :     '.$larghezzaimmagine  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezzaimmagine :     '.$altezzaimmagine  .'</pre>';	
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  indirizzo :     '.$indirizzo  .'</pre>';
-		
+	
 		if (is_writable(JPATH_SITE.DS . $folder)):
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '. JText::_( 'Writable' )  .'</pre>';
         else:
@@ -286,6 +286,7 @@ endif;
 		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);
+		$this->assignRef('manualxmlname' , 			$manualxmlname);		
 		
 		parent::display($tpl);
 	}
