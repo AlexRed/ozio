@@ -26,7 +26,8 @@
 		<param name="xml_moder" type="list" default="2" label="Metodo XML" description="Metodo XML desc imagerotator" >
           <option value="0">XML automatico</option>
           <option value="1">XML manuale</option>
-        </param>			
+        </param>
+		<param name="manualxmlname" type="text" default="imagerotator" label="Nome XML manuale" size="30" description="Nome XML manuale desc" />		
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="PERCORSO CARTELLA DESC"/>		
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;XML Settings (reset XML to apply)&lt;/div&gt;" label="" description="" />	
 		<param name="ordinamento" type="list" default="3" label="Ordine immagini" description="Ordine immagini desc" >
