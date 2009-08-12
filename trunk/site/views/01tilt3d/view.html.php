@@ -37,7 +37,8 @@ class OzioGalleryView01Tilt3d extends JView
 		$sort 				= (int) $params->def('sort', 1);		
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
-		$debug 				= (int) $params->def('debug');			
+		$debug 				= (int) $params->def('debug');	
+		$manualxmlname		= $params->def('manualxmlname', 'tiltviewer');		
 		
 		$framecolor 		= str_replace( '#', '', $framecolor );
 		$bkgndretro 		= str_replace( '#', '', $bkgndretro );
@@ -280,6 +281,7 @@ elseif  ( $xml_mode == 0 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML automatico :   ' .JText::_('ATTIVO') .'</pre>';
 elseif  ( $xml_mode == 1 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML manuale :   ' .JText::_('ATTIVO') .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  manualxmlname :     '.$manualxmlname  .'</pre>';
 endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';		
@@ -339,7 +341,7 @@ endif;
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);		
-		
+		$this->assignRef('manualxmlname' , 			$manualxmlname);		
 		parent::display($tpl);
 	}
 }

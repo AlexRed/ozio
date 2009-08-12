@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php if  	  ( $this->xml_mode == 0 ) : ?>
 					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.xml"); 
 <?php else: ?>
-					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/manual-xml/tiltviewer.xml");
+					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/manual-xml/<?php echo $this->manualxmlname ?>.xml");
 <?php endif; ?>
 					fo.addVariable("maxJPGSize","<?php echo $this->maximagesize ?>");
 					//GENERAL OPTIONS
