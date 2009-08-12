@@ -31,6 +31,7 @@ class OzioGalleryView05ImageRotator extends JView
 		$modifiche 		= (int) $params->def('modifiche', 0);
 		$debug 			= (int) $params->def('debug');		
 		$ordinamento 	= (int) $params->def('ordinamento');
+		$manualxmlname	= $params->def('manualxmlname', 'imagerotator');		
 		
 		$screencolor = str_replace( '#', '', $screencolor );
 		
@@ -271,6 +272,7 @@ elseif  ( $xml_moder == 0 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML automatico :   ' .JText::_('ATTIVO') .'</pre>';
 elseif  ( $xml_moder == 1 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML manuale :   ' .JText::_('ATTIVO') .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  manualxmlname :     '.$manualxmlname  .'</pre>';
 endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';		
@@ -325,7 +327,8 @@ endif;
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);		
+		$this->assignRef('oziodebug' , 				$oziodebug);
+		$this->assignRef('manualxmlname' , 			$manualxmlname);		
 		
 		parent::display($tpl);
 	}
