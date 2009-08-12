@@ -27,7 +27,8 @@ class OzioGalleryView04Carousel extends JView
 		$ordinamento 		= (int) $params->def('ordinamento');		
 		$speed				= $params->def('speed');
 		$titoli				= $params->def('titoli');
-		$titolo				= (int) $params->def('titolo');		
+		$titolo				= (int) $params->def('titolo');
+		$manualxmlname		= $params->def('manualxmlname', 'carousel');		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -158,7 +159,7 @@ class OzioGalleryView04Carousel extends JView
 		{
 			case '0': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/manual-xml/carousel.xml';		
+			case '1': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/manual-xml/'. $manualxmlname .'.xml';		
 				break;
 			
 		}			
@@ -372,7 +373,8 @@ endif;
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);	
+		$this->assignRef('oziodebug' , 				$oziodebug);
+		$this->assignRef('manualxmlname' , 			$manualxmlname);		
 
 	
 		parent::display($tpl);
