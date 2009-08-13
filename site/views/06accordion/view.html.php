@@ -26,7 +26,7 @@ class OzioGalleryView06Accordion extends JView
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
 		$fotoiniziale		= (int) $params->def('fotoiniziale');			
 		$indirizzo			= $params->def('indirizzo');
-		$manualxmlname		= $params->def('manualxmlname', 'accordion');		
+		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml');		
 
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -120,7 +120,7 @@ class OzioGalleryView06Accordion extends JView
 		{
 			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
 				break;
-			case '1': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/manual-xml/'. $manualxmlname .'.xml';							
+			case '1': $xml_moder	= JURI::root(). $manualxmlname;							
 				break;
 	
 		}			
