@@ -31,7 +31,7 @@ class OzioGalleryView05ImageRotator extends JView
 		$modifiche 		= (int) $params->def('modifiche', 0);
 		$debug 			= (int) $params->def('debug');		
 		$ordinamento 	= (int) $params->def('ordinamento');
-		$manualxmlname	= $params->def('manualxmlname', 'imagerotator');		
+		$manualxmlname	= $params->def('manualxmlname', 'components/com_oziogallery2/skin/imagerotator/manual-xml/imagerotator.xml');		
 		
 		$screencolor = str_replace( '#', '', $screencolor );
 		

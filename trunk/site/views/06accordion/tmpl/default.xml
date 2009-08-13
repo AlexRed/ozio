@@ -22,7 +22,7 @@
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
-			<param name="manualxmlname" type="text" default="accordion" label="Nome XML manuale" size="30" description="Nome XML manuale desc" />		
+			<param name="manualxmlname" type="text" default="components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml" label="Path XML manuale" size="60" description="Path XML manuale desc" />		
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
 		<param name="width" type="text" default="590" label="Larghezza" size="4" description="Larghezza Desc" />
