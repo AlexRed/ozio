@@ -3,19 +3,19 @@
 <photo>
 <title>Image 1</title>
 <creator></creator>
-<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/info.png</location>
+<location>http://www.exemple.xx/images/oziogallery2/img1.jpg</location>
 <info></info>
 </photo>
 <photo>
 <title>Image 2</title>
 <creator></creator>
-<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/IMG_4480.jpg</location>
+<location>http://www.exemple.xx/images/oziogallery2/img2.jpg</location>
 <info></info>
 </photo>
 <photo>
 <title>Image 3</title>
 <creator></creator>
-<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/IMG_4480.jpg</location>
+<location>http://www.exemple.xx/images/oziogallery2/img3.jpg</location>
 <info></info>
 </photo>
 </trackList>
