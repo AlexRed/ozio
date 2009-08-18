@@ -1,24 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<tiltviewergallery>
-	<photos>
-
-		<track>
-			<title>Image 1</title>
-			<location>http://www.exemple.xx/images/oziogallery2/img.jpg</location>
-			<info>http://www.joomla.it</info>
-		</track>
-
-		<track>
-			<title>Image 2</title>
-			<location>http://www.exemple.xx/images/oziogallery2/img.jpg</location>
-			<info>http://www.joomla.it</info>
-		</track>
-
-		<track>
-			<title>Image 3</title>
-			<location>http://www.exemple.xx/images/oziogallery2/img.jpg</location>
-			<info>http://www.joomla.it</info>
-		</track>
-
-	</photos>
-</tiltviewergallery>
+﻿<playlist version="1.0" encoding="UTF-8">
+<trackList>
+<photo>
+<title>Image 1</title>
+<creator></creator>
+<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/info.png</location>
+<info></info>
+</photo>
+<photo>
+<title>Image 2</title>
+<creator></creator>
+<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/IMG_4480.jpg</location>
+<info></info>
+</photo>
+<photo>
+<title>Image 3</title>
+<creator></creator>
+<location>http://localhost/Joomla_1.5.14_ita-Stable/images/oziogallery2/IMG_4480.jpg</location>
+<info></info>
+</photo>
+</trackList>
+</playlist>
