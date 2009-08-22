@@ -54,7 +54,7 @@ function plgcontentloadozio( $galleriaozio )
 
 	$db =& JFactory::getDBO();
 
-		$query = 'SELECT published, link, id, access'
+		$query = 'SELECT published, link, id, access, params'
 				. ' FROM #__menu'
 				. ' WHERE id='.(int) $galleriaozio
 				;
@@ -84,12 +84,13 @@ function plgcontentloadozio( $galleriaozio )
         if ($cp->id = $galleriaozio) :
 		
 				@$gall 	= JURI::root(). $codice->link .'&Itemid='. $galleriaozio;
+				$parametar = new JParameter($codice->params); // alexred
 
 			if (@$codice->published != 0 && @$codice->access != 1 && @$codice->access != 2) :
 				$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/autoHeight.js');			
 				$contents = '';
                 $contents .='<div class="clr"></div>';				
-				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="100%" frameborder="0" scrolling="no" class="autoHeight"></iframe>';				
+				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" frameborder="0" scrolling="no" class="autoHeight"></iframe>';				
 				$contents .= '</iframe>';
 				$contents .='<div class="clr"></div>';				
 
