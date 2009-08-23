@@ -9,7 +9,7 @@
 	play_sound_till_next_is_found="true"
 	repeat_sound="false"
 	rss=""
-	css="components/com_oziogallery2/zimagin/styles.css"
+	css="components/com_oziogallery2/imagin/styles.css"
 	predefined_menu="FullScreen, Slideshow View, Normal View, Sound, Back"
 	custom_menu=""
 	viewer="slideshow view"
