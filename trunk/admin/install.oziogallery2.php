@@ -39,6 +39,10 @@ function com_install()
 	$folder[0][1]	= 	JPATH_ROOT . DS .  $folder[0][0];
 	$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;
 	$folder[0][2]	= 	JPATH_ROOT . DS .  $folder[0][0];
+	$folder[0][0]	=	'modules' . DS . 'mod_ozio2' . DS ;
+	$folder[0][3]	= 	JPATH_ROOT . DS .  $folder[0][0];
+	$folder[0][0]	=	'modules' . DS . 'mod_ozio2' . DS . 'tmpl' . DS ;
+	$folder[0][4]	= 	JPATH_ROOT . DS .  $folder[0][0];		
 	$file 		= "index.html";
 	$file2 		= "_preferences.xml";
 	$file3 		= "info.png";	
@@ -73,6 +77,29 @@ function com_install()
 						   .' <span style="color:#009933">exists!</span></b></p>';
 			$error[] = 0;
 		}
+		
+		if (!JFolder::exists( $value[3]))
+		{
+			if (JFolder::create( $value[3], 0755 ) && JFolder::create( $value[4], 0755 ))
+			{
+
+				$message .= '<p><b><span style="color:#009933">Folder</span> ' . $value[0] 
+						   .' <span style="color:#009933">created!</span></b></p>';
+				$error[] = 0;
+			}	 
+			else
+			{
+				$message .= '<p><b><span style="color:#CC0033">Folder</span> ' . $value[0]
+						   .' <span style="color:#CC0033">creation failed!</span></b> Please create it manually.</p>';
+				$error[] = 1;
+			}
+		}
+		else//Folder exist
+		{
+			$message .= '<p><b><span style="color:#009933">Folder</span> ' . $value[0] 
+						   .' <span style="color:#009933">exists!</span></b></p>';
+			$error[] = 0;
+		}		
 	}
 
 	jimport('joomla.filesystem.file');
@@ -98,7 +125,39 @@ function com_install()
 	}	
 	
     deleteDir(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'plugins');	
+
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'mod_ozio2.xm', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'mod_ozio2.xml')){
+		echo JText::_('<b>Failed</b> to copy modules xml file<br />');
+	}
+
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'mod_ozio2.php', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'mod_ozio2.php')){
+		echo JText::_('<b>Failed</b> to copy modules php file<br />');
+	}
+
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'helper.php', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'helper.php')){
+		echo JText::_('<b>Failed</b> to copy helper php file<br />');
+	}	
+
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'index.html', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'index.html')){
+		echo JText::_('<b>Failed</b> to copy index.html file<br />');
+	}
+
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'index.html', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'index.html')){
+		echo JText::_('<b>Failed</b> to copy index.html file<br />');
+	}	
+	
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'tmpl'.DS.'default.php', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'tmpl'.DS.'default.php')){
+		echo JText::_('<b>Failed</b> to copy default.php file<br />');
+	}		
+	
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules'.DS.'tmpl'.DS.'index.html', JPATH_SITE.DS.'modules'.DS.'mod_ozio2'.DS.'tmpl'.DS.'index.html')){
+		echo JText::_('<b>Failed</b> to copy index.html file<br />');
+	}		
+	
+	
+    deleteDir(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'modules');	
 }
+
 {
 ?>
 <div class="header">Congratulations! Joomla Ozio Gallery Component has been installed successfully</div>
