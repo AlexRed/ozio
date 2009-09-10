@@ -10,7 +10,7 @@
 		<description>Ozio mediagallery skin Desc</description>
 	<params addpath="/components/com_oziogallery2/elements">
 		<param name="" type="scriptloader" default="" label="" description="" />
-		<param name="Reset XML" type="oziotext1" default="" label="" description="Reset XML Desc" />		
+		<param name="Reset XML" type="oziotext5" default="" label="" description="Reset XML Desc" />		
 			<param name="introtext" type="textarea" default="" label="Intro" rows="5" cols="30" description="Intro desc"/>
 			<param name="showintrotext" type="radio" default="0" label="Mostra intro" description="Mostra intro desc">
 				<option value="0">Hide</option>
