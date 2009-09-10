@@ -138,7 +138,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 			<td width="80%" nowrap="nowrap">
 			<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'mediagallery Gallery' ); ?>::<?php echo JText::_ ( 'XML Files' );?>">
-				<?php echo $this->tilt; ?>	
+				<?php echo $this->mediagallery; ?>	
             </span>				
 			</td>			
 			
