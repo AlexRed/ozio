@@ -268,5 +268,57 @@ class ozio_helper
 				$mainframe->redirect( $link, $message);
 		}			
 
+		function mediagallery($dir)
+		{
+				global $mainframe;
+		    	$VAMBpathAssoluto = JPATH_SITE;
+				$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+				$dir = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/mediagallery';
+					if($objs = @glob($dir.'/xml/*'))
+			{
+		        foreach($objs as $obj) 
+				{
+					@is_dir($obj)? Svuota($obj) : @unlink($obj);
+				}
+			}
+				@rmdir($dir);
+				//copio file index.html nella cartella temporanea
+				$file 	= 'index.html';	
+				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
+				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'mediagallery' . DS . 'xml' . DS;	
+				@copy($source. DS .$file,$dest. DS .$file);
+		 
+				$message = JText::_('Cartella XML').' mediagallery '.JText::_('svuotata correttamente');
+				$link = 'index.php?option=com_oziogallery2&view=reset';
+				$mainframe->redirect( $link, $message);
+		}			
+
+		function resetmediagallery($dir)
+		{
+				global $mainframe;
+		    	$VAMBpathAssoluto = JPATH_SITE;
+				$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+				$dir = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/mediagallery';
+					if($objs = @glob($dir.'/xml/*'))
+			{
+		        foreach($objs as $obj) 
+				{
+					@is_dir($obj)? Svuota($obj) : @unlink($obj);
+				}
+			}
+				@rmdir($dir);
+				//copio file index.html nella cartella temporanea
+				$file 	= 'index.html';	
+				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';	
+				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'skin' . DS . 'mediagallery' . DS . 'xml' . DS;	
+				@copy($source. DS .$file,$dest. DS .$file);
+		 
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';
+				$message .= JText::_('Cartella XML').' mediagallery '.JText::_('svuotata correttamente');
+				$message .= '</p>';
+				$link = 'index.php?option=com_oziogallery2&view=resetel&tmpl=component';
+				$mainframe->redirect( $link, $message);
+		}		
+		
 }
 ?>

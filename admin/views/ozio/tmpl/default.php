@@ -219,7 +219,15 @@ JHTML::_('behavior.modal');
 					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
 					'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'Not Installed' ) .'</font></strong>'; ?></td>
-				</tr>			
+				</tr>
+				</tr>		
+					<tr>
+					<td align="center">10</td>
+					<td align="center">components/com_oziogallery2/skin/mediagallery/xml</td>
+					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'mediagallery'.DS.'xml') ? 
+					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
+					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
+				</tr>	
 			</tbody>
 		</table>
 		</fieldset>
