@@ -29,6 +29,7 @@ class OzioViewReset extends JView
 		$link3	= 'index.php?option=com_oziogallery2&task=flashgallery';
 		$link4	= 'index.php?option=com_oziogallery2&task=imagerotator';
 		$link5	= 'index.php?option=com_oziogallery2&task=tilt';
+		$link6	= 'index.php?option=com_oziogallery2&task=mediagallery';
 		
         $img = JURI::root().'administrator/images/delete_f2.png';
 		
@@ -39,6 +40,7 @@ class OzioViewReset extends JView
 		$Directory3 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/flashgallery/xml/';
 		$Directory4 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/imagerotator/xml/';		
 		$Directory5 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/tiltviewer/xml/';
+		$Directory6 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/mediagallery/xml/';
 
 
       if(is_dir($Directory1))
@@ -140,6 +142,26 @@ class OzioViewReset extends JView
       {
           $tilt .= $Directory5 . JText::_ ( 'La directory non esiste' );
       }		  
+	  
+	        if(is_dir($Directory6))
+      {
+          $dir = opendir($Directory6);
+          $mediagallery = '<pre>';
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory6 ."/". $file);
+              $mediagallery .= "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          $mediagallery .= "</pre>";
+      }
+      else
+      {
+          $mediagallery .= $Directory6 . JText::_ ( 'La directory non esiste' );
+      }	
 
 		$this->assignRef('img'					, $img);
 		$this->assignRef('link1'				, $link1);
@@ -147,11 +169,13 @@ class OzioViewReset extends JView
 		$this->assignRef('link3'				, $link3);
 		$this->assignRef('link4'				, $link4);
 		$this->assignRef('link5'				, $link5);
+		$this->assignRef('link6'				, $link6);
 		$this->assignRef('accordion'			, $accordion);	
 		$this->assignRef('carousel'				, $carousel);
 		$this->assignRef('flashgallery'			, $flashgallery);
 		$this->assignRef('imagerotator'			, $imagerotator);
-		$this->assignRef('tilt'					, $tilt);		
+		$this->assignRef('tilt'					, $tilt);	
+		$this->assignRef('mediagallery'			, $mediagallery);	
 
 		parent::display($tpl);
 

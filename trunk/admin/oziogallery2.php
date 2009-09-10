@@ -28,11 +28,13 @@ $controller->redirect();
 			case 'flashgallery'			: ozio_helper::flashgallery(); 			break;
 			case 'imagerotator'			: ozio_helper::imagerotator(); 			break;			
 			case 'tilt'					: ozio_helper::tilt(); 					break;
+			case 'mediagallery'			: ozio_helper::mediagallery(); 			break;
 			case 'resetImg' 			: ozio_helper::resetImg(); 				break;
 			case 'resetAcc' 			: ozio_helper::resetAcc(); 				break;
 			case 'resetCar' 			: ozio_helper::resetCar(); 				break;
 			case 'resetFLG' 			: ozio_helper::resetFLG(); 				break;
-			case 'resetTilt' 			: ozio_helper::resetTilt(); 			break;			
+			case 'resetTilt' 			: ozio_helper::resetTilt(); 			break;
+			case 'resetmediagallery' 	: ozio_helper::resetmediagallery(); 	break;			
 		}
 
 ?>
