@@ -25,6 +25,7 @@ class OzioGalleryView01Tilt3d extends JView
 		$columns 			= (int) $params->def('columns', 5);	
 		$rows 				= (int) $params->def('rows', 5);			
 		$downloads 			= (int) $params->def('downloads', 0);
+		$flipbutton 		= (int) $params->def('flipbutton', 1);
 		$downloadtxt		= $params->def('downloadtxt', 'Download');		
 		$retrotext			= $params->def('retrotext');
 		$flickr 			= (int) $params->def('flickr', 0);
@@ -67,6 +68,13 @@ class OzioGalleryView01Tilt3d extends JView
 			case '0': $download		= 'false'; 		break;
 			case '1': $download		= 'true';		break;
 			default:  $download		= 'true'; 		break;				
+		}
+		
+		switch ($params->get( 'flipbutton' ))
+		{
+			case '0': $flipbutton		= 'false'; 		break;
+			case '1': $flipbutton		= 'true';		break;
+			default:  $flipbutton		= 'false'; 		break;				
 		}
 		
 		switch ($params->get( 'sort' ))
@@ -289,6 +297,7 @@ endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  rows :   ' .$rows .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  downloads :   ' .$downloads  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  download :   ' .$download  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  flipbutton :   ' .$flipbutton  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  downloadtxt :   ' .$downloadtxt  .'</pre>';		
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  maximagesize :   ' .$maximagesize  .'</pre>';			
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  framecolor :     #'.$framecolor  .'</pre>';
@@ -322,7 +331,8 @@ endif;
 		$this->assignRef('columns' , 				$columns);
 		$this->assignRef('rows' , 					$rows);		
 		$this->assignRef('downloads' , 				$downloads);
-		$this->assignRef('download' , 				$download);			
+		$this->assignRef('download' , 				$download);	
+		$this->assignRef('flipbutton' , 			$flipbutton);			
 		$this->assignRef('downloadtxt' , 			$downloadtxt);			
 
 		$this->assignRef('xml_mode' , 				$xml_mode);

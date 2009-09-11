@@ -49,7 +49,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					fo.addVariable("height","<?php echo $this->altezza ?>");					
 					fo.addVariable("columns", "<?php echo $this->columns ?>");
 					fo.addVariable("rows", "<?php echo $this->rows ?>");
-					fo.addVariable("showFlipButton", "true");
+					fo.addVariable("showFlipButton", "<?php echo $this->flipbutton ?>");
 					fo.addVariable("showLinkButton", "<?php echo $this->download ?>");
 					fo.addVariable("linkLabel", "<?php echo $this->downloadtxt ?>");
 					fo.addVariable("frameColor", "0x<?php echo $this->framecolor ?>");

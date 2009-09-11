@@ -51,7 +51,7 @@
           <option value="3">Per Data - Prima i meno recenti</option>	
           <option value="4">Casuale</option>		  
         </param>
-		<param name="retrotext" type="textarea" default="Ozio Gallery - Componente Joomla! by www.joomla.it" label="Testo immagini" rows="5" cols="30" description="Testo immagini desc"/>
+		<param name="retrotext" type="textarea" default="Ozio Gallery - Joomla! extension by www.joomla.it" label="Testo immagini" rows="5" cols="30" description="Testo immagini desc"/>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Tilt Viewer Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
@@ -77,7 +77,11 @@
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
-		<param name="downloadtxt" type="text" default="Download" label="DOWNLOADTXT" size="25" description="DOWNLOADTXT DESC" />		
+		<param name="downloadtxt" type="text" default="Download" label="DOWNLOADTXT" size="25" description="DOWNLOADTXT DESC" />
+		<param name="flipbutton" type="radio" default="1" label="Show Flip Button" description="SHOW FLIP BUTTON DESC" >
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </param>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />		
 		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Data e Ora modifiche desc" >
           <option value="0">No</option>
