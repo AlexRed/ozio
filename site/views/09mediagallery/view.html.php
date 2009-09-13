@@ -418,7 +418,7 @@ class OzioGalleryView09mediagallery extends JView
 					{ 
 							if($file != '.' && $file2 != '..') 
 						{
-								if (strpos($file, $thumb_sufix) === false) {
+								if (strpos($file2, $thumb_sufix) === false) {
 									if(is_file($path2 . $file2) && preg_match('/\.(jpg|png|gif|flv|mp3|swf|txt)$/i',$file2)) 
 								{
 									if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) 
