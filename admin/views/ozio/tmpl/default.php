@@ -54,7 +54,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->pubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->pubblicate[$i];
-					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=edit&cid[]='. $row->id;
 					$link2 		= 'index.php?option=com_menus&task=view&menutype='. $row->menutype;					
 					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
 					$pcode 		= $row->link .'&Itemid='. $row->id;
