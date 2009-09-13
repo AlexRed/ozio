@@ -24,7 +24,8 @@ class OzioGalleryView09mediagallery extends JView
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
-		$manualxmlname		= $params->def('manualxmlname', 'mediagallery');		
+		$manualxmlname		= $params->def('manualxmlname', 'mediagallery');
+		$primagalleria 		= $params->def('primagalleria');		
 		
 
 		
