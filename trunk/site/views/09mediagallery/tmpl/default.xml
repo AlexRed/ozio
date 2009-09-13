@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="mediagallery Skin">
+	<layout title="Mediagallery Skin">
 		<message>
-			<![CDATA[Ozio mediagallery skin tip]]>
+			<![CDATA[Ozio Mediagallery skin tip]]>
 		</message>
 	</layout>
 	<state>
@@ -25,6 +25,7 @@
         </param>
 		<param name="manualxmlname" type="text" default="components/com_oziogallery2/skin/mediagallery/manual-xml/mediagallery.xml" label="Path XML manuale" size="60" description="Path XML manuale desc" />			
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
+		<param name="primagalleria" type="text" default="Ozio Gallery2" label="First gallery name" size="40" description="First gallery name desc" />	
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;XML Settings (reset XML to apply)&lt;/div&gt;" label="" description="" />	
 		<param name="ordinamento" type="list" default="3" label="Ordine immagini" description="Ordine immagini desc" >
