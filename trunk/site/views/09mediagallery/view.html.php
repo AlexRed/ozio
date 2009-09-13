@@ -16,8 +16,7 @@ class OzioGalleryView09mediagallery extends JView
 		
 		$larghezza 			= $params->def('width', 640);
 		$altezza 			= $params->def('height', 480);	
-		$framecolor			= $params->def('framecolor');
-		$primagalleria		= $params->def('primagalleria');			
+		$showtooltips		= $params->def('showtooltips', 1);			
 		$ordinamento 		= (int) $params->def('ordinamento');
 		$columns 			= (int) $params->def('columns', 3);	
 		$rows 				= (int) $params->def('rows', 3);			
@@ -27,7 +26,7 @@ class OzioGalleryView09mediagallery extends JView
 		$debug 				= (int) $params->def('debug');	
 		$manualxmlname		= $params->def('manualxmlname', 'mediagallery');		
 		
-		$framecolor 		= str_replace( '#', '', $framecolor );
+
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -52,7 +51,13 @@ class OzioGalleryView09mediagallery extends JView
 			case '1': $sort		= 'relevance';		break;
 			default:  $sort		= 'relevance'; 		break;				
 		}
-
+		
+		switch ($params->get( 'showtooltips' ))
+		{
+			case '0': $showtooltips		= 'false'; 		break;
+			case '1': $showtooltips		= 'true';		break;
+			default:  $showtooltips		= 'true'; 		break;				
+		}
 
 /*
 		switch ($params->get( 'ordinamento' ))
@@ -248,7 +253,7 @@ class OzioGalleryView09mediagallery extends JView
 			scrollbarBgColor="000000"
 			scrollbarOpacity="100"
 			scrollbarBgOpacity="100"
-			showTooltips="true"
+			showTooltips="'.$showtooltips.'"
 			tooltipSize="10"
 			tooltipColor="999999"
 			tooltipStroke="0"
