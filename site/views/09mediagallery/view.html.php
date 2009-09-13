@@ -19,8 +19,8 @@ class OzioGalleryView09mediagallery extends JView
 		$framecolor			= $params->def('framecolor');
 		$primagalleria		= $params->def('primagalleria');			
 		$ordinamento 		= (int) $params->def('ordinamento');
-		$columns 			= (int) $params->def('columns', 5);	
-		$rows 				= (int) $params->def('rows', 5);			
+		$columns 			= (int) $params->def('columns', 3);	
+		$rows 				= (int) $params->def('rows', 3);			
 		$xml_mode 			= (int) $params->def('xml_mode', 0);		
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
@@ -290,8 +290,8 @@ class OzioGalleryView09mediagallery extends JView
 			tooltipLink="external link"
 
 			FLASH_NIFTIES_COMMENT2="---------Styles for the gallery component-----"
-			rows="3"
-			cols="3"
+			rows="'.$columns.'"
+			cols="'.$rows.'"
 			galleryMargin="45"
 			thumb_width="80"
 			thumb_height="80"
