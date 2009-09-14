@@ -25,7 +25,8 @@ class OzioGalleryView09mediagallery extends JView
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
 		$manualxmlname		= $params->def('manualxmlname', 'mediagallery');
-		$primagalleria 		= $params->def('primagalleria');		
+		$primagalleria 		= $params->def('primagalleria');
+		$titologalleria 	= $params->def('page_title');			
 		
 
 		
@@ -206,7 +207,7 @@ class OzioGalleryView09mediagallery extends JView
 			
 
 			$string = '<?xml version="1.0" encoding="iso-8859-1"?>
-			<folder name="Ozio Gallery2" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
+			<folder name="'.$titologalleria.'" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
 			autoSize="true"
 			loaderColor="FFFFFF"
 			loaderOpacity="100"
