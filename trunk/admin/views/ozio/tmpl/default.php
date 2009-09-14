@@ -250,6 +250,8 @@ JHTML::_('behavior.modal');
 		- <a href="http://www.flshow.net/" target='blank'>Carousel</a> - Design/Development by <a href="http://www.dsi.uniroma1.it/~caminiti/" target='blank'>Saverio Caminiti</a>
 		<br />
 		- <a href="http://imagin.ro" target='blank'>Imagin</a> - Design/Development by <a href="http://ralcr.com/" target='blank'>Baluta Cristian</a>
+		<br />
+		- <a href="http://www.flashnifties.com" target='blank'>Mediagallery</a> - Design/Development by <a href="http://www.flashnifties.com" target='blank'>FlashNifties.com</a>
 		<br /><br />
 		Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 		Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
