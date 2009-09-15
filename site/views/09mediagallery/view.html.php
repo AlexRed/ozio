@@ -26,8 +26,8 @@ class OzioGalleryView09mediagallery extends JView
 		$debug 				= (int) $params->def('debug');	
 		$manualxmlname		= $params->def('manualxmlname', 'mediagallery');
 		$primagalleria 		= $params->def('primagalleria');
-		$titologalleria 	= $params->def('page_title');			
-		
+		$titologalleria 	= $params->def('page_title');		
+		$titolo				= (int) $params->def('titolo');
 
 		
 		
@@ -59,8 +59,14 @@ class OzioGalleryView09mediagallery extends JView
 			case '0': $showtooltips		= 'false'; 		break;
 			case '1': $showtooltips		= 'true';		break;
 			default:  $showtooltips		= 'true'; 		break;				
+		}	
+		
+		switch ($params->get( 'titolo' ))
+		{
+			case '0': $titolo		= '0'; 		break;
+			case '1': $titolo		= '1';		break;
+			default:  $titolo		= '1'; 		break;				
 		}
-
 /*
 		switch ($params->get( 'ordinamento' ))
 		{
@@ -468,7 +474,11 @@ class OzioGalleryView09mediagallery extends JView
 					}
 					$title = preg_replace('/\.(jpg|png|gif)$/i','',$f[1]);
 					if(strtolower(substr($f[1], -3)) == "jpg" || strtolower(substr($file, -3)) == "gif" || strtolower(substr($file, -3)) == "png"){
-					$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $dir_images .'/'. $img . '" />';
+					if( $titolo != 0 ) :	
+						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $dir_images .'/'. $img . '" />';
+						else:
+						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="" link="" link_title="" />';			
+						endif;
 					} elseif(strtolower(substr($f[1], -3)) == "flv" || strtolower(substr($file, -3)) == "swf"){
 					$string .= '<video file="' . $dir_images .'/'. $img .'" name="' . $title . '"  />';					
 					} elseif(strtolower(substr($f[1], -3)) == "mp3"){
