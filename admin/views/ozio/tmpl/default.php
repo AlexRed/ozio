@@ -113,7 +113,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->nonpubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->nonpubblicate[$i];
-					$link 		= 'index.php?option=com_menus&menutype=mainmenu&task=edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=edit&cid[]='. $row->id;
 					$img		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-config.png';
 				?>
 					<tr>
@@ -212,22 +212,22 @@ JHTML::_('behavior.modal');
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
 				</tr>
-				</tr>	
-					<tr>
-					<td align="center">9</td>
-					<td align="center">plugins/content/ozio.php</td>
-					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
-					'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
-					'<strong><font color="red">'. JText::_( 'Not Installed' ) .'</font></strong>'; ?></td>
-				</tr>
 				</tr>		
 					<tr>
-					<td align="center">10</td>
+					<td align="center">9</td>
 					<td align="center">components/com_oziogallery2/skin/mediagallery/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'mediagallery'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
+				</tr>
 				</tr>	
+					<tr>
+					<td align="center">10</td>
+					<td align="center">plugins/content/ozio.php</td>
+					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
+					'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
+					'<strong><font color="red">'. JText::_( 'Not Installed' ) .'</font></strong>'; ?></td>
+				</tr>				
 			</tbody>
 		</table>
 		</fieldset>
@@ -255,7 +255,7 @@ JHTML::_('behavior.modal');
 		<br /><br />
 		Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 		Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
-		<h3 align="right">July 04th, 2009. Component developed by AlexRed & Ste & Vamba- <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
+		<h3 align="right">July 04th, 2009. Component developed by AlexRed & Ste & Vamba - <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
 				</td>
 			</tr>
 		</table>
