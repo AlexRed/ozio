@@ -72,7 +72,8 @@ function plgcontentloadozio( $galleriaozio )
 						OR link LIKE "index.php?option=com_oziogallery2&view=05imagerotator"
 						OR link LIKE "index.php?option=com_oziogallery2&view=06accordion"	
 						OR link LIKE "index.php?option=com_oziogallery2&view=07flickrslidershow"
-						OR link LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"				
+						OR link LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"		
+						OR link LIKE "index.php?option=com_oziogallery2&view=09mediagallery"	
 						)'
 				;				
 		$db->setQuery($query);
@@ -90,7 +91,7 @@ function plgcontentloadozio( $galleriaozio )
 				$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/autoHeight.js');			
 				$contents = '';
                 $contents .='<div class="clr"></div>';				
-				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" frameborder="0" scrolling="no" class="autoHeight"></iframe>';				
+				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight"></iframe>';				
 				$contents .= '</iframe>';
 				$contents .='<div class="clr"></div>';				
 
