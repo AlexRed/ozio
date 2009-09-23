@@ -67,16 +67,7 @@ class OzioGalleryView09mediagallery extends JView
 			case '1': $titolo		= '1';		break;
 			default:  $titolo		= '1'; 		break;				
 		}
-/*
-		switch ($params->get( 'ordinamento' ))
-		{
-			case '0': $ordinamento		= 'arsort($files)'; 	break;
-			case '1': $ordinamento		= 'sort($files)';		break;
-			case '2': $ordinamento		= 'asort($files)';		break;
-			case '3': $ordinamento		= 'rsort($files)';		break;	
-			case '4': $ordinamento		= 'shuffle($files)';	break;				
-		}		
-*/		
+	
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
 		$document->addCustomTag('
 		<style type="text/css">
@@ -120,7 +111,6 @@ class OzioGalleryView09mediagallery extends JView
 
 		$path  = $VAMBpathAssoluto .'/'. $folder . '/';
 		$dir_images = rtrim(JURI::root() . $folder) ;
-		$dir_files = rtrim(JURI::root() . 'images/oziodownload') . '/';		
 		
 		$xmltitle = $menu->name;
 		$xmltitle = str_replace( ' ', '', $xmltitle );
@@ -179,8 +169,8 @@ class OzioGalleryView09mediagallery extends JView
 
 				} // NOTE:  Tag chiusura  == if ($hd = opendir($path))
 	
-		if(count($files)) 
-		{
+
+	
 			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
 					sort($files);  
 			} else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
@@ -193,7 +183,7 @@ class OzioGalleryView09mediagallery extends JView
 			
 				// inizio esperimento categorie AlexRed			
 				$path2  = $path;
-				$categories[] = array(filectime($path2), 'oziogallery2');
+				$categories[] = array(filectime($path2), $folder);
 				if ($hd2 = opendir($path2)) 
 				{
 					while (false !== ($file2 = readdir($hd2))) 
@@ -411,10 +401,10 @@ class OzioGalleryView09mediagallery extends JView
 				foreach($categories as $c) 
 				{
 						$files2 = array();
-						if($c[1] != 'oziogallery2') {
-							$path2  = './images/oziogallery2/' . $c[1] . '/';
+						if($c[1] != $folder	) {
+							$path2  = $folder . '/' . $c[1] . '/';
 						} else {
-							$path2  = './images/oziogallery2/';
+							$path2  = $folder . '/';
 						}
 
 
@@ -424,10 +414,10 @@ class OzioGalleryView09mediagallery extends JView
 					  $files2 = array();
 						while (false !== ($file2 = readdir($hd2))) 
 					{ 
-							if($file != '.' && $file2 != '..') 
+							if($file2 != '.' && $file2 != '..') 
 						{
 								if (strpos($file2, $thumb_sufix) === false) {
-									if(is_file($path2 . $file2) && preg_match('/\.(jpg|png|gif|flv|mp3|swf|txt)$/i',$file2)) 
+									if(is_file($path2 . $file2) && preg_match('/\.(jpg|gif|flv|mp3|swf|txt)$/i',$file2)) 
 								{
 									if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) 
 									{ 
@@ -456,9 +446,8 @@ class OzioGalleryView09mediagallery extends JView
             }else {  
 					shuffle($files2);			
 			}
-			
 			// Variabile Parametro per la generazione del nome da assegnare alla prima galleria
-				if($c[1] == 'oziogallery2') :
+				if($c[1] == $folder) :
 					$string .= '<folder name="'.$primagalleria.'">';
 				else:
 					$string .= "<folder name=\"{$c[1]}\">";
@@ -467,13 +456,13 @@ class OzioGalleryView09mediagallery extends JView
 
 					foreach($files2 as $f) 
 				{
-					if($c[1] == 'oziogallery2') {
+					if($c[1] == $folder) {
 						$img = $f[1];
 					} else {
 						$img = $c[1] . '/'. $f[1];
 					}
-					$title = preg_replace('/\.(jpg|png|gif)$/i','',$f[1]);
-					if(strtolower(substr($f[1], -3)) == "jpg" || strtolower(substr($file, -3)) == "gif" || strtolower(substr($file, -3)) == "png"){
+					$title = preg_replace('/\.(jpg|gif)$/i','',$f[1]);
+					if(strtolower(substr($f[1], -3)) == "jpg" || strtolower(substr($file, -3)) == "gif"){
 					if( $titolo != 0 ) :	
 						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $dir_images .'/'. $img . '" />';
 						else:
@@ -506,7 +495,7 @@ class OzioGalleryView09mediagallery extends JView
 					fwrite($filehandle, $string);
 					fclose($filehandle);
 
-		} // NOTE:  Tag chiusura  == if(count($files)) 			
+		 // NOTE:  Tag chiusura  == if(count($files)) 			
 
 		} // NOTE:  Tag chiusura  == if ( @filemtime($foldername) >= @filemtime($filename) )
 
