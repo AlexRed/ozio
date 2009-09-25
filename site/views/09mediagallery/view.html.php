@@ -28,7 +28,8 @@ class OzioGalleryView09mediagallery extends JView
 		$primagalleria 		= $params->def('primagalleria');
 		$titologalleria 	= $params->def('page_title');		
 		$titolo				= (int) $params->def('titolo');
-
+		$originalsizetxt	= $params->def('originalsizetxt', 'Original size');	
+		$originalsize		= (int) $params->def('originalsize');
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -66,6 +67,13 @@ class OzioGalleryView09mediagallery extends JView
 			case '0': $titolo		= '0'; 		break;
 			case '1': $titolo		= '1';		break;
 			default:  $titolo		= '1'; 		break;				
+		}
+		
+		switch ($params->get( 'originalsize' ))
+		{
+			case '0': $originalsize		= '0'; 		break;
+			case '1': $originalsize		= '1';		break;
+			default:  $originalsize		= '1'; 		break;				
 		}
 	
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
@@ -446,6 +454,10 @@ class OzioGalleryView09mediagallery extends JView
             }else {  
 					shuffle($files2);			
 			}
+			// Variabile Parametro per attivare disattivare il link al file originale dell'immagine
+			if( $originalsize != 1 ) :	
+						$originalsizetxt = '';
+						endif;
 			// Variabile Parametro per la generazione del nome da assegnare alla prima galleria
 				if($c[1] == $folder) :
 					$string .= '<folder name="'.$primagalleria.'">';
@@ -464,9 +476,9 @@ class OzioGalleryView09mediagallery extends JView
 					$title = preg_replace('/\.(jpg|gif)$/i','',$f[1]);
 					if(strtolower(substr($f[1], -3)) == "jpg" || strtolower(substr($file, -3)) == "gif"){
 					if( $titolo != 0 ) :	
-						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $dir_images .'/'. $img . '" />';
+						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $originalsizetxt . '" />';
 						else:
-						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="" link="" link_title="" />';			
+						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="" link="' . $dir_images .'/'. $img . '" link_title="' . $originalsizetxt . '" />';			
 						endif;
 					} elseif(strtolower(substr($f[1], -3)) == "flv" || strtolower(substr($file, -3)) == "swf"){
 					$string .= '<video file="' . $dir_images .'/'. $img .'" name="' . $title . '"  />';					
@@ -570,7 +582,7 @@ endif;
 		$this->assignRef('rows' , 					$rows);					
 
 		$this->assignRef('xml_mode' , 				$xml_mode);
-		
+		$this->assignRef('originalsizetxt' , 		$originalsizetxt);	
 		$this->assignRef('tags' , 					$tags);
 		$this->assignRef('text' , 					$text);		
 		$this->assignRef('table' , 					$table);
