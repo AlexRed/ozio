@@ -193,28 +193,14 @@ videoDescriptionBgColor="000000"
 videoDescriptionBgOpacity="60"
 videoDescriptionPadding="50">
 <folder name="Album2 - Images">
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/IMG_2136.jpg" title="flower" link="/mediaGalleryFree/content/images/IMG_2136.jpg" link_title="/mediaGalleryFree/content/images/IMG_2136.jpg" />
-<pic image="/mediaGalleryFree/content/images/IMG_2161.jpg" title="flower" link="/mediaGalleryFree/content/images/IMG_2161.jpg" link_title="/mediaGalleryFree/content/images/IMG_2161.jpg" />
-<pic image="/mediaGalleryFree/content/images/IMG_2217.jpg" title="flower" link="/mediaGalleryFree/content/images/IMG_2217.jpg" link_title="/mediaGalleryFree/content/images/IMG_2217.jpg" />
-<pic image="/mediaGalleryFree/content/images/IMG_2318.jpg" title="flower" link="/mediaGalleryFree/content/images/IMG_2318.jpg" link_title="/mediaGalleryFree/content/images/IMG_2318.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
-<pic image="/mediaGalleryFree/content/images/00_flower.jpg" title="flower" link="/mediaGalleryFree/content/images/00_flower.jpg" link_title="/mediaGalleryFree/content/images/00_flower.jpg" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 01" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 01" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 02" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 02" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 03" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 03" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 04" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 04" />
 </folder>
 <folder name="Album4 - Test">
-<pic image="/images/oziogallery/Cammino di Santiago/IMG_2650.JPG" title="Santiago" link="/images/oziogallery/Cammino di Santiago/IMG_2650.JPG" link_title="/images/oziogallery/Cammino di Santiago/IMG_2650.JPG" />
-<pic image="/images/oziogallery/Cammino di Santiago/IMG_2679.JPG" title="Santiago" link="/images/oziogallery/Cammino di Santiago/IMG_2679.JPG" link_title="/images/oziogallery/Cammino di Santiago/IMG_2679.JPG" />
-<pic image="/images/oziogallery/Cammino di Santiago/IMG_2696.JPG" title="Santiago" link="/images/oziogallery/Cammino di Santiago/IMG_2696.JPG" link_title="/images/oziogallery/Cammino di Santiago/IMG_2696.JPG" />
-<pic image="/images/oziogallery/Cammino di Santiago/IMG_2736.JPG" title="Santiago" link="/images/oziogallery/Cammino di Santiago/IMG_2736.JPG" link_title="/images/oziogallery/Cammino di Santiago/IMG_2736.JPG" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 05" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 05" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 06" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 06" />
 </folder>
 <folder name="Album3 - Videos"><video file="http://blip.tv/file/get/Neave-FilmakademieCAPs806.flv" name="Filmakademie CAPs" >Video Description can go here</video>
 <video file="http://blip.tv/file/get/Neave-TherosByGeorgiosCherouviem317.flv" name="Theros by Georgios Cherouvim" />
