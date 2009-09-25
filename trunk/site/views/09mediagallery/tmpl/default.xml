@@ -45,11 +45,11 @@
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>	
-		<param name="originalsize" type="radio" default="1" label="Originala size link" description="Originala size link DESC" >
+		<param name="originalsize" type="radio" default="1" label="Original size link" description="Original size link DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
-		<param name="originalsizetxt" type="text" default="Original size" label="DOWNLOADTXT" size="25" description="DOWNLOADTXT DESC" />
+		<param name="originalsizetxt" type="text" default="Original size" label="Original size text" size="25" description="Original size text DESC" />
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Mediagallery  Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />	
