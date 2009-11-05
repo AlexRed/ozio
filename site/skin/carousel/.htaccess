@@ -1,0 +1,4 @@
+<Files ~ "\.xml$">
+Allow from all
+Satisfy all
+</Files>
