@@ -40,7 +40,7 @@ function com_install()
 	$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;
 	$folder[0][2]	= 	JPATH_ROOT . DS .  $folder[0][0];
 	$file 		= "index.html";
-	$file2 		= "_preferences.xml";
+	$file2 		= "_preferences.ozio";
 	$file3 		= "info.png";	
 	$source 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';
 	$source2 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'imagin' . DS . 'imagin';	
@@ -79,7 +79,7 @@ function com_install()
 	jimport('joomla.filesystem.file');
 	jimport('joomla.filesystem.folder');
 
-	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'plugins'.DS.'ozio.xm', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.xml')){
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'plugins'.DS.'ozio.xm', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.ozio')){
 		echo JText::_('<b>Failed</b> to copy plugin xml file<br />');
 	}
 
