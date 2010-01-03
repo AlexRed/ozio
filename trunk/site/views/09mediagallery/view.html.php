@@ -213,6 +213,8 @@ class OzioGalleryView09mediagallery extends JView
 			$string = '<?xml version="1.0" encoding="iso-8859-1"?>
 			<folder name="'.$titologalleria.'" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
 			autoSize="true"
+			movie_width="'.$larghezza.'"
+            movie_height="'.$altezza.'"
 			loaderColor="FFFFFF"
 			loaderOpacity="100"
 			openFirstFile="true"
