@@ -26,7 +26,7 @@ class OzioGalleryView06Accordion extends JView
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
 		$fotoiniziale		= (int) $params->def('fotoiniziale');			
 		$indirizzo			= $params->def('indirizzo');
-		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/accordion/manual-xml/accordion.xml');		
+		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/accordion/manual-xml/accordion.ozio');		
 
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -118,7 +118,7 @@ class OzioGalleryView06Accordion extends JView
 		
 		switch ($params->get( 'xml_moder' ))
 		{
-			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml'; 		
+			case '0': $xml_moder	= JURI::root().'components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.ozio'; 		
 				break;
 			case '1': $xml_moder	= JURI::root(). $manualxmlname;							
 				break;
@@ -138,7 +138,7 @@ class OzioGalleryView06Accordion extends JView
 		$dir_files = rtrim(JURI::root() . 'images/oziogallery2') . '/';
 
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/accordion/xml/accordion_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 

@@ -171,7 +171,7 @@ class OzioGalleryView01Tilt3d extends JView
 		endif;
 		
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 

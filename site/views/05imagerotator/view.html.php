@@ -31,7 +31,7 @@ class OzioGalleryView05ImageRotator extends JView
 		$modifiche 		= (int) $params->def('modifiche', 0);
 		$debug 			= (int) $params->def('debug');		
 		$ordinamento 	= (int) $params->def('ordinamento');
-		$manualxmlname	= $params->def('manualxmlname', 'components/com_oziogallery2/skin/imagerotator/manual-xml/imagerotator.xml');		
+		$manualxmlname	= $params->def('manualxmlname', 'components/com_oziogallery2/skin/imagerotator/manual-xml/imagerotator.ozio');		
 		
 		$screencolor = str_replace( '#', '', $screencolor );
 		
@@ -157,7 +157,7 @@ if( $flickr == 0 ) :
 			$xmlname = $xmltitle;
 		endif;
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/imagerotator/xml/imagerotator_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/imagerotator/xml/imagerotator_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 

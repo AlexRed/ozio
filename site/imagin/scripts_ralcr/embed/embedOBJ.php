@@ -10,10 +10,10 @@
 	<param name="quality" value="high" ></param>
 	<param name="scale" value="noscale" ></param>
 	<param name="bgcolor" value="#FFFFFF" ></param>
-	<param name="FlashVars" value="settings_file=settings.xml" ></param>
+	<param name="FlashVars" value="settings_file=settings.ozio" ></param>
 
 	<embed src="imagin.swf"
-		FlashVars="settings_file=settings.xml"
+		FlashVars="settings_file=settings.ozio"
 		bgcolor="#FFFFFF"
 		width="600"
 		height="300"

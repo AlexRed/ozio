@@ -138,8 +138,8 @@ class OzioGalleryView02FlashGallery extends JView
 			$xmlname = $xmltitle;
 		endif;
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/flashgallery_'. $xmlname .'.xml';
-		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/settings_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/flashgallery_'. $xmlname .'.ozio';
+		$settings 	= JPATH_SITE.'/components/com_oziogallery2/skin/flashgallery/xml/settings_'. $xmlname .'.ozio';
 		
 		
         $foldername = $path;		

@@ -24,11 +24,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					so.addParam("quality", "high");
 					so.addParam("allowFullScreen", "true");
 					so.addParam("wmode", "transparent");
-					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.xml");					
+					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.ozio");					
 <?php if ( $this->flickr == 1 ) : ?>						
 					so.addVariable("content_path","http://www.flickr.com/photos/<?php echo $this->user_id ?>");
 <?php else: ?>	
-					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.xml" );
+					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.ozio" );
 <?php endif; ?>						
 					so.write("oziogallery");
 				</script>

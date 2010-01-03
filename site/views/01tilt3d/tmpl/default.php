@@ -38,7 +38,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					fo.addVariable("useFlickr", "<?php echo $this->flickrs ?>");
 		
 <?php if  	  ( $this->xml_mode == 0 ) : ?>
-					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.xml"); 
+					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.ozio"); 
 <?php else: ?>
 					fo.addVariable("xmlURL","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
