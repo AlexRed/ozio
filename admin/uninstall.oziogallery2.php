@@ -34,7 +34,7 @@ function com_uninstall(){
   
 	$db=JFactory::getDBO();
     unlink(JPATH_ROOT . DS . 'plugins' . DS . 'content' . DS . 'ozio.php');
-    unlink(JPATH_ROOT . DS . 'plugins' . DS . 'content' . DS . 'ozio.ozio');
+    unlink(JPATH_ROOT . DS . 'plugins' . DS . 'content' . DS . 'ozio.xml');
     $db->setQuery("DELETE FROM #__plugins WHERE name='Content - OzioGallery2'");
     $db->query();
 
