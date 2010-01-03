@@ -35,8 +35,8 @@
           <option value="4">Casuale</option>		  
         </param>
 		<param name="primagalleria" type="text" default="Ozio Gallery2" label="First gallery name" size="40" description="First gallery name desc" />	
-		<param name="columns" type="text" default="3" label="COLUMNS" size="2" description="COLUMNS DESC" />
-		<param name="rows" type="text" default="3" label="ROWS" size="2" description="ROWS DESC" />
+		<param name="columns" type="text" default="3" label="ROWS" size="2" description="ROWS DESC" />
+		<param name="rows" type="text" default="3" label="COLUMNS" size="2" description="COLUMNS DESC" />
 		<param name="showtooltips" type="radio" default="1" label="SHOW TOOLTIPS" description="SHOW TOOLTIPS DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
