@@ -138,7 +138,7 @@ class OzioGalleryView09mediagallery extends JView
 		endif;
 		
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/mediagallery/xml/mediagallery_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/mediagallery/xml/mediagallery_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 

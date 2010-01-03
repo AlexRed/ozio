@@ -28,7 +28,7 @@ class OzioGalleryView04Carousel extends JView
 		$speed				= $params->def('speed');
 		$titoli				= $params->def('titoli');
 		$titolo				= (int) $params->def('titolo');
-		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/carousel/manual-xml/carousel.xml');		
+		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/carousel/manual-xml/carousel.ozio');		
 		
 		switch ($params->get( 'rotatoralign' ))
 		{
@@ -157,7 +157,7 @@ class OzioGalleryView04Carousel extends JView
 
 		switch ($params->get( 'xml_moder' ))
 		{
-			case '0': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml'; 		
+			case '0': $xml_moder	= JURI::root() . 'components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.ozio'; 		
 				break;
 			case '1': $xml_moder	= JURI::root(). $manualxmlname;			
 				break;
@@ -179,7 +179,7 @@ class OzioGalleryView04Carousel extends JView
 
 
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.xml';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/carousel/xml/carousel_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 

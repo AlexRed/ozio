@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php if( $this->flickr == 1 ) : ?>
 					s1.addVariable("file","http://api.flickr.com/services/feeds/photos_public.gne?id=<?php echo $this->user_id ?>&format=rss_200");
 <?php elseif  ( $this->xml_moder == 0 ) : ?>
-					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery2/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.xml"); 
+					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery2/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.ozio"); 
 <?php elseif  ( $this->xml_moder == 1 ) : ?>
 					s1.addVariable("file","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
