@@ -91,7 +91,7 @@ function plgcontentloadozio( $galleriaozio )
 				$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/autoHeight.js');			
 				$contents = '';
                 $contents .='<div class="clr"></div>';				
-				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight"></iframe>';				
+				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight">';				
 				$contents .= '</iframe>';
 				$contents .='<div class="clr"></div>';				
 
