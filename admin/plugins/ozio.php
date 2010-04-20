@@ -93,7 +93,8 @@ function plgcontentloadozio( $galleriaozio )
 						OR link LIKE "index.php?option=com_oziogallery2&view=06accordion"	
 						OR link LIKE "index.php?option=com_oziogallery2&view=07flickrslidershow"
 						OR link LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"		
-						OR link LIKE "index.php?option=com_oziogallery2&view=09mediagallery"	
+						OR link LIKE "index.php?option=com_oziogallery2&view=09mediagallery"
+						OR link LIKE "index.php?option=com_oziogallery2&view=10cooliris"						
 						)'
 				;				
 		$db->setQuery($query);

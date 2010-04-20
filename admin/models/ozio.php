@@ -47,6 +47,7 @@ class OzioModelOzio extends JModel
 						OR i.link = "index.php?option=com_oziogallery2&view=07flickrslidershow"
 						OR i.link = "index.php?option=com_oziogallery2&view=08flickrphoto"
 						OR i.link = "index.php?option=com_oziogallery2&view=09mediagallery"
+						OR i.link = "index.php?option=com_oziogallery2&view=10cooliris"
 				)'
 				. ' AND i.published = 1'				
 				. ' ORDER BY i.name DESC'
@@ -73,6 +74,7 @@ class OzioModelOzio extends JModel
 						OR link = "index.php?option=com_oziogallery2&view=07flickrslidershow"
 						OR link = "index.php?option=com_oziogallery2&view=08flickrphoto"
 						OR link = "index.php?option=com_oziogallery2&view=09mediagallery"
+						OR link = "index.php?option=com_oziogallery2&view=10cooliris"
 				)'
 				. ' AND published  = 0'	
 				. ' AND published != -2'				
