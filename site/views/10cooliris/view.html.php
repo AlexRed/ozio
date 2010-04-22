@@ -35,36 +35,26 @@ class OzioGalleryView10Cooliris extends JView
 		$params = $mainframe->getParams('com_oziogallery2');
 		
 		$larghezza 			= $params->def('width', 640);
-		$altezza 			= $params->def('height', 480);
-		$maximagesize 		= (int) $params->def('maximagesize', 640);		
+		$altezza 			= $params->def('height', 480);	
 		$framecolor			= $params->def('framecolor');		
-		$bkgndretro			= $params->def('bkgndretro');
-		$bkgndinnercolor	= $params->def('bkgndinnercolor');		
-		$bkgndoutercolor	= $params->def('bkgndoutercolor');		
+		$bkgndretro			= $params->def('bkgndretro');			
 		$ordinamento 		= (int) $params->def('ordinamento');
-		$columns 			= (int) $params->def('columns', 5);	
-		$rows 				= (int) $params->def('rows', 5);			
+		$rows 				= (int) $params->def('rows', 2);			
 		$downloads 			= (int) $params->def('downloads', 0);
-		$flipbutton 		= (int) $params->def('flipbutton', 1);
-		$downloadtxt		= $params->def('downloadtxt', 'Download');		
 		$retrotext			= $params->def('retrotext');
 		$flickr 			= (int) $params->def('flickr', 0);
 		$xml_mode 			= (int) $params->def('xml_mode', 0);
 		$user_id 			= $params->def('user_id');
 		$set_id 			= $params->def('set_id');
 		$group_id 			= $params->def('group_id');		
-		$tags				= $params->def('tags', '');
-		$text				= $params->def('text', '');	
-		$sort 				= (int) $params->def('sort', 1);		
+		$text				= $params->def('text', '');			
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
-		$manualxmlname		= $params->def('manualxmlname', 'tiltviewer');		
+		$manualxmlname		= $params->def('manualxmlname', 'cooliris');		
 		
 		$framecolor 		= str_replace( '#', '', $framecolor );
 		$bkgndretro 		= str_replace( '#', '', $bkgndretro );
-		$bkgndinnercolor 	= str_replace( '#', '', $bkgndinnercolor );
-		$bkgndoutercolor 	= str_replace( '#', '', $bkgndoutercolor );
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -89,27 +79,7 @@ class OzioGalleryView10Cooliris extends JView
 			case '1': $download		= 'true';		break;
 			default:  $download		= 'true'; 		break;				
 		}
-		
-		switch ($params->get( 'flipbutton' ))
-		{
-			case '0': $flipbutton		= 'false'; 		break;
-			case '1': $flipbutton		= 'true';		break;
-			default:  $flipbutton		= 'false'; 		break;				
-		}
-		
-		switch ($params->get( 'sort' ))
-		{
-			case '0': $sort		= ''; 				break;
-			case '1': $sort		= 'relevance';		break;
-			default:  $sort		= 'relevance'; 		break;				
-		}
 
-		switch ($params->get( 'tag_mode' ))
-		{
-			case '0': $tag_mode		= 'any'; 		break;
-			case '1': $tag_mode		= 'all';	break;
-			default:  $tag_mode		= 'all'; 		break;				
-		}
 
 		switch ($params->get( 'flickr' ))
 		{
@@ -127,7 +97,7 @@ class OzioGalleryView10Cooliris extends JView
 			case '4': $ordinamento		= 'shuffle($files)';	break;				
 		}		
 */		
-		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/21/swfobject.js');
 		$document->addCustomTag('
 		<style type="text/css">
 			.oziofloat {
@@ -191,7 +161,7 @@ class OzioGalleryView10Cooliris extends JView
 		endif;
 		
 		// nome del file creato
-		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_'. $xmlname .'.ozio';
+		$filename 	= JPATH_SITE.'/components/com_oziogallery2/skin/cooliris/xml/cooliris_'. $xmlname .'.ozio';
         $foldername = $path;		
 		$this->assignRef('nomexml' , 				$xmlname);
 
@@ -239,21 +209,28 @@ class OzioGalleryView10Cooliris extends JView
 				
 			$filehandle = fopen($filename, 'w');
 
-			$string = '<tiltviewergallery>'."\n";
-			$string .= '<photos>'."\n";			    	
+			$string = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>'."\n";
+			$string .= '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"'."\n";	
+			$string .= 'xmlns:atom="http://www.w3.org/2005/Atom">'."\n";	
+			
+			$string .= '<channel>'."\n";			    	
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-						$string .= '<photo imageurl="' . $dir_images .'/'. $row[1] . '" linkurl="'. $dir_files . $title . '.zip">';
-						$string .= "\n";					
-						$string .= '<title>'. $title . '</title>'."\n";	
-						$string .= '<description><![CDATA['.$retrotext.']]></description>'."\n";	
-						$string .= '</photo>'."\n";						
+						$string .= '<item>'."\n";
+						$string .= '<title>'. $title . '</title>'."\n";
+						$string .= '<media:description>'.$retrotext.'</media:description>'."\n";
+						$string .= '<link>' . $dir_images .'/'. $row[1] . '</link>'."\n";
+						$string .= '<media:thumbnail url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";	
+						$string .= '<media:content url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";						
+						$string .= '</item>'."\n";						
 			}	
-			$string .= '</photos>'."\n";			
-			$string .= '</tiltviewergallery>'."\n";
+			$string .= '</channel>'."\n";			
+			$string .= '</rss>'."\n";
 			fwrite($filehandle, $string);
 			fclose($filehandle);
 		}			
@@ -301,10 +278,7 @@ if( $flickr == 1 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  user_id :     '.$user_id  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  set_id :   ' .$set_id .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  group_id :   ' .$group_id .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tag_mode :   ' .$tag_mode  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tags :     '.$tags  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  text :     '.$text  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  sort :     '.$sort  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  text :     '.$text  .'</pre>';	
 elseif  ( $xml_mode == 0 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  XML automatico :   ' .JText::_('ATTIVO') .'</pre>';
 elseif  ( $xml_mode == 1 ) :
@@ -313,17 +287,11 @@ elseif  ( $xml_mode == 1 ) :
 endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  columns :   ' .$columns .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  rows :   ' .$rows .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  downloads :   ' .$downloads  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  download :   ' .$download  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  flipbutton :   ' .$flipbutton  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  downloadtxt :   ' .$downloadtxt  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  maximagesize :   ' .$maximagesize  .'</pre>';			
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  download :   ' .$download  .'</pre>';			
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  framecolor :     #'.$framecolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  bkgndretro :     #'.$bkgndretro  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  bkgndinnercolor :     #'.$bkgndinnercolor  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  screencolor :     #'.$bkgndoutercolor  .'</pre>';
 		
 
 	
@@ -332,10 +300,10 @@ endif;
         else:
 			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  ' . $folder . ' :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;			
-		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'tiltviewer'.DS.'xml')):
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/tiltviewer/xml :     '. JText::_( 'Writable' )  .'</pre>';
+		if (is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'cooliris'.DS.'xml')):
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/cooliris/xml :     '. JText::_( 'Writable' )  .'</pre>';
         else:
-			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/tiltviewer/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
+			$oziodebug .= '<pre>'.JText::_('CARTELLA'). '  components/com_oziogallery2/skin/cooliris/xml :     '.  JText::_( 'Unwritable' )  .'</pre>';			
 		endif;			
 		//fine debug				
 			
@@ -344,16 +312,10 @@ endif;
 		$this->assignRef('larghezza' , 				$larghezza);
 		$this->assignRef('framecolor' , 			$framecolor);
 		$this->assignRef('bkgndretro' , 			$bkgndretro);
-		$this->assignRef('bkgndinnercolor' , 		$bkgndinnercolor);
-		$this->assignRef('bkgndoutercolor' , 		$bkgndoutercolor);		
 		
-		$this->assignRef('maximagesize' , 			$maximagesize);		
-		$this->assignRef('columns' , 				$columns);
 		$this->assignRef('rows' , 					$rows);		
 		$this->assignRef('downloads' , 				$downloads);
-		$this->assignRef('download' , 				$download);	
-		$this->assignRef('flipbutton' , 			$flipbutton);			
-		$this->assignRef('downloadtxt' , 			$downloadtxt);			
+		$this->assignRef('download' , 				$download);						
 
 		$this->assignRef('xml_mode' , 				$xml_mode);
 		$this->assignRef('flickr' , 				$flickr);
@@ -361,10 +323,7 @@ endif;
 		$this->assignRef('user_id' , 				$user_id);
 		$this->assignRef('set_id' , 				$set_id);
 		$this->assignRef('group_id' , 				$group_id);		
-		$this->assignRef('sort' , 					$sort);	
-		$this->assignRef('tag_mode' , 				$tag_mode);
 		
-		$this->assignRef('tags' , 					$tags);
 		$this->assignRef('text' , 					$text);		
 		$this->assignRef('table' , 					$table);
 		$this->assignRef('tempo' , 					$tempo);

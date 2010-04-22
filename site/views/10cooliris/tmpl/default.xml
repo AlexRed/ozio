@@ -26,21 +26,12 @@
           <option value="0">XML Automatico</option>
           <option value="1">XML manuale</option>
         </param>
-		<param name="manualxmlname" type="text" default="components/com_oziogallery2/skin/tiltviewer/manual-xml/tiltviewer.ozio" label="Path XML manuale" size="60" description="Path XML manuale desc" />		
+		<param name="manualxmlname" type="text" default="components/com_oziogallery2/skin/cooliris/manual-xml/cooliris.ozio" label="Path XML manuale" size="60" description="Path XML manuale desc" />		
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Flickr Settings&lt;/div&gt;" label="" description="" />		
 		<param name="user_id" type="text" default="" label="Id Utente flickr" size="30" description="Id Utente flickr desc" />
-		<param name="set_id" type="text" default="" label="Id Set flickr" size="30" description="Id Set flickr desc" />
 		<param name="group_id" type="text" default="" label="Id Gruppo flickr" size="30" description="Id Gruppo flickr desc" />
-		<param name="sort" type="radio" default="0" label="Relevance" description="Relevance desc" >
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </param>
-		<param name="tag_mode" type="radio" default="0" label="Tag Mode" description="Tag Mode desc" >
-          <option value="0">Any</option>
-          <option value="1">All</option>
-        </param>		
-		<param name="tags" type="text" default="" label="Tags" size="40" description="Tags desc" />		
-		<param name="text" type="text" default="" label="Testo" size="40" description="Testo desc" />			
+		<param name="set_id" type="text" default="" label="Id Set flickr" size="30" description="Id Set flickr desc" />
+		<param name="text" type="text" default="" label="Testo" size="40" description="Testo desc" />
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Manual Settings&lt;/div&gt;" label="" description="" />		
 		<param name="folder" type="text" default="images/oziogallery2" label="Percorso Cartella" size="40" description="Percorso Cartella desc"/>		
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;XML Settings (reset XML to apply)&lt;/div&gt;" label="" description="" />	
@@ -55,13 +46,9 @@
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Tilt Viewer Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
-		<param name="maximagesize" type="text" default="640" label="Max Image size" size="4" description="Max Image size Desc" />
 		<param name="framecolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Colore bordo immagini" description="Colore bordo immagini desc" />
 		<param name="bkgndretro" type="colorpicker" class="color {hash:true,required:false}" default="#FFFF66" size="10" label="Colore retro immagine" description="Colore retro immagine desc" />
-		<param name="bkgndinnercolor" type="colorpicker" class="color {hash:true,required:false}" default="#333333" size="10" label="BACKGROUND GRADIENT CENTER" description="BACKGROUND GRADIENT CENTER DESC" />
-		<param name="bkgndoutercolor" type="colorpicker" class="color {hash:true,required:false}" default="#000000" size="10" label="BACKGROUND GRADIENT EDGE" description="BACKGROUND GRADIENT EDGE DESC" />
-		<param name="columns" type="text" default="3" label="COLUMNS" size="2" description="COLUMNS DESC" />
-		<param name="rows" type="text" default="3" label="ROWS" size="2" description="ROWS DESC" />		
+		<param name="rows" type="text" default="2" label="ROWS" size="2" description="ROWS DESC" />		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
           <option value="1">Right</option>
@@ -74,11 +61,6 @@
         </param>
 			
 		<param name="downloads" type="radio" default="0" label="USE DOWNLOAD" description="USE DOWNLOAD DESC" >
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </param>
-		<param name="downloadtxt" type="text" default="Download" label="DOWNLOADTXT" size="25" description="DOWNLOADTXT DESC" />
-		<param name="flipbutton" type="radio" default="1" label="Show Flip Button" description="SHOW FLIP BUTTON DESC" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>

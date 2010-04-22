@@ -38,22 +38,29 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <table width="100%" align="<?php echo $this->table ?>">
 	<tr>
 		<td>
-			<div id="ozioflashcontent" class="oziofloat">  
-				<object id="o" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="600" height="450">
-				<param name="movie" value="http://apps.cooliris.com/embed/cooliris.swf" />
-				<param name="allowFullScreen" value="true" />
-				<param name="allowScriptAccess" value="always" />
-				<param name="flashvars" value="feed=api://www.flickr.com/" />
-				<embed type="application/x-shockwave-flash"
-				  src="http://apps.cooliris.com/embed/cooliris.swf"
-				  flashvars="feed=api://www.flickr.com/"
-				  width="600" 
-				  height="450"
-				  allowFullScreen="true"
-				  allowScriptAccess="always">
-				</embed>
-				</object>
-			</div>
+			<div id="oziowall" class="oziofloat">  aaaaa</div>
+    <script>
+        var flashvars = {
+		<?php if  	  ( $this->flickr == 1 ) : ?>	
+					feed: "api://www.flickr.com/<?php if ( $this->user_id != '' ) : ?>?user=<?php echo $this->user_id ?><?php else: ?><?php if ( $this->group_id != '' ) : ?>?group=<?php echo $this->group_id ?><?php else: ?><?php if ( $this->set_id != '' ) : ?>?album=<?php echo $this->set_id ?><?php else: ?><?php if ( $this->text != '' ) : ?>?search=<?php echo $this->text ?><?php else: ?><?php endif; ?><?php endif; ?><?php endif; ?><?php endif; ?>"};
+		<?php else: ?>
+		<?php if  	  ( $this->xml_mode == 0 ) : ?>
+					feed: "<?php echo JURI::root() ?>components/com_oziogallery2/skin/cooliris/xml/cooliris_<?php echo $this->nomexml ?>.ozio&numRows=<?php echo $this->rows ?>&backgroundColor=0x<?php echo $this->bkgndretro ?>&backgroundImage=&showEmbed=false&glowColor=0x<?php echo $this->framecolor ?>&showDescription=<?php echo $this->download ?>"}; 
+		<?php else: ?>
+					feed: "<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>"};
+		<?php endif; ?>
+		<?php endif; ?>
+        var params = {
+             allowFullScreen: "true",
+             allowscriptaccess: "always"
+        };
+        swfobject.embedSWF("<?php echo JURI::root() ?>components/com_oziogallery2/skin/cooliris/cooliris.swf",
+            "oziowall", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "9.0.0", "",
+            flashvars, params);
+    </script>
+			
+			
+		
        </td>
 	</tr>
 </table>  
