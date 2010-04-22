@@ -60,7 +60,7 @@ function com_install()
 	$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;
 	$folder[0][2]	= 	JPATH_ROOT . DS .  $folder[0][0];
 	$file 		= "index.html";
-	$file2 		= "_preferences.ozio";
+	$file2 		= "_preferences.xml";
 	$file3 		= "info.png";	
 	$source 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';
 	$source2 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'imagin' . DS . 'imagin';	
