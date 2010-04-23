@@ -10,7 +10,7 @@
 		<description>Ozio Cooliris skin Desc</description>
 	<params addpath="/components/com_oziogallery2/elements">
 		<param name="" type="scriptloader" default="" label="" description="" />
-		<param name="Reset XML" type="oziotext1" default="" label="" description="Reset XML Desc" />		
+		<param name="Reset XML" type="oziotext6" default="" label="" description="Reset XML Desc" />		
 			<param name="introtext" type="textarea" default="" label="Intro" rows="5" cols="30" description="Intro desc"/>
 			<param name="showintrotext" type="radio" default="0" label="Mostra intro" description="Mostra intro desc">
 				<option value="0">Hide</option>
@@ -47,7 +47,7 @@
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="framecolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Colore bordo immagini" description="Colore bordo immagini desc" />
-		<param name="bkgndretro" type="colorpicker" class="color {hash:true,required:false}" default="#FFFF66" size="10" label="Colore retro immagine" description="Colore retro immagine desc" />
+		<param name="bkgndretro" type="colorpicker" class="color {hash:true,required:false}" default="#000000" size="10" label="BACKGROUND GRADIENT EDGE" description="BACKGROUND GRADIENT EDGE DESC" />
 		<param name="rows" type="text" default="2" label="ROWS" size="2" description="ROWS DESC" />		
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
@@ -60,7 +60,7 @@
           <option value="2">Inherit</option>
         </param>
 			
-		<param name="downloads" type="radio" default="0" label="USE DOWNLOAD" description="USE DOWNLOAD DESC" >
+		<param name="downloads" type="radio" default="0" label="TESTO IMMAGINI" description="TESTO IMMAGINI DESC2" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>

@@ -92,7 +92,8 @@ class OzioModelList extends JModel
 						OR link = "index.php?option=com_oziogallery2&view=06accordion"	
 						OR link = "index.php?option=com_oziogallery2&view=07flickrslidershow"
 						OR link = "index.php?option=com_oziogallery2&view=08flickrphoto"
-						OR link = "index.php?option=com_oziogallery2&view=09mediagallery"
+						OR link = "index.php?option=com_oziogallery2&view=09mediagallery
+						OR link = "index.php?option=com_oziogallery2&view=10cooliris"
 				)'
 				. ' AND published = 1'				
 				. $orderby

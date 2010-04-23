@@ -163,6 +163,26 @@ JHTML::_('behavior.tooltip');
 			</td>			
 			
 		</tr>	
+		<tr>
+			<td width="20%" nowrap="nowrap"  >
+				<label for="title">
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'cooliris Reset' );?>">						
+							<span style="font-size:16px; color:#004080; font-weight:bold;"><?php echo JText::_( 'cooliris Gallery' ); ?></span>	
+					</span>				
+				</label>
+			</td>
+			<th width="80" align="center">
+				<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'Svuota' ); ?>::<?php echo JText::_ ( 'cooliris Gallery' );?> <?php echo JText::_ ( 'XML' );?>">
+					<a href="<?php echo $this->link7 ?>"> <img src="<?php echo $this->img?>" width="30"> </a>
+				</span>				
+			</td>
+			<td width="80%" nowrap="nowrap">
+			<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'cooliris Gallery' ); ?>::<?php echo JText::_ ( 'XML Files' );?>">
+				<?php echo $this->cooliris; ?>	
+            </span>				
+			</td>			
+			
+		</tr>	
 		</table>
 		</fieldset>		
 			</td>

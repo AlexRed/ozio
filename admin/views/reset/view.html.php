@@ -50,6 +50,7 @@ class OzioViewReset extends JView
 		$link4	= 'index.php?option=com_oziogallery2&task=imagerotator';
 		$link5	= 'index.php?option=com_oziogallery2&task=tilt';
 		$link6	= 'index.php?option=com_oziogallery2&task=mediagallery';
+		$link7	= 'index.php?option=com_oziogallery2&task=cooliris';
 		
         $img = JURI::root().'administrator/images/delete_f2.png';
 		
@@ -61,6 +62,7 @@ class OzioViewReset extends JView
 		$Directory4 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/imagerotator/xml/';		
 		$Directory5 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/tiltviewer/xml/';
 		$Directory6 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/mediagallery/xml/';
+		$Directory7 = $VAMBpathAssoluto.'/components/com_oziogallery2/skin/cooliris/xml/';
 
 
       if(is_dir($Directory1))
@@ -182,6 +184,26 @@ class OzioViewReset extends JView
       {
           $mediagallery .= $Directory6 . JText::_ ( 'La directory non esiste' );
       }	
+	  
+	  if(is_dir($Directory7))
+      {
+          $dir = opendir($Directory7);
+          $cooliris = '<pre>';
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory7 ."/". $file);
+              $cooliris .= "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          $cooliris .= "</pre>";
+      }
+      else
+      {
+          $cooliris .= $Directory7 . JText::_ ( 'La directory non esiste' );
+      }	
 
 		$this->assignRef('img'					, $img);
 		$this->assignRef('link1'				, $link1);
@@ -190,12 +212,14 @@ class OzioViewReset extends JView
 		$this->assignRef('link4'				, $link4);
 		$this->assignRef('link5'				, $link5);
 		$this->assignRef('link6'				, $link6);
+		$this->assignRef('link7'				, $link7);
 		$this->assignRef('accordion'			, $accordion);	
 		$this->assignRef('carousel'				, $carousel);
 		$this->assignRef('flashgallery'			, $flashgallery);
 		$this->assignRef('imagerotator'			, $imagerotator);
 		$this->assignRef('tilt'					, $tilt);	
-		$this->assignRef('mediagallery'			, $mediagallery);	
+		$this->assignRef('mediagallery'			, $mediagallery);
+		$this->assignRef('cooliris'				, $cooliris);		
 
 		parent::display($tpl);
 

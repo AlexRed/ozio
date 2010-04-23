@@ -240,9 +240,17 @@ JHTML::_('behavior.modal');
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
 				</tr>
-				</tr>	
+				</tr>		
 					<tr>
 					<td align="center">10</td>
+					<td align="center">components/com_oziogallery2/skin/cooliris/xml</td>
+					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'cooliris'.DS.'xml') ? 
+					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
+					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
+				</tr>
+				</tr>	
+					<tr>
+					<td align="center">11</td>
 					<td align="center">plugins/content/ozio.php</td>
 					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
 					'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
