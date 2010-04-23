@@ -51,7 +51,12 @@ class OzioGalleryView10Cooliris extends JView
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
-		$manualxmlname		= $params->def('manualxmlname', 'cooliris');		
+		$manualxmlname		= $params->def('manualxmlname', 'cooliris');
+		$immaginesfondo		= $params->def('immaginesfondo');
+		$larghezzaant		= $params->def('larghezzaant');
+		$altezzaant			= $params->def('altezzaant');
+		$distanzaoriz		= $params->def('distanzaoriz');
+		$distanzavert		= $params->def('distanzavert');
 		
 		$framecolor 		= str_replace( '#', '', $framecolor );
 		$bkgndretro 		= str_replace( '#', '', $bkgndretro );
@@ -313,24 +318,29 @@ endif;
 		$this->assignRef('framecolor' , 			$framecolor);
 		$this->assignRef('bkgndretro' , 			$bkgndretro);
 		
-		$this->assignRef('rows' , 					$rows);		
+		$this->assignRef('rows' , 					$rows);
 		$this->assignRef('downloads' , 				$downloads);
-		$this->assignRef('download' , 				$download);						
+		$this->assignRef('download' , 				$download);
 
 		$this->assignRef('xml_mode' , 				$xml_mode);
 		$this->assignRef('flickr' , 				$flickr);
-		$this->assignRef('flickrs' , 				$flickrs);		
+		$this->assignRef('flickrs' , 				$flickrs);	
 		$this->assignRef('user_id' , 				$user_id);
 		$this->assignRef('set_id' , 				$set_id);
-		$this->assignRef('group_id' , 				$group_id);		
+		$this->assignRef('group_id' , 				$group_id);
 		
-		$this->assignRef('text' , 					$text);		
+		$this->assignRef('text' , 					$text);
 		$this->assignRef('table' , 					$table);
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);		
-		$this->assignRef('manualxmlname' , 			$manualxmlname);		
+		$this->assignRef('oziodebug' , 				$oziodebug);
+		$this->assignRef('manualxmlname' , 			$manualxmlname);
+		$this->assignRef('immaginesfondo' , 		$immaginesfondo);
+		$this->assignRef('larghezzaant' , 			$larghezzaant);
+		$this->assignRef('altezzaant' , 			$altezzaant);
+		$this->assignRef('distanzaoriz' , 			$distanzaoriz);
+		$this->assignRef('distanzavert' , 			$distanzavert);
 		parent::display($tpl);
 	}
 }

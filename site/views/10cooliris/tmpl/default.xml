@@ -42,7 +42,7 @@
           <option value="4">Casuale</option>		  
         </param>
 		<param name="retrotext" type="textarea" default="Ozio Gallery - Joomla! extension by www.joomla.it" label="Testo immagini" rows="5" cols="30" description="Testo immagini desc"/>
-			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Tilt Viewer Settings&lt;/div&gt;" label="" description="" />			
+			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Cooliris Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
 		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
 		<param name="framecolor" type="colorpicker" class="color {hash:true,required:false}" default="#FFFFFF" size="10" label="Colore bordo immagini" description="Colore bordo immagini desc" />
@@ -58,11 +58,15 @@
           <option value="1">Right</option>
           <option value="2">Inherit</option>
         </param>
-			
 		<param name="downloads" type="radio" default="0" label="TESTO IMMAGINI" description="TESTO IMMAGINI DESC2" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
+		<param name="immaginesfondo" type="text" default="" label="IMMAGINE SFONDO" size="40" description="IMMAGINE SFONDO DESC"/>
+		<param name="larghezzaant" type="text" default="" label="LARGHEZZA ANTEPRIMA" size="4" description="LARGHEZZA ANTEPRIMA DESC"/>
+		<param name="altezzaant" type="text" default="" label="ALTEZZA ANTEPRIMA" size="4" description="ALTEZZA ANTEPRIMA DESC"/>
+		<param name="distanzaoriz" type="text" default="" label="DISTANZA ORIZZONTALE" size="4" description="DISTANZA ORIZZONTALE DESC"/>
+		<param name="distanzavert" type="text" default="" label="DISTANZA VERTICALE" size="4" description="DISTANZA VERTICALE DESC"/>
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Debug Settings&lt;/div&gt;" label="" description="" />		
 		<param name="modifiche" type="radio" default="0" label="Data e Ora modifiche" description="Data e Ora modifiche desc" >
           <option value="0">No</option>

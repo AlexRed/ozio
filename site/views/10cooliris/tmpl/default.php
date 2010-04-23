@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					feed: "api://www.flickr.com/<?php if ( $this->user_id != '' ) : ?>?user=<?php echo $this->user_id ?><?php else: ?><?php if ( $this->group_id != '' ) : ?>?group=<?php echo $this->group_id ?><?php else: ?><?php if ( $this->set_id != '' ) : ?>?album=<?php echo $this->set_id ?><?php else: ?><?php if ( $this->text != '' ) : ?>?search=<?php echo $this->text ?><?php else: ?><?php endif; ?><?php endif; ?><?php endif; ?><?php endif; ?>"};
 		<?php else: ?>
 		<?php if  	  ( $this->xml_mode == 0 ) : ?>
-					feed: "<?php echo JURI::root() ?>components/com_oziogallery2/skin/cooliris/xml/cooliris_<?php echo $this->nomexml ?>.ozio&numRows=<?php echo $this->rows ?>&backgroundColor=0x<?php echo $this->bkgndretro ?>&backgroundImage=&showEmbed=false&glowColor=0x<?php echo $this->framecolor ?>&showDescription=<?php echo $this->download ?>"}; 
+					feed: "<?php echo JURI::root() ?>components/com_oziogallery2/skin/cooliris/xml/cooliris_<?php echo $this->nomexml ?>.ozio&numRows=<?php echo $this->rows ?>&backgroundColor=0x<?php echo $this->bkgndretro ?>&backgroundImage=<?php echo $this->immaginesfondo ?>&showEmbed=false&glowColor=0x<?php echo $this->framecolor ?>&showDescription=<?php echo $this->download ?>&cellWidth=<?php echo $this->larghezzaant ?>&cellHeight=<?php echo $this->altezzaant ?>&cellSpacingX=<?php echo $this->distanzaoriz ?>&cellSpacingY=<?php echo $this->distanzavert ?>"}; 
 		<?php else: ?>
 					feed: "<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>"};
 		<?php endif; ?>
