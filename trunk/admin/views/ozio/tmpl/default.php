@@ -280,6 +280,8 @@ JHTML::_('behavior.modal');
 		- <a href="http://imagin.ro" target='blank'>Imagin</a> - Design/Development by <a href="http://ralcr.com/" target='blank'>Baluta Cristian</a>
 		<br />
 		- <a href="http://www.flashnifties.com" target='blank'>Mediagallery</a> - Design/Development by <a href="http://www.flashnifties.com" target='blank'>FlashNifties.com</a>
+		<br />
+		- <a href="www.cooliris.com" target='blank'>Cooliris</a> - Design/Development by Cooliris, Inc.
 		<br /><br />
 		Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 		Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
