@@ -49,6 +49,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php endif; ?>
 			so.addVariable("stageAlign", "TL");
 			so.addVariable("stageScaleMode", "noScale");
+/**			so.addParam("wmode", "transparent"); */
 			so.write("flashcontent");
 		</script> 
    </td></tr></table>
