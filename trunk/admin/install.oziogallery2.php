@@ -99,7 +99,7 @@ function com_install()
 	jimport('joomla.filesystem.file');
 	jimport('joomla.filesystem.folder');
 
-	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'plugins'.DS.'ozio.xm', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.ozio')){
+	if(!JFile::copy(JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_oziogallery2'.DS.'plugins'.DS.'ozio.xm', JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.xml')){
 		echo JText::_('<b>Failed</b> to copy plugin xml file<br />');
 	}
 
