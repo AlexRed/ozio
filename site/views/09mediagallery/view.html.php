@@ -576,10 +576,9 @@ elseif  ( $xml_mode == 1 ) :
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  manualxmlname :     '.$manualxmlname  .'</pre>';
 endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  columns :   ' .$columns .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  rows :   ' .$rows .'</pre>';				
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  framecolor :     #'.$framecolor  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  rows :   ' .$rows .'</pre>';
 		
 
 	
@@ -598,7 +597,6 @@ endif;
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
-		$this->assignRef('framecolor' , 			$framecolor);
 			
 		$this->assignRef('columns' , 				$columns);
 		$this->assignRef('rows' , 					$rows);					
