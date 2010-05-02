@@ -50,9 +50,17 @@
           <option value="1">Yes</option>
         </param>
 		<param name="originalsizetxt" type="text" default="Original size" label="Original size text" size="25" description="Original size text DESC" />
+		<param name="style" type="list" default="0" label="STYLE GALLERIA" description="STYLE GALLERIA DESC" >
+          <option value="0">Black</option>
+          <option value="1">White</option>
+        </param>	
 		<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Mediagallery  Settings&lt;/div&gt;" label="" description="" />			
 		<param name="width" type="text" default="640" label="Larghezza" size="4" description="Larghezza Desc" />
-		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />	
+		<param name="height" type="text" default="480" label="Altezza" size="4" description="Altezza Desc" />
+		<param name="behind" type="radio" default="0" label="BEHIND" description="BEHIND DESC" >
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </param>
 		<param name="table" type="list" default="2" label="Allineamento tabella" description="Allineamento tabella desc" >
           <option value="0">Left</option>
           <option value="1">Right</option>
