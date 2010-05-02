@@ -57,6 +57,7 @@ class OzioGalleryView10Cooliris extends JView
 		$altezzaant			= $params->def('altezzaant');
 		$distanzaoriz		= $params->def('distanzaoriz');
 		$distanzavert		= $params->def('distanzavert');
+		$titoloimg 			= (int) $params->def('titoloimg', 0);
 		
 		$framecolor 		= str_replace( '#', '', $framecolor );
 		$bkgndretro 		= str_replace( '#', '', $bkgndretro );
@@ -204,14 +205,16 @@ class OzioGalleryView10Cooliris extends JView
 		
 		if(count($files)) {
 		
-			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
+			if($ordinamento == 0 OR $ordinamento == 2 ) {  
 					sort($files);  
-			}else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
+			}else if ($ordinamento == 1 OR $ordinamento == 3 ) {  
 					rsort($files);
             }else {  
 					shuffle($files);			
 			}	
-				
+			
+					
+					
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>'."\n";
@@ -220,6 +223,9 @@ class OzioGalleryView10Cooliris extends JView
 			
 			$string .= '<channel>'."\n";			    	
 			$n = count($files);
+			
+			if ($titoloimg == 1) {
+			
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
@@ -234,6 +240,23 @@ class OzioGalleryView10Cooliris extends JView
 						$string .= "\n";						
 						$string .= '</item>'."\n";						
 			}	
+			}
+			else {
+			
+			for ($i=0; $i<$n; $i++)
+			{
+				$row 	 = &$files[$i];
+						$string .= '<item>'."\n";
+						$string .= '<title></title>'."\n";
+						$string .= '<media:description>'.$retrotext.'</media:description>'."\n";
+						$string .= '<link>' . $dir_images .'/'. $row[1] . '</link>'."\n";
+						$string .= '<media:thumbnail url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";	
+						$string .= '<media:content url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";						
+						$string .= '</item>'."\n";						
+			}	
+			}
 			$string .= '</channel>'."\n";			
 			$string .= '</rss>'."\n";
 			fwrite($filehandle, $string);
@@ -321,6 +344,7 @@ endif;
 		$this->assignRef('rows' , 					$rows);
 		$this->assignRef('downloads' , 				$downloads);
 		$this->assignRef('download' , 				$download);
+		$this->assignRef('titoloimg' , 				$titoloimg);
 
 		$this->assignRef('xml_mode' , 				$xml_mode);
 		$this->assignRef('flickr' , 				$flickr);
