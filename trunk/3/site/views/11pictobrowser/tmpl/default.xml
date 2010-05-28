@@ -50,7 +50,7 @@
 			<field name="source" type="list" 
 			description="COM_OZIOGALLERY3_SOURCE_DESC" 			
 			label="COM_OZIOGALLERY3_SOURCE" 
-			default="" 
+			default="1" 
 			>
 				<option value="0">COM_OZIOGALLERY3_SET</option>
 				<option value="1">COM_OZIOGALLERY3_KEYWORDS</option>
@@ -61,7 +61,7 @@
 			description="COM_OZIOGALLERY3_KEYWORDS_DESC"
 			label="COM_OZIOGALLERY3_KEYWORDS"
 			size="28" 
-			default="" 			
+			default="2008, perna" 			
 			/>				
 			
 		</fieldset>
