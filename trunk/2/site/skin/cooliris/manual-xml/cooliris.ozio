@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"
+xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<item>
+<title>info</title>
+<media:description>Ozio Gallery - Joomla! extension by www.joomla.it</media:description>
+<link>http://www.exemple.xx/images/oziogallery2/img1.jpg</link>
+<media:thumbnail url="http://www.exemple.xx/images/oziogallery2/img1.jpg"/>
+<media:content url="http://www.exemple.xx/images/oziogallery2/img1.jpg"/>
+</item>
+<item>
+<title>info</title>
+<media:description>Ozio Gallery - Joomla! extension by www.joomla.it</media:description>
+<link>http://www.exemple.xx/images/oziogallery2/img2.jpg</link>
+<media:thumbnail url="http://www.exemple.xx/images/oziogallery2/img2.jpg"/>
+<media:content url="http://www.exemple.xx/images/oziogallery2/img2.jpg"/>
+</item>
+</channel>
+</rss>

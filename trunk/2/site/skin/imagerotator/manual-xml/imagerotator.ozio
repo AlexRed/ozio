@@ -1,0 +1,22 @@
+﻿<playlist version="1.0" encoding="UTF-8">
+<trackList>
+<photo>
+<title>Image 1</title>
+<creator></creator>
+<location>http://www.exemple.xx/images/oziogallery2/img1.jpg</location>
+<info></info>
+</photo>
+<photo>
+<title>Image 2</title>
+<creator></creator>
+<location>http://www.exemple.xx/images/oziogallery2/img2.jpg</location>
+<info></info>
+</photo>
+<photo>
+<title>Image 3</title>
+<creator></creator>
+<location>http://www.exemple.xx/images/oziogallery2/img3.jpg</location>
+<info></info>
+</photo>
+</trackList>
+</playlist>
