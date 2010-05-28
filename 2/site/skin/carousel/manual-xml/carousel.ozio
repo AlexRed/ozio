@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+	fhShow Carousel 1.5 configuration file
+	Please visit http://www.flshow.net/ for more info
+-->
+
+<slide_show>
+	<options>
+		<background>transparent</background>		<!-- #RRGGBB, transparent -->
+	<interaction>
+	<speed>50</speed>  <!-- [-360,360] degrees per second -->
+	</interaction>
+	<titles>
+	<style>
+	font-size: 14px; font-family: Verdana, _serif; color: #003366;
+	</style>
+	</titles>
+	</options>
+
+	<photo href="http://www.joomla.it/" target="_self" title="www.joomla.it">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_self">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_blank">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+	<photo href="http://www.joomla.it/" target="_blank">http://www.exemple.xx/images/oziogallery2/img.jpg</photo>
+</slide_show>

@@ -1,0 +1,21 @@
+/* Toolbar */
+
+.icon-48-logo {
+    background: url(../images/logo.png) no-repeat left;
+}
+
+.icon-32-settings
+{
+	background: url(../images/settings.png) no-repeat left;
+}
+
+.icon-32-faq
+{
+	background: url(../images/help.png) no-repeat left;
+}
+
+.icon-32-reset
+{
+	background: url(../images/settings.png) no-repeat left;
+}
+
