@@ -1,0 +1,98 @@
+<?php
+/**
+* This file is part of Ozio Gallery 3
+*
+* Ozio Gallery 3 is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* Foobar is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*
+* @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
+*/
+
+/*
+ original name
+ final name
+ new width
+ new height
+ kind of resize:"fill" (resize the image to fill the new width and new height)
+				"fit" (resize the image to fit the new width and height.
+						one of them might not be fill completely)
+*/
+function resize ($path, $new_path, $w, $h, $kind) {
+	$src_img = imagecreatefromjpeg($path);
+	// $system = explode(".", $original_name);
+	// if (preg_match("/jpg|jpeg|JPG/", $system[1]) ) $src_img=imagecreatefromjpeg($path.$original_name);
+	// if (preg_match("/png|PNG/", $system[1]) ) $src_img=imagecreatefrompng($path.$original_name);
+	
+	$src_w = imageSX($src_img);
+	$src_h = imageSY($src_img);
+	$src_x = 0; // source x and y (fit: 0,0), (fill: recalculate to center)
+	$src_y = 0;
+	
+	$dst_w = $w; // destination width and height
+	$dst_h = $h;
+	$dst_x = 0; // destination x and y: 0,0 all the time
+	$dst_y = 0;
+	
+	
+	// Resize only if original is bigger than the new desired size
+	if ($src_w>$w || $src_h>$h) {
+		
+		if ($src_w/$w > $src_h/$h) {
+			// larger on width axis
+			if ($kind=="fill") {
+				// resize then crop in center
+				$org_w = $src_w;//original w,h use when calculating the new x,y with the new w,h
+				$org_h = $src_h;
+				//
+				$src_h = $org_h;
+				$src_w = $org_h * $dst_w/$dst_h;
+			}
+			else {
+				// resize the image to fit the smaller border
+				$dst_w = $w;
+				$dst_h = $src_h * $w/$src_w;
+			}
+		}
+		else {
+			// larger on height axis
+			if ($kind=="fill") {
+				// resize then crop in center
+				$org_w = $src_w;//original w,h use when calculating the new x,y with the new w,h
+				$org_h = $src_h;
+				//
+				$src_w = $org_w;
+				$src_h = $org_w * $dst_h/$dst_w;
+			}
+			else {
+				$dst_h = $h;
+				$dst_w = $src_w * $h/$src_h;
+			}
+		}
+		
+		// copy pixels from center
+		if ($kind=="fill") {
+			$src_x = ($org_w - $src_w)/2;
+			$src_y = ($org_h - $src_h)/2;
+		}
+		
+		
+		$dst_img = ImageCreateTrueColor($dst_w, $dst_h);
+		// In other words, imagecopyresampled() will take an rectangular area from src_image of width src_w and height src_h at position (src_x ,src_y ) and place it in a rectangular area of dst_image of width dst_w and height dst_h at position (dst_x ,dst_y ).
+		imagecopyresampled($dst_img, $src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h); 
+		imagejpeg($dst_img, $new_path, 90);
+		
+		imagedestroy($dst_img);
+		imagedestroy($src_img);
+	}
+}
