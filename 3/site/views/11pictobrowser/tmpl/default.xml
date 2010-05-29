@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_PICTOBROWSER_SKIN">
+	<layout title="COM_OZIOGALLERY3_11PICTOBROWSER_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_PICTOBROWSER_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_11PICTOBROWSER_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
-<fields name="params">
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 
 		<fieldset
-        name="cartella"
+        name="flickr"
         label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
 		>	
-		
-			<field name="gallerymode" type="list"
-			description="COM_OZIOGALLERY3_MOD_DESC"
-			label="COM_OZIOGALLERY3_MOD"
+
+			<field name="source" type="list" 
+			description="COM_OZIOGALLERY3_SOURCE_DESC" 			
+			label="COM_OZIOGALLERY3_SOURCE" 
+			default="" 
 			>
-				<option value="0">COM_OZIOGALLERY3_FLI</option>
-				<option value="1">COM_OZIOGALLERY3_PIC</option>
-			</field>		
-		
-		</fieldset>
-		
-		<fieldset
-        name="flickr"
-        label="COM_OZIOGALLERY3_IMPORTANT_FLICKR_SETTINGS"
-		>				
-	
+				<option value="0">COM_OZIOGALLERY3_SET</option>
+				<option value="1">COM_OZIOGALLERY3_KEYWORDS</option>
+				<option value="2">COM_OZIOGALLERY3_GROUPS</option>				
+			</field>
+			
 			<field name="user_id" type="text" 
 			description="COM_OZIOGALLERY3_ID_UTENTE_FLICKR_DESC" 			
 			label="COM_OZIOGALLERY3_ID_UTENTE_FLICKR" 
 			size="30" 
 			default="26100973@N05"
+			required="true"			
 			/>
 			
 			<field name="user_name" type="text" 
@@ -39,67 +36,45 @@
 			label="COM_OZIOGALLERY3_NOME_UTENTE_FLICKR" 
 			size="30" 
 			default="oziogallery"
+			required="true"			
 			/>			
 			
 			<field name="set_id" type="text"
 			description="COM_OZIOGALLERY3_ID_SETS_FLICKR_DESC" 			
 			label="COM_OZIOGALLERY3_ID_SETS_FLICKR" 
-			default="72157604894026071"
-			/>
+			default="72157604894160345"
+			size="32"			
+			/>			
 			
-			<field name="source" type="list" 
-			description="COM_OZIOGALLERY3_SOURCE_DESC" 			
-			label="COM_OZIOGALLERY3_SOURCE" 
-			default="1" 
-			>
-				<option value="0">COM_OZIOGALLERY3_SET</option>
-				<option value="1">COM_OZIOGALLERY3_KEYWORDS</option>
-				<option value="2">COM_OZIOGALLERY3_GROUPS</option>				
-			</field>
+			<field name="set_name" type="text"
+			description="COM_OZIOGALLERY3_SETNAME_DESC"
+			label="COM_OZIOGALLERY3_SETNAME"
+			size="28" 
+			default="Rally Ciocco 2008" 			
+			/>				
 
 			<field name="gname" type="text"
 			description="COM_OZIOGALLERY3_KEYWORDS_DESC"
 			label="COM_OZIOGALLERY3_KEYWORDS"
 			size="28" 
-			default="2008, perna" 			
+			default="" 			
+			/>		
+
+			<field name="group_name" type="text"
+			description="COM_OZIOGALLERY3_GROUPNANE_DESC"
+			label="COM_OZIOGALLERY3_GROUPNANE"
+			size="28" 
+			default="" 			
+			/>		
+
+			<field name="group_id" type="text"
+			description="COM_OZIOGALLERY3_GROUPID_DESC"
+			label="COM_OZIOGALLERY3_GROUPID"
+			size="28" 
+			default="" 			
 			/>				
 			
 		</fieldset>
-		
-		<fieldset
-        name="picasa"
-        label="COM_OZIOGALLERY3_IMPORTANT_PICASA_SETTINGS"
-		>				
-	
-			<field name="user_namep" type="text" 
-			description="COM_OZIOGALLERY3_NOME_UTENTE_PICASA_DESC" 			
-			label="COM_OZIOGALLERY3_NOME_UTENTE_PICASA" 
-			size="30" 
-			/>			
-
-			<field name="sourcep" type="list" 
-			description="COM_OZIOGALLERY3_SOURCE_DESC" 			
-			label="COM_OZIOGALLERY3_SOURCE" 
-
-			>
-				<option value="0">COM_OZIOGALLERY3_ALBUM</option>
-				<option value="1">COM_OZIOGALLERY3_TAGS</option>
-			</field>
-			
-			<field name="album_id" type="text"
-			description="COM_OZIOGALLERY3_ALBUMID_DESC"
-			label="COM_OZIOGALLERY3_ALBUMID"
-			size="28" 
-			/>				
-
-			<field name="gnamep" type="text"
-			description="COM_OZIOGALLERY3_KEYWORDS_DESC"
-			label="COM_OZIOGALLERY3_KEYWORDS"
-			size="28" 
-			/>
-
-			
-		</fieldset>		
 		
 		<fieldset name="basic">
 		
@@ -228,11 +203,12 @@
 				<option value="1">COM_OZIOGALLERY3_YES</option>
 			</field>
 			
-			<field name="bg" type="text"
+			<field name="bg" type="colorpicker" 
+			class="color {hash:true,required:false}" 
+			default="#FFFFFF" 
 			description="COM_OZIOGALLERY3_BG_DESC"
 			label="COM_OZIOGALLERY3_BG"
 			size="8" 
-			default="#FFFFFF" 			
 			/>				
 
 			<field name="bgalpha" type="text"

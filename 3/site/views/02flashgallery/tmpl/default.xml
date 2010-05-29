@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_FLASHGALLERY_SKIN">
+	<layout title="COM_OZIOGALLERY3_02FLASHGALLERY_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_FLASHGALLERY_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_02FLASHGALLERY_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
-	<fields name="params">
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+	
 		<fieldset
         name="cartella"
         label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
@@ -18,7 +20,13 @@
 			default="images/oziogallery3" 			
 			/>
 			
-		</fieldset>	
+		<field name="reset" type="flashgalleryreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>				
+			
+		</fieldset>
 		
 		<fieldset name="basic">
 		

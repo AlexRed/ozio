@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_IMAGEROTATOR_SKIN">
+	<layout title="COM_OZIOGALLERY3_05IMAGEROTATOR_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_IMAGEROTATOR_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_05IMAGEROTATOR_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
-<fields name="params">
-
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+	
 		<fieldset
         name="cartella"
         label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
@@ -18,6 +19,12 @@
 			size="40" 
 			default="images/oziogallery3" 			
 			/>
+			
+		<field name="reset" type="imagerotatorreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>				
 			
 		</fieldset>
 
@@ -253,7 +260,7 @@
 			default="" 
 			label="COM_OZIOGALLERY3_Id_Utente_flickr" 
 			size="20" 
-			description="COM_OZIOGALLERY3_Id_Utente_flickr_desc" 
+			description="COM_OZIOGALLERY3_Id Utente_flickr_desc" 
 			/>		
 
 		</fieldset>		

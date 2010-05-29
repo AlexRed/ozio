@@ -67,9 +67,10 @@ JHTML::_('behavior.modal');
 					<th></th>
 					<th></th>
 					<th><?php echo JText::_( 'COM_OZIOGALLERY3_NAME' )?></th>
+					<th><?php echo JText::_( 'Gallery Skin' )?></th>					
 					<th><?php echo JText::_( 'COM_OZIOGALLERY3_PLUGIN_CODE' )?></th>						
 					<th><?php echo JText::_( 'COM_OZIOGALLERY3_MENU_GROUP' )?></th>	
-					<th><?php echo JText::_( 'COM_OZIOGALLERY3_RESET_XML' )?></th>					
+					<th><?php echo JText::_( 'COM_OZIOGALLERY3_XML' )?></th>					
 				<?php
 					$k = 0;
 					$n = count($this->pubblicate);
@@ -96,34 +97,67 @@ JHTML::_('behavior.modal');
 					$pcode 		= $row->link .'&Itemid='. $row->id;
 					$pcode 		= str_replace( 'index.php?option=com_oziogallery3&view=', '', $pcode );
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
-					$img1		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-menu.png';					
+					$img1		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-menu.png';
+
+						if ($row->link == 'index.php?option=com_oziogallery3&view=01tilt3d') :	
+						$image	= 'logotilt.gif'; 			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=02flashgallery') :
+						$image	= 'logoflashgallery.gif';		
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=03imagin') :
+						$image	= 'logoimagin.gif';			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=04carousel') :		
+						$image	= 'logocarousel.gif';			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=05imagerotator') :
+						$image	= 'logorotator.gif'; 			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=06accordion') : 
+						$image	= 'logoaccordion.gif';		
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=07flickrslidershow') : 
+						$image	= 'logoflic.gif'; 			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=08flickrphoto') : 
+						$image	= 'logoflic.gif';		
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=09mediagallery') : 
+						$image	= 'logomediagallery.gif';			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=10cooliris') : 
+						$image	= 'logocooliris.gif'; 			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=11pictobrowser') : 
+						$image	= 'logoflickr.gif';		
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=12pictobrowser2') : 
+						$image	= 'logopicasa.gif';			
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=14pupngoo') : 
+						$image	= 'logogoogle.gif';			
+					endif;	
 				?>
 					<tr>
 						<td width="16">
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
-							<?php echo '<a href="'. $link .'"> '?>
+							<a href="<?php echo $link ?>"> 
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
 						</td>							
 						<td width="16">							
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_PREVIEW' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_GALLERY_PREVIEW' );?>">
-								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"							
+								<a href="<?php echo $gall.'&amp;tmpl=component'; ?>" style="cursor:pointer" class="modal" rel="{handler: 'iframe', size: {x: 850, y: 580}}"	>						
 									<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img1; ?>">
 							</span> 
 						</td>
-                        <td width="36%">						
+                        <td width="37%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
 							<span style="font-size:13px; padding: 0 0 0 5px; margin-top:-3px">
-								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
+								<a href="<?php echo $link ?>"><?php echo htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
 							</span>							
 						</td>
-                        <td width="20%">						
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_CONTENT_PLUGIN_CODE' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_COPY_AND_PASTE_THIS_CODE_IN_THE_ARTICLES' );?>">
-								<input class="text_area" type="text" size="23" value="{oziogallery <?php echo $row->id; ?>}" />
-							</span>							
+						<td width="75">							
+									<img style="margin-top:4px; padding:0 6px 0 4px; width: 65px;" src="<?php echo JURI::root().'administrator/components/com_oziogallery3/assets/images/'.$image; ?>">
+						</td>						
+                        <td width="18%">
+							<?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio'.DS.'ozio.php') ? 
+							'<span class="editlinktip hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_CONTENT_PLUGIN_CODE' ) .' - '. $row->title .' :: '. JText::_( 'COM_OZIOGALLERY3_COPY_AND_PASTE_THIS_CODE_IN_THE_ARTICLES' ) .'">
+								<input class="text_area" type="text" size="20" value="{oziogallery '. $row->id .'}" />
+							</span>' :	
+					'<span class="editlinktip hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_CONTENT_PLUGIN_CODE_NO' ) .' :: '. JText::_( 'COM_OZIOGALLERY3_COPY_AND_PASTE_THIS_CODE_IN_THE_ARTICLES_NO' ) .'"><strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_NOT_INSTALLED' ) .'</font></strong>'; ?>					
 						</td>						
                         <td width="25%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->nomemenu;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_GROUP' );?>">
@@ -133,11 +167,13 @@ JHTML::_('behavior.modal');
 							</span>	
 							</span>							
 						</td>
-						<td width="13%">							
+						<td width="5%">							
 							<div class="button2-left">
 						<?php if (($row->link == 'index.php?option=com_oziogallery3&view=07flickrslidershow') 
 							   || ($row->link =='index.php?option=com_oziogallery3&view=08flickrphoto') 
 							   || ($row->link =='index.php?option=com_oziogallery3&view=11pictobrowser')
+							   || ($row->link =='index.php?option=com_oziogallery3&view=12pictobrowser2')
+							   || ($row->link =='index.php?option=com_oziogallery3&view=14pupngoo')							   
 							   || ($row->link =='index.php?option=com_oziogallery3&view=03imagin')): ?>
 						    <?php else: ?>
 								<div class="blank"><a class="modal" title="<?php echo JText::_('COM_OZIOGALLERY3_RESET_XML') ?>"  href="<?php echo $link3 ?>" rel="{handler: 'iframe', size: {x: 450, y: 115}}"><?php echo JText::_('COM_OZIOGALLERY3_RESET') ?></a>
@@ -165,13 +201,14 @@ JHTML::_('behavior.modal');
 					$n = count($this->nonpubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->nonpubblicate[$i];
+
 					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. $row->id;
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 				?>
 					<tr>
 						<td width="20">
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
-							<?php echo '<a href="'. $link .'"> '?>
+							<a href="<?php echo $link ?>">
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
@@ -179,7 +216,7 @@ JHTML::_('behavior.modal');
                         <td width="98%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
 							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
-								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
+								<a href="<?php echo $link ?>"><?php echo htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
 							</span>							
@@ -211,7 +248,7 @@ JHTML::_('behavior.modal');
 					<tr>
 						<td width="20">
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
-							<?php echo '<a href="'. $link .'"> '?>
+							<a href="<?php echo $link ?>">
 								<img style="margin-top:4px; padding:0 6px 0 4px;" src="<?php echo $img; ?>">
 							 </a> 
 							</span> 
@@ -219,7 +256,7 @@ JHTML::_('behavior.modal');
                         <td width="98%">						
 							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_OZIOGALLERY3_EDIT' ) .' - '. $row->title;?>::<?php echo JText::_( 'COM_OZIOGALLERY3_CLICK_TO_EDIT_THE_MENU_ITEM' );?>">
 							<span style="font-size:14px; padding: 0 0 0 5px; margin-top:-3px">
-								<?php echo '<a href="'. $link .'"> '  . htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
+								<a href="<?php echo $link ?>"><?php echo htmlspecialchars($row->title, ENT_QUOTES, 'UTF-8'); ?>
 								</a>
 							</span>	
 							</span>							
@@ -356,6 +393,8 @@ JHTML::_('behavior.modal');
 		- <a href="http://www.flashnifties.com" target='blank'>Mediagallery</a> - Design/Development by <a href="http://www.flashnifties.com" target='blank'>FlashNifties.com</a>
 		<br />
 		- <a href="http://www.cooliris.com" target='blank'>Cooliris</a> - Design/Development by Cooliris, Inc.
+		<br />
+		- <a href="http://www.joomlab.it" target='blank'>Pup 'n Goo</a> - Il cinquino Blu Production.			
 		<br />
 		- <a href="http://www.pictobrowser.com" target='blank'>PictoBrowser</a> - The PictoBrowser Team.		
 		<br /><br />

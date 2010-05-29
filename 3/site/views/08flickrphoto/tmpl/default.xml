@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_FLICKR_PHOTO_SKIN">
+	<layout title="COM_OZIOGALLERY3_08FLICKRPHOTO_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_FLICKR_PHOTO_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_08FLICKRPHOTO_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
+	</layout>	
+	
 <fields name="params">
 
 		<fieldset
