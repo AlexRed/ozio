@@ -18,12 +18,10 @@
 * @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 */
+defined('_JEXEC') or die;
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-$params =& JComponentHelper::getParams('com_oziogallery3');
-require_once (JPATH_COMPONENT.DS.'controller.php');
-$classname  = 'OzioGalleryController';
-$controller = new $classname( );
-$controller->execute( JRequest::getVar('task', null, 'default', 'cmd') );
+jimport('joomla.application.component.controller');
+$controller = JController::getInstance('OzioGallery');
+$controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
 ?>
