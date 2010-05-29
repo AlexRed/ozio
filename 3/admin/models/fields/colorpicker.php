@@ -25,7 +25,7 @@ class JFormFieldColorpicker extends JFormField
 {
 	public $type = 'Colorpicker';
 
-	protected function getInput()
+	protected function getInput()	
 	{
 
 		JHTML::script('administrator/components/com_oziogallery3/models/fields/media/jscolor.js');		
@@ -38,11 +38,11 @@ class JFormFieldColorpicker extends JFormField
 			$attributes['class'] = (string) $this->element['class'];
 		}		
 
-        $this->value = htmlspecialchars(html_entity_decode($this->value, ENT_QUOTES), ENT_QUOTES);
+		$this->value = htmlspecialchars(html_entity_decode($this->value, ENT_QUOTES), ENT_QUOTES);
 				
 		$html = '';
 		
-		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_CHANGE' ).'::'. JText::_( 'COM_OZIOGALLERY3_CHANGE_DESC' ).'"><input type="text" name="'.$type.'['.$this->name.']" id="'.$type.$this->name.'" value="'.$this->value.'" class="'.$this->element['class'].'" size="'.$this->element['size'].'" /></span>';
+		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_CHANGE' ).'::'. JText::_( 'COM_OZIOGALLERY3_CHANGE_DESC' ).'"><input type="text" name="'.$this->name.'" id="'.$this->name.'" value="'.$this->value.'" class="'.$this->element['class'].'" size="'.$this->element['size'].'" /></span>';
 		
 		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'::'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'"><img border="0" src="'.JURI::root().'administrator/components/com_oziogallery3/models/fields/media/tick.png" style="margin-left:3px; cursor:pointer;" onclick="document.getElementById(\''.$type.$this->name.'\').value=\'\'; document.getElementById(\''.$type.$this->name.'\').style.backgroundColor=\'#fff\';" /></span>';
 		
