@@ -37,38 +37,27 @@ class OzioGalleryView11PictoBrowser extends JView
 		
 		$larghezza 			= $params->def('width');
 		$altezza 			= $params->def('height');
-		$gnamep 			= $params->def('gnamep');		
 		$gname 				= $params->def('gname');
 		$user_id 			= $params->def('user_id', null);
 		$user_name 			= $params->def('user_name', null);
-		$user_namep 		= $params->def('user_namep', null);		
 		$set_id 			= $params->def('set_id', null);
-		$album_id			= $params->def('album_id', null);
+		$group_id 			= $params->def('group_id', null);		
+		$set_name 			= $params->def('set_name', null);		
+		$group_name			= $params->def('group_name', null);
 		$bg					= $params->def('bg', '#FFFFFF');
 		$bgalpha			= (int) $params->def('bgalpha', '80');
 		$offset				= (int) $params->def('offset');		
 		$debug 				= (int) $params->def('debug');
 		$bg 				= str_replace( '#', '', $bg );
 
-		switch ($params->get( 'gallerymode' ))
-		{
-			case '0': $gallerymode		= '0'; 		break;
-			case '1': $gallerymode		= '1';		break;
-		}
-
 		switch ($params->get( 'source' ))
 		{
-			case '0': $source		= 'set'; 			break;
+			case '0': $source		= 'sets'; 			break;
 			case '1': $source		= 'keyword';		break;
 			case '2': $source		= 'groups';			break;			
 		}	
 
-		switch ($params->get( 'sourcep' ))
-		{
-			case '0': $sourcep		= 'album'; 			break;
-			case '1': $sourcep		= 'tag';			break;
-		}			
-		
+	
 		switch ($params->get( 'rotatoralign' ))
 		{
 			case '0': $float		= 'left'; 		break;
@@ -170,6 +159,9 @@ class OzioGalleryView11PictoBrowser extends JView
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_namep :     '.$user_namep  .'</pre>';		
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_id :   ' .$user_id .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  set_id :   ' .$set_id .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  set_name :   ' .$set_name .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  group_id :   ' .$group_id .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  group_name :   ' .$group_name .'</pre>';		
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  album_id :   ' .$album_id .'</pre>';		
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gname :   ' .$gname  .'</pre>';	
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gnamep :   ' .$gnamep  .'</pre>';			
@@ -196,10 +188,10 @@ class OzioGalleryView11PictoBrowser extends JView
 	
 		$this->assignRef('user_id' , 				$user_id);
 		$this->assignRef('user_name' , 				$user_name);
-		$this->assignRef('user_namep' , 			$user_namep);		
 		$this->assignRef('set_id' , 				$set_id);
-		$this->assignRef('album_id' , 				$album_id);		
-		$this->assignRef('gnamep' , 				$gnamep);		
+		$this->assignRef('set_name' , 				$set_name);	
+		$this->assignRef('group_id' , 				$group_id);
+		$this->assignRef('group_name' , 			$group_name);			
 		$this->assignRef('gname' , 					$gname);
 		$this->assignRef('titles' , 				$titles);	
 		$this->assignRef('note' , 					$note);
@@ -212,7 +204,6 @@ class OzioGalleryView11PictoBrowser extends JView
 		$this->assignRef('bg' , 					$bg);	
 		$this->assignRef('offset' , 				$offset);		
 		$this->assignRef('source' , 				$source);
-		$this->assignRef('sourcep' , 				$sourcep);		
 		$this->assignRef('table' , 					$table);
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);			

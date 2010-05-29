@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_CAROUSEL_SKIN">
+	<layout title="COM_OZIOGALLERY3_04CAROUSEL_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_CAROUSEL_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_04CAROUSEL_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
-<fields name="params">
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 
 		<fieldset
         name="cartella"
@@ -18,6 +19,12 @@
 			size="40" 
 			default="images/oziogallery3" 			
 			/>
+			
+		<field name="reset" type="carouselreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>				
 			
 		</fieldset>
 
@@ -171,7 +178,7 @@
 			<field name="titolo" type="radio" 
 			default="1" 
 			label="COM_OZIOGALLERY3_Titolo_immagine" 
-			description="COM_OZIOGALLERY3_Show/hide_image_Title" 
+			description="COM_OZIOGALLERY3_Show/hide_image _Title" 
 			>
 				  <option value="0">COM_OZIOGALLERY3_NO</option>
 				  <option value="1">COM_OZIOGALLERY3_YES</option>

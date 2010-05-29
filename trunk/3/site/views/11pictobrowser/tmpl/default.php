@@ -38,37 +38,29 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
    <table align="<?php echo $this->table ?>">
    <tr>  
 		<td align="<?php echo $this->table ?>">
-				<div id="oziopicto">Get the flash player here: http://www.adobe.com/flashplayer</div>
-				<script type="text/javascript" src="http://www.db798.com/pictobrowser/swfobject.js"></script>
+				<div id="oziopictoflickr">Get the flash player here: http://www.adobe.com/flashplayer</div>
+				<script type="text/javascript" src="<?php echo JURI::root() ?>components/com_oziogallery3/assets/js/15/swfobject.js"></script>
 				<script type="text/javascript"> 
-				<?php echo $this->gallerymode ?>
-				
-			<?php if ($this->gallerymode == 0): ?>				
 				var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery3/skin/pictobrowser/pictobrowser.swf", "PictoBrowser", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "8", "#<?php echo $this->bg?>"); 
 					so.addVariable("source", "<?php echo $this->source ?>");
-					so.addVariable("names", "<?php echo $this->gname ?>"); 
+<?php if ($this->source =='sets'): ?>
+					so.addVariable("names", "<?php echo $this->set_name ?>");
 					so.addVariable("userName", "<?php echo $this->user_name ?>"); 
 					so.addVariable("userId", "<?php echo $this->user_id ?>"); 
-			<?php if ($this->source=='0'): ?>
-					so.addVariable("ids", "<?php echo $this->gname ?>");
+					so.addVariable("ids", "<?php echo $this->set_id ?>");					
+<?php endif; ?>
+<?php if ($this->source =='keyword'): ?>
+					so.addVariable("names", "<?php echo $this->gname ?>");
+					so.addVariable("userName", "<?php echo $this->user_name ?>"); 
+					so.addVariable("userId", "<?php echo $this->user_id ?>"); 
+					so.addVariable("ids", "<?php echo $this->gname ?>");	
 			<?php endif; ?>
-			<?php if ($this->source=='1') :?>
-					so.addVariable("ids", "<?php echo $this->set_id ?>");
-			<?php endif; ?>
-			<?php if (($this->source!='0') && ($this->source!='1')): ?>
-					so.addVariable("ids", "<?php echo $this->set_id ?>");
-			<?php endif; ?>
-			<?php else: ?>			
-				var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery3/skin/pictobrowser/pictobrowserp.swf", "PictoBrowser", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "8", "#<?php echo $this->bg?>"); 			
-					so.addVariable("userName", "<?php echo $this->user_namep ?>");
-					so.addVariable("source", "<?php echo $this->sourcep ?>");
-			<?php if ($this->sourcep=='0'): ?>		
-					so.addVariable("names", "<?php echo $this->gnamep ?>");					
-					so.addVariable("albumId", "<?php echo $this->album_id ?>");
-			<?php else: ?>
-					so.addVariable("names", "<?php echo $this->gnamep ?>");
-			<?php endif; ?>				
-			<?php endif; ?>				
+<?php if ($this->source =='groups'): ?>
+					so.addVariable("names", "<?php echo $this->group_name ?>");
+					so.addVariable("userName", "<?php echo $this->user_name ?>"); 
+					so.addVariable("userId", "<?php echo $this->user_id ?>"); 
+					so.addVariable("ids", "<?php echo $this->group_id ?>");	
+<?php endif; ?>
 					so.addVariable("titles", "<?php echo $this->titles ?>"); 
 					so.addVariable("displayNotes", "<?php echo $this->note ?>"); 
 					so.addVariable("thumbAutoHide", "<?php echo $this->autohide ?>"); 
@@ -79,18 +71,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					so.addVariable("colorHexVar", "<?php echo $this->bg?>"); 
 					so.addVariable("initialScale", "<?php echo $this->scale?>"); 
 					so.addVariable("bgAlpha", "<?php echo $this->bgalpha?>"); 
-					so.write("oziopicto");	
+					so.write("oziopictoflickr");	
 				</script>		
-		
-<?php /*		
-		
-						<object width="<?php echo $this->larghezza ?>" height="<?php echo $this->altezza ?>" align="middle">
-						<param name="FlashVars" VALUE="userName=<?php echo $this->user_name ?>&userId=<?php echo $this->user_id ?>&ids=<?php echo $this->set_id ?>&titles=<?php echo $this->titles ?>&source=sets&titles=<?php echo $this->titles ?>&displayNotes=<?php echo $this->note ?>&thumbAutoHide=<?php echo $this->autohide ?>&imageSize=<?php echo $this->imagesize?>&vAlign=<?php echo $this->valign?>&displayZoom=<?php echo $this->zoom?>&vertOffset=0&initialScale=<?php echo $this->scale?>&bgAlpha=<?php echo $this->bgalpha?>"></param>
-						<param name="PictoBrowser" value="<?php echo JURI::root() ?>components/com_oziogallery3/skin/pictobrowser/pictobrowser.swf"></param>
-						<param name="scale" value="noscale"></param>
-						<param name="bgcolor" value="#DDDDDD">
-						</param><embed src="<?php echo JURI::root() ?>components/com_oziogallery3/skin/pictobrowser/pictobrowser.swf" FlashVars="userName=userName=<?php echo $this->user_name ?>&userId=<?php echo $this->user_id ?>&ids=<?php echo $this->set_id ?>&titles=<?php echo $this->titles ?>&source=sets&titles=<?php echo $this->titles ?>&displayNotes=<?php echo $this->note ?>&thumbAutoHide=<?php echo $this->autohide ?>&imageSize=<?php echo $this->imagesize?>&vAlign=<?php echo $this->valign?>&displayZoom=<?php echo $this->zoom?>&vertOffset=0&initialScale=<?php echo $this->scale?>&bgAlpha=<?php echo $this->bgalpha?>" loop="false" scale="noscale" bgcolor="<?php echo $this->bg?>" width="<?php echo $this->larghezza ?>" height="<?php echo $this->altezza?>" name="PictoBrowser" align="middle"></embed></object>
-*/ ?>						
 		</td>
 	</tr>
 </table>

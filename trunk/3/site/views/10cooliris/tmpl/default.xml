@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_OZIOGALLERY3_COOLIRIS_SKIN">
+	<layout title="COM_OZIOGALLERY3_10COOLIRIS_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_OZIOGALLERY3_OZIO_COOLIRIS_SKIN_TIP]]>
+			<![CDATA[COM_OZIOGALLERY3_10COOLIRIS_VIEW_DEFAULT_DESC]]>
 		</message>
-	</layout>
-	<fields name="params">
+	</layout>	
 	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+	
+
 		<fieldset
         name="cartella"
         label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+
 		>				
 	
 			<field name="folder" type="text"
@@ -18,8 +21,14 @@
 			size="40" 
 			default="images/oziogallery3" 			
 			/>
-
-		</fieldset>	
+			
+		<field name="reset" type="coolirisreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>				
+			
+		</fieldset>
 	
 		<fieldset name="basic">	
 			<field name="show_page_title" type="radio"

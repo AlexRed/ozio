@@ -68,22 +68,24 @@ class Com_OzioGallery3InstallerScript
 
 			}
 	
-		echo '<p>'. JText::_('COM_OZIOGALLERY3_INSTALL_SCRIPT') . '</p>';
+		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6! has been installed successfully</p>';
 	}
 
 	function uninstall($parent) 
 	{
 	
-		echo '<p>'. JText::_('COM_OZIOGALLERY3_UNINSTALL_SCRIPT') .'</p>';
+		echo '<p>The component Ozio Gallery 3 Component for Joomla 1.6! has been uninstalled successfully.</p>';
 	}
 
-	function update($parent) {
+	function update($parent) 
+	{
 	}
 
-	function preflight($type, $parent) {
+	function preflight($type, $parent) 
+	{
 	}
 
-	function postflight($type, $parent) {
-//		$parent->getParent()->set('redirect_url', 'index.php?option=com_oziogallery3');
+	function postflight($type, $parent) 
+	{
 	}
 }

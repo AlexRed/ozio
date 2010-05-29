@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
-	<name>Ozio Gallery 3</name>
+	<name>com_oziogallery3</name>
 	<creationDate>24/05/2010</creationDate>
 	<author>Alexred</author>
 	<authorEmail>info@joomla.it</authorEmail>
@@ -8,7 +8,7 @@
 	<copyright>(C) 2008 - 2010 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
 	<version>3.0</version>
-	<description>Ozio Gallery for Joomla! 1.6</description>
+	<description>COM_OZIOGALLERY_XML_DESCRIPTION</description>
         <install>
         </install>
         <uninstall>
@@ -27,6 +27,7 @@
 	</files>
 <languages>
 		<language tag="en-GB">languages/site/en-GB.com_oziogallery3.ini</language>
+		<language tag="it-IT">languages/site/it-IT.com_oziogallery3.ini</language>		
 </languages>
 <administration>
 	<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">Ozio Gallery 3</menu>
@@ -43,7 +44,11 @@
 		<language tag="en-GB">languages/admin/en-GB.com_oziogallery3.ini</language>
 		<language tag="en-GB">languages/admin/en-GB.com_oziogallery3.sys.ini</language>
 		<language tag="en-GB">languages/admin/en-GB.plg_content_ozio.ini</language>
-		<language tag="en-GB">languages/admin/en-GB.plg_content_ozio.sys.ini</language>		
+		<language tag="en-GB">languages/admin/en-GB.plg_content_ozio.sys.ini</language>	
+		<language tag="it-IT">languages/admin/it-IT.com_oziogallery3.ini</language>
+		<language tag="it-IT">languages/admin/it-IT.com_oziogallery3.sys.ini</language>
+		<language tag="it-IT">languages/admin/it-IT.plg_content_ozio.ini</language>
+		<language tag="it-IT">languages/admin/it-IT.plg_content_ozio.sys.ini</language>		
 </languages>
 	</administration>
 </extension>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_14PUPNGOO_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY3_14PUPNGOO_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>	
+	
+<fields name="params">
+<fieldset name="basic">
+
+			<field name="show_page_title" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_TITOLO"
+			default="1"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>			
+		
+			<field name="introtext" type="textarea"
+			description="COM_OZIOGALLERY3_INTRO_DESC"
+			label="COM_OZIOGALLERY3_INTRO"
+			cols="25"
+			rows="5"			
+			/>
+			
+			<field name="showintrotext" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_INTRO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+		<field name="chiave" type="text" default="joomla" label="COM_OZIOGALLERY3_CHIAVI_DI_RICERCA" size="45"  description="COM_OZIOGALLERY3_CHIAVI_DI_RICERCA_DESC"/>	
+		<field name="table" type="list" default="2" label="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA" description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" >
+          <option value="0">COM_OZIOGALLERY3_LEFT</option>
+          <option value="1">COM_OZIOGALLERY3_RIGHT</option>
+          <option value="2">COM_OZIOGALLERY3_CENTERED</option>
+        </field>		
+		<field name="cerca" type="list" default="0" label="COM_OZIOGALLERY3_FORMATO_GALLERIA" description="COM_OZIOGALLERY3_FORMATO_GALLERIA_DESC" >
+          <option value="0">COM_OZIOGALLERY3_8_X_8</option>
+          <option value="1">COM_OZIOGALLERY3_4_X_8</option>
+        </field>			
+			
+		<field name="size" type="list" default="0" label="COM_OZIOGALLERY3_DIMENSIONE" description="COM_OZIOGALLERY3_DIMENSIONE_DESC" >
+          <option value="0">COM_OZIOGALLERY3_TUTTI_I_FORMATI</option>		
+          <option value="1">COM_OZIOGALLERY3_PICCOLE</option>
+          <option value="2">COM_OZIOGALLERY3_MEDIE</option>
+          <option value="3">COM_OZIOGALLERY3_GRANDI</option>
+          <option value="4">COM_OZIOGALLERY3_MOLTO_GRANDI</option>		  
+        </field>
+		
+		<field name="safe" type="list" default="2" label="COM_OZIOGALLERY3_RESTRIZIONE" description="COM_OZIOGALLERY3_RESTRIZIONE_DESC" >
+          <option value="0">COM_OZIOGALLERY3_ALTA</option>
+          <option value="1">COM_OZIOGALLERY3_MODERATA</option>
+          <option value="2">COM_OZIOGALLERY3_OFF</option>
+        </field>		
+
+		<field name="colori" type="list" default="1" label="COM_OZIOGALLERY3_COLORIG" description="COM_OZIOGALLERY3_COLORIG_DESC" >
+          <option value="0">COM_OZIOGALLERY3_BIANCO_E_NERO</option>
+          <option value="1">COM_OZIOGALLERY3_COLORI</option>
+        </field>
+		
+		<field name="tcolor" type="list" default="0" label="COM_OZIOGALLERY3_COLORE_PREDOMINANTE" description="COM_OZIOGALLERY3_COLORE_PREDOMINANTE_DESC" >
+          <option value="0">COM_OZIOGALLERY3_TUTTI</option>		
+          <option value="1">COM_OZIOGALLERY3_ROSSO</option>
+          <option value="2">COM_OZIOGALLERY3_BLUE</option>
+          <option value="3">COM_OZIOGALLERY3_NERO</option>
+          <option value="4">COM_OZIOGALLERY3_MARRONE</option>
+          <option value="5">COM_OZIOGALLERY3_GRIGIO</option>
+          <option value="6">COM_OZIOGALLERY3_VERDE</option>
+          <option value="7">COM_OZIOGALLERY3_ARANCIO</option>
+          <option value="8">COM_OZIOGALLERY3_ROSA</option>
+          <option value="9">COM_OZIOGALLERY3_PORPORA</option>
+          <option value="10">COM_OZIOGALLERY3_VERDE_MARE</option>
+          <option value="11">COM_OZIOGALLERY3_BIANCO</option>
+          <option value="12">COM_OZIOGALLERY3_GIALLO</option>
+        </field>		
+		
+		<field name="tipo" type="list" default="0" label="COM_OZIOGALLERY3_ESTENSIONE" description="COM_OZIOGALLERY3_ESTENSIONE_DESC" >
+          <option value="0">COM_OZIOGALLERY3_TUTTE_LE_ESTENSIONI</option>			
+          <option value="1">COM_OZIOGALLERY3_JPG</option>
+          <option value="2">COM_OZIOGALLERY3_PNG</option>
+          <option value="3">COM_OZIOGALLERY3_GIF</option>
+          <option value="4">COM_OZIOGALLERY3_BMP</option>		  
+        </field>
+
+		<field name="tipofile" type="list" default="1" label="COM_OZIOGALLERY3_TIPO_IMMAGINI" description="COM_OZIOGALLERY3_TIPO_IMMAGINI_DESC" >
+          <option value="0">COM_OZIOGALLERY3_TUTTI_I_TIPI</option>			
+          <option value="1">COM_OZIOGALLERY3_VOLTI</option>
+          <option value="2">COM_OZIOGALLERY3_IMMAGINI</option>
+          <option value="3">COM_OZIOGALLERY3_CLIPART</option>
+          <option value="4">COM_OZIOGALLERY3_LINEART</option>		  
+        </field>
+		
+		<field name="sito" type="text" default="" label="COM_OZIOGALLERY3_SITO" size="45"  description="COM_OZIOGALLERY3_SITO_DESC"/>
+		<field name="googlep" type="radio" default="0" label="COM_OZIOGALLERY3_GOOGLE" description="COM_OZIOGALLERY3_GOOGLE_TIP">
+			<option value="0">COM_OZIOGALLERY3_NO</option>
+			<option value="1">COM_OZIOGALLERY3_YES</option>
+		</field>		
+		</fieldset>
+</fields>
+</metadata>
