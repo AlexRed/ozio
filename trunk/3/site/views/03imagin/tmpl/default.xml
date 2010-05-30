@@ -6,7 +6,7 @@
 		</message>
 	</layout>	
 	
-<fields name="params">
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
  
 		<fieldset
         name="cartella"
