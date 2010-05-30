@@ -141,13 +141,7 @@
 			description="COM_OZIOGALLERY3_Speed_Rotation_Desc" 
 			/>
 			
-			<field name="titoli" type="colorpicker" 
-			class="color {hash:true,required:false}" 
-			default="#003366" size="10" 
-			label="COM_OZIOGALLERY3_Colore_Titoli" 
-			description="COM_OZIOGALLERY3_Colore_Titoli_desc" 
-			/>
-			
+
 			<field name="loadercolor" type="colorpicker" 
 			class="color {hash:true,required:false}" 
 			default="#9F9F9F" 
