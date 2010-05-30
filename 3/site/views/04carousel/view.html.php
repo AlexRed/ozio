@@ -46,7 +46,7 @@ class OzioGalleryView04Carousel extends JView
 		$debug 				= (int) $params->def('debug');		
 		$ordinamento 		= (int) $params->def('ordinamento');		
 		$speed				= $params->def('speed');
-		$titoli				= $params->def('titoli');
+		//$titoli				= $params->def('titoli');
 		$titolo				= (int) $params->def('titolo');
 		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery3/skin/carousel/manual-xml/carousel.ozio');		
 		
@@ -251,7 +251,7 @@ class OzioGalleryView04Carousel extends JView
 			$string .= '</interaction>'."\n";
 			$string .= '<titles>'."\n";
 			$string .= '<style>'."\n";
-			$string .= 'font-size: 14px; font-family: Verdana, _serif; color: ' . $titoli . ';'."\n";
+			$string .= 'font-size: 14px; font-family: Verdana, _serif;'."\n";
 			$string .= '</style>'."\n";			
 			$string .= '</titles>'."\n";
 			$string .= '</options>'."\n";
@@ -329,6 +329,7 @@ endif;
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  xml_moder :   ' .$xml_moder .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  loadercolor :     '.$loadercolor  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  titolo :     '.$titolo  .'</pre>';		
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  carousellink  :     '.$carousellink  .'</pre>';
