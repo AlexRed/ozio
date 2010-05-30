@@ -260,7 +260,7 @@
 			default="" 
 			label="COM_OZIOGALLERY3_Id_Utente_flickr" 
 			size="20" 
-			description="COM_OZIOGALLERY3_Id Utente_flickr_desc" 
+			description="COM_OZIOGALLERY3_Id_Utente_flickr_desc" 
 			/>		
 
 		</fieldset>		
