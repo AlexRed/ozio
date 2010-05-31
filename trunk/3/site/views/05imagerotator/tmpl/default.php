@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </table>
 <?php endif; ?>
    <table align="<?php echo $this->table ?>"><tr><td>
-	<div id="oziocontainer" class="oziofloat">
+	<div id="<?php echo $this->oziocode;?>oziocontainer" class="oziofloat">
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
@@ -67,7 +67,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					s1.addVariable("volume","<?php echo $this->volume ?>");
 <?php endif; ?>					
 					s1.addParam("wmode", "transparent");
-					s1.write("oziocontainer");
+					s1.write("<?php echo $this->oziocode;?>oziocontainer");
 				</script>
    </td></tr></table>
 <?php if ( $this->modifiche == 1 ) : ?>   

@@ -38,12 +38,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
    <table align="<?php echo $this->table ?>"><tr><td>
    
 <div id="carousel_container" class="oziofloat">
-	<div id="carousel1">
+	<div id="<?php echo $this->oziocode;?>carousel1">
 		<p>This slideshow requires <a href="http://www.adobe.com/go/getflashplayer">Adobe Flash Player 9.0</a> (or higher). JavaScript must be enabled.</p>
 	</div>
 </div></td></tr></table>
 <script type="text/javascript">
-	swfobject.embedSWF("<?php echo JURI::root() ?>components/com_oziogallery3/skin/carousel/Carousel.swf", "carousel1", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "9.0.0", false, {xmlfile:"<?php echo $this->xml_moder ?>", loaderColor:"<?php echo $this->loadercolor ?>"}, {wmode: "transparent"});
+	swfobject.embedSWF("<?php echo JURI::root() ?>components/com_oziogallery3/skin/carousel/Carousel.swf", "<?php echo $this->oziocode;?>carousel1", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "9.0.0", false, {xmlfile:"<?php echo $this->xml_moder ?>", loaderColor:"<?php echo $this->loadercolor ?>"}, {wmode: "transparent"});
 </script>
 
 <?php if ( $this->modifiche == 1 ) : ?>   

@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </table>
 <?php endif; ?>
    <table width="100%" align="<?php echo $this->table ?>"><tr><td>
-	<div id="flashcontent"> 
+	<div id="<?php echo $this->oziocode;?>flashcontent"> 
  
 			<strong>You need to upgrade your Flash Player.</strong> 
 		</div> 
@@ -53,7 +53,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addParam("wmode", "transparent"); 
 <?php else: ?>
 <?php endif; ?>
-			so.write("flashcontent");
+			so.write("<?php echo $this->oziocode;?>flashcontent");
 		</script> 
    </td></tr></table>
 <?php if ( $this->modifiche == 1 ) : ?>   

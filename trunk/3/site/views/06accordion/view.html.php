@@ -31,7 +31,7 @@ class OzioGalleryView06Accordion extends JView
 		$document 	= & JFactory::getDocument();
 		$menus		= & JSite::getMenu();
 		$menu		= $menus->getActive();
-
+		$oziocode	= uniqid() .'_';
 		$params = $app->getParams('com_oziogallery3');
 		
 		$larghezza 			= $params->def('width', 640);
@@ -77,8 +77,8 @@ class OzioGalleryView06Accordion extends JView
 		$document->addCustomTag('
 		<style type="text/css">
 			.oziofloat {
-				width: '.$larghezza.';
-				height: '.$altezza.';
+				width: '.$larghezza.'px;
+				height: '.$altezza.'px;
 				margin: 0px auto;
 				float:  '.$float.';
 				}
@@ -305,7 +305,7 @@ endif;
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);
 		$this->assignRef('manualxmlname' , 			$manualxmlname);		
-		
+		$this->assignRef('oziocode' , 				$oziocode);			
 		parent::display($tpl);
 	}
 }
