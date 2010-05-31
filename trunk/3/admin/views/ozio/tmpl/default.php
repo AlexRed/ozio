@@ -48,7 +48,7 @@ JHTML::_('behavior.modal');
 											</tr>
 											<tr>
 												<td align="left" valign="bottom">
-												<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b> - <b><a href="http://code.google.com/p/oziogallery3/" target="blank">Ozio Gallery Google Code Project</a></b> - <b><a href="http://oziogallery.joomla.it/" target="blank">Ozio Gallery Site</a></b>
+												<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery3/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://oziogallery.joomla.it/" target="blank">Ozio Gallery Site</a></b>  -  <b><a href="http://wiki.joomla.it/index.php?title=Manuale_Ozio_Gallery" target="blank">Ozio Gallery Wiki</a></b>
 												</td>
 											</tr>											
 										</table>
@@ -340,6 +340,13 @@ JHTML::_('behavior.modal');
 					<td align="center">8</td>
 					<td align="center">components/com_oziogallery3/imagin</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'imagin') ? 
+					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
+					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
+				</tr>
+					<tr>
+					<td align="center">8b</td>
+					<td align="center">components/com_oziogallery3/imagin/scripts_ralcr/filesystem/readAndCreateThumbs.php</td>
+					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'imagin'.DS.'scripts_ralcr'.DS.'filesystem'.DS.'readAndCreateThumbs.php') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
