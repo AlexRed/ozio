@@ -238,7 +238,7 @@ if( $flickr == 0 ) :
 if ($showtitle == 0) :
 						$string .= '<title></title>'."\n";	
 else:
-						$string .= '<title>'. $title . '</title>'."\n";	
+						$string .= '<title> '. $title .' </title>'."\n";	
 endif;						
 						$string .= '<creator></creator>'."\n";
 						$string .= '<location>'. $dir_images . $row[1] . '</location>'."\n";				
