@@ -234,7 +234,7 @@ if( $flickr == 0 ) :
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
 				$string .= '<photo>'."\n";		
-						$string .= '<title>'. $title . '</title>'."\n";	
+						$string .= '<title> '. $title . ' </title>'."\n";	
 						$string .= '<creator></creator>'."\n";
 						$string .= '<location>'. $dir_images . $row[1] . '</location>'."\n";				
 						$string .= '<info></info>'."\n";
