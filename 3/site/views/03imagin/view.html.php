@@ -60,8 +60,8 @@ class OzioGalleryView03Imagin extends JView
 		$document->addCustomTag('
 		<style type="text/css">
 			.oziofloat {
-				width: '.$larghezza.';
-				height: '.$altezza.';
+				width: '.$larghezza.'px;
+				height: '.$altezza.'px;
 				margin: 0px auto;
 				float:  '.$float.';
 				}

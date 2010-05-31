@@ -37,7 +37,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php endif; ?>
    <table align="<?php echo $this->table ?>"><tr><td>
    
-		<div id="ozioflashcontent" class="oziofloat">
+		<div id="<?php echo $this->oziocode;?>ozioflashcontent" class="oziofloat">
 
 			<strong>You need to upgrade your Flash Player.</strong>
 		</div>
@@ -48,7 +48,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 			so.addParam("allowFullScreen", "true");
 			so.addParam("wmode", "transparent");
-			so.write("ozioflashcontent");
+			so.write("<?php echo $this->oziocode;?>ozioflashcontent");
 			
 		</script>
 

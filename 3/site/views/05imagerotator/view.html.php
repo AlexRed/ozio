@@ -32,7 +32,7 @@ class OzioGalleryView05ImageRotator extends JView
 		$document 	= & JFactory::getDocument();
 		$menus		= & JSite::getMenu();
 		$menu		= $menus->getActive();
-
+		$oziocode	= uniqid() .'_';		
 		$params = $app->getParams('com_oziogallery3');
 		
 		$larghezza 		= $params->def('width', 640);
@@ -120,8 +120,8 @@ class OzioGalleryView05ImageRotator extends JView
 		$document->addCustomTag('
 		<style type="text/css">
 			.oziofloat {
-				width: '.$larghezza.';
-				height: '.$altezza.';
+				width: '.$larghezza.'px;
+				height: '.$altezza.'px;
 				margin: 0px auto;
 				float:  '.$float.';
 				}
@@ -238,7 +238,7 @@ if( $flickr == 0 ) :
 if ($showtitle == 0) :
 						$string .= '<title></title>'."\n";	
 else:
-						$string .= '<title> '. $title .' </title>'."\n";	
+						$string .= '<title>'. $title .'</title>'."\n";	
 endif;						
 						$string .= '<creator></creator>'."\n";
 						$string .= '<location>'. $dir_images . $row[1] . '</location>'."\n";				
@@ -350,7 +350,8 @@ endif;
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);
-		$this->assignRef('manualxmlname' , 			$manualxmlname);		
+		$this->assignRef('manualxmlname' , 			$manualxmlname);
+		$this->assignRef('oziocode' , 				$oziocode);		
 		
 		parent::display($tpl);
 	}
