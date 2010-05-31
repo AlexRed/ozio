@@ -49,6 +49,7 @@ class OzioGalleryView05ImageRotator extends JView
 		$user_id 		= $params->def('user_id', 0);		
 		$folder			= $params->def('folder');
 		$modifiche 		= (int) $params->def('modifiche', 0);
+		$showtitle 		= (int) $params->def('showtitle', 1);		
 		$debug 			= (int) $params->def('debug');		
 		$ordinamento 	= (int) $params->def('ordinamento');
 		$manualxmlname	= $params->def('manualxmlname', 'components/com_oziogallery3/skin/imagerotator/manual-xml/imagerotator.ozio');		
@@ -233,8 +234,12 @@ if( $flickr == 0 ) :
 			{
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-				$string .= '<photo>'."\n";		
-						$string .= '<title> '. $title . ' </title>'."\n";	
+				$string .= '<photo>'."\n";	
+if ($showtitle == 0) :
+						$string .= '<title></title>'."\n";	
+else:
+						$string .= '<title>'. $title . '</title>'."\n";	
+endif;						
 						$string .= '<creator></creator>'."\n";
 						$string .= '<location>'. $dir_images . $row[1] . '</location>'."\n";				
 						$string .= '<info></info>'."\n";

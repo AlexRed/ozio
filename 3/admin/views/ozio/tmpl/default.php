@@ -344,7 +344,7 @@ JHTML::_('behavior.modal');
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
 					<tr>
-					<td align="center">8b</td>
+					<td align="center">9</td>
 					<td align="center">components/com_oziogallery3/imagin/scripts_ralcr/filesystem/readAndCreateThumbs.php</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'imagin'.DS.'scripts_ralcr'.DS.'filesystem'.DS.'readAndCreateThumbs.php') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
@@ -352,7 +352,7 @@ JHTML::_('behavior.modal');
 				</tr>
 				</tr>		
 					<tr>
-					<td align="center">9</td>
+					<td align="center">10</td>
 					<td align="center">components/com_oziogallery3/skin/mediagallery/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'mediagallery'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
@@ -360,7 +360,7 @@ JHTML::_('behavior.modal');
 				</tr>
 				</tr>		
 					<tr>
-					<td align="center">10</td>
+					<td align="center">11</td>
 					<td align="center">components/com_oziogallery3/skin/cooliris/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'cooliris'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
@@ -368,7 +368,7 @@ JHTML::_('behavior.modal');
 				</tr>
 				</tr>	
 					<tr>
-					<td align="center">11</td>
+					<td align="center">12</td>
 					<td align="center">plugins/content/ozio/ozio.php</td>
 					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio'.DS.'ozio.php') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_INSTALLED' ) .'</font></strong>' : 

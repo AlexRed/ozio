@@ -173,6 +173,15 @@
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
 			</field>
+			
+			<field name="showtitle" type="radio" 
+			default="1" 
+			label="COM_OZIOGALLERY3_SHOWTITLE" 
+			description="COM_OZIOGALLERY3_SHOWTITLE_DESC" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>			
 
 			<field name="movimento" type="radio" 
 			default="0" 
