@@ -40,7 +40,6 @@ class OzioModelOzio extends JModel
 				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
 				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
 						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03imagin"
 						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
 						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
 						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
@@ -71,7 +70,6 @@ class OzioModelOzio extends JModel
 				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
 				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
 						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03imagin"
 						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
 						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
 						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
@@ -104,7 +102,6 @@ class OzioModelOzio extends JModel
 				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
 				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
 						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03imagin"
 						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
 						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
 						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
