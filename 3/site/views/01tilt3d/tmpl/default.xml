@@ -7,11 +7,18 @@
 	</layout>	
 	
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="info"
+		label="COM_OZIOGALLERY3_HELP_INFO"
+		>		
+			<field name="info" type="tilt3d" 
+			label="Tilt 3D Skin" 
+			/>				
+		</fieldset>	
 	
 		<fieldset
         name="cartella"
         label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
-		>				
+		>		
 			<field name="folder" type="text"
 			description="COM_OZIOGALLERY3_PERCORSO_CARTELLA_DESC"			
 			label="COM_OZIOGALLERY3_PERCORSO_CARTELLA" 
@@ -23,8 +30,8 @@
 			default="" 
 			label="COM_OZIOGALLERY3_RESET_XML" 
 			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
-			/>			
-			
+			/>	
+
 		</fieldset>	
 	
 		<fieldset name="basic">
