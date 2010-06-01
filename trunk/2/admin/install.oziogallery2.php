@@ -60,10 +60,8 @@ function com_install()
 	$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;
 	$folder[0][2]	= 	JPATH_ROOT . DS .  $folder[0][0];
 	$file 		= "index.html";
-	$file2 		= "_preferences.xml";
 	$file3 		= "info.png";	
 	$source 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2';
-	$source2 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery2' . DS . 'imagin' . DS . 'imagin';	
 	$dest 		=   JPATH_ROOT . DS . 'images' . DS . 'oziogallery2';	
 	$dest2 		=   JPATH_ROOT . DS . 'images' . DS . 'oziodownload';
 	
@@ -73,7 +71,7 @@ function com_install()
 	{
 		if (!JFolder::exists( $value[1]))
 		{
-			if (JFolder::create( $value[1], 0755 ) && JFolder::create( $value[2], 0755 ) && @copy($source. DS .$file,$dest. DS .$file) && @copy($source. DS .$file,$dest2. DS .$file) && @copy($source2. DS .$file2,$dest. DS .$file2) && @copy($source2. DS .$file3,$dest. DS .$file3))
+			if (JFolder::create( $value[1], 0755 ) && JFolder::create( $value[2], 0755 ) && @copy($source. DS .$file,$dest. DS .$file) && @copy($source. DS .$file,$dest2. DS .$file) && @copy($source. DS .$file3,$dest. DS .$file3))
 			{
 
 				$message .= '<p><b><span style="color:#009933">Folder</span> ' . $value[0] 

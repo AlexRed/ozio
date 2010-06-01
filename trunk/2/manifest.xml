@@ -14,6 +14,7 @@
 <uninstallfile>uninstall.oziogallery2.php</uninstallfile>
 	<files folder="site">
 		<filename>index.html</filename>
+		<filename>info.png</filename>
 		<filename>oziogallery2.php</filename>
 		<filename>controller.php</filename>
 		<folder>assets</folder>
