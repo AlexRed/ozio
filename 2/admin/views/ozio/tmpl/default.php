@@ -225,16 +225,9 @@ JHTML::_('behavior.modal');
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
 				</tr>	
-					<tr>
-					<td align="center">8</td>
-					<td align="center">components/com_oziogallery2/imagin</td>
-					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'imagin') ? 
-					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
-					'<strong><font color="red">'. JText::_( 'Unwritable' ) .'</font></strong>'; ?></td>
-				</tr>
 				</tr>		
 					<tr>
-					<td align="center">9</td>
+					<td align="center">8</td>
 					<td align="center">components/com_oziogallery2/skin/mediagallery/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'mediagallery'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
@@ -242,7 +235,7 @@ JHTML::_('behavior.modal');
 				</tr>
 				</tr>		
 					<tr>
-					<td align="center">10</td>
+					<td align="center">9</td>
 					<td align="center">components/com_oziogallery2/skin/cooliris/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery2'.DS.'skin'.DS.'cooliris'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'Writable' ) .'</font></strong>' : 
@@ -250,7 +243,7 @@ JHTML::_('behavior.modal');
 				</tr>
 				</tr>	
 					<tr>
-					<td align="center">11</td>
+					<td align="center">10</td>
 					<td align="center">plugins/content/ozio.php</td>
 					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio.php') ? 
 					'<strong><font color="green">'. JText::_( 'Installed' ) .'</font></strong>' : 
@@ -276,9 +269,7 @@ JHTML::_('behavior.modal');
 		- <a href="http://www.flash-gallery.org" target='blank'>FlashGallery</a> - Design/Development by <a href="http://www.realitysoftware.ca/" target='blank'>Reality Software</a>
 		<br />
 		- <a href="http://www.flshow.net/" target='blank'>Carousel</a> - Design/Development by <a href="http://www.dsi.uniroma1.it/~caminiti/" target='blank'>Saverio Caminiti</a>
-		<br />
-		- <a href="http://imagin.ro" target='blank'>Imagin</a> - Design/Development by <a href="http://ralcr.com/" target='blank'>Baluta Cristian</a>
-		<br />
+        <br />
 		- <a href="http://www.flashnifties.com" target='blank'>Mediagallery</a> - Design/Development by <a href="http://www.flashnifties.com" target='blank'>FlashNifties.com</a>
 		<br />
 		- <a href="www.cooliris.com" target='blank'>Cooliris</a> - Design/Development by Cooliris, Inc.
