@@ -103,8 +103,6 @@ JHTML::_('behavior.modal');
 						$image	= 'logotilt.gif'; 			
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=02flashgallery') :
 						$image	= 'logoflashgallery.gif';		
-					elseif ($row->link == 'index.php?option=com_oziogallery3&view=03imagin') :
-						$image	= 'logoimagin.gif';			
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=04carousel') :		
 						$image	= 'logocarousel.gif';			
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=05imagerotator') :
@@ -173,8 +171,7 @@ JHTML::_('behavior.modal');
 							   || ($row->link =='index.php?option=com_oziogallery3&view=08flickrphoto') 
 							   || ($row->link =='index.php?option=com_oziogallery3&view=11pictobrowser')
 							   || ($row->link =='index.php?option=com_oziogallery3&view=12pictobrowser2')
-							   || ($row->link =='index.php?option=com_oziogallery3&view=14pupngoo')							   
-							   || ($row->link =='index.php?option=com_oziogallery3&view=03imagin')): ?>
+							   || ($row->link =='index.php?option=com_oziogallery3&view=14pupngoo')): ?>
 						    <?php else: ?>
 								<div class="blank"><a class="modal" title="<?php echo JText::_('COM_OZIOGALLERY3_RESET_XML') ?>"  href="<?php echo $link3 ?>" rel="{handler: 'iframe', size: {x: 450, y: 115}}"><?php echo JText::_('COM_OZIOGALLERY3_RESET') ?></a>
 								</div>
@@ -297,78 +294,57 @@ JHTML::_('behavior.modal');
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
-					<tr>
+				<tr>
 					<td align="center">2</td>
 					<td align="center">components/com_oziogallery3/skin/accordion/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'accordion'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
-				</tr>		
-					<tr>
+				<tr>
 					<td align="center">4</td>
 					<td align="center">components/com_oziogallery3/skin/carousel/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'carousel'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
-				</tr>		
-					<tr>
+				<tr>
 					<td align="center">5</td>
 					<td align="center">components/com_oziogallery3/skin/flashgallery/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'flashgallery'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>		
-				</tr>		
-					<tr>
+				<tr>
 					<td align="center">6</td>
 					<td align="center">components/com_oziogallery3/skin/imagerotator/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'imagerotator'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>	
-				</tr>		
-					<tr>
+				<tr>
 					<td align="center">7</td>
 					<td align="center">components/com_oziogallery3/skin/tiltviewer/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'tiltviewer'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>	
-					<tr>
+				<tr>
 					<td align="center">8</td>
-					<td align="center">components/com_oziogallery3/imagin</td>
-					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'imagin') ? 
-					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
-					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
-				</tr>
-					<tr>
-					<td align="center">9</td>
-					<td align="center">components/com_oziogallery3/imagin/scripts_ralcr/filesystem/readAndCreateThumbs.php</td>
-					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'imagin'.DS.'scripts_ralcr'.DS.'filesystem'.DS.'readAndCreateThumbs.php') ? 
-					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
-					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
-				</tr>
-				</tr>		
-					<tr>
-					<td align="center">10</td>
 					<td align="center">components/com_oziogallery3/skin/mediagallery/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'mediagallery'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
-				</tr>
 				</tr>		
-					<tr>
-					<td align="center">11</td>
+				<tr>
+					<td align="center">9</td>
 					<td align="center">components/com_oziogallery3/skin/cooliris/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'cooliris'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
-				</tr>
 				</tr>	
-					<tr>
-					<td align="center">12</td>
+				<tr>
+					<td align="center">10</td>
 					<td align="center">plugins/content/ozio/ozio.php</td>
 					<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio'.DS.'ozio.php') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_INSTALLED' ) .'</font></strong>' : 
@@ -395,8 +371,6 @@ JHTML::_('behavior.modal');
 		<br />
 		- <a href="http://www.flshow.net/" target='blank'>Carousel</a> - Design/Development by <a href="http://www.dsi.uniroma1.it/~caminiti/" target='blank'>Saverio Caminiti</a>
 		<br />
-		- <a href="http://imagin.ro" target='blank'>Imagin</a> - Design/Development by <a href="http://ralcr.com/" target='blank'>Baluta Cristian</a>
-		<br />
 		- <a href="http://www.flashnifties.com" target='blank'>Mediagallery</a> - Design/Development by <a href="http://www.flashnifties.com" target='blank'>FlashNifties.com</a>
 		<br />
 		- <a href="http://www.cooliris.com" target='blank'>Cooliris</a> - Design/Development by Cooliris, Inc.
@@ -407,7 +381,7 @@ JHTML::_('behavior.modal');
 		<br /><br />
 		Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 		Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
-		<h3 align="right">May 24th, 2010. Component developed by AlexRed & Ste & Vamba - <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
+		<h3 align="right">June 02nd, 2010. Component developed by AlexRed & Ste & Vamba - <a href="http://oziogallery.joomla.it">http://oziogallery.joomla.it</a></h3><br />		
 				</td>
 			</tr>
 		</table>

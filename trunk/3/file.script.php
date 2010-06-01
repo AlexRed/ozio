@@ -32,10 +32,9 @@ class Com_OzioGallery3InstallerScript
 			$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;
 			$folder[0][2]	= 	JPATH_ROOT . DS .  $folder[0][0];
 			$file 		= "index.html";
-			$file2 		= "_preferences.xml";
-			$file3 		= "info.png";	
+			$file2 		= "info.png";	
 			$source 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3';
-			$source2 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3' . DS . 'imagin' . DS . 'imagin';	
+			$source2 	= 	JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3' . DS . 'assets';	
 			$dest 		=   JPATH_ROOT . DS . 'images' . DS . 'oziogallery3';	
 			$dest2 		=   JPATH_ROOT . DS . 'images' . DS . 'oziodownload';
 			
@@ -45,7 +44,7 @@ class Com_OzioGallery3InstallerScript
 			{
 				if (!JFolder::exists( $value[1]))
 				{
-					if (JFolder::create( $value[1], 0755 ) && JFolder::create( $value[2], 0755 ) && @copy($source. DS .$file,$dest. DS .$file) && @copy($source. DS .$file,$dest2. DS .$file) && @copy($source2. DS .$file2,$dest. DS .$file2) && @copy($source2. DS .$file3,$dest. DS .$file3))
+					if (JFolder::create( $value[1], 0755 ) && JFolder::create( $value[2], 0755 ) && @copy($source. DS .$file,$dest. DS .$file) && @copy($source. DS .$file,$dest2. DS .$file) && @copy($source2. DS .$file2,$dest. DS .$file2))
 					{
 
 						$message .= '<p><b><span style="color:#009933">Folder</span> ' . $value[0] 
