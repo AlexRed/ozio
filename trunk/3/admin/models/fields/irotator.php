@@ -29,7 +29,7 @@ class JFormFieldIrotator extends JFormField
 	{
 
 		return '<div style="padding:5px 5px 5px 0; "><p style="font-size:98%; color:#666; padding: 10px 5px 0px 2px;"><br />' .
-				JText::_('COM_OZIOGALLERY3_OZIO FLICKR_SLIDERSHOW_SKIN_DESC').
+				JText::_('COM_OZIOGALLERY3_OZIO_IMAGEROTATOR_SKIN_DESC').
 				'</p></div>';
 	}
 }
