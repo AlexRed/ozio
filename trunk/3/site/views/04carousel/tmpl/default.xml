@@ -7,11 +7,12 @@
 	</layout>	
 	
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
-
-		<fieldset
-        name="cartella"
-        label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
-		>				
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="carou" 
+			label="Carousel Skin" 
+			/>			
 	
 			<field name="folder" type="text"
 			description="COM_OZIOGALLERY3_PERCORSO_CARTELLA_DESC"			

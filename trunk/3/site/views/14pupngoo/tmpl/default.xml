@@ -6,8 +6,14 @@
 		</message>
 	</layout>	
 	
-<fields name="params">
-<fieldset name="basic">
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>	
+
+			<field name="info" type="pupngoo" 
+			label="Pup 'N Goo Skin" 
+			/>	
 
 			<field name="show_page_title" type="radio"
 			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
