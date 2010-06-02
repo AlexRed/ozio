@@ -6,12 +6,13 @@
 		</message>
 	</layout>	
 	
-<fields name="params">
-
-		<fieldset
-        name="cartella"
-        label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
-		>				
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="flickrp" 
+			label="Flickr Photo Skin" 
+			/>					
 	
 			<field name="user_id" type="text" 
 			description="COM_OZIOGALLERY3_ID_UTENTE_FLICKR_DESC" 			

@@ -21,15 +21,15 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldTilt3d extends JFormField
+class JFormFieldAccor extends JFormField
 {
-	protected $type = 'Tilt3d';
+	protected $type = 'Accor';
 
 	protected function getInput()
 	{
 
 		return '<div style="padding:5px 5px 5px 0; "><p style="font-size:98%; color:#666; padding: 10px 5px 0px 2px;"><br />' .
-				JText::_('COM_OZIOGALLERY3_OZIO_TILTVIEWER_SKIN_DESC').
+				JText::_('COM_OZIOGALLERY3_OZIO_ACCORDION_SKIN_DESC').
 				'</p></div>';
 	}
 }

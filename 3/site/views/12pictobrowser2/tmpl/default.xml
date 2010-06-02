@@ -7,11 +7,12 @@
 	</layout>	
 	
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
-
-		<fieldset
-        name="picasa"
-        label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
-		>	
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="pictop" 
+			label="Pictobrowser Picasa Skin" 
+			/>		
 		
 			<field name="user_namep" type="text" 
 			description="COM_OZIOGALLERY3_NOME_UTENTE_PICASA_DESC" 			
