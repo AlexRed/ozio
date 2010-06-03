@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" version="1.6.0" method="upgrade">
+	<name>plg_content_ozio</name>
+	<author>Vamba</author>
+	<creationDate>Maggio 2010</creationDate>
+	<copyright>Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>oziogallery3@joomla.it</authorEmail>
+	<authorUrl>www.joomla.it</authorUrl>
+	<version>3.0-Beta2</version>
+	<description>PLG_OZIO_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="ozio">ozio.php</filename>
+	</files>
+	<config>
+		<fields name="params">
+		</fields>
+	</config>
+</extension>
