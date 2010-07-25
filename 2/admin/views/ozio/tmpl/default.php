@@ -74,10 +74,10 @@ JHTML::_('behavior.modal');
 					$n = count($this->pubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->pubblicate[$i];
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=edit&cid[]='. (int) $row->id;
 					$link2 		= 'index.php?option=com_menus&task=view&menutype='. $row->menutype;					
-					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
-					$pcode 		= $row->link .'&Itemid='. $row->id;
+					$gall 		= JURI::root().$row->link .'&Itemid='. (int) $row->id;
+					$pcode 		= $row->link .'&Itemid='. (int) $row->id;
 					$pcode 		= str_replace( 'index.php?option=com_oziogallery2&view=', '', $pcode );
 					$img		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-config.png';
 					$img1		= JURI::root().'administrator/templates/khepri/images/menu/icon-16-menu.png';					

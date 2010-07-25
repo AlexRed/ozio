@@ -76,7 +76,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->pubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->pubblicate[$i];
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
 					$link2 		= 'index.php?option=com_menus&view=items&menutype='. $row->menutype;
 						if ($row->link == 'index.php?option=com_oziogallery3&view=01tilt3d') :						
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetTilt&amp;tmpl=component';
@@ -93,8 +93,8 @@ JHTML::_('behavior.modal');
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=10cooliris') :
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetcooliris&amp;tmpl=component';
 					endif;	
-					$gall 		= JURI::root().$row->link .'&Itemid='. $row->id;
-					$pcode 		= $row->link .'&Itemid='. $row->id;
+					$gall 		= JURI::root().$row->link .'&Itemid='. (int) $row->id;
+					$pcode 		= $row->link .'&Itemid='. (int) $row->id;
 					$pcode 		= str_replace( 'index.php?option=com_oziogallery3&view=', '', $pcode );
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 					$img1		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-menu.png';
@@ -199,7 +199,7 @@ JHTML::_('behavior.modal');
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->nonpubblicate[$i];
 
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 				?>
 					<tr>
@@ -239,7 +239,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->cestinate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->cestinate[$i];
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 				?>
 					<tr>
