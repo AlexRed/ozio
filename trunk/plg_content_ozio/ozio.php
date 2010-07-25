@@ -90,7 +90,7 @@ class plgContentOzio extends JPlugin
 
         if ($cp->id = $galleriaozio) :
 		
-				@$gall 	= JURI::root(). $codice->link .'&Itemid='. $galleriaozio;
+				@$gall 	= JURI::root(). $codice->link .'&Itemid='. (int) $galleriaozio;
 				//$parametar un tentativo di Vamba che stranamente va
 				$parametar = new JRegistry;
 				$parametar->loadJSON($codice->params);

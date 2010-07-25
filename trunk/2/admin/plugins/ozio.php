@@ -105,7 +105,7 @@ function plgcontentloadozio( $galleriaozio )
 
         if ($cp->id = $galleriaozio) :
 		
-				@$gall 	= JURI::root(). $codice->link .'&Itemid='. $galleriaozio;
+				@$gall 	= JURI::root(). $codice->link .'&Itemid='. (int) $galleriaozio;
 				$parametar = new JParameter($codice->params); // alexred
 
 			if (@$codice->published != 0 && @$codice->access != 1 && @$codice->access != 2) :
