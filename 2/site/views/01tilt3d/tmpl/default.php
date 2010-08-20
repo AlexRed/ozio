@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
-					var fo = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/TiltViewer.swf","viewer","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>", "9.0.28", "#<?php echo $this->bkgndoutercolor ?>");
+					var fo = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/TiltViewer.swf?"+Math.random()*1,"viewer","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>", "9.0.28", "#<?php echo $this->bkgndoutercolor ?>");
 
 					//FLICKR GALLERY OPTIONS
 					// To use images from Flickr, uncomment this block
@@ -58,7 +58,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					fo.addVariable("useFlickr", "<?php echo $this->flickrs ?>");
 		
 <?php if  	  ( $this->xml_mode == 0 ) : ?>
-					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.ozio"); 
+					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery2/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1); 
 <?php else: ?>
 					fo.addVariable("xmlURL","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
@@ -114,4 +114,4 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</td></tr></table> 
 <?php endif; ?>
 <?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."css".DS."ozio.css");  ?> 
-<div class="clr"><br /></div>	
+<div class="clr"></div>	
