@@ -41,9 +41,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		</div> 
 		
 		<script type="text/javascript"> 
-			var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/mediagallery/mediaGallery.swf", "gallery", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "6", "#333333");
+			var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/mediagallery/mediaGallery.swf?"+Math.random()*1, "gallery", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "6", "#333333");
  <?php if  	  ( $this->xml_mode == 0 ) : ?>
-			so.addVariable("data_source", "<?php echo JURI::root() ?>components/com_oziogallery2/skin/mediagallery/xml/mediagallery_<?php echo $this->nomexml ?>.ozio") 
+			so.addVariable("data_source", "<?php echo JURI::root() ?>components/com_oziogallery2/skin/mediagallery/xml/mediagallery_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1) 
 <?php else: ?>
 			so.addVariable("data_source", "<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>")
 <?php endif; ?>

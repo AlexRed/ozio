@@ -40,15 +40,15 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
-					var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/flashgallery.swf","gallery","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>", "8");
+					var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/flashgallery.swf?"+Math.random()*1,"gallery","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>", "8");
 					so.addParam("quality", "high");
 					so.addParam("allowFullScreen", "true");
 					so.addParam("wmode", "transparent");
-					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.ozio");					
+					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);					
 <?php if ( $this->flickr == 1 ) : ?>						
 					so.addVariable("content_path","http://www.flickr.com/photos/<?php echo $this->user_id ?>");
 <?php else: ?>	
-					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.ozio" );
+					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery2/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);
 <?php endif; ?>						
 					so.write("oziogallery");
 				</script>
