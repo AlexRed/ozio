@@ -32,18 +32,19 @@ class OzioGalleryView06Accordion extends JView
 		$menus		= & JSite::getMenu();
 		$menu		= $menus->getActive();
 
-		$params = $mainframe->getParams('com_oziogallery22');
+		$params = $mainframe->getParams('com_oziogallery2');
 		
 		$larghezza 			= $params->def('width', 640);
 		$altezza 			= $params->def('height', 480);
 		$larghezzaimmagine 	= $params->def('widthi', 640);
 		$altezzaimmagine 	= $params->def('heighti', 480);
-		$bkgndoutercolora	= $params->def('bkgndoutercolora', '004080');
+		$loadercolor	    	= $params->def('loadercolor', 'FFFFFF');
 		$ordinamento 		= (int) $params->def('ordinamento');		
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
+		$slidershow		= (int) $params->def('slidershow');
 		$fotoiniziale		= (int) $params->def('fotoiniziale');			
 		$indirizzo			= $params->def('indirizzo');
 		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/accordion/manual-xml/accordion.ozio');		
@@ -56,13 +57,7 @@ class OzioGalleryView06Accordion extends JView
 			case '2': $float		= 'inherit';	break;			
 			default:  $float		= 'inherit'; 	break;				
 		}
-		
-		switch ($params->get( 'slidershow' ))
-		{
-			case '0': $slidershow		= 'false'; 		break;
-			case '1': $slidershow		= 'true';		break;
-			default:  $slidershow		= 'true'; 		break;				
-		}		
+				
 		
 		switch ($params->get( 'table' ))
 		{
@@ -70,7 +65,16 @@ class OzioGalleryView06Accordion extends JView
 			case '1': $table		= 'right';		break;
 			case '2': $table		= 'center';		break;			
 			default:  $table		= 'center'; 	break;				
-		}		
+		}
+
+		switch ($params->get( 'target' ))
+			{
+			case '0': $target		= '_parent'; 		
+			break;
+			case '1': $target		= '_blank';		
+			break;
+	
+		}
 
 
 		$document->addScript(JURI::root(true).'/components/com_oziogallery2/assets/js/15/swfobject.js');
@@ -213,13 +217,21 @@ $randval = rand();
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
-			$string .= '<options slideshow="'.$slidershow.'">'."\n";			
+			$string .= '<options divColor="0x000000" divAlpha="70">'."\n";			
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-			$string .= '<item link="'.$indirizzo.'" jpg="' . $dir_images . $row[1] . '" title="'.$title.'" color="0x000000" alphaColor="0"><![CDATA['.$title.']]>';
+			switch ($params->get( 'accordiontitle' ))
+			{
+			case '0': $accordiontitle		= ''; 		
+			break;
+			case '1': $accordiontitle		= $title;		
+			break;
+	
+			}
+			$string .= '<item link="'.$indirizzo.'" target="'.$target.'" jpg="' . $dir_images . $row[1] . '" title="'.$accordiontitle.'" color="0x000000" alphaColor="0"><![CDATA['.$accordiontitle.']]>';
 			$string .= '</item>'."\n";			
 					
 			}	
@@ -262,24 +274,16 @@ $randval = rand();
 endif;		
 		
 		
-
-
-		switch ($params->get( 'accordiontitle' ))
-		{
-			case '0': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview2.swf?xmlPath='; 		
-			break;
-			case '1': $accordiontitle		= JURI::root().'components/com_oziogallery2/skin/accordion/preview.swf?xmlPath=';		
-			break;
 	
-		}	
 
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  accordiontitle :   ' .$accordiontitle .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  xml_moder :   ' .$xml_moder .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tuttochiuso :   ' .$tuttochiuso .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  slidershow :   ' .$slidershow .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  fotoiniziale :   ' .$fotoiniziale  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  bkgndoutercolora :     '.$bkgndoutercolora  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  loadercolor :     '.$loadercolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezzaimmagne :     '.$larghezzaimmagine  .'</pre>';
@@ -304,12 +308,13 @@ endif;
 		$this->assignRef('altezzaimmagine' , 		$altezzaimmagine);
 		$this->assignRef('larghezzaimmagine' , 		$larghezzaimmagine);		
 		$this->assignRef('xml_moder' , 				$xml_moder);
-		$this->assignRef('bkgndoutercolora' , 		$bkgndoutercolora);		
+		$this->assignRef('loadercolor' , 		$loadercolor);		
 		$this->assignRef('table' , 					$table);			
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('accordiontitle' , 		$accordiontitle);
 		$this->assignRef('tuttochiuso' , 			$tuttochiuso);
+		$this->assignRef('slidershow' , 			$slidershow);
 		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);

@@ -42,15 +42,29 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<strong>You need to upgrade your Flash Player.</strong>
 		</div>
 		
-		<script type="text/javascript">
-
-			var so = new SWFObject("<?php echo $this->accordiontitle . $this->xml_moder?><?php echo '&keepSelected='?><?php if( $this->tuttochiuso == 1 ) echo "f"; else echo "t";?><?php echo '&selectedWindow='?><?php echo $this->fotoiniziale;?><?php echo '&imageWidth='?><?php echo $this->larghezzaimmagine;?><?php echo '&imageHeight='?><?php echo $this->altezzaimmagine;?><?php echo '&sWidth='?><?php echo $this->larghezza;?><?php echo '&sHeight='?><?php echo $this->altezza;?><?php echo '", "sotester", "'?><?php echo $this->larghezza;?><?php echo '", "'?><?php echo $this->altezza;?><?php echo '", "8", "'?><?php echo $this->bkgndoutercolora;?>");
-
-			so.addParam("allowFullScreen", "true");
-			so.addParam("wmode", "transparent");
-			so.write("ozioflashcontent");
-			
-		</script>
+<script type="text/javascript">
+		
+		var stageW = <?php echo $this->larghezza;?>;
+		var stageH = <?php echo $this->altezza;?>;
+		
+		var so = new SWFObject("<?php echo JURI::root().'components/com_oziogallery2/skin/accordion/preview.swf';?>?"+Math.random()*1, "sotester", stageW, stageH, "9", "<?php echo $this->loadercolor;?>");
+		
+		so.addVariable("xmlPath", "<?php echo $this->xml_moder;?>");
+		
+		so.addVariable("stageW", stageW);
+       		so.addVariable("stageH", stageH);
+       	
+       		so.addVariable("keepSelected", "<?php if( $this->tuttochiuso == 1 ) echo "f"; else echo "t";?>");
+       		so.addVariable("selectedWindow", "<?php echo $this->fotoiniziale;?>");
+       		so.addVariable("imageWidth", "<?php echo $this->larghezzaimmagine;?>");
+       		so.addVariable("imageHeight", "<?php echo $this->altezza;?>");
+		so.addVariable("slideshow", "<?php if( $this->slidershow == 1 ) echo "t"; else echo "f";?>");
+       	
+		so.addParam("allowFullScreen", "true");
+		so.addParam("wmode", "transparent");
+		so.write("ozioflashcontent");
+		
+	</script>
 
    </td></tr></table>
 <?php if ( $this->modifiche == 1 ) : ?>   
