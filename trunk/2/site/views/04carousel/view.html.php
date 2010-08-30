@@ -68,7 +68,7 @@ class OzioGalleryView04Carousel extends JView
 
 		switch ($params->get( 'target' ))
 		{
-			case '0': $target		= '_self'; 		break;
+			case '0': $target		= '_parent'; 		break;
 			case '1': $target		= '_blank';		break;
 	
 		}		
