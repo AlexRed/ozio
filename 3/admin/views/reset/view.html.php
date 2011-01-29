@@ -232,7 +232,7 @@ class OzioViewReset extends JView
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_RESET_XML' ),'reset' );
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3');
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_RESET_XML' ), 'index.php?option=com_oziogallery3&amp;view=reset', true);			
-		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_F.A.Q.' ), 'index.php?option=com_oziogallery3&amp;view=faq');	
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq');	
 
 	}
 }

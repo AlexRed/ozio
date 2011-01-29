@@ -133,7 +133,7 @@
 			<field name="titolo" type="radio" 
 			default="1" 
 			label="COM_OZIOGALLERY3_Titolo_immagine" 
-			description="COM_OZIOGALLERY3_Show/hide_image_title" 
+			description="COM_OZIOGALLERY3_Showhide_image_title" 
 			>
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
