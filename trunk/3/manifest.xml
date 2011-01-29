@@ -29,7 +29,7 @@
 		<language tag="it-IT">languages/site/it-IT.com_oziogallery3.ini</language>		
 </languages>
 <administration>
-	<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">Ozio Gallery 3</menu>
+	<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">OzioGallery3</menu>
 	<files folder="admin">
 		<filename>controller.php</filename>	
 		<filename>index.html</filename>
