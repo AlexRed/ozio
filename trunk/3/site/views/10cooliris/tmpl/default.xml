@@ -95,7 +95,7 @@
 		
 			<field name="titoloimg" type="radio" 
 			default="0" 
-			label="COM_OZIOGALLERY3_SHOW/HIDE_IMAGE_TITLE" 
+			label="COM_OZIOGALLERY3_SHOWHIDE_IMAGE_TITLE" 
 			description="COM_OZIOGALLERY3_TITOLO_DESC" >
 				<option value="0">COM_OZIOGALLERY3_No</option>
 				<option value="1">COM_OZIOGALLERY3_Yes</option>
