@@ -132,11 +132,18 @@ class OzioGalleryView06Accordion extends JView
 		else:
 			$xmlname = $xmltitle;
 		endif;
-		
+// codice per la variabile di un numero random da associare al fil xml		
+header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+srand((double)microtime()*1000000);
+$randval = rand();
+// fine		
 		
 		switch ($params->get( 'xml_moder' ))
 		{
-			case '0': $xml_moder	= JURI::root().'components/com_oziogallery3/skin/accordion/xml/accordion_'. $xmlname .'.ozio'; 		
+			case '0': $xml_moder	= JURI::root().'components/com_oziogallery3/skin/accordion/xml/accordion_'. $xmlname .'.ozio?'. $randval .''; 		
 				break;
 			case '1': $xml_moder	= JURI::root(). $manualxmlname;							
 				break;
