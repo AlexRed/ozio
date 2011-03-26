@@ -40,11 +40,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
-					var s1 = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/imagerotator.swf","rotator","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>","7");
+					var s1 = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/imagerotator.swf?"+Math.random()*1,"rotator","<?php echo $this->larghezza ?>","<?php echo $this->altezza ?>","7");
 <?php if( $this->flickr == 1 ) : ?>
 					s1.addVariable("file","http://api.flickr.com/services/feeds/photos_public.gne?id=<?php echo $this->user_id ?>&format=rss_200");
 <?php elseif  ( $this->xml_moder == 0 ) : ?>
-					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.ozio"); 
+					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1); 
 <?php elseif  ( $this->xml_moder == 1 ) : ?>
 					s1.addVariable("file","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
