@@ -48,7 +48,7 @@ JHTML::_('behavior.modal');
 											</tr>
 											<tr>
 												<td align="left" valign="bottom">
-												<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery3/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://oziogallery.joomla.it/" target="blank">Ozio Gallery Site</a></b>  -  <b><a href="http://wiki.joomla.it/index.php?title=Manuale_Ozio_Gallery" target="blank">Ozio Gallery Wiki</a></b>
+												<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery2/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://oziogallery.joomla.it/" target="blank">Ozio Gallery Site</a></b>  -  <b><a href="http://wiki.joomla.it/index.php?title=Manuale_Ozio_Gallery" target="blank">Ozio Gallery Wiki</a></b>
 												</td>
 											</tr>											
 										</table>
