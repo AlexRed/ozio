@@ -38,8 +38,9 @@ class OzioGalleryView06Accordion extends JView
 		$altezza 			= $params->def('height', 480);
 		$larghezzaimmagine 	= $params->def('widthi', 640);
 		$altezzaimmagine 	= $params->def('heighti', 480);
-		$bkgndoutercolora	= $params->def('bkgndoutercolora', '004080');
-		$ordinamento 		= (int) $params->def('ordinamento');		
+		$loadercolor		= $params->def('loadercolor', 'FFFFFF');
+		$ordinamento 		= (int) $params->def('ordinamento');
+		$slidershow 		= (int) $params->def('slidershow');
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
@@ -57,11 +58,10 @@ class OzioGalleryView06Accordion extends JView
 			default:  $float		= 'inherit'; 	break;				
 		}
 		
-		switch ($params->get( 'slidershow' ))
+		switch ($params->get( 'target' ))
 		{
-			case '0': $slidershow		= 'false'; 		break;
-			case '1': $slidershow		= 'true';		break;
-			default:  $slidershow		= 'true'; 		break;				
+			case '0': $target		= '_parent'; 		break;
+			case '1': $target		= '_blank';		break;			
 		}		
 		
 		switch ($params->get( 'table' ))
@@ -211,13 +211,21 @@ $randval = rand();
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
-			$string .= '<options slideshow="'.$slidershow.'">'."\n";			
+			$string .= '<options divColor="0x000000" divAlpha="70">'."\n";			
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
 				$row 	 = &$files[$i];
 				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
-			$string .= '<item link="'.$indirizzo.'" jpg="' . $dir_images . $row[1] . '" title="'.$title.'" color="0x000000" alphaColor="0"><![CDATA['.$title.']]>';
+			switch ($params->get( 'accordiontitle' ))
+			{
+			case '0': $accordiontitle		= ''; 		
+			break;
+			case '1': $accordiontitle		= $title;		
+			break;
+	
+			}
+			$string .= '<item link="'.$indirizzo.'" target="'.$target.'" jpg="' . $dir_images . $row[1] . '" title="'.$accordiontitle.'" color="0x000000" alphaColor="0"><![CDATA['.$accordiontitle.']]>';
 			$string .= '</item>'."\n";			
 					
 			}	
@@ -259,25 +267,15 @@ $randval = rand();
 			}		 
 endif;		
 		
-		
-
-
-		switch ($params->get( 'accordiontitle' ))
-		{
-			case '0': $accordiontitle		= JURI::root().'components/com_oziogallery3/skin/accordion/preview2.swf?xmlPath='; 		
-			break;
-			case '1': $accordiontitle		= JURI::root().'components/com_oziogallery3/skin/accordion/preview.swf?xmlPath=';		
-			break;
-	
-		}	
 
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  accordiontitle :   ' .$accordiontitle .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  xml_moder :   ' .$xml_moder .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  tuttochiuso :   ' .$tuttochiuso .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  slidershow :   ' .$slidershow .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  fotoiniziale :   ' .$fotoiniziale  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  bkgndoutercolora :     '.$bkgndoutercolora  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  loadercolor :     '.$loadercolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezzaimmagne :     '.$larghezzaimmagine  .'</pre>';
@@ -302,12 +300,13 @@ endif;
 		$this->assignRef('altezzaimmagine' , 		$altezzaimmagine);
 		$this->assignRef('larghezzaimmagine' , 		$larghezzaimmagine);		
 		$this->assignRef('xml_moder' , 				$xml_moder);
-		$this->assignRef('bkgndoutercolora' , 		$bkgndoutercolora);		
+		$this->assignRef('loadercolor' , 		$loadercolor);		
 		$this->assignRef('table' , 					$table);			
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('accordiontitle' , 		$accordiontitle);
 		$this->assignRef('tuttochiuso' , 			$tuttochiuso);
+		$this->assignRef('slidershow' , 			$slidershow);
 		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);

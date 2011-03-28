@@ -141,19 +141,27 @@
 			description="COM_OZIOGALLERY3_Indirizzo_web_desc" 
 			/>
 			
-			<field name="slidershow" type="list" 
-			default="1" 
-			label="COM_OZIOGALLERY3_Slidershow" 
-			description="COM_OZIOGALLERY3_Slidershow_desc" >
-				  <option value="0">COM_OZIOGALLERY3_No</option>
-				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			<field name="target" type="list" 
+			default="2" 
+			label="COM_OZIOGALLERY3_Target" 
+			description="COM_OZIOGALLERY3_Target_desc" >
+				  <option value="0">COM_OZIOGALLERY3_STESSA_FINESTRA</option>
+				  <option value="1">COM_OZIOGALLERY3_NUOVA_FINESTRA</option>
 			</field>
-
 			
 			<field name="accordiontitle" type="list" 
 			default="1" 
 			label="COM_OZIOGALLERY3_Titolo" 
 			description="COM_OZIOGALLERY3_Titolo_desc" >
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+
+			
+			<field name="slidershow" type="list" 
+			default="1" 
+			label="COM_OZIOGALLERY3_Slidershow" 
+			description="COM_OZIOGALLERY3_Slidershow_desc" >
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
 			</field>
@@ -180,12 +188,6 @@
 			description="COM_OZIOGALLERY3_Larghezza_Immagini_Desc" 
 			/>
 			
-			<field name="heighti" type="text" 
-			default="300" 
-			label="COM_OZIOGALLERY3_Altezza_Immagini" 
-			size="4" 
-			description="COM_OZIOGALLERY3_Altezza_Immagini_Desc" 
-			/>
 			
 			<field name="loadercolor" type="colorpicker" 
 			class="color {hash:true,required:false}" 
