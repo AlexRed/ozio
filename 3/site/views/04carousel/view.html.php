@@ -68,7 +68,7 @@ class OzioGalleryView04Carousel extends JView
 
 		switch ($params->get( 'target' ))
 		{
-			case '0': $target		= '_self'; 		break;
+			case '0': $target		= '_parent'; 		break;
 			case '1': $target		= '_blank';		break;
 	
 		}		
@@ -271,7 +271,7 @@ $randval = rand();
 				$row	= &$files[$i];
 				$title	= preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
 				$js		= "javascript:aclick('ancor_".$title."_id')";
-				$jst	= "_self";
+				$jst	= "_parent";
 	if( $carousellink == 0 ) {
 			if( $titolo != 0 ) :	
 				$string .= '<photo title="' . $title . '" href="' . $dir_images . $row[1] . '" target="' . $target . '">' . $dir_images . $row[1] . '</photo>'."\n";
