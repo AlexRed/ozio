@@ -191,12 +191,18 @@
 			
 			<field name="loadercolor" type="colorpicker" 
 			class="color {hash:true,required:false}" 
-			default="#FFFFFF" 
+			default="#000000" 
 			size="10" 
 			label="COM_OZIOGALLERY3_LOADER_COLOR" 
 			description="COM_OZIOGALLERY3_LOADER_COLOR_desc" 
 			/>			
-
+			<field name="dissolvenza" 
+			type="text" 
+			default="70" 
+			label="COM_OZIOGALLERY3_DISSOLVENZA" 
+			size="4" 
+			description="COM_OZIOGALLERY3_DISSOLVENZA_DESC" 
+			/>
 		
 		</fieldset>		
         <fieldset
