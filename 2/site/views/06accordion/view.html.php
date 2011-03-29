@@ -38,14 +38,15 @@ class OzioGalleryView06Accordion extends JView
 		$altezza 			= $params->def('height', 480);
 		$larghezzaimmagine 	= $params->def('widthi', 640);
 		$altezzaimmagine 	= $params->def('heighti', 480);
-		$loadercolor	    	= $params->def('loadercolor', 'FFFFFF');
+		$loadercolor	    = $params->def('loadercolor', 'FFFFFF');
 		$ordinamento 		= (int) $params->def('ordinamento');		
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
 		$slidershow		= (int) $params->def('slidershow');
-		$fotoiniziale		= (int) $params->def('fotoiniziale');			
+		$fotoiniziale		= (int) $params->def('fotoiniziale');
+		$dissolvenza		= (int) $params->def('dissolvenza');			
 		$indirizzo			= $params->def('indirizzo');
 		$manualxmlname		= $params->def('manualxmlname', 'components/com_oziogallery2/skin/accordion/manual-xml/accordion.ozio');		
 
@@ -203,6 +204,7 @@ $randval = rand();
 			closedir($hd);
 	}
 		
+$loadercolor = str_replace("#", "" , $loadercolor);	
 		
 		if(count($files)) {
 		
@@ -217,7 +219,7 @@ $randval = rand();
 			$filehandle = fopen($filename, 'w');
 
 			$string = '<?xml version="1.0" encoding="utf-8"?>'."\n";
-			$string .= '<options divColor="0x000000" divAlpha="70">'."\n";			
+			$string .= '<options divColor="0x'.$loadercolor.'" divAlpha="'.$dissolvenza.'">'."\n";			
 			$n = count($files);
 			for ($i=0; $i<$n; $i++)
 			{
@@ -283,6 +285,7 @@ endif;
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  tuttochiuso :   ' .$tuttochiuso .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  slidershow :   ' .$slidershow .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  fotoiniziale :   ' .$fotoiniziale  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  dissolvenza :   ' .$dissolvenza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  loadercolor :     '.$loadercolor  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
@@ -308,14 +311,15 @@ endif;
 		$this->assignRef('altezzaimmagine' , 		$altezzaimmagine);
 		$this->assignRef('larghezzaimmagine' , 		$larghezzaimmagine);		
 		$this->assignRef('xml_moder' , 				$xml_moder);
-		$this->assignRef('loadercolor' , 		$loadercolor);		
+		$this->assignRef('loadercolor' , 		    $loadercolor);		
 		$this->assignRef('table' , 					$table);			
 		$this->assignRef('tempo' , 					$tempo);
 		$this->assignRef('modifiche' , 				$modifiche);
 		$this->assignRef('accordiontitle' , 		$accordiontitle);
 		$this->assignRef('tuttochiuso' , 			$tuttochiuso);
 		$this->assignRef('slidershow' , 			$slidershow);
-		$this->assignRef('fotoiniziale' , 			$fotoiniziale);		
+		$this->assignRef('fotoiniziale' , 			$fotoiniziale);
+		$this->assignRef('dissolvenza' , 			$dissolvenza);				
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);
 		$this->assignRef('manualxmlname' , 			$manualxmlname);		

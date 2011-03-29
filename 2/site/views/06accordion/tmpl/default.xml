@@ -54,6 +54,8 @@
 		<option value="0">No</option>
 		<option value="1">Yes</option>
         </param>
+		<param name="loadercolor" type="colorpicker" class="color {hash:true,required:false}" default="#000000" size="10" label="BACKGROUND GRADIENT EDGE" description="BACKGROUND GRADIENT EDGE DESC" />
+		<param name="dissolvenza" type="text" default="70" label="DISSOLVENZA" size="4" description="DISSOLVENZA_DESC" />	
 			<param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#666;&quot;&gt;Accordion Settings&lt;/div&gt;" label="" description="" />		
 			<param name="slidershow" type="list" default="1" label="Slidershow" description="Slidershow desc" >
 				<option value="0">No</option>
