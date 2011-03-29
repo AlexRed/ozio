@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <folder name="Ozio Gallery2" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
 autoSize="true"
+movie_width="640"
+movie_height="480"
 loaderColor="FFFFFF"
 loaderOpacity="100"
 openFirstFile="true"
