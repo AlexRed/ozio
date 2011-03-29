@@ -101,6 +101,14 @@
 				<option value="1">COM_OZIOGALLERY3_Yes</option>
 			</field>
 			
+			<field name="apriinnuova" type="radio" 
+			default="0" 
+			label="COM_OZIOGALLERY3_ORIGINAL_SIZE_LINK" 
+			description="COM_OZIOGALLERY3_LINK_PAGE_DESC" >
+				<option value="0">COM_OZIOGALLERY3_No</option>
+				<option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+			
 			<field name="ordinamento" type="list"
 			description="COM_OZIOGALLERY3_ORDINE_IMMAGINI_DESC"			
 			label="COM_OZIOGALLERY3_ORDINE_IMMAGINI" 
