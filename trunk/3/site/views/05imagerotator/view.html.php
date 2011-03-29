@@ -88,9 +88,9 @@ class OzioGalleryView05ImageRotator extends JView
 
 		switch ($params->get( 'overstretch' ))
 		{
-			case '0': $overstretch		= 'false'; 		break;
-			case '1': $overstretch		= 'true';		break;
-			default:  $overstretch		= 'false'; 		break;				
+			case '1': $overstretch		= 'false'; 		break;
+			case '0': $overstretch		= 'true';		break;
+			default:  $overstretch		= 'true'; 		break;				
 		}	
 
 		switch ($params->get( 'shuffle' ))
