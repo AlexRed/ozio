@@ -72,7 +72,7 @@
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
-		<param name="overstretch" type="radio" default="0" label="Overstretch" description="Overstretch desc" >
+		<param name="overstretch" type="radio" default="1" label="Overstretch" description="Overstretch desc" >
           <option value="0">No</option>
           <option value="1">Yes</option>
         </param>
