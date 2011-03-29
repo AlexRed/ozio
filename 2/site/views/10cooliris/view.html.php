@@ -58,6 +58,7 @@ class OzioGalleryView10Cooliris extends JView
 		$distanzaoriz		= $params->def('distanzaoriz');
 		$distanzavert		= $params->def('distanzavert');
 		$titoloimg 			= (int) $params->def('titoloimg', 0);
+		$apriinnuova 		= (int) $params->def('apriinnuova', 0);
 		
 		$framecolor 		= str_replace( '#', '', $framecolor );
 		$bkgndretro 		= str_replace( '#', '', $bkgndretro );
@@ -223,8 +224,8 @@ class OzioGalleryView10Cooliris extends JView
 			
 			$string .= '<channel>'."\n";			    	
 			$n = count($files);
-			
-			if ($titoloimg == 1) {
+					
+			if ($titoloimg == 1 and $apriinnuova == 1) {
 			
 			for ($i=0; $i<$n; $i++)
 			{
@@ -241,7 +242,40 @@ class OzioGalleryView10Cooliris extends JView
 						$string .= '</item>'."\n";						
 			}	
 			}
-			else {
+			else if ($titoloimg == 1 and $apriinnuova == 0) {
+			
+			for ($i=0; $i<$n; $i++)
+			{
+				$row 	 = &$files[$i];
+				$title = preg_replace('/\.(jpg|png|gif)$/i','',$row[1]);
+						$string .= '<item>'."\n";
+						$string .= '<title>'. $title . '</title>'."\n";
+						$string .= '<media:description>'.$retrotext.'</media:description>'."\n";
+						$string .= '<link></link>'."\n";
+						$string .= '<media:thumbnail url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";	
+						$string .= '<media:content url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";						
+						$string .= '</item>'."\n";						
+			}	
+			}
+			else if ($titoloimg == 0 and $apriinnuova == 0) {
+			
+			for ($i=0; $i<$n; $i++)
+			{
+				$row 	 = &$files[$i];
+						$string .= '<item>'."\n";
+						$string .= '<title></title>'."\n";
+						$string .= '<media:description>'.$retrotext.'</media:description>'."\n";
+						$string .= '<link></link>'."\n";
+						$string .= '<media:thumbnail url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";	
+						$string .= '<media:content url="' . $dir_images .'/'. $row[1] . '"/>';
+						$string .= "\n";						
+						$string .= '</item>'."\n";						
+			}	
+			}
+			else if ($titoloimg == 0 and $apriinnuova == 1) {
 			
 			for ($i=0; $i<$n; $i++)
 			{
@@ -345,6 +379,7 @@ endif;
 		$this->assignRef('downloads' , 				$downloads);
 		$this->assignRef('download' , 				$download);
 		$this->assignRef('titoloimg' , 				$titoloimg);
+		$this->assignRef('apriinnuova' , 			$apriinnuova);
 
 		$this->assignRef('xml_mode' , 				$xml_mode);
 		$this->assignRef('flickr' , 				$flickr);
