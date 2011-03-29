@@ -52,12 +52,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		so.addVariable("xmlPath", "<?php echo $this->xml_moder;?>");
 		
 		so.addVariable("stageW", stageW);
-       		so.addVariable("stageH", stageH);
-       	
-       		so.addVariable("keepSelected", "<?php if( $this->tuttochiuso == 1 ) echo "f"; else echo "t";?>");
-       		so.addVariable("selectedWindow", "<?php echo $this->fotoiniziale;?>");
-       		so.addVariable("imageWidth", "<?php echo $this->larghezzaimmagine;?>");
-       		so.addVariable("imageHeight", "<?php echo $this->altezza;?>");
+       	so.addVariable("stageH", stageH);
+       	so.addVariable("keepSelected", "<?php if( $this->tuttochiuso == 1 ) echo "f"; else echo "t";?>");
+       	so.addVariable("selectedWindow", "<?php echo $this->fotoiniziale;?>");
+       	so.addVariable("imageWidth", "<?php echo $this->larghezzaimmagine;?>");
+       	so.addVariable("imageHeight", "<?php echo $this->altezza;?>");
 		so.addVariable("slideshow", "<?php if( $this->slidershow == 1 ) echo "t"; else echo "f";?>");
        	
 		so.addParam("allowFullScreen", "true");
