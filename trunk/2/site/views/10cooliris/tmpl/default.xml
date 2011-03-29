@@ -38,6 +38,10 @@
         <option value="0">No</option>
         <option value="1">Yes</option>
         </param>
+		<param name="apriinnuova" type="radio" default="0" label="SHOW/HIDE LINK PAGE" description="LINK PAGE DESC" >
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+        </param>
 		<param name="ordinamento" type="list" default="3" label="Ordine immagini" description="Ordine immagini desc" >
           <option value="0">Per Nome ordine alfabetico</option>
           <option value="1">Per Nome ordine alfabetico inverso</option>		  
