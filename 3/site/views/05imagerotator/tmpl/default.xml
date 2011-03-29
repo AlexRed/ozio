@@ -194,7 +194,7 @@
 			</field>
 
 			<field name="overstretch" type="radio" 
-			default="0" 
+			default="1" 
 			label="COM_OZIOGALLERY3_Overstretch" 
 			description="COM_OZIOGALLERY3_Overstretch_desc" 
 			>
