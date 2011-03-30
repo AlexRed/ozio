@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<options divColor="0x000000" divAlpha="70">
 <options slideshow="true">
 	<item link="http://www.msn.com" jpg="http://www.exemple.xx/images/oziogallery2/image1.jpg" title="Grand Canion Jump" color="0x000000" alphaColor="0"><![CDATA[I cannot believe <font color="#ff7700">this</font> guy]]></item>
 	<item link="http://www.aol.com" jpg="http://www.exemple.xx/images/oziogallery2/image2.jpg" title="moddeling around" color="0x000000" alphaColor="0"><![CDATA[<font color="#ff0000">                                           I love shopping!</font>]]></item>
