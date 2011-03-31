@@ -9,12 +9,7 @@
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
 	<version>3.1</version>
 	<description>Ozio Gallery for Joomla! 1.6</description>
-        <install>
-        </install>
-        <uninstall>
-        </uninstall>	
-        <update>
-        </update>
+
 	<scriptfile>file.script.php</scriptfile>
 	<files folder="site">
 		<filename>index.html</filename>
@@ -50,4 +45,11 @@
 		<language tag="it-IT">languages/admin/it-IT.plg_content_ozio.sys.ini</language>		
 </languages>
 	</administration>
+	    <install>
+        </install>
+        <uninstall>
+        </uninstall>
+	<updateservers>
+		<server type="extension" priority="1" name="Ozio Gallery3 update site"><![CDATA[http://oziogallery.joomla.it/com_oziogallery3.xml]]></server>
+    </updateservers>
 </extension>
