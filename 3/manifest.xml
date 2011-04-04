@@ -7,7 +7,7 @@
 	<authorUrl>http://www.joomla.it</authorUrl>
 	<copyright>(C) 2008 - 2010 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.1</version>
+	<version>3.2</version>
 	<description>Ozio Gallery for Joomla! 1.6</description>
 
 	<scriptfile>file.script.php</scriptfile>
@@ -17,12 +17,9 @@
 		<filename>controller.php</filename>
 		<folder>assets</folder>
 		<folder>skin</folder>
-		<folder>views</folder>	
+		<folder>views</folder>
+		<folder>language</folder>	
 	</files>
-<languages>
-		<language tag="en-GB">languages/site/en-GB.com_oziogallery3.ini</language>
-		<language tag="it-IT">languages/site/it-IT.com_oziogallery3.ini</language>		
-</languages>
 <administration>
 	<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">OzioGallery3</menu>
 	<files folder="admin">
@@ -32,18 +29,10 @@
 		<folder>assets</folder>		
 		<folder>classes</folder>
 		<folder>models</folder>
-		<folder>views</folder>			
+		<folder>views</folder>
+		<folder>language</folder>		
 	</files>
-<languages>
-		<language tag="en-GB">languages/admin/en-GB.com_oziogallery3.ini</language>
-		<language tag="en-GB">languages/admin/en-GB.com_oziogallery3.sys.ini</language>
-		<language tag="en-GB">languages/admin/en-GB.plg_content_ozio.ini</language>
-		<language tag="en-GB">languages/admin/en-GB.plg_content_ozio.sys.ini</language>	
-		<language tag="it-IT">languages/admin/it-IT.com_oziogallery3.ini</language>
-		<language tag="it-IT">languages/admin/it-IT.com_oziogallery3.sys.ini</language>
-		<language tag="it-IT">languages/admin/it-IT.plg_content_ozio.ini</language>
-		<language tag="it-IT">languages/admin/it-IT.plg_content_ozio.sys.ini</language>		
-</languages>
+
 	</administration>
 	    <install>
         </install>
