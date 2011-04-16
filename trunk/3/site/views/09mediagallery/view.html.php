@@ -24,6 +24,112 @@ jimport( 'joomla.application.component.view');
 
 class OzioGalleryView09mediagallery extends JView
 {
+// start code by mmleoni
+	private $pathToImageFolder = '';
+	private $urlToImageFolder = '';
+	private $titolo = '';
+
+/*
+	<option value="0">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO</option>
+	<option value="1">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO_INVERSO</option>		  
+	<option value="2">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_RECENTI</option>
+	<option value="3">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_MENO_RECENTI</option>	
+	<option value="4">COM_OZIOGALLERY3_CASUALE</option>	
+
+*/
+	private function sortFsItems( $items = null, $ordinamento = 0){
+		$sorted = array();
+		$i=0;
+		foreach($items as $item){
+			switch ($ordinamento) {
+				case 2:
+				case 3:
+					$sorted[filemtime($item) . sprintf("%04d", ++$i)] = $item;
+					break;
+				default:
+					$sorted[$item] = $item;
+					break;
+			}
+		}
+
+		switch ($ordinamento) {
+			case 0:
+			case 3:
+				sort($sorted);
+				break;
+			case 1:
+			case 2:
+				rsort($sorted);
+				break;
+			case 4:
+				shuffle($sorted);
+				break;
+			default:
+				break;		
+		}
+		
+		return $sorted;
+	}
+
+
+	private function recurseDirs($path = '', $dom = null, $container = null, $ordinamento = 0, $level = 0){
+		$d = $this->sortFsItems(glob($path.'*', GLOB_ONLYDIR), $ordinamento);
+		$f = array();
+		$element = null;
+		if ($d){ // sub dirs present: ignore files
+			foreach( $d as $item){
+				$name = str_replace ( $path, '', $item );
+
+				$element = $dom->createElement("folder");
+				$container->appendChild($element);
+				$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($name));
+				
+				$this->recurseDirs($item . '/', &$dom, &$element, $ordinamento, $level + 1);
+			}
+		}else{ // no sub dirs read files
+			foreach(glob($path.'*', GLOB_NOSORT) as $file){
+				if(is_file($file)) $f[]=$file;
+			}
+			$f = $this->sortFsItems($f, $ordinamento);
+			foreach( $f as $item){
+				$name = str_replace ( $path, '', $item );
+				$img = str_replace ( $this->pathToImageFolder, '', $path ) . $name;
+				$ext = strtolower(substr($name, -3));
+				$title = preg_replace('/\.(\w+)$/i','', $name);
+				$title = ( $this->titolo ? $title : '' );
+				$url = utf8_encode($this->urlToImageFolder . '/' . $img);
+				$element = null;
+				
+				if($ext == "jpg" || $ext == "gif"){
+					$element = $dom->createElement("pic");
+					$element->appendChild( $dom->createAttribute('image'))->appendChild( $dom->createTextNode($url));
+					$element->appendChild( $dom->createAttribute('title'))->appendChild( $dom->createTextNode($title));
+					$element->appendChild( $dom->createAttribute('link'))->appendChild( $dom->createTextNode($url));
+					$element->appendChild( $dom->createAttribute('link_title'))->appendChild( $dom->createTextNode($originalsizetxt));
+				} elseif($ext == "flv" || $ext == "swf"){
+					$element = $dom->createElement("video");
+					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
+					$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($title));
+				} elseif($ext == "mp3"){
+					$element = $dom->createElement("music");
+					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
+					$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($title));
+				} elseif($ext == "txt"){
+					$element = $dom->createElement("txt");
+					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
+					$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($title));
+				}
+				
+				if ($element) $container->appendChild($element);
+
+			}
+		}
+
+		return; 
+	}
+// end code by mmleoni
+	
+
 	function display( $tpl = null )
 	{
 	
@@ -164,559 +270,47 @@ class OzioGalleryView09mediagallery extends JView
 		if (JFolder::exists( $path ))
 		{			
 
-		if ( @filemtime($foldername) >= @filemtime($filename) ) 
-		{	
 		
-		$thumb_sufix = ".th.";
-	
-				if ($hd = opendir($path)) 
-				{
-					  $files = array();
-						while (false !== ($file = readdir($hd))) 
-					{ 
-							if($file != '.' && $file != '..') 
-						{
-								if (strpos($file, $thumb_sufix) === false) {
-									if(is_file($path . $file) && preg_match('/\.(jpg|png|gif|flv|mp3|swf|txt)$/i',$file)) 
-								{
-									if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) 
-									{ 
-										$files[] = array(filemtime($path.$file), $file);
-									}
-									if( $ordinamento == 0 OR $ordinamento == 1) 
-									{ 
-										$files[] = array(($path.$file), $file);
-									}							
-								}
-							}
-						}
-					} // NOTE:  Tag chiusura  == while (false !== ($file = readdir($hd)))
-
-					closedir($hd);
-
-				} // NOTE:  Tag chiusura  == if ($hd = opendir($path))
-	
-
-	
-			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
-					sort($files);  
-			} else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
-					rsort($files);
-            } else {  
-					shuffle($files);			
-			}	
-				
-			$filehandle = fopen($filename, 'w');
+		//if ( @filemtime($foldername) >= @filemtime($filename) ) {
+		if ( 1 ) {	
+		
+// start code by mmleoni			
+			$dom = new DOMDocument('1.0');// '1.0', 'iso-8859-1' || 'UTF-8'
 			
-				// inizio esperimento categorie AlexRed			
-				$path2  = $path;
-				$categories[] = array(filectime($path2), $folder);
-				if ($hd2 = opendir($path2)) 
-				{
-					while (false !== ($file2 = readdir($hd2))) 
-					{ 
-						  if($file2 != '.' && $file2 != '..') {
-							if(is_dir($path2 . $file2) && $file2 != 'file' && $file2 != 'imagin') {
-								$categories[] = array(filemtime($path2.$file2), $file2);
-							}
-						  }
-					} // NOTE:  Tag chiusura  == (false !== ($file2 = readdir($hd2))) 
-					
-					closedir($hd2);
-
-				} // NOTE:  Tag chiusura  == ($hd2 = opendir($path2)) 
-
-				sort($categories);		
-			
+			// make header
+			$setup=null;
 			if ($style == 0) {
-			$string = '<?xml version="1.0" encoding="iso-8859-1"?>
-			<folder name="'.$titologalleria.'" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
-			autoSize="true"
-			movie_width="'.$larghezza.'"
-            movie_height="'.$altezza.'"
-			loaderColor="FFFFFF"
-			loaderOpacity="100"
-			openFirstFile="true"
-
-			FLASH_NIFTIES_COMMENT="---------Styles for Navigation-----"
-			menuY="0"
-			menuItemHeight="30"
-			menuWidth="170"
-			menuHeight="465"
-			menuSpeed="15"
-			shineOpacity="50"
-			hoverColor="015287"
-			hoverOpacity="100"
-			menubgColor="000000"
-			menuBgOpacity="100"
-			navTextX="0"
-			navTextY="0"
-			navTextSize="11"
-			navHeaderTextSize="10"
-			navTextFont="Verdana"
-			navTextEmbed="false"
-			navTextColor="999999"
-			navTextHoverColor="FFFFFF"
-			headerTextColor="FFFFFF"
-			navHeaderBgColor="404040"
-			navHeaderBgOpacity="100"
-			navBackButtonEnabledOpacity="100"
-			navBackButtonDisabledOpacity="20"
-			navDivColor="222222"
-			navDivOpacity="100"
-			navBgColor="000000"
-			navBgAlpha="100"
-			iconsColor="FFFFFF"
-			iconsOverColor="FFFFFF"
-			iconOpacity="20"
-			iconOverOpacity="60"
-			navSeparatorColor="585858"
-			navSeparatorOpacity="100"
-			navCollapseButtonColor="ffffff"
-			navCollapseButtonOpacity="15"
-			navCollapseButtonSize="10"
-			scrollbarWidth ="12"
-			scrollbarColor="585858"
-			scrollbarBgColor="000000"
-			scrollbarOpacity="100"
-			scrollbarBgOpacity="100"
-			showTooltips="'.$showtooltips.'"
-			tooltipSize="10"
-			tooltipColor="999999"
-			tooltipStroke="0"
-			tooltipStrokeColor="FFFFFF"
-			tooltipStrokeAlpha="0"
-			tooltipFillAlpha="50"
-			tooltipFill="000000"
-			tooltipCornerRadius="0"
-			navOpenAtStart="true"
-			autoCloseNavFirstAfter="0"
-			autoCloseNavAfter="0"
-			showMusicFiles="true"
-			showTextFiles="true"
-			showTooltipsOnMenuItems="true"
-			tooltipFolder="folders"
-			tooltipImages="pics"
-			tooltipMusic="songs"
-			tooltipVideo="movies"
-			tooltipText="documents"
-			tooltipFlash="flash movies"
-			tooltipMusicSingle=" (mp3)"
-			tooltipVideoSingle=" (flv)"
-			tooltipTextSingle=" (text)"
-			tooltipFlashSingle=" (flash)"
-			tooltipNoContents="empty"
-			tooltipHome="home"
-			tooltipBack="back"
-			tooltipCollapseMenu="close menu"
-			tooltipOpenMenu="open menu"
-			tooltipPlayPauseVideo="play/pause"
-			tooltipSeekVideo="seek"
-			tooltipDragVolume="drag to set volume"
-			tooltipNextSong="next:"
-			tooltipPrevSong="back:"
-			tooltipMusicShowSongTitle="true"
-			tooltipMinimizeVideo="original size"
-			tooltipMaximizeVideo="maximize"
-			tooltipShowVideoInfo="click for video info"
-			tooltipLink="external link"
-
-			FLASH_NIFTIES_COMMENT2="---------Styles for the gallery component-----"
-			rows="'.$columns.'"
-			cols="'.$rows.'"
-			galleryMargin="45"
-			thumb_width="80"
-			thumb_height="80"
-			thumb_space="10"
-			thumbs_x="auto"
-			thumbs_y="auto"
-			large_x="auto"
-			large_y="auto"
-			nav_x="10"
-			nav_y="0"
-			nav_slider_alpha="50"
-			nav_padding ="7"
-			use_flash_fonts="true"
-			nav_text_size="20"
-			nav_text_bold="false"
-			nav_font="Time New Roman"
-			bg_alpha="10"
-			text_bg_alpha="50"
-			text_xoffset="20"
-			text_yoffset="10"
-			text_size="20"
-			text_bold="false"
-			text_font="Time New Roman"
-			link_xoffset="-2"
-			link_yoffset="5"
-			link_text_size="20"
-			link_text_bold="true"
-			link_font="Time New Roman"
-			border="3"
-			corner_radius="5"
-			shadow_alpha="40"
-			shadow_offset="1"
-			shadow_size="3"
-			shadow_spread="-3"
-			friction=".3"
-			bg_color="333333"
-			border_color="FFFFFF"
-			thumb_bg_color="FFFFFF"
-			thumb_loadbar_color="CCCCCC"
-			nav_color="FFFFFF"
-			nav_slider_color="000000"
-			txt_color="FFFFFF"
-			text_bg_color="000000"
-			link_text_color="666666"
-			link_text_over_color="FF9900"
-			showHideCaption="true"
-			autoShowFirst="false"
-			disableThumbOnOpen="true"
-			duplicateThumb="true"
-			activeThumbAlpha="50"
-			abortLoadAfter="20"
-			bgImage="images/Bells.jpg"
-			bgImageSizing="fill"
-			galleryTitle="hide"
-			galleryTitleX="120"
-			galleryTitleY="0"
-			galleryTitle_size="11"
-			galleryTitle_bold="false"
-			galleryTitle_font="Verdana"
-			galleryTitle_color="666666"
-
-			FLASH_NIFTIES_COMMENT3="---------Styles for text pages-----"
-			maximizeText="true"
-			autoCenterTextPage="true"
-			textPageMargin="100"
-			textPageWidth="450"
-			textPageHeight="360"
-			textPageX="50"
-			textPageY="40"
-			txtEmbedFonts="false"
-
-			FLASH_NIFTIES_COMMENT4="---------Styles for music player-----"
-			loopPlaylist="true"
-			musicPlayBackMethod="2"
-			showPlayer="true"
-			mplayerX="center"
-			mplayerY="bottom"
-			mplayerMargin="5"
-			mplayerColor="FFFFFF"
-			mplayerOpacity="60"
-			mplayerSize="1"
-			defaultVolume="3"
-			musicFadeSteps="10"
-
-			FLASH_NIFTIES_COMMENT5="---------Styles for video player-----"
-			videoButtonsColor="ffffff"
-			videoBarColor="666666"
-			videoVolumeColor="ffffff"
-			videoControlsOpacity="60"
-			videoControlsYoffset="0"
-			videoMargin="20"
-			maximizeVideo="true"
-			videoPaused="false"
-			videoPlaySequence="true"
-			videoDescriptionTextColor="999999"
-			videoDescriptionTextSize="16"
-			videoDescriptionTextFont="Verdana"
-			videoDescriptionBgColor="000000"
-			videoDescriptionBgOpacity="60"
-			videoDescriptionPadding="50">'."\n";
-}
-			else {
-			$string = '<?xml version="1.0" encoding="iso-8859-1"?>
-			<folder name="'.$titologalleria.'" FLASH_NIFTIES_COMMENT0="---------Global Styles-----"
-			autoSize="true"
-			movie_width="'.$larghezza.'"
-            movie_height="'.$altezza.'"
-			loaderColor="FFFFFF"
-			loaderOpacity="100"
-			openFirstFile="true"
-
-			FLASH_NIFTIES_COMMENT="---------Styles for Navigation-----"
-			menuY="0"
-menuItemHeight="21"
-menuWidth="140"
-menuHeight="465"
-menuSpeed="15"
-shineOpacity="0"
-hoverColor="f0f0f0"
-hoverOpacity="100"
-menubgColor="FFFFFF"
-menuBgOpacity="100"
-navTextX="0"
-navTextY="1"
-navTextSize="11"
-navHeaderTextSize="10"
-navTextFont="Verdana"
-navTextEmbed="false"
-navTextColor="666666"
-navTextHoverColor="666666"
-headerTextColor="666666"
-navHeaderBgColor="FFFFFF"
-navHeaderBgOpacity="100"
-navBackButtonEnabledOpacity="100"
-navBackButtonDisabledOpacity="20"
-navDivColor="DDDDDD"
-navDivOpacity="100"
-navBgColor="FFFFFF"
-navBgAlpha="100"
-iconsColor="EEEEEE"
-iconsOverColor="CCCCCC"
-iconOpacity="0"
-iconOverOpacity="100"
-navSeparatorColor="f0f0f0"
-navSeparatorOpacity="100"
-navCollapseButtonColor="000000"
-navCollapseButtonOpacity="10"
-navCollapseButtonSize="10"
-scrollbarWidth ="8"
-scrollbarColor="cccccc"
-scrollbarBgColor="eeeeee"
-scrollbarOpacity="100"
-scrollbarBgOpacity="100"
-showTooltips="'.$showtooltips.'"
-tooltipSize="10"
-tooltipColor="666666"
-tooltipStroke="0"
-tooltipStrokeColor="FFFFFF"
-tooltipStrokeAlpha="0"
-tooltipFillAlpha="50"
-tooltipFill="dddddd"
-tooltipCornerRadius="4"
-navOpenAtStart="true"
-autoCloseNavFirstAfter="5"
-autoCloseNavAfter="3"
-showMusicFiles="true"
-showTextFiles="true"
-showTooltipsOnMenuItems="false"
-tooltipFolder="folders"
-tooltipImages="pics"
-tooltipMusic="songs"
-tooltipVideo="movies"
-tooltipText="documents"
-tooltipFlash="flash movies"
-tooltipMusicSingle=" (mp3)"
-tooltipVideoSingle=" (flv)"
-tooltipTextSingle=" (text)"
-tooltipFlashSingle=" (flash)"
-tooltipNoContents="empty"
-tooltipPlayPauseVideo="play/pause"
-tooltipSeekVideo="seek"
-tooltipDragVolume="drag to set volume"
-tooltipNextSong="next:"
-tooltipPrevSong="back:"
-tooltipMusicShowSongTitle="true"
-tooltipMinimizeVideo="original size"
-tooltipMaximizeVideo="maximize"
-tooltipShowVideoInfo="click for video info"
-tooltipLink="external link"
-
-FLASH_NIFTIES_COMMENT2="---------Styles for the gallery component-----"
-rows="'.$columns.'"
-cols="'.$rows.'"
-galleryMargin="55"
-thumb_width="100"
-thumb_height="100"
-thumb_space="10"
-thumbs_x="auto"
-thumbs_y="auto"
-large_x="auto"
-large_y="auto"
-nav_x="5"
-nav_y="5"
-nav_slider_alpha="50"
-nav_padding ="3"
-use_flash_fonts="true"
-nav_text_size="20"
-nav_text_bold="false"
-nav_font="Time New Roman"
-bg_alpha="100"
-text_bg_alpha="40"
-text_xoffset="20"
-text_yoffset="10"
-text_size="20"
-text_bold="false"
-text_font="Time New Roman"
-link_xoffset="-2"
-link_yoffset="5"
-link_text_size="20"
-link_text_bold="true"
-link_font="Time New Roman"
-border="7"
-corner_radius="0"
-shadow_alpha="20"
-shadow_offset="0"
-shadow_size="1"
-shadow_spread="-5"
-friction=".3"
-bg_color="FFFFFF"
-border_color="FFFFFF"
-thumb_bg_color="FFFFFF"
-nav_color="666666"
-nav_slider_color="DDDDDD"
-txt_color="FFFFFF"
-text_bg_color="000000"
-link_text_color="666666"
-link_text_over_color="FF9900"
-showHideCaption="true"
-autoShowFirst="false"
-disableThumbOnOpen="true"
-duplicateThumb="true"
-activeThumbAlpha="50"
-abortLoadAfter="200"
-galleryTitle="hide"
-
-FLASH_NIFTIES_COMMENT3="---------Styles for text pages-----"
-maximizeText="true"
-autoCenterTextPage="true"
-textPageMargin="80"
-textPageWidth="450"
-textPageHeight="360"
-textPageX="250"
-textPageY="40"
-txtEmbedFonts="false"
-
-FLASH_NIFTIES_COMMENT4="---------Styles for music player-----"
-loopPlaylist="true"
-musicPlayBackMethod="2"
-showPlayer="true"
-mplayerX="center"
-mplayerY="bottom"
-mplayerMargin="5"
-mplayerColor="666666"
-mplayerOpacity="60"
-mplayerSize="1"
-defaultVolume="3"
-musicFadeSteps="10"
-
-FLASH_NIFTIES_COMMENT5="---------Styles for video player-----"
-videoButtonsColor="666666"
-videoBarColor="666666"
-videoVolumeColor="666666"
-videoControlsOpacity="60"
-videoControlsYoffset="0"
-videoMargin="20"
-maximizeVideo="true"
-videoPaused="false"
-videoPlaySequence="true"
-videoDescriptionTextColor="999999"
-videoDescriptionTextSize="11"
-videoDescriptionTextFont="Verdana"
-videoDescriptionBgColor="000000"
-videoDescriptionBgOpacity="60"
-videoDescriptionPadding="50">'."\n";
+				$setup=$this->getStyle0(&$setup);
+			} else {
+				$setup=$this->getStyle1(&$setup);
+			}
+			$setup['name']=$titologalleria;
+			$setup['movie_width']=$larghezza;
+			$setup['movie_height']=$altezza;
+			$setup['showTooltips']=$showtooltips;
+			$setup['rows']=$rows;
+			$setup['cols']=$columns;
+				
+			$root = $dom->createElement("folder");
+			$dom->appendChild($root);
+			
+			foreach($setup as $k=>$v){
+					$root->appendChild( $dom->createAttribute($k))->appendChild( $dom->createTextNode($v));
 			}
 
-		if(count($categories)) 
-		{
-				foreach($categories as $c) 
-				{
-						$files2 = array();
-						if($c[1] != $folder	) {
-							$path2  = $folder . '/' . $c[1] . '/';
-						} else {
-							$path2  = $folder . '/';
-						}
 
-
-
-				if ($hd2 = opendir($path2)) 
-				{
-					  $files2 = array();
-						while (false !== ($file2 = readdir($hd2))) 
-					{ 
-							if($file2 != '.' && $file2 != '..') 
-						{
-								if (strpos($file2, $thumb_sufix) === false) {
-									if(is_file($path2 . $file2) && preg_match('/\.(jpg|gif|flv|mp3|swf|txt)$/i',$file2)) 
-								{
-									if( $ordinamento == 2 OR $ordinamento == 3 OR $ordinamento == 4) 
-									{ 
-										$files2[] = array(filemtime($path2.$file2), $file2);
-									}
-									if( $ordinamento == 0 OR $ordinamento == 1) 
-									{ 
-										$files2[] = array(($path2.$file2), $file2);
-									}	
-								}
-							}
-						}
-					} // NOTE:  Tag chiusura  == while (false !== ($file = readdir($hd2)))
-
-					closedir($hd2);
-
-				} // NOTE:  Tag chiusura  == if ($hd2 = opendir($path2))
-
-
-			if(count($files2)) 
-			{
-			if( $ordinamento == 0 OR $ordinamento == 2 ) {  
-					sort($files2);  
-			}else if ( $ordinamento == 1 OR $ordinamento == 3 ) {  
-					rsort($files2);
-            }else {  
-					shuffle($files2);			
-			}
-			// Variabile Parametro per attivare disattivare il link al file originale dell'immagine
-			if( $originalsize != 1 ) :	
-						$originalsizetxt = '';
-						endif;
-			// Variabile Parametro per la generazione del nome da assegnare alla prima galleria
-				if($c[1] == $folder) :
-					$string .= '<folder name="'.$primagalleria.'">';
-				else:
-					$string .= "<folder name=\"{$c[1]}\">";
-				endif;					
-					$string .= "\n";
-
-					foreach($files2 as $f) 
-				{
-					if($c[1] == $folder) {
-						$img = $f[1];
-					} else {
-						$img = $c[1] . '/'. $f[1];
-					}
-					$title = preg_replace('/\.(jpg|gif)$/i','',$f[1]);
-					if(strtolower(substr($f[1], -3)) == "jpg" || strtolower(substr($file, -3)) == "gif"){
-					if( $titolo != 0 ) :	
-						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="' . $title . '" link="' . $dir_images .'/'. $img . '" link_title="' . $originalsizetxt . '" />';
-						else:
-						$string .= '<pic image="' . $dir_images .'/'. $img .'" title="" link="' . $dir_images .'/'. $img . '" link_title="' . $originalsizetxt . '" />';			
-						endif;
-					} elseif(strtolower(substr($f[1], -3)) == "flv" || strtolower(substr($file, -3)) == "swf"){
-					$string .= '<video file="' . $dir_images .'/'. $img .'" name="' . $title . '"  />';					
-					} elseif(strtolower(substr($f[1], -3)) == "mp3"){
-					$string .= '<music file="' . $dir_images .'/'. $img .'" name="' . $title . '"  />';
-					} elseif(strtolower(substr($f[1], -3)) == "txt"){
-					$string .= '<txt file="' . $dir_images .'/'. $img .'" name="' . $title . '"  />';
-					}
-					$string .= "\n";
-
-				} // NOTE:  Tag chiusura  ==  foreach($files2 as $f) 
-
-					$string .= '</folder>'."\n";
-
-			} // NOTE:  Tag chiusura  == if(count($files2)) 
-		
-
-		
-				} // NOTE:  Tag chiusura  ==  foreach($categories as $c) 
-
-					$string .= '</folder>'."\n";
-
-			} // NOTE:  Tag chiusura  == if(count($categories)) 	
-
-
-					fwrite($filehandle, $string);
-					fclose($filehandle);
-
-		 // NOTE:  Tag chiusura  == if(count($files)) 			
-
-		} // NOTE:  Tag chiusura  == if ( @filemtime($foldername) >= @filemtime($filename) )
-
+			// read fs
+			$this->pathToImageFolder = $path;
+			$this->urlToImageFolder = $dir_images;
+			$this->titolo = $titolo;
+			$this->recurseDirs($path, &$dom, &$root, $ordinamento, 0);
+			//var_dump($items);die;
+			
+			//echo $dom->saveXML();die;
+			
+			file_put_contents ($filename, $dom->saveXML());
+			}//file time
+// end code by mmleoni
 		}	
 		else//Folder  non esiste
 		{
@@ -732,33 +326,33 @@ videoDescriptionPadding="50">'."\n";
 		
 
 
-				$tempo = '<div>';
-				$tempo .= '<span class="oziotime">';	
-			$foldername 	= $foldername;				
-			if (JFolder::exists($foldername)) {
-			    $tempo .= JText::_('COM_OZIOGALLERY3_ULTIMA_MODIFICA_CARTELLA'). ": " . date("d m Y H:i:s.", filemtime($foldername));
-				$tempo .= '</span>';				
-			}
-			$tempo .= ' | ';
-			
-			$filename 	= $filename;
-			if (JFile::exists($filename)) {
-			    $tempo .= '<span class="oziotime">';
-			    $tempo .= JText::_('COM_OZIOGALLERY3_ULTIMA_MODIFICA_FILE') . ": " . date("d m Y H:i:s.", filemtime($filename));
-				$tempo .= '</span>';
-				$tempo .= '</div>';				
-			}			
+		$tempo = '<div>';
+		$tempo .= '<span class="oziotime">';	
+		$foldername 	= $foldername;				
+		if (JFolder::exists($foldername)) {
+		    $tempo .= JText::_('COM_OZIOGALLERY3_ULTIMA_MODIFICA_CARTELLA'). ": " . date("d m Y H:i:s.", filemtime($foldername));
+			$tempo .= '</span>';				
+		}
+		$tempo .= ' | ';
+	
+		$filename 	= $filename;
+		if (JFile::exists($filename)) {
+		    $tempo .= '<span class="oziotime">';
+		    $tempo .= JText::_('COM_OZIOGALLERY3_ULTIMA_MODIFICA_FILE') . ": " . date("d m Y H:i:s.", filemtime($filename));
+			$tempo .= '</span>';
+			$tempo .= '</div>';				
+		}			
 
 
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';
 	
-if  ( $xml_mode == 0 ) :
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  XML automatico :   ' .JText::_('COM_OZIOGALLERY3_ATTIVO') .'</pre>';
-elseif  ( $xml_mode == 1 ) :
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  XML manuale :   ' .JText::_('COM_OZIOGALLERY3_ATTIVO') .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  manualxmlname :     '.$manualxmlname  .'</pre>';
-endif;
+		if  ( $xml_mode == 0 ){
+				$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  XML automatico :   ' .JText::_('COM_OZIOGALLERY3_ATTIVO') .'</pre>';
+		}elseif  ( $xml_mode == 1 ){
+				$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  XML manuale :   ' .JText::_('COM_OZIOGALLERY3_ATTIVO') .'</pre>';
+				$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  manualxmlname :     '.$manualxmlname  .'</pre>';
+		};
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  columns :   ' .$columns .'</pre>';
@@ -800,5 +394,371 @@ endif;
 		$this->assignRef('oziocode' , 				$oziocode);			
 		parent::display($tpl);
 	}
+	
+// start code by mmleoni
+	private function getStyle0(){
+		$a=array();
+		$a['autoSize']='true';
+		$a['loaderColor']='FFFFFF';
+		$a['loaderOpacity']='100';
+		$a['openFirstFile']='true';
+		$a['FLASH_NIFTIES_COMMENT']='---------Styles for Navigation-----';
+		$a['menuY']='0';
+		$a['menuItemHeight']='30';
+		$a['menuWidth']='170';
+		$a['menuHeight']='465';
+		$a['menuSpeed']='15';
+		$a['shineOpacity']='50';
+		$a['hoverColor']='015287';
+		$a['hoverOpacity']='100';
+		$a['menubgColor']='000000';
+		$a['menuBgOpacity']='100';
+		$a['navTextX']='0';
+		$a['navTextY']='0';
+		$a['navTextSize']='11';
+		$a['navHeaderTextSize']='10';
+		$a['navTextFont']='Verdana';
+		$a['navTextEmbed']='false';
+		$a['navTextColor']='999999';
+		$a['navTextHoverColor']='FFFFFF';
+		$a['headerTextColor']='FFFFFF';
+		$a['navHeaderBgColor']='404040';
+		$a['navHeaderBgOpacity']='100';
+		$a['navBackButtonEnabledOpacity']='100';
+		$a['navBackButtonDisabledOpacity']='20';
+		$a['navDivColor']='222222';
+		$a['navDivOpacity']='100';
+		$a['navBgColor']='000000';
+		$a['navBgAlpha']='100';
+		$a['iconsColor']='FFFFFF';
+		$a['iconsOverColor']='FFFFFF';
+		$a['iconOpacity']='20';
+		$a['iconOverOpacity']='60';
+		$a['navSeparatorColor']='585858';
+		$a['navSeparatorOpacity']='100';
+		$a['navCollapseButtonColor']='ffffff';
+		$a['navCollapseButtonOpacity']='15';
+		$a['navCollapseButtonSize']='10';
+		$a['scrollbarWidth']='12';
+		$a['scrollbarColor']='585858';
+		$a['scrollbarBgColor']='000000';
+		$a['scrollbarOpacity']='100';
+		$a['scrollbarBgOpacity']='100';
+		$a['tooltipSize']='10';
+		$a['tooltipColor']='999999';
+		$a['tooltipStroke']='0';
+		$a['tooltipStrokeColor']='FFFFFF';
+		$a['tooltipStrokeAlpha']='0';
+		$a['tooltipFillAlpha']='50';
+		$a['tooltipFill']='000000';
+		$a['tooltipCornerRadius']='0';
+		$a['navOpenAtStart']='true';
+		$a['autoCloseNavFirstAfter']='0';
+		$a['autoCloseNavAfter']='0';
+		$a['showMusicFiles']='true';
+		$a['showTextFiles']='true';
+		$a['showTooltipsOnMenuItems']='true';
+		$a['tooltipFolder']='folders';
+		$a['tooltipImages']='pics';
+		$a['tooltipMusic']='songs';
+		$a['tooltipVideo']='movies';
+		$a['tooltipText']='documents';
+		$a['tooltipFlash']='flash movies';
+		$a['tooltipMusicSingle']=' (mp3)';
+		$a['tooltipVideoSingle']=' (flv)';
+		$a['tooltipTextSingle']=' (text)';
+		$a['tooltipFlashSingle']=' (flash)';
+		$a['tooltipNoContents']='empty';
+		$a['tooltipHome']='home';
+		$a['tooltipBack']='back';
+		$a['tooltipCollapseMenu']='close menu';
+		$a['tooltipOpenMenu']='open menu';
+		$a['tooltipPlayPauseVideo']='play/pause';
+		$a['tooltipSeekVideo']='seek';
+		$a['tooltipDragVolume']='drag to set volume';
+		$a['tooltipNextSong']='next:';
+		$a['tooltipPrevSong']='back:';
+		$a['tooltipMusicShowSongTitle']='true';
+		$a['tooltipMinimizeVideo']='original size';
+		$a['tooltipMaximizeVideo']='maximize';
+		$a['tooltipShowVideoInfo']='click for video info';
+		$a['tooltipLink']='external link';
+		$a['FLASH_NIFTIES_COMMENT2']='---------Styles for the gallery component-----';
+		$a['galleryMargin']='45';
+		$a['thumb_width']='80';
+		$a['thumb_height']='80';
+		$a['thumb_space']='10';
+		$a['thumbs_x']='auto';
+		$a['thumbs_y']='auto';
+		$a['large_x']='auto';
+		$a['large_y']='auto';
+		$a['nav_x']='10';
+		$a['nav_y']='0';
+		$a['nav_slider_alpha']='50';
+		$a['nav_padding']='7';
+		$a['use_flash_fonts']='true';
+		$a['nav_text_size']='20';
+		$a['nav_text_bold']='false';
+		$a['nav_font']='Time New Roman';
+		$a['bg_alpha']='10';
+		$a['text_bg_alpha']='50';
+		$a['text_xoffset']='20';
+		$a['text_yoffset']='10';
+		$a['text_size']='20';
+		$a['text_bold']='false';
+		$a['text_font']='Time New Roman';
+		$a['link_xoffset']='-2';
+		$a['link_yoffset']='5';
+		$a['link_text_size']='20';
+		$a['link_text_bold']='true';
+		$a['link_font']='Time New Roman';
+		$a['border']='3';
+		$a['corner_radius']='5';
+		$a['shadow_alpha']='40';
+		$a['shadow_offset']='1';
+		$a['shadow_size']='3';
+		$a['shadow_spread']='-3';
+		$a['friction']='.3';
+		$a['bg_color']='333333';
+		$a['border_color']='FFFFFF';
+		$a['thumb_bg_color']='FFFFFF';
+		$a['thumb_loadbar_color']='CCCCCC';
+		$a['nav_color']='FFFFFF';
+		$a['nav_slider_color']='000000';
+		$a['txt_color']='FFFFFF';
+		$a['text_bg_color']='000000';
+		$a['link_text_color']='666666';
+		$a['link_text_over_color']='FF9900';
+		$a['showHideCaption']='true';
+		$a['autoShowFirst']='false';
+		$a['disableThumbOnOpen']='true';
+		$a['duplicateThumb']='true';
+		$a['activeThumbAlpha']='50';
+		$a['abortLoadAfter']='20';
+		$a['bgImage']='images/Bells.jpg';
+		$a['bgImageSizing']='fill';
+		$a['galleryTitle']='hide';
+		$a['galleryTitleX']='120';
+		$a['galleryTitleY']='0';
+		$a['galleryTitle_size']='11';
+		$a['galleryTitle_bold']='false';
+		$a['galleryTitle_font']='Verdana';
+		$a['galleryTitle_color']='666666';
+		$a['FLASH_NIFTIES_COMMENT3']='---------Styles for text pages-----';
+		$a['maximizeText']='true';
+		$a['autoCenterTextPage']='true';
+		$a['textPageMargin']='100';
+		$a['textPageWidth']='450';
+		$a['textPageHeight']='360';
+		$a['textPageX']='50';
+		$a['textPageY']='40';
+		$a['txtEmbedFonts']='false';
+		$a['FLASH_NIFTIES_COMMENT4']='---------Styles for music player-----';
+		$a['loopPlaylist']='true';
+		$a['musicPlayBackMethod']='2';
+		$a['showPlayer']='true';
+		$a['mplayerX']='center';
+		$a['mplayerY']='bottom';
+		$a['mplayerMargin']='5';
+		$a['mplayerColor']='FFFFFF';
+		$a['mplayerOpacity']='60';
+		$a['mplayerSize']='1';
+		$a['defaultVolume']='3';
+		$a['musicFadeSteps']='10';
+		$a['FLASH_NIFTIES_COMMENT5']='---------Styles for video player-----';
+		$a['videoButtonsColor']='ffffff';
+		$a['videoBarColor']='666666';
+		$a['videoVolumeColor']='ffffff';
+		$a['videoControlsOpacity']='60';
+		$a['videoControlsYoffset']='0';
+		$a['videoMargin']='20';
+		$a['maximizeVideo']='true';
+		$a['videoPaused']='false';
+		$a['videoPlaySequence']='true';
+		$a['videoDescriptionTextColor']='999999';
+		$a['videoDescriptionTextSize']='16';
+		$a['videoDescriptionTextFont']='Verdana';
+		$a['videoDescriptionBgColor']='000000';
+		$a['videoDescriptionBgOpacity']='60';
+		$a['videoDescriptionPadding']='50';
+		return $a;
+	}
+
+	private function getStyle1(){
+		$a=array();
+		$a['autoSize']='true';
+		$a['loaderColor']='FFFFFF';
+		$a['loaderOpacity']='100';
+		$a['openFirstFile']='true';
+		$a['FLASH_NIFTIES_COMMENT']='---------Styles for Navigation-----';
+		$a['menuY']='0';
+		$a['menuItemHeight']='21';
+		$a['menuWidth']='140';
+		$a['menuHeight']='465';
+		$a['menuSpeed']='15';
+		$a['shineOpacity']='0';
+		$a['hoverColor']='f0f0f0';
+		$a['hoverOpacity']='100';
+		$a['menubgColor']='FFFFFF';
+		$a['menuBgOpacity']='100';
+		$a['navTextX']='0';
+		$a['navTextY']='1';
+		$a['navTextSize']='11';
+		$a['navHeaderTextSize']='10';
+		$a['navTextFont']='Verdana';
+		$a['navTextEmbed']='false';
+		$a['navTextColor']='666666';
+		$a['navTextHoverColor']='666666';
+		$a['headerTextColor']='666666';
+		$a['navHeaderBgColor']='FFFFFF';
+		$a['navHeaderBgOpacity']='100';
+		$a['navBackButtonEnabledOpacity']='100';
+		$a['navBackButtonDisabledOpacity']='20';
+		$a['navDivColor']='DDDDDD';
+		$a['navDivOpacity']='100';
+		$a['navBgColor']='FFFFFF';
+		$a['navBgAlpha']='100';
+		$a['iconsColor']='EEEEEE';
+		$a['iconsOverColor']='CCCCCC';
+		$a['iconOpacity']='0';
+		$a['iconOverOpacity']='100';
+		$a['navSeparatorColor']='f0f0f0';
+		$a['navSeparatorOpacity']='100';
+		$a['navCollapseButtonColor']='000000';
+		$a['navCollapseButtonOpacity']='10';
+		$a['navCollapseButtonSize']='10';
+		$a['scrollbarWidth']='8';
+		$a['scrollbarColor']='cccccc';
+		$a['scrollbarBgColor']='eeeeee';
+		$a['scrollbarOpacity']='100';
+		$a['scrollbarBgOpacity']='100';
+		$a['tooltipSize']='10';
+		$a['tooltipColor']='666666';
+		$a['tooltipStroke']='0';
+		$a['tooltipStrokeColor']='FFFFFF';
+		$a['tooltipStrokeAlpha']='0';
+		$a['tooltipFillAlpha']='50';
+		$a['tooltipFill']='dddddd';
+		$a['tooltipCornerRadius']='4';
+		$a['navOpenAtStart']='true';
+		$a['autoCloseNavFirstAfter']='5';
+		$a['autoCloseNavAfter']='3';
+		$a['showMusicFiles']='true';
+		$a['showTextFiles']='true';
+		$a['showTooltipsOnMenuItems']='false';
+		$a['tooltipFolder']='folders';
+		$a['tooltipImages']='pics';
+		$a['tooltipMusic']='songs';
+		$a['tooltipVideo']='movies';
+		$a['tooltipText']='documents';
+		$a['tooltipFlash']='flash movies';
+		$a['tooltipMusicSingle']=' (mp3)';
+		$a['tooltipVideoSingle']=' (flv)';
+		$a['tooltipTextSingle']=' (text)';
+		$a['tooltipFlashSingle']=' (flash)';
+		$a['tooltipNoContents']='empty';
+		$a['tooltipPlayPauseVideo']='play/pause';
+		$a['tooltipSeekVideo']='seek';
+		$a['tooltipDragVolume']='drag to set volume';
+		$a['tooltipNextSong']='next:';
+		$a['tooltipPrevSong']='back:';
+		$a['tooltipMusicShowSongTitle']='true';
+		$a['tooltipMinimizeVideo']='original size';
+		$a['tooltipMaximizeVideo']='maximize';
+		$a['tooltipShowVideoInfo']='click for video info';
+		$a['tooltipLink']='external link';
+		$a['FLASH_NIFTIES_COMMENT2']='---------Styles for the gallery component-----';
+		$a['galleryMargin']='55';
+		$a['thumb_width']='100';
+		$a['thumb_height']='100';
+		$a['thumb_space']='10';
+		$a['thumbs_x']='auto';
+		$a['thumbs_y']='auto';
+		$a['large_x']='auto';
+		$a['large_y']='auto';
+		$a['nav_x']='5';
+		$a['nav_y']='5';
+		$a['nav_slider_alpha']='50';
+		$a['nav_padding']='3';
+		$a['use_flash_fonts']='true';
+		$a['nav_text_size']='20';
+		$a['nav_text_bold']='false';
+		$a['nav_font']='Time New Roman';
+		$a['bg_alpha']='100';
+		$a['text_bg_alpha']='40';
+		$a['text_xoffset']='20';
+		$a['text_yoffset']='10';
+		$a['text_size']='20';
+		$a['text_bold']='false';
+		$a['text_font']='Time New Roman';
+		$a['link_xoffset']='-2';
+		$a['link_yoffset']='5';
+		$a['link_text_size']='20';
+		$a['link_text_bold']='true';
+		$a['link_font']='Time New Roman';
+		$a['border']='7';
+		$a['corner_radius']='0';
+		$a['shadow_alpha']='20';
+		$a['shadow_offset']='0';
+		$a['shadow_size']='1';
+		$a['shadow_spread']='-5';
+		$a['friction']='.3';
+		$a['bg_color']='FFFFFF';
+		$a['border_color']='FFFFFF';
+		$a['thumb_bg_color']='FFFFFF';
+		$a['nav_color']='666666';
+		$a['nav_slider_color']='DDDDDD';
+		$a['txt_color']='FFFFFF';
+		$a['text_bg_color']='000000';
+		$a['link_text_color']='666666';
+		$a['link_text_over_color']='FF9900';
+		$a['showHideCaption']='true';
+		$a['autoShowFirst']='false';
+		$a['disableThumbOnOpen']='true';
+		$a['duplicateThumb']='true';
+		$a['activeThumbAlpha']='50';
+		$a['abortLoadAfter']='200';
+		$a['galleryTitle']='hide';
+		$a['FLASH_NIFTIES_COMMENT3']='---------Styles for text pages-----';
+		$a['maximizeText']='true';
+		$a['autoCenterTextPage']='true';
+		$a['textPageMargin']='80';
+		$a['textPageWidth']='450';
+		$a['textPageHeight']='360';
+		$a['textPageX']='250';
+		$a['textPageY']='40';
+		$a['txtEmbedFonts']='false';
+		$a['FLASH_NIFTIES_COMMENT4']='---------Styles for music player-----';
+		$a['loopPlaylist']='true';
+		$a['musicPlayBackMethod']='2';
+		$a['showPlayer']='true';
+		$a['mplayerX']='center';
+		$a['mplayerY']='bottom';
+		$a['mplayerMargin']='5';
+		$a['mplayerColor']='666666';
+		$a['mplayerOpacity']='60';
+		$a['mplayerSize']='1';
+		$a['defaultVolume']='3';
+		$a['musicFadeSteps']='10';
+		$a['FLASH_NIFTIES_COMMENT5']='---------Styles for video player-----';
+		$a['videoButtonsColor']='666666';
+		$a['videoBarColor']='666666';
+		$a['videoVolumeColor']='666666';
+		$a['videoControlsOpacity']='60';
+		$a['videoControlsYoffset']='0';
+		$a['videoMargin']='20';
+		$a['maximizeVideo']='true';
+		$a['videoPaused']='false';
+		$a['videoPlaySequence']='true';
+		$a['videoDescriptionTextColor']='999999';
+		$a['videoDescriptionTextSize']='11';
+		$a['videoDescriptionTextFont']='Verdana';
+		$a['videoDescriptionBgColor']='000000';
+		$a['videoDescriptionBgOpacity']='60';
+		$a['videoDescriptionPadding']='50';
+		return $a;
+	}
+// end code by mmleoni
+
 }
 ?>
