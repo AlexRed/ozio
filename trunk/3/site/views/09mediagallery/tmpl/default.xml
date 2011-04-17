@@ -187,7 +187,13 @@
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
 			</field>
-		
+			
+			<field name="menuwidth" type="text" 
+			description="COM_OZIOGALLERY3_MENUWIDTH_DESC"			
+			label="COM_OZIOGALLERY3_MENUWIDTH"
+			default="170"			
+			size="4" 
+			/>
 		
 			<field name="table" type="list" 
 			description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" 

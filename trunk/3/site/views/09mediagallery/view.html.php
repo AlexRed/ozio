@@ -158,6 +158,7 @@ class OzioGalleryView09mediagallery extends JView
 		$originalsize		= (int) $params->def('originalsize');
 		$style				= (int) $params->def('style');
 		$behind 			= (int) $params->def('behind', 0);
+		$menuwidth 			= $params->def('menuwidth', 170);
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -290,6 +291,8 @@ class OzioGalleryView09mediagallery extends JView
 			$setup['showTooltips']=$showtooltips;
 			$setup['rows']=$rows;
 			$setup['cols']=$columns;
+			$setup['menuHeight']=$altezza;
+			$setup['menuWidth']=$menuwidth;
 				
 			$root = $dom->createElement("folder");
 			$dom->appendChild($root);
@@ -375,7 +378,7 @@ class OzioGalleryView09mediagallery extends JView
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
 		$this->assignRef('larghezza' , 				$larghezza);
-			
+		$this->assignRef('menuwidth' , 				$menuwidth);	
 		$this->assignRef('columns' , 				$columns);
 		$this->assignRef('rows' , 					$rows);					
 
@@ -405,8 +408,6 @@ class OzioGalleryView09mediagallery extends JView
 		$a['FLASH_NIFTIES_COMMENT']='---------Styles for Navigation-----';
 		$a['menuY']='0';
 		$a['menuItemHeight']='30';
-		$a['menuWidth']='170';
-		$a['menuHeight']='465';
 		$a['menuSpeed']='15';
 		$a['shineOpacity']='50';
 		$a['hoverColor']='015287';
@@ -593,8 +594,6 @@ class OzioGalleryView09mediagallery extends JView
 		$a['FLASH_NIFTIES_COMMENT']='---------Styles for Navigation-----';
 		$a['menuY']='0';
 		$a['menuItemHeight']='21';
-		$a['menuWidth']='140';
-		$a['menuHeight']='465';
 		$a['menuSpeed']='15';
 		$a['shineOpacity']='0';
 		$a['hoverColor']='f0f0f0';
