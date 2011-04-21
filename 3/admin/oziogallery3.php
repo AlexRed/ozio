@@ -41,6 +41,7 @@ $controller->redirect();
 			case 'imagerotator'			: ozio_helper::imagerotator($dir); 		break;			
 			case 'tilt'					: ozio_helper::tilt($dir); 				break;
 			case 'mediagallery'			: ozio_helper::mediagallery($dir); 		break;
+			case 'futura'				: ozio_helper::futura($dir); 			break;
 			case 'cooliris'				: ozio_helper::cooliris($dir); 			break;
 			case 'resetImg' 			: ozio_helper::resetImg(); 				break;
 			case 'resetAcc' 			: ozio_helper::resetAcc(); 				break;
@@ -48,6 +49,7 @@ $controller->redirect();
 			case 'resetFLG' 			: ozio_helper::resetFLG(); 				break;
 			case 'resetTilt' 			: ozio_helper::resetTilt(); 			break;
 			case 'resetmediagallery' 	: ozio_helper::resetmediagallery(); 	break;
+			case 'resetfutura'		 	: ozio_helper::resetfutura(); 			break;
 			case 'resetcooliris' 		: ozio_helper::resetcooliris(); 		break;
 		}
 ?>

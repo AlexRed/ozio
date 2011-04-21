@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<folder name="Ozio Gallery2">
+<folder name="Album2 - Images">
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 01" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 01" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 02" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 02" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 03" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 03" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 04" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 04" />
+</folder>
+<folder name="Album4 - Test">
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 05" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 05" />
+<pic image="http://www.exemple.xx/images/oziogallery2/img.jpg" title="title photo 06" link="http://www.exemple.xx/images/oziogallery2/img.jpg" link_title="title link 06" />
+</folder>
+<folder name="Album3 - Videos"><video file="http://blip.tv/file/get/Neave-FilmakademieCAPs806.flv" name="Filmakademie CAPs" >Video Description can go here</video>
+<video file="http://blip.tv/file/get/Neave-TherosByGeorgiosCherouviem317.flv" name="Theros by Georgios Cherouvim" />
+<video file="http://blip.tv/file/get/Neave-Krapooyo140.flv" name="Krapooyo" />
+<video file="http://blip.tv/file/get/Neave-EdHarcourtsDeadDog375.flv" name="Ed Harcourt's Dead Dog" />
+<video file="http://blip.tv/file/get/Neave-LALetsBeFriends763.flv" name="LA Lets Be Friends" />
+<video file="http://blip.tv/file/get/Neave-GnarlsBarkleyCrazy644.flv" name="Gnarls Barkley: Crazy (music video)" />
+</folder>
+</folder>

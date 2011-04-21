@@ -78,18 +78,20 @@ JHTML::_('behavior.modal');
 					$row = $this->pubblicate[$i];
 					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
 					$link2 		= 'index.php?option=com_menus&view=items&menutype='. $row->menutype;
-						if ($row->link == 'index.php?option=com_oziogallery3&view=01tilt3d') :						
+						if ($row->link == 'index.php?option=com_oziogallery3&view=01tilt3d') :
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetTilt&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=02flashgallery') :
-							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetFLG&amp;tmpl=component';						
+							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetFLG&amp;tmpl=component';
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=03futura') :
+							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetfutura&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=04carousel') :
-							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetCar&amp;tmpl=component';						
+							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetCar&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=05imagerotator') :
-							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetImg&amp;tmpl=component';						
+							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetImg&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=06accordion') :
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetAcc&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=09mediagallery') :
-							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetmediagallery&amp;tmpl=component';						
+							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetmediagallery&amp;tmpl=component';
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=10cooliris') :
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetcooliris&amp;tmpl=component';
 					endif;	
@@ -103,6 +105,8 @@ JHTML::_('behavior.modal');
 						$image	= 'logotilt.gif'; 			
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=02flashgallery') :
 						$image	= 'logoflashgallery.gif';		
+					elseif ($row->link == 'index.php?option=com_oziogallery3&view=03futura') : 
+						$image	= 'logofutura.gif';		
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=04carousel') :		
 						$image	= 'logocarousel.gif';			
 					elseif ($row->link == 'index.php?option=com_oziogallery3&view=05imagerotator') :
@@ -298,6 +302,13 @@ JHTML::_('behavior.modal');
 					<td align="center">2</td>
 					<td align="center">components/com_oziogallery3/skin/accordion/xml</td>
 					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'accordion'.DS.'xml') ? 
+					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
+					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
+				</tr>
+				<tr>
+					<td align="center">3</td>
+					<td align="center">components/com_oziogallery3/skin/futura/xml</td>
+					<td align="center"><?php echo is_writable(JPATH_SITE.DS.'components'.DS.'com_oziogallery3'.DS.'skin'.DS.'futura'.DS.'xml') ? 
 					'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_WRITABLE' ) .'</font></strong>' : 
 					'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_UNWRITABLE' ) .'</font></strong>'; ?></td>
 				</tr>
