@@ -340,6 +340,58 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}
 
+		function futura($dir)
+		{
+				$app = JFactory::getApplication('administrator');
+		    	$VAMBpathAssoluto = JPATH_SITE;
+				$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+				$dir = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/futura';
+					if($objs = @glob($dir.'/xml/*'))
+			{
+		        foreach($objs as $obj) 
+				{
+					@is_dir($obj)? Svuota($obj) : @unlink($obj);
+				}
+			}
+				@rmdir($dir);
+				//copio file index.html nella cartella temporanea
+				$file 	= 'index.html';	
+				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3';	
+				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3' . DS . 'skin' . DS . 'futura' . DS . 'xml' . DS;	
+				@copy($source. DS .$file,$dest. DS .$file);
+		 
+				$message = JText::_('Cartella XML').' futura '.JText::_('svuotata correttamente');
+				$link = 'index.php?option=com_oziogallery3&view=reset';
+				$app->redirect( $link, $message);
+		}			
+
+		function resetfutura($dir)
+		{
+				$app = JFactory::getApplication('administrator');
+		    	$VAMBpathAssoluto = JPATH_SITE;
+				$VAMBpathAssoluto = str_replace("\\", "/" , $VAMBpathAssoluto);	
+				$dir = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/futura';
+					if($objs = @glob($dir.'/xml/*'))
+			{
+		        foreach($objs as $obj) 
+				{
+					@is_dir($obj)? Svuota($obj) : @unlink($obj);
+				}
+			}
+				@rmdir($dir);
+				//copio file index.html nella cartella temporanea
+				$file 	= 'index.html';	
+				$source = JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3';	
+				$dest 	= JPATH_ROOT . DS . 'components' . DS . 'com_oziogallery3' . DS . 'skin' . DS . 'futura' . DS . 'xml' . DS;	
+				@copy($source. DS .$file,$dest. DS .$file);
+		 
+				$message = '<p style="line-height:300%; font-size: 12px; font-weight:bold;">';
+				$message .= JText::_('Cartella XML').' futura '.JText::_('svuotata correttamente');
+				$message .= '</p>';
+				$link = 'index.php?option=com_oziogallery3&view=resetel&tmpl=component';
+				$app->redirect( $link, $message);
+		}
+		
 		function cooliris($dir)
 		{
 				$app = JFactory::getApplication('administrator');

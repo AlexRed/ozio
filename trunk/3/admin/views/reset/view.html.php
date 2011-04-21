@@ -41,6 +41,7 @@ class OzioViewReset extends JView
 		$link5	= 'index.php?option=com_oziogallery3&task=tilt';
 		$link6	= 'index.php?option=com_oziogallery3&task=mediagallery';
 		$link7	= 'index.php?option=com_oziogallery3&task=cooliris';
+		$link8	= 'index.php?option=com_oziogallery3&task=futura';
 		
         $img = JURI::root().'administrator/components/com_oziogallery3/assets/images/delete.png';
 		
@@ -53,6 +54,7 @@ class OzioViewReset extends JView
 		$Directory5 = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/tiltviewer/xml/';
 		$Directory6 = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/mediagallery/xml/';
 		$Directory7 = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/cooliris/xml/';
+		$Directory8 = $VAMBpathAssoluto.'/components/com_oziogallery3/skin/futura/xml/';
 
 
       if(is_dir($Directory1))
@@ -194,6 +196,26 @@ class OzioViewReset extends JView
       {
           $cooliris .= $Directory7 . JText::_ ( 'COM_OZIOGALLERY3_LA_DIRECTORY_NON_ESISTE' );
       }	
+	  
+	  if(is_dir($Directory8))
+      {
+          $dir = opendir($Directory8);
+          $futura = '<pre>';
+          while(false !== ($file = readdir($dir)))
+          {
+		  if($file != '.' && $file != '..' && $file != 'index.html') 
+		  {
+              $size = filesize($Directory8 ."/". $file);
+              $futura .= "$file | $size kb \n";			  
+          }			  
+          }
+          closedir($dir);
+          $futura .= "</pre>";
+      }
+      else
+      {
+          $futura .= $Directory8 . JText::_ ( 'COM_OZIOGALLERY3_LA_DIRECTORY_NON_ESISTE' );
+      }
 
 		$this->assignRef('img'					, $img);
 		$this->assignRef('link1'				, $link1);
@@ -203,12 +225,14 @@ class OzioViewReset extends JView
 		$this->assignRef('link5'				, $link5);
 		$this->assignRef('link6'				, $link6);
 		$this->assignRef('link7'				, $link7);
+		$this->assignRef('link8'				, $link8);
 		$this->assignRef('accordion'			, $accordion);	
 		$this->assignRef('carousel'				, $carousel);
 		$this->assignRef('flashgallery'			, $flashgallery);
 		$this->assignRef('imagerotator'			, $imagerotator);
 		$this->assignRef('tilt'					, $tilt);	
 		$this->assignRef('mediagallery'			, $mediagallery);
+		$this->assignRef('futura'				, $futura);
 		$this->assignRef('cooliris'				, $cooliris);		
 	
 	

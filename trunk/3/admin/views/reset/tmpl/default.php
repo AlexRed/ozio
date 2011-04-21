@@ -162,6 +162,26 @@ JHTML::_('behavior.tooltip');
             </span>				
 			</td>			
 			
+		</tr>
+		<tr>
+			<td width="20%" nowrap="nowrap"  >
+				<label for="title">
+					<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'NOTES' ); ?>::<?php echo JText::_ ( 'futura Reset' );?>">						
+							<span style="font-size:16px; color:#004080; font-weight:bold;"><?php echo JText::_( 'futura Gallery' ); ?></span>	
+					</span>				
+				</label>
+			</td>
+			<th width="80" align="center">
+				<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'Svuota' ); ?>::<?php echo JText::_ ( 'futura Gallery' );?> <?php echo JText::_ ( 'XML' );?>">
+					<a href="<?php echo $this->link6 ?>"> <img src="<?php echo $this->img?>" width="30"> </a>
+				</span>				
+			</td>
+			<td width="80%" nowrap="nowrap">
+			<span class="editlinktip hasTip" title="<?php echo JText::_ ( 'futura Gallery' ); ?>::<?php echo JText::_ ( 'XML Files' );?>">
+				<?php echo $this->futura; ?>	
+            </span>				
+			</td>			
+			
 		</tr>	
 		<tr>
 			<td width="20%" nowrap="nowrap"  >
