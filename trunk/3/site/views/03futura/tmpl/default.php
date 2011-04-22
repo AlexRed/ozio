@@ -47,14 +47,14 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addParam('allowfullscreen', 'true');
 			so.addParam('allowScriptAccess','always');
 			so.addParam('wmode','opaque');  <!--   Se usi il wmode passalo anche come variabile a Flash ( vedi  so.addVariable('wmode','opaque'); )  -->
-			so.addVariable('width','<?php echo $this->larghezza ?>');  <!--   Larghezza SWF   -->
-			so.addVariable('height','<?php echo $this->altezza ?>');  <!--   Altezza SWF   -->
 			<?php if  	  ( $this->xml_mode == 0 ) : ?>
-			so.addVariable('xmlPath', '<?php echo JURI::root() ?>components/com_oziogallery3/skin/futura/xml/futura_<?php echo $this->nomexml ?>.ozio?'+Math.random()*1) 
+			so.addVariable('xmlPath', '<?php echo JURI::root() ?>components/com_oziogallery3/skin/futura/xml/futura_<?php echo $this->nomexml ?>.ozio?'+Math.random()*1)
 			<?php else: ?>
 			so.addVariable('xmlPath', '<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>')
 			<?php endif; ?>
 			so.addVariable('wmode','opaque');  <!--   Passa il valore di wmode anche a Flash  -->
+			so.addParam('scale','showall');
+			so.addParam('salign','tl');
 			so.addVariable('background_color','0x333333');  <!--   Imposta il colore di sfondo   -->
 			so.addVariable('background_image','none'); <!--   Se vuoi un'immagine di sfondo inserisci l'url dove si trova l'immagine, altrimenti inserisci "none"   -->
 			so.addVariable('image_name','true');  <!--   Mostra nome immagine true o false   -->
