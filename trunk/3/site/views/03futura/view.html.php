@@ -291,8 +291,6 @@ class OzioGalleryView03futura extends JView
 			$setup['showTooltips']=$showtooltips;
 			$setup['rows']=$rows;
 			$setup['cols']=$columns;
-			$setup['menuHeight']=$altezza;
-			$setup['menuWidth']=$menuwidth;
 				
 			$root = $dom->createElement("folder");
 			$dom->appendChild($root);
