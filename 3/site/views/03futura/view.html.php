@@ -286,13 +286,10 @@ class OzioGalleryView03futura extends JView
 				$setup=$this->getStyle1(&$setup);
 			}
 			$setup['name']=$titologalleria;
-			$setup['movie_width']=$larghezza;
-			$setup['movie_height']=$altezza;
-			$setup['showTooltips']=$showtooltips;
-			$setup['rows']=$rows;
-			$setup['cols']=$columns;
+			$setup['width']=$larghezza;
+			$setup['height']=$altezza;
 				
-			$root = $dom->createElement("folder");
+			$root = $dom->createElement("config");
 			$dom->appendChild($root);
 			
 			foreach($setup as $k=>$v){
@@ -399,13 +396,13 @@ class OzioGalleryView03futura extends JView
 // start code by mmleoni
 	private function getStyle0(){
 		$a=array();
-		$a['autoSize']='true';
+
 		return $a;
 	}
 
 	private function getStyle1(){
 		$a=array();
-		$a['autoSize']='true';
+
 		return $a;
 	}
 // end code by mmleoni
