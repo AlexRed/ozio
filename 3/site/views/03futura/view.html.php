@@ -272,8 +272,8 @@ class OzioGalleryView03futura extends JView
 		{			
 
 		
-		//if ( @filemtime($foldername) >= @filemtime($filename) ) {
-		if ( 1 ) {	
+		if ( @filemtime($foldername) >= @filemtime($filename) ) {
+		//if ( 1 ) {	
 		
 // start code by mmleoni			
 			$dom = new DOMDocument('1.0');// '1.0', 'iso-8859-1' || 'UTF-8'
