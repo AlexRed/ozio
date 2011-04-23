@@ -27,7 +27,6 @@ class OzioGalleryView03futura extends JView
 // start code by mmleoni
 	private $pathToImageFolder = '';
 	private $urlToImageFolder = '';
-	private $titolo = '';
 
 /*
 	<option value="0">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO</option>
@@ -96,7 +95,6 @@ class OzioGalleryView03futura extends JView
 				$img = str_replace ( $this->pathToImageFolder, '', $path ) . $name;
 				$ext = strtolower(substr($name, -3));
 				$title = preg_replace('/\.(\w+)$/i','', $name);
-				$title = ( $this->titolo ? $title : '' );
 				$url = utf8_encode($this->urlToImageFolder . '/' . $img);
 				$element = null;
 				
@@ -105,7 +103,6 @@ class OzioGalleryView03futura extends JView
 					$element->appendChild( $dom->createAttribute('image'))->appendChild( $dom->createTextNode($url));
 					$element->appendChild( $dom->createAttribute('title'))->appendChild( $dom->createTextNode($title));
 					$element->appendChild( $dom->createAttribute('link'))->appendChild( $dom->createTextNode($url));
-					$element->appendChild( $dom->createAttribute('link_title'))->appendChild( $dom->createTextNode($originalsizetxt));
 				} elseif($ext == "flv" || $ext == "swf"){
 					$element = $dom->createElement("video");
 					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
@@ -142,10 +139,8 @@ class OzioGalleryView03futura extends JView
 		
 		$larghezza 			= $params->def('width', 640);
 		$altezza 			= $params->def('height', 480);	
-		$showtooltips		= $params->def('showtooltips', 1);			
-		$ordinamento 		= (int) $params->def('ordinamento');
-		$columns 			= (int) $params->def('columns', 3);	
-		$rows 				= (int) $params->def('rows', 3);			
+		$titolocat	 		= (int) $params->def('titolocat', 1);
+		$ordinamento 		= (int) $params->def('ordinamento');			
 		$xml_mode 			= (int) $params->def('xml_mode', 0);		
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
@@ -154,11 +149,11 @@ class OzioGalleryView03futura extends JView
 		$primagalleria 		= $params->def('primagalleria');
 		$titologalleria 	= $params->def('page_title');		
 		$titolo				= (int) $params->def('titolo');
-		$originalsizetxt	= $params->def('originalsizetxt', 'Original size');	
-		$originalsize		= (int) $params->def('originalsize');
-		$style				= (int) $params->def('style');
-		$behind 			= (int) $params->def('behind', 0);
-		$menuwidth 			= $params->def('menuwidth', 170);
+		$immaginesfondo		= $params->def('immaginesfondo', 'none');
+		$transition			= (int) $params->def('transition');
+		$bkgndoutercolor	= $params->def('bkgndoutercolor');
+		
+		$bkgndoutercolor 	= str_replace( '#', '', $bkgndoutercolor );
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -184,26 +179,34 @@ class OzioGalleryView03futura extends JView
 			default:  $sort		= 'relevance'; 		break;				
 		}
 		
-		switch ($params->get( 'showtooltips' ))
+		switch ($params->get( 'titolocat' ))
 		{
-			case '0': $showtooltips		= 'false'; 		break;
-			case '1': $showtooltips		= 'true';		break;
-			default:  $showtooltips		= 'true'; 		break;				
+			case '0': $titolocat		= 'false'; 		break;
+			case '1': $titolocat		= 'true';		break;
+			default:  $titolocat		= 'true'; 		break;				
 		}	
+		
+		switch ($params->get( 'transition' ))
+		{
+			case '0': $transition		= 'fade'; 		break;
+			case '1': $transition		= 'blinds';		break;
+			case '2': $transition		= 'fly';		break;
+			case '3': $transition		= 'iris';		break;
+			case '4': $transition		= 'photo';		break;
+			case '5': $transition		= 'pixeldissolve';		break;
+			case '6': $transition		= 'rotate';		break;
+			case '7': $transition		= 'wipe';		break;
+			case '8': $transition		= 'zoom';		break;
+			default:  $transition		= 'fade'; 		break;				
+		}
 		
 		switch ($params->get( 'titolo' ))
 		{
-			case '0': $titolo		= '0'; 		break;
-			case '1': $titolo		= '1';		break;
-			default:  $titolo		= '1'; 		break;				
+			case '0': $titolo		= 'false'; 		break;
+			case '1': $titolo		= 'true';		break;
+			default:  $titolo		= 'true'; 		break;				
 		}
 		
-		switch ($params->get( 'originalsize' ))
-		{
-			case '0': $originalsize		= '0'; 		break;
-			case '1': $originalsize		= '1';		break;
-			default:  $originalsize		= '1'; 		break;				
-		}
 	
 		$document->addScript(JURI::root(true).'/components/com_oziogallery3/assets/js/15/swfobject.js');
 		$document->addCustomTag('
@@ -300,7 +303,6 @@ class OzioGalleryView03futura extends JView
 			// read fs
 			$this->pathToImageFolder = $path;
 			$this->urlToImageFolder = $dir_images;
-			$this->titolo = $titolo;
 			$this->recurseDirs($path, &$dom, &$root, $ordinamento, 0);
 			//var_dump($items);die;
 			
@@ -353,8 +355,6 @@ class OzioGalleryView03futura extends JView
 		};
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  columns :   ' .$columns .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  rows :   ' .$rows .'</pre>';
 		
 
 	
@@ -372,13 +372,11 @@ class OzioGalleryView03futura extends JView
 			
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('altezza' , 				$altezza);
-		$this->assignRef('larghezza' , 				$larghezza);
-		$this->assignRef('menuwidth' , 				$menuwidth);	
-		$this->assignRef('columns' , 				$columns);
-		$this->assignRef('rows' , 					$rows);					
-
+		$this->assignRef('larghezza' , 				$larghezza);			
+		$this->assignRef('titolocat' , 				$titolocat);
+		$this->assignRef('titolo' , 				$titolo);
 		$this->assignRef('xml_mode' , 				$xml_mode);
-		$this->assignRef('originalsizetxt' , 		$originalsizetxt);	
+		$this->assignRef('immaginesfondo' , 		$immaginesfondo);	
 		$this->assignRef('tags' , 					$tags);
 		$this->assignRef('text' , 					$text);		
 		$this->assignRef('table' , 					$table);
@@ -387,9 +385,9 @@ class OzioGalleryView03futura extends JView
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);		
 		$this->assignRef('manualxmlname' , 			$manualxmlname);
-		$this->assignRef('style' , 					$style);
-		$this->assignRef('behind' , 				$behind);	
-		$this->assignRef('oziocode' , 				$oziocode);			
+		$this->assignRef('transition' , 			$transition);
+		$this->assignRef('oziocode' , 				$oziocode);
+		$this->assignRef('bkgndoutercolor' , 		$bkgndoutercolor);	
 		parent::display($tpl);
 	}
 	

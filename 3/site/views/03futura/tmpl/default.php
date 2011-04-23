@@ -53,13 +53,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addVariable('xmlPath', '<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>')
 			<?php endif; ?>
 			so.addVariable('wmode','opaque');  <!--   Passa il valore di wmode anche a Flash  -->
-			so.addParam('scale','showall');
+			so.addParam('scale','noscale');
 			so.addParam('salign','tl');
-			so.addVariable('background_color','0x333333');  <!--   Imposta il colore di sfondo   -->
-			so.addVariable('background_image','none'); <!--   Se vuoi un'immagine di sfondo inserisci l'url dove si trova l'immagine, altrimenti inserisci "none"   -->
-			so.addVariable('image_name','true');  <!--   Mostra nome immagine true o false   -->
+			so.addVariable('background_color','0x<?php echo $this->bkgndoutercolor ?>');  <!--   Imposta il colore di sfondo   -->
+			so.addVariable('background_image','<?php echo $this->immaginesfondo ?>'); <!--   Se vuoi un'immagine di sfondo inserisci l'url dove si trova l'immagine, altrimenti inserisci "none"   -->
+			so.addVariable('image_name','<?php echo $this->titolo ?>');  <!--   Mostra nome immagine true o false   -->
 			so.addVariable('image_date','true');  <!--   Mostra data immagine true o false   -->
-			so.addVariable('category_name','true');  <!--   Mostra nome categoria true o false   -->
+			so.addVariable('category_name','<?php echo $this->titolocat ?>');  <!--   Mostra nome categoria true o false   -->
 			so.addVariable('category_date','true');  <!--   Mostra data categoria true o false   -->
 			so.addVariable('background_color_miniature_categorie','0x4C4C4C');  <!--   Colore sfondo miniature categorie   -->
 			so.addVariable('background_color_miniature_immagini','0xFFFFFF');  <!--   Colore sfondo miniature immagini   -->
@@ -71,7 +71,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addVariable('lines_color','0x999999');  <!--   Colore delle linee categorie   -->
 			so.addVariable('nav_color','0xFFFFFF');  <!--   Colore delle icone di navigazione  -->
 			so.addVariable('numero_anteprime','12');  <!--   Quante anteprime caricare ( max 24 )  -->
-			so.addVariable('transition','fade');  <!--   Tipo di transizione ( fade, blinds, fly, iris, photo, pixeldissolve, rotate, wipe, zoom)  -->
+			so.addVariable('transition','<?php echo $this->transition ?>');  <!--   Tipo di transizione ( fade, blinds, fly, iris, photo, pixeldissolve, rotate, wipe, zoom)  -->
 			so.addVariable('speed_transition','0.5');
             so.write('content');
         </script>

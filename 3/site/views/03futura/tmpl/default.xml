@@ -104,27 +104,11 @@
 				<option value="4">COM_OZIOGALLERY3_CASUALE</option>		  
 			</field>
 		
-		
-		
-		
-			<field name="columns" type="text" 
-			default="3" 
-			label="COM_OZIOGALLERY3_ROWS" 
-			size="2" 
-			description="COM_OZIOGALLERY3_ROWS_DESC" 
-			/>
 			
-			<field name="rows" type="text" 
-			default="3" 
-			label="COM_OZIOGALLERY3_COLUMNS" 
-			size="2" 
-			description="COM_OZIOGALLERY3_COLUMNS_DESC" 
-			/>
-			
-			<field name="showtooltips" type="radio" 
+			<field name="titolocat" type="radio" 
 			default="1" 
-			label="COM_OZIOGALLERY3_SHOW_TOOLTIPS" 
-			description="COM_OZIOGALLERY3_SHOW_TOOLTIPS_DESC" 
+			label="COM_OZIOGALLERY3_SHOW_TITOLOCAT" 
+			description="COM_OZIOGALLERY3_SHOW_TITOLOCAT_DESC" 
 			>
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
@@ -138,30 +122,21 @@
 				  <option value="0">COM_OZIOGALLERY3_No</option>
 				  <option value="1">COM_OZIOGALLERY3_Yes</option>
 			</field>
-			
-			<field name="originalsize" type="radio" 
-			default="1" 
-			label="COM_OZIOGALLERY3_Original_size_link" 
-			description="COM_OZIOGALLERY3_Original_size_link_DESC" 
-			>
-				  <option value="0">COM_OZIOGALLERY3_No</option>
-				  <option value="1">COM_OZIOGALLERY3_Yes</option>
-			</field>
-			
-			<field name="originalsizetxt" type="text" 
-			default="Original size" 
-			label="COM_OZIOGALLERY3_Original_size_text" 
-			size="25" 
-			description="COM_OZIOGALLERY3_Original_size_text_DESC" 
-			/>
 
-			<field name="style" type="list" 
+			<field name="transition" type="list" 
 			default="0" 
-			label="COM_OZIOGALLERY3_STYLE_GALLERIA" 
-			description="COM_OZIOGALLERY3_STYLE_GALLERIA_DESC" 
+			label="COM_OZIOGALLERY3_Transizione" 
+			description="COM_OZIOGALLERY3_Transizione_desc"  
 			>
-				  <option value="0">COM_OZIOGALLERY3_BLACK</option>
-				  <option value="1">COM_OZIOGALLERY3_WHITE</option>
+				  <option value="0">COM_OZIOGALLERY3_FADE</option>
+				  <option value="1">COM_OZIOGALLERY3_BLINDS</option>
+				  <option value="2">COM_OZIOGALLERY3_FLY</option>
+				  <option value="3">COM_OZIOGALLERY3_IRIS</option>
+				  <option value="4">COM_OZIOGALLERY3_PHOTO</option>
+				  <option value="5">COM_OZIOGALLERY3_PIXELDISSOLVE</option>
+				  <option value="6">COM_OZIOGALLERY3_ROTATE</option>
+				  <option value="7">COM_OZIOGALLERY3_WIPE</option>
+				  <option value="8">COM_OZIOGALLERY3_ZOOM</option>
 			</field>
 			
 			<field name="width" type="text" 
@@ -178,21 +153,19 @@
 			size="4" 
 			/>
 
+			<field name="bkgndoutercolor" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_EDGE_DESC"			
+			label="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_EDGE" 			
+			class="color {hash:true,required:false}" 
+			size="10" 
+			default="#000000" 			
+			/>
 
-			<field name="behind" type="radio" 
-			default="0" 
-			label="COM_OZIOGALLERY3_BEHIND" 
-			description="COM_OZIOGALLERY3_BEHIND_DESC" 
-			>
-				  <option value="0">COM_OZIOGALLERY3_No</option>
-				  <option value="1">COM_OZIOGALLERY3_Yes</option>
-			</field>
-			
-			<field name="menuwidth" type="text" 
-			description="COM_OZIOGALLERY3_MENUWIDTH_DESC"			
-			label="COM_OZIOGALLERY3_MENUWIDTH"
-			default="170"			
-			size="4" 
+			<field name="immaginesfondo" type="text" 
+			default="none" 
+			label="COM_OZIOGALLERY3_IMMAGINE_SFONDO" 
+			size="40" 
+			description="COM_OZIOGALLERY3_IMMAGINE_SFONDO_DESC" 
 			/>
 		
 			<field name="table" type="list" 
