@@ -98,7 +98,7 @@ class OzioGalleryView03futura extends JView
 				$url = utf8_encode($this->urlToImageFolder . '/' . $img);
 				$element = null;
 				
-				if($ext == "jpg" || $ext == "gif"){
+				if($ext == "jpg" || $ext == "gif" || $ext == "png"){
 					$element = $dom->createElement("pic");
 					$element->appendChild( $dom->createAttribute('image'))->appendChild( $dom->createTextNode($url));
 					$element->appendChild( $dom->createAttribute('title'))->appendChild( $dom->createTextNode($title));
