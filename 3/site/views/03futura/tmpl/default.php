@@ -73,6 +73,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addVariable('numero_anteprime','12');  <!--   Quante anteprime caricare ( max 24 )  -->
 			so.addVariable('transition','<?php echo $this->transition ?>');  <!--   Tipo di transizione ( fade, blinds, fly, iris, photo, pixeldissolve, rotate, wipe, zoom)  -->
 			so.addVariable('speed_transition','0.5');
+			so.addVariable('home_color','0xFFFFFF');  <!--   Colore icona home  -->
+			so.addVariable('menu_background_color','0x000000');  <!--   Colore sfondi menu  -->
+			so.addVariable('menu_text_color','0xFFFFFF');  <!--   Colore testi menu  -->
             so.write('content');
         </script>
 
