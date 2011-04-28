@@ -26,7 +26,32 @@ class Com_OzioGallery3InstallerScript
 
 	function install($parent) 
 	{
+			
+			//Inzio attivazione Plugin
+			$manifest 	= $parent->get("manifest");
+			$parent 	= $parent->getParent();
+			$source 	= $parent->getPath("source");
+			$installer 	= new JInstaller();
+			 
+			foreach($manifest->plugins->plugin as $plugin) 
+			{
+				$attributes = $plugin->attributes();
+				$plg = $source . DS . $attributes['folder'].DS.$attributes['plugin'];
+				$installer->install($plg);
+			}
+			 $db = JFactory::getDbo();
+			$tableExtensions = $db->nameQuote("#__extensions");
+			$columnEnabled   = $db->nameQuote("enabled");			
+			$columnElement   = $db->nameQuote("element");
+			$columnType      = $db->nameQuote("type");
+
+			 // Attiva plugin
+			$db->setQuery(
+				"UPDATE  $tableExtensions  SET $columnEnabled=1  WHERE $columnElement='ozio'   AND  $columnType='plugin'"
+			);
+			$db->query(); 
 	
+			//Inzio creazione cartelle
 			$folder[0][0]	=	'images' . DS . 'oziogallery3' . DS ;
 			$folder[0][1]	= 	JPATH_ROOT . DS .  $folder[0][0];
 			$folder[0][0]	=	'images' . DS . 'oziodownload' . DS ;

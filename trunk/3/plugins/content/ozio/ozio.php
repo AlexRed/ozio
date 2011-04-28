@@ -70,6 +70,7 @@ class plgContentOzio extends JPlugin
 				. ' FROM #__menu'
 				. ' WHERE (link LIKE "index.php?option=com_oziogallery2&view=01tilt3d" 
 						OR link LIKE "index.php?option=com_oziogallery2&view=02flashgallery"
+						OR link LIKE "index.php?option=com_oziogallery2&view=03futura"
 						OR link LIKE "index.php?option=com_oziogallery2&view=04carousel"
 						OR link LIKE "index.php?option=com_oziogallery2&view=05imagerotator"
 						OR link LIKE "index.php?option=com_oziogallery2&view=06accordion"	
