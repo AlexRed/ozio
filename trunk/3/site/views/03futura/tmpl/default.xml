@@ -168,6 +168,92 @@
 			description="COM_OZIOGALLERY3_IMMAGINE_SFONDO_DESC" 
 			/>
 		
+			<field name="bkgnd_min_categorie" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_CATEGORIE_DESC"	
+			label="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_CATEGORIE"
+			class="color {hash:true,required:false}"
+			size="10"
+			default="#000000"
+			/>
+			
+			<field name="bkgnd_min_immagini" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_IMMAGINI_DESC"
+			label="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_IMMAGINI"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#FFFFFF"
+			/>
+			
+			<field name="bkgnd_min_immagini_over" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_IMMAGINI_OVER_DESC"
+			label="COM_OZIOGALLERY3_BACKGROUND_MINIATURE_IMMAGINI_OVER"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#0066FF"
+			/>
+			
+			<field name="bkgnd_immagini_grandi" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_IMMAGINI_GRANDI_DESC"
+			label="COM_OZIOGALLERY3_BACKGROUND_IMMAGINI_GRANDI"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#FFFFFF"
+			/>
+		
+			<field name="colortext_miniature" type="colorpicker"
+			description="COM_OZIOGALLERY3_COLORE_TESTO_MINIATURE_DESC"
+			label="COM_OZIOGALLERY3_COLORE_TESTO_MINIATURE"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#0066FF"
+			/>
+			
+			<field name="colortext_miniature_over" type="colorpicker"
+			description="COM_OZIOGALLERY3_COLORE_TESTO_MINIATURE_OVER_DESC"
+			label="COM_OZIOGALLERY3_COLORE_TESTO_MINIATURE_OVER"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#FFFFFF"
+			/>
+			
+			<field name="color_linea" type="colorpicker"
+			description="COM_OZIOGALLERY3_COLORE_LINEA_DESC"
+			label="COM_OZIOGALLERY3_COLORE_LINEA"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#999999"
+			/>
+			
+			<field name="color_menu" type="colorpicker"
+			description="COM_OZIOGALLERY3_COLORE_MENU_DESC"
+			label="COM_OZIOGALLERY3_COLORE_MENU"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#000000"
+			/>
+			
+			<field name="color_menu_text" type="colorpicker"
+			description="COM_OZIOGALLERY3_COLORE_MENU_TEXT_DESC"
+			label="COM_OZIOGALLERY3_COLORE_MENU_TEXT"
+			class="color {hash:true,required:false}"
+			size="10" 
+			default="#FFFFFF"
+			/>
+			
+			<field name="schermointerotxt" type="text" 
+			default="Schermo Intero" 
+			label="COM_OZIOGALLERY3_SCHERMOINTERO_TXT" 
+			size="40" 
+			description="COM_OZIOGALLERY3_SCHERMOINTERO_TXT_DESC" 
+			/>
+			
+			<field name="schermonormaletxt" type="text" 
+			default="Visuale sito" 
+			label="COM_OZIOGALLERY3_SCHERMONORMALE_TXT" 
+			size="40" 
+			description="COM_OZIOGALLERY3_SCHERMONORMALE_TXT_DESC" 
+			/>
+		
 			<field name="table" type="list" 
 			description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" 
 			label="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA" 			
