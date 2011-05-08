@@ -61,21 +61,22 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addVariable('image_date','true');  <!--   Mostra data immagine true o false   -->
 			so.addVariable('category_name','<?php echo $this->titolocat ?>');  <!--   Mostra nome categoria true o false   -->
 			so.addVariable('category_date','true');  <!--   Mostra data categoria true o false   -->
-			so.addVariable('background_color_miniature_categorie','0x4C4C4C');  <!--   Colore sfondo miniature categorie   -->
-			so.addVariable('background_color_miniature_immagini','0xFFFFFF');  <!--   Colore sfondo miniature immagini   -->
-			so.addVariable('background_mouseover_color_miniature_immagini','0x0066FF');  <!--   Colore sfondo in mouseover delle miniature immagini   -->
-			so.addVariable('background_color_immagini_grandi','0xFFFFFF');  <!--   Colore sfondo delle immagini grandi   -->
-			so.addVariable('text_color_miniature_immagini','0x0066FF');  <!--   Colore testo miniature immagini   -->
-			so.addVariable('text_color_mouseover_miniature_immagini','0xFFFFFF');  <!--   Colore testo in mouseover delle miniature immagini   -->
-			so.addVariable('text_color_immagini_grandi','0xFFFFFF');  <!--   Colore testo immagini grandi   -->
-			so.addVariable('lines_color','0x999999');  <!--   Colore delle linee categorie   -->
+			so.addVariable('background_color_miniature_categorie','0x<?php echo $this->bkgnd_min_categorie ?>');  <!--   Colore sfondo miniature categorie   -->
+			so.addVariable('background_color_miniature_immagini','0x<?php echo $this->bkgnd_min_immagini ?>');  <!--   Colore sfondo miniature immagini   -->
+			so.addVariable('background_mouseover_color_miniature_immagini','0x<?php echo $this->bkgnd_min_immagini_over ?>');  <!--   Colore sfondo in mouseover delle miniature immagini   -->
+			so.addVariable('background_color_immagini_grandi','0x<?php echo $this->bkgnd_immagini_grandi ?>');  <!--   Colore sfondo delle immagini grandi   -->
+			so.addVariable('text_color_miniature_immagini','0x<?php echo $this->colortext_miniature ?>');  <!--   Colore testo miniature immagini   -->
+			so.addVariable('text_color_mouseover_miniature_immagini','0x<?php echo $this->colortext_miniature_over ?>');  <!--   Colore testo in mouseover delle miniature immagini   -->
+			so.addVariable('lines_color','0x<?php echo $this->color_linea ?>');  <!--   Colore delle linee categorie   -->
 			so.addVariable('nav_color','0xFFFFFF');  <!--   Colore delle icone di navigazione  -->
 			so.addVariable('numero_anteprime','12');  <!--   Quante anteprime caricare ( max 24 )  -->
 			so.addVariable('transition','<?php echo $this->transition ?>');  <!--   Tipo di transizione ( fade, blinds, fly, iris, photo, pixeldissolve, rotate, wipe, zoom)  -->
 			so.addVariable('speed_transition','0.5');
 			so.addVariable('home_color','0xFFFFFF');  <!--   Colore icona home  -->
-			so.addVariable('menu_background_color','0x000000');  <!--   Colore sfondi menu  -->
-			so.addVariable('menu_text_color','0xFFFFFF');  <!--   Colore testi menu  -->
+			so.addVariable('menu_background_color','0x<?php echo $this->color_menu ?>');  <!--   Colore sfondi menu  -->
+			so.addVariable('menu_text_color','0x<?php echo $this->color_menu_text ?>');  <!--   Colore testi menu  -->
+			so.addVariable('titolo_full_screen','<?php echo $this->schermointerotxt ?>');  <!--   Testo click destro per full screen  -->
+			so.addVariable('titolo_normal_screen','<?php echo $this->schermonormaletxt ?>');  <!--   Testo click destro per normal screen  -->
             so.write('content');
         </script>
 

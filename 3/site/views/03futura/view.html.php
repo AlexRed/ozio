@@ -150,10 +150,30 @@ class OzioGalleryView03futura extends JView
 		$titologalleria 	= $params->def('page_title');		
 		$titolo				= (int) $params->def('titolo');
 		$immaginesfondo		= $params->def('immaginesfondo', 'none');
+		$schermointerotxt	= $params->def('schermointerotxt', 'none');
+		$schermonormaletxt	= $params->def('schermonormaletxt', 'none');
 		$transition			= (int) $params->def('transition');
 		$bkgndoutercolor	= $params->def('bkgndoutercolor');
+		$bkgnd_min_categorie	= $params->def('bkgnd_min_categorie');
+		$bkgnd_min_immagini	= $params->def('bkgnd_min_immagini');
+		$bkgnd_min_immagini_over	= $params->def('bkgnd_min_immagini_over');
+		$bkgnd_immagini_grandi	= $params->def('bkgnd_immagini_grandi');
+		$colortext_miniature	= $params->def('colortext_miniature');
+		$colortext_miniature_over	= $params->def('colortext_miniature_over');
+		$color_linea		= $params->def('color_linea');
+		$color_menu			= $params->def('color_menu');
+		$color_menu_text	= $params->def('color_menu_text');
 		
 		$bkgndoutercolor 	= str_replace( '#', '', $bkgndoutercolor );
+		$bkgnd_min_categorie 	= str_replace( '#', '', $bkgnd_min_categorie );
+		$bkgnd_min_immagini 	= str_replace( '#', '', $bkgnd_min_immagini );
+		$bkgnd_min_immagini_over 	= str_replace( '#', '', $bkgnd_min_immagini_over );
+		$bkgnd_immagini_grandi 	= str_replace( '#', '', $bkgnd_immagini_grandi );
+		$colortext_miniature 	= str_replace( '#', '', $colortext_miniature );
+		$colortext_miniature_over 	= str_replace( '#', '', $colortext_miniature_over );
+		$color_linea 		= str_replace( '#', '', $color_linea );
+		$color_menu 		= str_replace( '#', '', $color_menu );
+		$color_menu_text	= str_replace( '#', '', $color_menu_text );
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -376,7 +396,9 @@ class OzioGalleryView03futura extends JView
 		$this->assignRef('titolocat' , 				$titolocat);
 		$this->assignRef('titolo' , 				$titolo);
 		$this->assignRef('xml_mode' , 				$xml_mode);
-		$this->assignRef('immaginesfondo' , 		$immaginesfondo);	
+		$this->assignRef('immaginesfondo' , 		$immaginesfondo);
+		$this->assignRef('schermointerotxt' , 		$schermointerotxt);
+		$this->assignRef('schermonormaletxt' , 		$schermonormaletxt);	
 		$this->assignRef('tags' , 					$tags);
 		$this->assignRef('text' , 					$text);		
 		$this->assignRef('table' , 					$table);
@@ -387,7 +409,16 @@ class OzioGalleryView03futura extends JView
 		$this->assignRef('manualxmlname' , 			$manualxmlname);
 		$this->assignRef('transition' , 			$transition);
 		$this->assignRef('oziocode' , 				$oziocode);
-		$this->assignRef('bkgndoutercolor' , 		$bkgndoutercolor);	
+		$this->assignRef('bkgndoutercolor' , 		$bkgndoutercolor);
+		$this->assignRef('bkgnd_min_categorie' , 	$bkgnd_min_categorie);
+		$this->assignRef('bkgnd_min_immagini' , 	$bkgnd_min_immagini);
+		$this->assignRef('bkgnd_min_immagini_over' , 	$bkgnd_min_immagini_over);
+		$this->assignRef('bkgnd_immagini_grandi' , 	$bkgnd_immagini_grandi);
+		$this->assignRef('colortext_miniature' , 	$colortext_miniature);
+		$this->assignRef('colortext_miniature_over' , 	$colortext_miniature_over);
+		$this->assignRef('color_linea' , 	$color_linea);
+		$this->assignRef('color_menu' , 	$color_menu);
+		$this->assignRef('color_menu_text' , 	$color_menu_text);
 		parent::display($tpl);
 	}
 	
