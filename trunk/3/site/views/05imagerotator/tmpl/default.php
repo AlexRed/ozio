@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </tr>
 </table>
 <?php endif; ?>
-   <table align="<?php echo $this->table ?>"><tr><td>
+   <table width="100%" align="<?php echo $this->table ?>"><tr><td>
 	<div id="<?php echo $this->oziocode;?>oziocontainer" class="oziofloat">
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
