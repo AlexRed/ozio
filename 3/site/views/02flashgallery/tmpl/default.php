@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </table>
 <?php endif; ?>
    <table align="<?php echo $this->table ?>"><tr><td>
-	<div id="<?php echo $this->oziocode;?>oziogallery" class="oziofloat">
+	<div id="oziogallery" class="oziofloat">
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
@@ -50,7 +50,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php else: ?>	
 					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery3/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1 );
 <?php endif; ?>						
-					so.write("<?php echo $this->oziocode;?>oziogallery");
+					so.write("oziogallery");
 				</script>
    </td></tr></table>
 <?php if ( $this->modifiche == 1 ) : ?>   

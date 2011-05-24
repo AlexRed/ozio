@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </table>
 <?php endif; ?>
    <table width="100%" align="<?php echo $this->table ?>"><tr><td>
-	<div id="<?php echo $this->oziocode;?>ozioflashcontent" class="oziofloat">
+	<div id="ozioflashcontent" class="oziofloat">
 			<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this rotator.
 	</div>
 				<script type="text/javascript">
@@ -100,7 +100,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				// END TILTVIEWER CONFIGURATION OPTIONS					
 					fo.addParam("wmode", "transparent");
 					fo.addParam("allowFullScreen","true");
-					fo.write("<?php echo $this->oziocode;?>ozioflashcontent");
+					fo.write("ozioflashcontent");
 				</script>
    </td></tr></table>
 <?php if ( $this->modifiche == 1 ) : ?>   

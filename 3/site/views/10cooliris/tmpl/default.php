@@ -47,7 +47,7 @@ $randval = rand();
 <table width="100%" align="<?php echo $this->table ?>">
 	<tr>
 		<td>
-			<div id="<?php echo $this->oziocode;?>oziowall" class="oziofloat">  <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this gallery.</div>
+			<div id="oziowall" class="oziofloat">  <a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this gallery.</div>
     <script>
         var flashvars = {
 		<?php if  	  ( $this->flickr == 1 ) : ?>	
@@ -65,7 +65,7 @@ $randval = rand();
              allowscriptaccess: "always"
         };
         swfobject.embedSWF("<?php echo JURI::root() ?>components/com_oziogallery3/skin/cooliris/cooliris.swf?"+Math.random()*1,
-            "<?php echo $this->oziocode;?>oziowall", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "9.0.0", "",
+            "oziowall", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "9.0.0", "",
             flashvars, params);
     </script>
 			

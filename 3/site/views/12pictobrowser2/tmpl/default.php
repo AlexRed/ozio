@@ -38,7 +38,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
    <table align="<?php echo $this->table ?>">
    <tr>  
 		<td align="<?php echo $this->table ?>">
-				<div id="<?php echo $this->oziocode;?>oziopictopicasa">Get the flash player here: http://www.adobe.com/flashplayer</div>
+				<div id="oziopictopicasa">Get the flash player here: http://www.adobe.com/flashplayer</div>
 				<script type="text/javascript" src="<?php echo JURI::root() ?>components/com_oziogallery3/assets/js/15/swfobject.js"></script>
 				<script type="text/javascript"> 
 				var so = new SWFObject("<?php echo JURI::root() ?>components/com_oziogallery3/skin/pictobrowser/pictobrowserp.swf", "PictoBrowser", "<?php echo $this->larghezza ?>", "<?php echo $this->altezza ?>", "8", "#<?php echo $this->bg?>"); 			
@@ -61,7 +61,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					so.addVariable("colorHexVar", "<?php echo $this->bg?>"); 
 					so.addVariable("initialScale", "<?php echo $this->scale?>"); 
 					so.addVariable("bgAlpha", "<?php echo $this->bgalpha?>"); 
-					so.write("<?php echo $this->oziocode;?>oziopictopicasa");	
+					so.write("oziopictopicasa");	
 				</script>		
 		</td>
 	</tr>
