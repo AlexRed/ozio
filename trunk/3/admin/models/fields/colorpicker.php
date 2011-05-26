@@ -44,7 +44,7 @@ class JFormFieldColorpicker extends JFormField
 		
 		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_CHANGE' ).'::'. JText::_( 'COM_OZIOGALLERY3_CHANGE_DESC' ).'"><input type="text" name="'.$this->name.'" id="'.$this->name.'" value="'.$this->value.'" class="'.$this->element['class'].'" size="'.$this->element['size'].'" /></span>';
 		
-		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'::'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'"><img border="0" src="'.JURI::root().'administrator/components/com_oziogallery3/models/fields/media/tick.png" style="margin-left:3px; cursor:pointer;" onclick="document.getElementById(\''.$type.$this->name.'\').value=\'\'; document.getElementById(\''.$type.$this->name.'\').style.backgroundColor=\'#fff\';" /></span>';
+		$html .= '<span class="hasTip" title="'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'::'. JText::_( 'COM_OZIOGALLERY3_RESET' ).'"><img border="0" src="'.JURI::root().'administrator/components/com_oziogallery3/models/fields/media/tick.png" style="margin-left:3px; cursor:pointer;" onclick="document.getElementById(\'Colorpicker\').value=\'\'; document.getElementById(\'Colorpicker\').style.backgroundColor=\'#fff\';" /></span>';
 		
 
 		return $html;		
