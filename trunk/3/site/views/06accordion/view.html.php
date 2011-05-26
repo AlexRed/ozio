@@ -41,6 +41,7 @@ class OzioGalleryView06Accordion extends JView
 		$loadercolor		= $params->def('loadercolor', 'FFFFFF');
 		$ordinamento 		= (int) $params->def('ordinamento');
 		$slidershow 		= (int) $params->def('slidershow');
+		$accordiontitle 	= (int) $params->def('accordiontitle');
 		$folder				= $params->def('folder');
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
