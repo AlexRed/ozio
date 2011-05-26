@@ -44,7 +44,7 @@ class plgContentOzio extends JPlugin
 		preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
 
 		foreach ($matches as $match) {
-
+			$style ='';
 			$output = $this->_load($match[1], $style);
 			$article->text = str_replace($match[0], $output, $article->text);
 		}
@@ -55,7 +55,7 @@ class plgContentOzio extends JPlugin
 	protected function _load($galleriaozio)
 	{
 
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 
 		$query = 'SELECT published, link, id, access, params'
 				. ' FROM #__menu'
@@ -87,11 +87,11 @@ class plgContentOzio extends JPlugin
   		$cp = $db->loadObject();	
 		
 		
-	$document	= &JFactory::getDocument();
+	$document	= JFactory::getDocument();
 
-        if ($cp->id = $galleriaozio) :
+        if (@$cp->id = $galleriaozio) :
 		
-				@$gall 	= JURI::root(). $codice->link .'&Itemid='. (int) $galleriaozio;
+				@$gall 	= JURI::root(). $codice->link .'&Itemid='. $galleriaozio;
 				//$parametar un tentativo di Vamba che stranamente va
 				$parametar = new JRegistry;
 				$parametar->loadJSON($codice->params);
