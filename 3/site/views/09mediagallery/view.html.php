@@ -105,7 +105,6 @@ class OzioGalleryView09mediagallery extends JView
 					$element->appendChild( $dom->createAttribute('image'))->appendChild( $dom->createTextNode($url));
 					$element->appendChild( $dom->createAttribute('title'))->appendChild( $dom->createTextNode($title));
 					$element->appendChild( $dom->createAttribute('link'))->appendChild( $dom->createTextNode($url));
-					$element->appendChild( $dom->createAttribute('link_title'))->appendChild( $dom->createTextNode($originalsizetxt));
 				} elseif($ext == "flv" || $ext == "swf"){
 					$element = $dom->createElement("video");
 					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
@@ -392,6 +391,7 @@ class OzioGalleryView09mediagallery extends JView
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);		
 		$this->assignRef('manualxmlname' , 			$manualxmlname);
+		$this->assignRef('originalsize' , 			$originalsize);
 		$this->assignRef('style' , 					$style);
 		$this->assignRef('behind' , 				$behind);	
 		$this->assignRef('oziocode' , 				$oziocode);			
