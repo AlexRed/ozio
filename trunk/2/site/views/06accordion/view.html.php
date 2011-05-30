@@ -44,7 +44,8 @@ class OzioGalleryView06Accordion extends JView
 		$modifiche 			= (int) $params->def('modifiche', 0);	
 		$debug 				= (int) $params->def('debug');		
 		$tuttochiuso		= (int) $params->def('tuttochiuso');	
-		$slidershow		= (int) $params->def('slidershow');
+		$slidershow			= (int) $params->def('slidershow');
+		$accordiontitle		= (int) $params->def('accordiontitle');
 		$fotoiniziale		= (int) $params->def('fotoiniziale');
 		$dissolvenza		= (int) $params->def('dissolvenza');			
 		$indirizzo			= $params->def('indirizzo');
