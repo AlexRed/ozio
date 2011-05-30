@@ -229,6 +229,8 @@ class OzioGalleryView03futura extends JView
 		
 	
 		$document->addScript(JURI::root(true).'/components/com_oziogallery3/assets/js/15/swfobject.js');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery3/assets/js/jquery.js');
+		$document->addScript(JURI::root(true).'/components/com_oziogallery3/assets/js/swfaddress.js');
 		$document->addCustomTag('
 		<style type="text/css">
 			.oziofloat {
