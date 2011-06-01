@@ -143,13 +143,13 @@
 			description="COM_OZIOGALLERY3_LARGHEZZA_DESC" 
 			label="COM_OZIOGALLERY3_LARGHEZZA" 
 			size="4" 
-			default="640" 			
+			default="726" 			
 			/>
 			
 			<field name="height" type="text" 
 			description="COM_OZIOGALLERY3_ALTEZZA_DESC"			
 			label="COM_OZIOGALLERY3_ALTEZZA"
-			default="480"			
+			default="600"			
 			size="4" 
 			/>
 
