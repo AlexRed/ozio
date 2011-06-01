@@ -33,7 +33,7 @@
 			<field name="show_page_title" type="radio"
 			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
 			label="COM_OZIOGALLERY3_TITOLO_INTRO"
-			default="1"
+			default="0"
 			>
 				<option value="0">COM_OZIOGALLERY3_NO</option>
 				<option value="1">COM_OZIOGALLERY3_YES</option>

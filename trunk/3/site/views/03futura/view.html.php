@@ -163,6 +163,8 @@ class OzioGalleryView03futura extends JView
 		$color_linea		= $params->def('color_linea');
 		$color_menu			= $params->def('color_menu');
 		$color_menu_text	= $params->def('color_menu_text');
+		$color_freccia		= $params->def('color_freccia');
+		$color_home			= $params->def('color_home');
 		
 		$bkgndoutercolor 	= str_replace( '#', '', $bkgndoutercolor );
 		$bkgnd_min_categorie 	= str_replace( '#', '', $bkgnd_min_categorie );
@@ -174,6 +176,8 @@ class OzioGalleryView03futura extends JView
 		$color_linea 		= str_replace( '#', '', $color_linea );
 		$color_menu 		= str_replace( '#', '', $color_menu );
 		$color_menu_text	= str_replace( '#', '', $color_menu_text );
+		$color_freccia		= str_replace( '#', '', $color_freccia );
+		$color_home			= str_replace( '#', '', $color_home	 );
 		
 		
 		switch ($params->get( 'rotatoralign' ))
@@ -305,11 +309,7 @@ class OzioGalleryView03futura extends JView
 			
 			// make header
 			$setup=null;
-			if ($style == 0) {
-				$setup=$this->getStyle0(&$setup);
-			} else {
-				$setup=$this->getStyle1(&$setup);
-			}
+			
 			$setup['name']=$titologalleria;
 			$setup['width']=$larghezza;
 			$setup['height']=$altezza;
@@ -421,6 +421,8 @@ class OzioGalleryView03futura extends JView
 		$this->assignRef('color_linea' , 	$color_linea);
 		$this->assignRef('color_menu' , 	$color_menu);
 		$this->assignRef('color_menu_text' , 	$color_menu_text);
+		$this->assignRef('color_freccia' , 	$color_freccia);
+		$this->assignRef('color_home' , 	$color_home);
 		parent::display($tpl);
 	}
 	
