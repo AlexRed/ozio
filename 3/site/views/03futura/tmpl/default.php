@@ -68,11 +68,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			so.addVariable('text_color_miniature_immagini','0x<?php echo $this->colortext_miniature ?>');  <!--   Colore testo miniature immagini   -->
 			so.addVariable('text_color_mouseover_miniature_immagini','0x<?php echo $this->colortext_miniature_over ?>');  <!--   Colore testo in mouseover delle miniature immagini   -->
 			so.addVariable('lines_color','0x<?php echo $this->color_linea ?>');  <!--   Colore delle linee categorie   -->
-			so.addVariable('nav_color','0xFFFFFF');  <!--   Colore delle icone di navigazione  -->
+			so.addVariable('nav_color','0x<?php echo $this->color_freccia ?>');  <!--   Colore delle icone di navigazione  -->
 			so.addVariable('numero_anteprime','12');  <!--   Quante anteprime caricare ( max 24 )  -->
 			so.addVariable('transition','<?php echo $this->transition ?>');  <!--   Tipo di transizione ( fade, blinds, fly, iris, photo, pixeldissolve, rotate, wipe, zoom)  -->
 			so.addVariable('speed_transition','0.5');
-			so.addVariable('home_color','0xFFFFFF');  <!--   Colore icona home  -->
+			so.addVariable('home_color','0x<?php echo $this->color_home ?>');  <!--   Colore icona home  -->
 			so.addVariable('menu_background_color','0x<?php echo $this->color_menu ?>');  <!--   Colore sfondi menu  -->
 			so.addVariable('menu_text_color','0x<?php echo $this->color_menu_text ?>');  <!--   Colore testi menu  -->
 			so.addVariable('titolo_full_screen','<?php echo $this->schermointerotxt ?>');  <!--   Testo click destro per full screen  -->
