@@ -102,7 +102,6 @@ class OzioGalleryView03futura extends JView
 					$element = $dom->createElement("pic");
 					$element->appendChild( $dom->createAttribute('image'))->appendChild( $dom->createTextNode($url));
 					$element->appendChild( $dom->createAttribute('title'))->appendChild( $dom->createTextNode($title));
-					$element->appendChild( $dom->createAttribute('link'))->appendChild( $dom->createTextNode($url));
 				} elseif($ext == "flv" || $ext == "swf"){
 					$element = $dom->createElement("video");
 					$element->appendChild( $dom->createAttribute('file'))->appendChild( $dom->createTextNode($url));
