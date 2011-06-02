@@ -150,6 +150,39 @@ class OzioGalleryView11PictoBrowser extends JView
 		}
 		$this->document->setTitle($title);
 			
+			
+		$this->assignRef('params' , 				$params);
+		$this->assignRef('gallerymode' , 			$gallerymode);		
+		$this->assignRef('altezza' , 				$altezza);
+		$this->assignRef('larghezza' , 				$larghezza);
+
+		$this->assignRef('album_id' , 				$album_id);		
+		$this->assignRef('user_id' , 				$user_id);
+		$this->assignRef('user_name' , 				$user_name);
+		$this->assignRef('user_namep' , 			$user_namep);		
+		$this->assignRef('set_id' , 				$set_id);
+		$this->assignRef('set_name' , 				$set_name);	
+		$this->assignRef('group_id' , 				$group_id);
+		$this->assignRef('group_name' , 			$group_name);			
+		$this->assignRef('gname' , 					$gname);
+		$this->assignRef('titles' , 				$titles);	
+		$this->assignRef('note' , 					$note);
+		$this->assignRef('autohide' , 				$autohide);		
+		$this->assignRef('imagesize' , 				$imagesize);	
+		$this->assignRef('valign' , 				$valign);
+		$this->assignRef('zoom' , 					$zoom);		
+		$this->assignRef('scale' , 					$scale);			
+		$this->assignRef('bgalpha' , 				$bgalpha);
+		$this->assignRef('bg' , 					$bg);	
+		$this->assignRef('offset' , 				$offset);		
+		$this->assignRef('source' , 				$source);
+		$this->assignRef('table' , 					$table);
+		$this->assignRef('debug' , 					$debug);
+		$this->assignRef('oziodebug' , 				$oziodebug);			
+		$this->assignRef('oziocode' , 				$oziocode);	
+		$this->assignRef('gnamep' , 				$gnamep);			
+		$this->assignRef('sourcep' , 				$sourcep);
+
         // Debug per test interno
 		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';	
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gallerymode :     '.$gallerymode  .'</pre>';		
@@ -177,37 +210,7 @@ class OzioGalleryView11PictoBrowser extends JView
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  offset :   '.$offset  .'</pre>';	
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  source :   '.$source  .'</pre>';
 		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  sourcep :   '.$sourcep  .'</pre>';		
-		//fine debug
-
-
-			
-		$this->assignRef('params' , 				$params);
-		$this->assignRef('gallerymode' , 			$gallerymode);		
-		$this->assignRef('altezza' , 				$altezza);
-		$this->assignRef('larghezza' , 				$larghezza);
-	
-		$this->assignRef('user_id' , 				$user_id);
-		$this->assignRef('user_name' , 				$user_name);
-		$this->assignRef('set_id' , 				$set_id);
-		$this->assignRef('set_name' , 				$set_name);	
-		$this->assignRef('group_id' , 				$group_id);
-		$this->assignRef('group_name' , 			$group_name);			
-		$this->assignRef('gname' , 					$gname);
-		$this->assignRef('titles' , 				$titles);	
-		$this->assignRef('note' , 					$note);
-		$this->assignRef('autohide' , 				$autohide);		
-		$this->assignRef('imagesize' , 				$imagesize);	
-		$this->assignRef('valign' , 				$valign);
-		$this->assignRef('zoom' , 					$zoom);		
-		$this->assignRef('scale' , 					$scale);			
-		$this->assignRef('bgalpha' , 				$bgalpha);
-		$this->assignRef('bg' , 					$bg);	
-		$this->assignRef('offset' , 				$offset);		
-		$this->assignRef('source' , 				$source);
-		$this->assignRef('table' , 					$table);
-		$this->assignRef('debug' , 					$debug);
-		$this->assignRef('oziodebug' , 				$oziodebug);			
-		$this->assignRef('oziocode' , 				$oziocode);		
+		//fine debug		
 		
 		parent::display($tpl);
 	}
