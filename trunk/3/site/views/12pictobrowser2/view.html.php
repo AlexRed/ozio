@@ -153,30 +153,6 @@ class OzioGalleryView12PictoBrowser2 extends JView
 		}
 		$this->document->setTitle($title);
 			
-        // Debug per test interno
-		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';	
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gallerymode :     '.$gallerymode  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_namep :     '.$user_namep  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_id :   ' .$user_id .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  set_id :   ' .$set_id .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  album_id :   ' .$album_id .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gnamep :   ' .$gnamep  .'</pre>';			
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  titles :   ' .$titles  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  note :     '.$note  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  autohide :   ' .$autohide  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  imagesize :     '.$imagesize  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  zoom :   ' .$zoom  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  valign :     '.$valign  .'</pre>';	
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  scale :     '.$scale  .'</pre>';		
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  bgalpha :   ' .$bgalpha  .'</pre>';
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  bg :     '.$bg  .'</pre>';	
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  offset :   '.$offset  .'</pre>';	
-		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  sourcep :   '.$sourcep  .'</pre>';		
-		//fine debug
-
-
 			
 		$this->assignRef('params' , 				$params);
 		$this->assignRef('gallerymode' , 			$gallerymode);		
@@ -205,7 +181,33 @@ class OzioGalleryView12PictoBrowser2 extends JView
 		$this->assignRef('table' , 					$table);
 		$this->assignRef('debug' , 					$debug);
 		$this->assignRef('oziodebug' , 				$oziodebug);			
-		$this->assignRef('oziocode' , 				$oziocode);		
+		$this->assignRef('oziocode' , 				$oziocode);	
+
+
+
+        // Debug per test interno
+		$oziodebug 	= '<h2>DEBUG OZIO - FOR HELP</h2>';	
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gallerymode :     '.$gallerymode  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  larghezza :     '.$larghezza  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  altezza :     '.$altezza  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_namep :     '.$user_namep  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  user_id :   ' .$user_id .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  set_id :   ' .$set_id .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  album_id :   ' .$album_id .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  gnamep :   ' .$gnamep  .'</pre>';			
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  titles :   ' .$titles  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  note :     '.$note  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  autohide :   ' .$autohide  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  imagesize :     '.$imagesize  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  zoom :   ' .$zoom  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  valign :     '.$valign  .'</pre>';	
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  scale :     '.$scale  .'</pre>';		
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  bgalpha :   ' .$bgalpha  .'</pre>';
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  bg :     '.$bg  .'</pre>';	
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  offset :   '.$offset  .'</pre>';	
+		$oziodebug .= '<pre>'.JText::_('COM_OZIOGALLERY3_PARAMETRO').'  sourcep :   '.$sourcep  .'</pre>';		
+		//fine debug		
+		
 		
 		parent::display($tpl);
 	}
