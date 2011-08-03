@@ -10,6 +10,8 @@
 	<version>3.3</version>
 	<description>Ozio Gallery for Joomla! 1.6</description>
 
+	<uninstallfile>uninstall.oziogallery.php</uninstallfile>
+
 	<scriptfile>file.script.php</scriptfile>
 	<files folder="site">
 		<filename>index.html</filename>
