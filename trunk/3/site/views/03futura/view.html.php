@@ -140,7 +140,8 @@ class OzioGalleryView03futura extends JView
 		$altezza 			= $params->def('height', 480);	
 		$titolocat	 		= (int) $params->def('titolocat', 1);
 		$ordinamento 		= (int) $params->def('ordinamento');			
-		$xml_mode 			= (int) $params->def('xml_mode', 0);		
+		$xml_mode 			= (int) $params->def('xml_mode', 0);
+		$xml_cache_time		= (int) $params->def('xml_cache_time', 0);		
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
@@ -300,7 +301,7 @@ class OzioGalleryView03futura extends JView
 		{			
 
 		
-		if ( @filemtime($foldername) >= @filemtime($filename) ) {
+		if ( (!$xml_mode) && (time() > @filemtime($filename) + $xml_cache_time) ) {
 		//if ( 1 ) {	
 		
 // start code by mmleoni			
