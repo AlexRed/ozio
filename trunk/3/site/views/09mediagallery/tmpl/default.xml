@@ -77,6 +77,13 @@
 				<option value="0">COM_OZIOGALLERY3_XML_AUTOMATICO</option>
 				<option value="1">COM_OZIOGALLERY3_XML_MANUALE</option>
 			</field>
+
+			<field name="xml_cache_time" type="text" 
+			description="COM_OZIOGALLERY3_XML_CACHE_TIME_DESC" 
+			label="COM_OZIOGALLERY3_XML_CACHE_TIME" 
+			size="6" 
+			default="0" 
+			/>			
 			
 			<field name="manualxmlname" type="text" 
 			description="COM_OZIOGALLERY3_PATH_XML_MANUALE_DESC"

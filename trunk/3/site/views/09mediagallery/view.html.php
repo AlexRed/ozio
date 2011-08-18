@@ -145,7 +145,8 @@ class OzioGalleryView09mediagallery extends JView
 		$ordinamento 		= (int) $params->def('ordinamento');
 		$columns 			= (int) $params->def('columns', 3);	
 		$rows 				= (int) $params->def('rows', 3);			
-		$xml_mode 			= (int) $params->def('xml_mode', 0);		
+		$xml_mode 			= (int) $params->def('xml_mode', 0);
+		$xml_cache_time		= (int) $params->def('xml_cache_time', 0);
 		$modifiche 			= (int) $params->def('modifiche', 0);			
 		$folder				= $params->def('folder');
 		$debug 				= (int) $params->def('debug');	
@@ -271,7 +272,7 @@ class OzioGalleryView09mediagallery extends JView
 		{			
 
 		
-		if ( @filemtime($foldername) >= @filemtime($filename) ) {
+		if ( (!$xml_mode) && (time() > @filemtime($filename) + $xml_cache_time) ) {
 		//if ( 1 ) {	
 		
 // start code by mmleoni			
