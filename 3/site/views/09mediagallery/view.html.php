@@ -24,7 +24,7 @@ jimport( 'joomla.application.component.view');
 
 class OzioGalleryView09mediagallery extends JView
 {
-// start code by mmleoni
+// start code by www.mmleoni.net
 	private $pathToImageFolder = '';
 	private $urlToImageFolder = '';
 	private $titolo = '';
@@ -51,15 +51,14 @@ class OzioGalleryView09mediagallery extends JView
 					break;
 			}
 		}
-
 		switch ($ordinamento) {
 			case 0:
-			case 3:
-				sort($sorted);
+			case 2:
+				ksort($sorted);
 				break;
 			case 1:
-			case 2:
-				rsort($sorted);
+			case 3:
+				krsort($sorted);
 				break;
 			case 4:
 				shuffle($sorted);
@@ -67,7 +66,6 @@ class OzioGalleryView09mediagallery extends JView
 			default:
 				break;		
 		}
-		
 		return $sorted;
 	}
 
@@ -126,7 +124,7 @@ class OzioGalleryView09mediagallery extends JView
 
 		return; 
 	}
-// end code by mmleoni
+// end code by www.mmleoni.net
 	
 
 	function display( $tpl = null )
@@ -275,7 +273,7 @@ class OzioGalleryView09mediagallery extends JView
 		if ( (!$xml_mode) && (time() > @filemtime($filename) + $xml_cache_time) ) {
 		//if ( 1 ) {	
 		
-// start code by mmleoni			
+// start code by www.mmleoni.net			
 			$dom = new DOMDocument('1.0');// '1.0', 'iso-8859-1' || 'UTF-8'
 			
 			// make header
@@ -306,6 +304,7 @@ class OzioGalleryView09mediagallery extends JView
 			$this->pathToImageFolder = $path;
 			$this->urlToImageFolder = $dir_images;
 			$this->titolo = $titolo;
+			//clearstatcache();
 			$this->recurseDirs($path, &$dom, &$root, $ordinamento, 0);
 			//var_dump($items);die;
 			
@@ -313,7 +312,7 @@ class OzioGalleryView09mediagallery extends JView
 			
 			file_put_contents ($filename, $dom->saveXML());
 			}//file time
-// end code by mmleoni
+// end code by www.mmleoni.net
 		}	
 		else//Folder  non esiste
 		{
@@ -399,7 +398,7 @@ class OzioGalleryView09mediagallery extends JView
 		parent::display($tpl);
 	}
 	
-// start code by mmleoni
+// start code by www.mmleoni.net
 	private function getStyle0(){
 		$a=array();
 		$a['autoSize']='true';
@@ -758,7 +757,7 @@ class OzioGalleryView09mediagallery extends JView
 		$a['videoDescriptionPadding']='50';
 		return $a;
 	}
-// end code by mmleoni
+// end code by www.mmleoni.net
 
 }
 ?>
