@@ -53,12 +53,12 @@ class OzioGalleryView03futura extends JView
 
 		switch ($ordinamento) {
 			case 0:
-			case 3:
-				sort($sorted);
+			case 2:
+				ksort($sorted);
 				break;
 			case 1:
-			case 2:
-				rsort($sorted);
+			case 3:
+				krsort($sorted);
 				break;
 			case 4:
 				shuffle($sorted);
