@@ -16,8 +16,9 @@
 	margin-bottom: 8px !important;
 }
 
-.pane-sliders .panel h3 {
-	background: #146295 !important;
+
+.pane-toggler .panel h3 {
+	background: #FFFFFF !important;
 	color: #FFF !important;
 	-moz-border-radius-topleft : 6px;  
 	-webkit-border-top-left-radius: 6px; 
