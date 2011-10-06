@@ -76,7 +76,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->pubblicate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->pubblicate[$i];
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&id='. (int) $row->id;
 					$link2 		= 'index.php?option=com_menus&view=items&menutype='. $row->menutype;
 						if ($row->link == 'index.php?option=com_oziogallery3&view=01tilt3d') :
 							$link3	= 'index.php?option=com_oziogallery3&amp;task=resetTilt&amp;tmpl=component';
@@ -203,7 +203,7 @@ JHTML::_('behavior.modal');
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->nonpubblicate[$i];
 
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&id='. (int) $row->id;
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 				?>
 					<tr>
@@ -243,7 +243,7 @@ JHTML::_('behavior.modal');
 					$n = count($this->cestinate);
 					for ($i=0, $n; $i < $n; $i++) {
 					$row = $this->cestinate[$i];
-					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&cid[]='. (int) $row->id;
+					$link 		= 'index.php?option=com_menus&menutype='.$row->menutype.'&task=item.edit&id='. (int) $row->id;
 					$img		= JURI::root().'administrator/components/com_oziogallery3/assets/images/icon-16-config.png';
 				?>
 					<tr>
