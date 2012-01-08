@@ -27,9 +27,9 @@ class OzioGalleryView04Carousel extends JView
 	function display( $tpl = null )
 	{
 	
-		$app	= &JFactory::getApplication();
-		$document 	= & JFactory::getDocument();
-		$menus		= & JSite::getMenu();
+		$app		= JFactory::getApplication();
+		$document 	= JFactory::getDocument();
+		$menus 		= $app->getMenu();
 		$menu		= $menus->getActive();
 		$oziocode	= uniqid() .'_';
 		$params = $app->getParams('com_oziogallery3');

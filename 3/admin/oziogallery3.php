@@ -32,6 +32,7 @@ require_once (JPATH_COMPONENT.DS.'classes'.DS.'ozio.helper.php');
 $controller	= JController::getInstance('Ozio');
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
+$task = JRequest::getCmd('task');
 
 		switch($task)
 		{
@@ -52,4 +53,5 @@ $controller->redirect();
 			case 'resetfutura'		 	: ozio_helper::resetfutura(); 			break;
 			case 'resetcooliris' 		: ozio_helper::resetcooliris(); 		break;
 		}
+		
 ?>

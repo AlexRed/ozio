@@ -20,9 +20,10 @@
 */
 
 defined('_JEXEC') or die;
+jimport('joomla.application.component.controller');
 class OzioController extends JController
 {
-	function display()
+	public function display($cachable = false, $urlparams = false)
 	{
 
 		parent::display();

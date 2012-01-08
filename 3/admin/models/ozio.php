@@ -50,7 +50,6 @@ class OzioModelOzio extends JModel
 						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
 						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"	
 						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-						OR i.link = "index.php?option=com_oziogallery3&view=14pupngoo"							
 				)'
 				. ' AND i.published = 1'				
 				. ' ORDER BY i.title ASC'
@@ -81,7 +80,6 @@ class OzioModelOzio extends JModel
 						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
 						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"	
 						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-						OR i.link = "index.php?option=com_oziogallery3&view=14pupngoo"							
 				)'
 				. ' AND published  = 0'	
 				. ' AND published != -2'				
@@ -114,7 +112,6 @@ class OzioModelOzio extends JModel
 						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
 						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"
 						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-						OR i.link = "index.php?option=com_oziogallery3&view=14pupngoo"							
 				)'
 				. ' AND i.published = -2'				
 				. ' ORDER BY i.title ASC'
