@@ -83,7 +83,7 @@ class OzioGalleryView03futura extends JView
 				$container->appendChild($element);
 				$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($name));
 				
-				$this->recurseDirs($item . '/', &$dom, &$element, $ordinamento, $level + 1);
+				$this->recurseDirs($item . '/', $dom, $element, $ordinamento, $level + 1);
 			}
 		}else{ // no sub dirs read files
 			foreach(glob($path.'*', GLOB_NOSORT) as $file){
@@ -325,7 +325,7 @@ class OzioGalleryView03futura extends JView
 			// read fs
 			$this->pathToImageFolder = $path;
 			$this->urlToImageFolder = $dir_images;
-			$this->recurseDirs($path, &$dom, &$root, $ordinamento, 0);
+			$this->recurseDirs($path, $dom, $root, $ordinamento, 0);
 			//var_dump($items);die;
 			
 			//echo $dom->saveXML();die;
