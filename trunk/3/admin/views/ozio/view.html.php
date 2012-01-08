@@ -35,11 +35,11 @@ class OzioViewOzio extends JView
 	public function display($tpl = null)
 	{
 		jimport('joomla.html.pane');
-		$pane   = & JPane::getInstance('sliders');	
+		$pane   = JPane::getInstance('sliders');	
 		
-		$pubblicate		= & $this->get( 'Pubblicate' );
-		$nonpubblicate	= & $this->get( 'Nonpubblicate' );
-		$cestinate		= & $this->get( 'Cestinate' );		
+		$pubblicate		= $this->get( 'Pubblicate' );
+		$nonpubblicate	= $this->get( 'Nonpubblicate' );
+		$cestinate		= $this->get( 'Cestinate' );		
 
 		$this->assignRef('pane'					, $pane);
 		$this->assignRef('pubblicate'			, $pubblicate);
@@ -58,7 +58,7 @@ class OzioViewOzio extends JView
 	
 	protected function addToolbar()
 	{
-		$document	= & JFactory::getDocument();
+		$document	= JFactory::getDocument();
 		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
 		
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ),'logo' );

@@ -29,7 +29,7 @@ class OzioViewResetel extends JView
 	function display( $tpl = null )
 	{
 
-		$document	= & JFactory::getDocument();
+		$document	= JFactory::getDocument();
 		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
 		parent::display($tpl);
 
