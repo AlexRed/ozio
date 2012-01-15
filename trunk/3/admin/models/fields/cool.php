@@ -21,9 +21,12 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldCool extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldCool extends OSSXMLCleaner
 {
 	protected $type = 'Cool';
+	protected $dir_name = "cooliris"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{

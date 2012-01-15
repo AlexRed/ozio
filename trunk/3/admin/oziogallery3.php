@@ -26,7 +26,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_oziogallery3')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-// Include dependancies
+// Include dependencies
 jimport('joomla.application.component.controller');
 require_once (JPATH_COMPONENT.DS.'classes'.DS.'ozio.helper.php');
 $controller	= JController::getInstance('Ozio');
@@ -34,6 +34,11 @@ $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
 $task = JRequest::getCmd('task');
 
+// 12/01/2011 DP Removed switch construct
+if (strpos($task, "reset") === 0)
+	ozio_helper::$task();
+
+/*
 		switch($task)
 		{
 			case 'accordion'			: ozio_helper::accordion($dir); 		break;
@@ -53,5 +58,5 @@ $task = JRequest::getCmd('task');
 			case 'resetfutura'		 	: ozio_helper::resetfutura(); 			break;
 			case 'resetcooliris' 		: ozio_helper::resetcooliris(); 		break;
 		}
-		
+*/
 ?>

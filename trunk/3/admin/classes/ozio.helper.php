@@ -19,6 +19,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 */
 
+// Todo: DP Function Svuota() doesn't exist. It causes errors if subdirectories of xml are present.
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class ozio_helper
@@ -150,7 +152,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}			
 
-		function resetImg ($dir)
+		function resetImg()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -178,7 +180,7 @@ class ozio_helper
 		}
 
 
-		function resetAcc ($dir)
+		function resetAcc()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -205,7 +207,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}		
 
-		function resetCar ($dir)
+		function resetCar()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -234,7 +236,7 @@ class ozio_helper
 
 		
 	
-		function resetFLG($dir)
+		function resetFLG()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -261,7 +263,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}		
 	
-		function resetTilt($dir)
+		function resetTilt()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -288,7 +290,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}			
 
-		function mediagallery($dir)
+		function mediagallery()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -313,7 +315,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}			
 
-		function resetmediagallery($dir)
+		function resetmediagallery()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;
@@ -365,7 +367,7 @@ class ozio_helper
 				$app->redirect( $link, $message);
 		}			
 
-		function resetfutura($dir)
+		function resetfutura()
 		{
 				$app = JFactory::getApplication('administrator');
 		    	$VAMBpathAssoluto = JPATH_SITE;

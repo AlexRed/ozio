@@ -21,13 +21,15 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldFlashg extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldFlashg extends OSSXMLCleaner
 {
 	protected $type = 'Flashg';
+	protected $dir_name = "flashgallery"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{
-
 		return '<div style="padding:5px 5px 5px 0; "><p style="font-size:98%; color:#666; padding: 10px 5px 0px 2px;"><br />' .
 				JText::_('COM_OZIOGALLERY3_OZIO_FLASHGALLERY_SKIN_DESC').
 				'</p></div>';

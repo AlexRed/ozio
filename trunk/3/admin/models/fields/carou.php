@@ -21,13 +21,15 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldCarou extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldCarou extends OSSXMLCleaner
 {
 	protected $type = 'Carou';
+	protected $dir_name = "carousel"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{
-
 		return '<div style="padding:5px 5px 5px 0; "><p style="font-size:98%; color:#666; padding: 10px 5px 0px 2px;"><br />' .
 				JText::_('COM_OZIOGALLERY3_OZIO_CAROUSEL_SKIN_DESC').
 				'</p></div>';

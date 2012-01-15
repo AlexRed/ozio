@@ -21,9 +21,12 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldFutura extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldFutura extends OSSXMLCleaner
 {
 	protected $type = 'Futura';
+	protected $dir_name = "futura"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{

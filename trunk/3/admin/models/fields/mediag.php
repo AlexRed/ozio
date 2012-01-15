@@ -21,9 +21,12 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldMediag extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldMediag extends OSSXMLCleaner
 {
 	protected $type = 'Mediag';
+	protected $dir_name = "mediagallery"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{

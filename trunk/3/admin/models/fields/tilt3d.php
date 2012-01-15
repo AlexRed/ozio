@@ -21,9 +21,12 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldTilt3d extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldTilt3d extends OSSXMLCleaner
 {
 	protected $type = 'Tilt3d';
+	protected $dir_name = "tiltviewer"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{

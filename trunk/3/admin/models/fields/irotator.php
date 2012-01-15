@@ -21,9 +21,12 @@
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldIrotator extends JFormField
+require_once realpath(dirname(__FILE__)) . DS . "xmlcleaner.php";
+
+class JFormFieldIrotator extends OSSXMLCleaner
 {
 	protected $type = 'Irotator';
+	protected $dir_name = "imagerotator"; // It would be better if $dir_name and $type were the same thing
 
 	protected function getInput()
 	{
