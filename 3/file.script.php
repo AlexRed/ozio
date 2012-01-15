@@ -92,13 +92,13 @@ class Com_OzioGallery3InstallerScript
 
 			}
 	
-		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6! has been installed successfully</p>';
+		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6/1.7/2.5! has been installed successfully</p>';
 	}
 
 	function uninstall($parent) 
 	{
 	
-		echo '<p>The component Ozio Gallery 3 Component for Joomla 1.6! has been uninstalled successfully.</p>';
+		echo '<p>The component Ozio Gallery 3 Component for Joomla 1.6/1.7/2.5! has been uninstalled successfully.</p>';
 	}
 
 	function update($parent) 
