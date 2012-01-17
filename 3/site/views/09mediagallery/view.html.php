@@ -70,7 +70,7 @@ class OzioGalleryView09mediagallery extends JView
 	}
 
 
-	private function recurseDirs($path = '', $dom = null, $container = null, $ordinamento = 0, $level = 0){
+	private function recurseDirs($path = '', &$dom = null, &$container = null, $ordinamento = 0, $level = 0){
 		$d = $this->sortFsItems(glob($path.'*', GLOB_ONLYDIR), $ordinamento);
 		$f = array();
 		$element = null;
@@ -82,7 +82,7 @@ class OzioGalleryView09mediagallery extends JView
 				$container->appendChild($element);
 				$element->appendChild( $dom->createAttribute('name'))->appendChild( $dom->createTextNode($name));
 				
-				$this->recurseDirs($item . '/', &$dom, &$element, $ordinamento, $level + 1);
+				$this->recurseDirs($item . '/', $dom, $element, $ordinamento, $level + 1);
 			}
 		}else{ // no sub dirs read files
 			foreach(glob($path.'*', GLOB_NOSORT) as $file){
@@ -277,11 +277,12 @@ class OzioGalleryView09mediagallery extends JView
 			$dom = new DOMDocument('1.0');// '1.0', 'iso-8859-1' || 'UTF-8'
 			
 			// make header
-			$setup=null;
+			// DP 16/01/2012 warning fixed
+			$setup = null;
 			if ($style == 0) {
-				$setup=$this->getStyle0(&$setup);
+				$setup = $this->getStyle0();
 			} else {
-				$setup=$this->getStyle1(&$setup);
+				$setup = $this->getStyle1();
 			}
 			$setup['name']=$titologalleria;
 			$setup['movie_width']=$larghezza;
@@ -305,7 +306,7 @@ class OzioGalleryView09mediagallery extends JView
 			$this->urlToImageFolder = $dir_images;
 			$this->titolo = $titolo;
 			//clearstatcache();
-			$this->recurseDirs($path, &$dom, &$root, $ordinamento, 0);
+			$this->recurseDirs($path, $dom, $root, $ordinamento, 0);
 			//var_dump($items);die;
 			
 			//echo $dom->saveXML();die;
