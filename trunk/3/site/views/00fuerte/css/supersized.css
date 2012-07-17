@@ -53,4 +53,5 @@ a#nextslide:focus
 
 .fuertecontainer {
 position: relative;
+background: none repeat scroll 0 0 #111111;
 }
