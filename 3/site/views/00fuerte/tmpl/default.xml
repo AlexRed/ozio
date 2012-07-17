@@ -10,11 +10,11 @@
 		<fieldset name="basic">
 
 			<field type="text" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true"/>
-			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="600">
+			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="100|%">
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
-			<field type="selext" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="4" default="400">
+			<field type="selext" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="4" default="484|px">
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
 			</field>
 
@@ -29,7 +29,7 @@
 				<option value="1">COM_OZIOGALLERY3_FULLSCREEN</option>
 			</field>
 -->
-			<field type="list" name="transition" label="COM_OZIOGALLERY3_TRANSITION_LBL" description="COM_OZIOGALLERY3_TRANSITION_DSC" default="slideRight">
+			<field type="list" name="transition" label="COM_OZIOGALLERY3_TRANSITION_LBL" description="COM_OZIOGALLERY3_TRANSITION_DSC" default="fade">
 				<option value="none">COM_OZIOGALLERY3_TRANSITION_NONE</option>
 				<option value="fade">COM_OZIOGALLERY3_TRANSITION_FADE</option>
 				<option value="slideTop">COM_OZIOGALLERY3_TRANSITION_SLIDETOP</option>

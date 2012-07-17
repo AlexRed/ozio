@@ -44,7 +44,8 @@
         };
 
 // DP *I*
-// Si applica a inizializzazione documento
+// Deep-link
+// Si applica a: cambio dell'hash manuale dalla barra dell'URL
 // Individuazione parametri per deep-link e caricamento immagine associata se presente
   $(window).bind( 'hashchange', function(e) {
 	// Get the hash (fragment) as a string, with any leading # removed. Note that
@@ -85,7 +86,12 @@
 
 				slideSet = slideSet+'<li class="slide-'+thisSlide+'"></li>';
 
-				if(thisSlide == base.options.start_slide-1)
+// DP *I*
+// Deep-link
+				//if(thisSlide == base.options.start_slide-1)
+				var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+				if (thisSlide == start_slide - 1)
+// DP *F*
 				{
 					// Slide links
 					if (base.options.slide_links)
@@ -140,13 +146,19 @@
 		----------------------------*/
     	base._start = function(){
 
+// DP *I*
+// Deep-link
+/*
 			// Determine if starting slide random
 			if (base.options.start_slide){
 				vars.current_slide = base.options.start_slide - 1;
 			}else{
 				vars.current_slide = Math.floor(Math.random()*base.options.slides.length);	// Generate random slide number
 			}
-
+*/
+			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			vars.current_slide = start_slide - 1;
+// DP *F*
 			// If links should open in new window
 			var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 

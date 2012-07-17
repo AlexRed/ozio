@@ -19,6 +19,13 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 */
 
+/*
+Default gallery width and height fixed and set to 100%, 484px
+Language files fixed
+Deep link fixed
+Dark background while loading
+*/
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.view');
 

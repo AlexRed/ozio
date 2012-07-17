@@ -51,6 +51,14 @@ class JFormFieldSelext extends JFormFieldList
 		$html = array();
 		$attr = "";
 
+		if (!is_array($this->value))
+		{
+			// First time accessing options. Default value passed.
+			$this->value = explode("|", $this->value);
+			$this->value["text"] = $this->value[0];
+			$this->value["select"] = $this->value[1];
+		}
+
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 
