@@ -1,13 +1,13 @@
 /*
 
-	Supersized - Fullscreen Slideshow jQuery Plugin
-	Version : 3.2.7
-	Theme 	: Shutter 1.1
+Supersized - Fullscreen Slideshow jQuery Plugin
+Version : 3.2.7
+Theme 	: Shutter 1.1
 
-	Site	: www.buildinternet.com/project/supersized
-	Author	: Sam Dunn
-	Company : One Mighty Roar (www.onemightyroar.com)
-	License : MIT License / GPL License
+Site	: www.buildinternet.com/project/supersized
+Author	: Sam Dunn
+Company : One Mighty Roar (www.onemightyroar.com)
+License : MIT License / GPL License
 
 */
 
@@ -16,16 +16,16 @@
 	theme = {
 
 
-	 	/* Initial Placement
+		/* Initial Placement
 		----------------------------*/
-	 	_init : function(){
+		_init : function(){
 
-	 		// Center Slide Links
-	 		if (api.options.slide_links) $(vars.slide_list).css('margin-left', -$(vars.slide_list).width()/2);
+			// Center Slide Links
+			if (api.options.slide_links) $(vars.slide_list).css('margin-left', -$(vars.slide_list).width()/2);
 
 			// Start progressbar if autoplay enabled
-    		if (api.options.autoplay){
-    			if (api.options.progress_bar) theme.progressBar();
+			if (api.options.autoplay){
+				if (api.options.progress_bar) theme.progressBar();
 			}else{
 				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");	// If pause play button is image, swap src
 				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );	//  Place progress bar
@@ -35,37 +35,37 @@
 			/* Thumbnail Tray
 			----------------------------*/
 			// Hide tray off screen
-// DP *I*
-// Si applica a inizializzazione documento
-// Rimosso codice per nascondere le miniature
-// Tasto apri/chiudi miniature cambiato stato iniziale in "chiudi"
-// Invertito il codice in toggle per fare collassare (al posto di espandere)la barra al primo click
+			// DP *I*
+			// Si applica a inizializzazione documento
+			// Rimosso codice per nascondere le miniature
+			// Tasto apri/chiudi miniature cambiato stato iniziale in "chiudi"
+			// Invertito il codice in toggle per fare collassare (al posto di espandere)la barra al primo click
 			// $(vars.thumb_tray).animate({bottom : -$(vars.thumb_tray).height()}, 0 );
 			$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
 			if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
-/*
+			/*
 			// Thumbnail Tray Toggle
 			$(vars.tray_button).toggle(function(){
-				$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
-				return false;
+			$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
+			if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
+			return false;
 			}, function() {
+			$(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
+			if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
+			return false;
+			});
+			*/
+			// Thumbnail Tray Toggle
+			$(vars.tray_button).toggle(function(){
 				$(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
 				return false;
-			});
-*/
-			// Thumbnail Tray Toggle
-			$(vars.tray_button).toggle(function(){
-				$(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
-				return false;
 			}, function() {
 				$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
 				return false;
 			});
-// DP *F*
+			// DP *F*
 
 			// Make thumb tray proper size
 			$(vars.thumb_list).width($('> li', vars.thumb_list).length * $('> li', vars.thumb_list).outerWidth(true));	//Adjust to true width of thumb markers
@@ -85,84 +85,84 @@
 				}
 
 				// Thumb Intervals
-        		vars.thumb_interval = Math.floor($(vars.thumb_tray).width() / $('> li', vars.thumb_list).outerWidth(true)) * $('> li', vars.thumb_list).outerWidth(true);
-        		vars.thumb_page = 0;
+				vars.thumb_interval = Math.floor($(vars.thumb_tray).width() / $('> li', vars.thumb_list).outerWidth(true)) * $('> li', vars.thumb_list).outerWidth(true);
+				vars.thumb_page = 0;
 
-        		// Cycle thumbs forward
-        		$(vars.thumb_forward).click(function(){
-        			if (vars.thumb_page - vars.thumb_interval <= -$(vars.thumb_list).width()){
-        				vars.thumb_page = 0;
-        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-        			}else{
-        				vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-        			}
-        		});
-
-        		// Cycle thumbs backwards
-        		$(vars.thumb_back).click(function(){
-        			if (vars.thumb_page + vars.thumb_interval > 0){
-        				vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
-        				if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+				// Cycle thumbs forward
+				$(vars.thumb_forward).click(function(){
+					if (vars.thumb_page - vars.thumb_interval <= -$(vars.thumb_list).width()){
+						vars.thumb_page = 0;
+						$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 					}else{
-        				vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-        			}
-        		});
+						vars.thumb_page = vars.thumb_page - vars.thumb_interval;
+						$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+					}
+				});
+
+				// Cycle thumbs backwards
+				$(vars.thumb_back).click(function(){
+					if (vars.thumb_page + vars.thumb_interval > 0){
+						vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
+						if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
+						$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+					}else{
+						vars.thumb_page = vars.thumb_page + vars.thumb_interval;
+						$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+					}
+				});
 
 			}
 
 
 			/* Navigation Items
 			----------------------------*/
-		    $(vars.next_slide).click(function() {
-		    	api.nextSlide();
-		    });
+			$(vars.next_slide).click(function() {
+				api.nextSlide();
+			});
 
-		    $(vars.prev_slide).click(function() {
-		    	api.prevSlide();
-		    });
+			$(vars.prev_slide).click(function() {
+				api.prevSlide();
+			});
 
-		    	// Full Opacity on Hover
-		    	if(jQuery.support.opacity){
-			    	$(vars.prev_slide +','+vars.next_slide).mouseover(function() {
-					   $(this).stop().animate({opacity:1},100);
-					}).mouseout(function(){
-					   $(this).stop().animate({opacity:0.6},100);
-					});
-				}
+			// Full Opacity on Hover
+			if(jQuery.support.opacity){
+				$(vars.prev_slide +','+vars.next_slide).mouseover(function() {
+					$(this).stop().animate({opacity:1},100);
+				}).mouseout(function(){
+					$(this).stop().animate({opacity:0.6},100);
+				});
+			}
 
 			if (api.options.thumbnail_navigation){
 				// Next thumbnail clicked
 				$(vars.next_thumb).click(function() {
-			    	api.nextSlide();
-			    });
-			    // Previous thumbnail clicked
-			    $(vars.prev_thumb).click(function() {
-			    	api.prevSlide();
-			    });
+					api.nextSlide();
+				});
+				// Previous thumbnail clicked
+				$(vars.prev_thumb).click(function() {
+					api.prevSlide();
+				});
 			}
 
-		    $(vars.play_button).click(function() {
+			$(vars.play_button).click(function() {
 				api.playToggle();
-		    });
+			});
 
 
 			/* Thumbnail Mouse Scrub
 			----------------------------*/
-    		if (api.options.mouse_scrub){
+			if (api.options.mouse_scrub){
 				$(vars.thumb_tray).mousemove(function(e) {
 					var containerWidth = $(vars.thumb_tray).width(),
-						listWidth = $(vars.thumb_list).width();
+					listWidth = $(vars.thumb_list).width();
 					if (listWidth > containerWidth){
 						var mousePos = 1,
-							diff = e.pageX - mousePos;
+						diff = e.pageX - mousePos;
 						if (diff > 10 || diff < -10) {
-						    mousePos = e.pageX;
-						    newX = (containerWidth - listWidth) * (e.pageX/containerWidth);
-						    diff = parseInt(Math.abs(parseInt($(vars.thumb_list).css('left'))-newX )).toFixed(0);
-						    $(vars.thumb_list).stop().animate({'left':newX}, {duration:diff*3, easing:'easeOutExpo'});
+							mousePos = e.pageX;
+							newX = (containerWidth - listWidth) * (e.pageX/containerWidth);
+							diff = parseInt(Math.abs(parseInt($(vars.thumb_list).css('left'))-newX )).toFixed(0);
+							$(vars.thumb_list).stop().animate({'left':newX}, {duration:diff*3, easing:'easeOutExpo'});
 						}
 					}
 				});
@@ -183,11 +183,11 @@
 					if (!vars.progressDelay && api.options.slideshow){
 						// Delay slideshow from resuming so Chrome can refocus images
 						vars.progressDelay = setTimeout(function() {
-								if (!vars.is_paused){
-									theme.progressBar();
-									vars.slideshow_interval = setInterval(api.nextSlide, api.options.slide_interval);
-								}
-								vars.progressDelay = false;
+							if (!vars.is_paused){
+								theme.progressBar();
+								vars.slideshow_interval = setInterval(api.nextSlide, api.options.slide_interval);
+							}
+							vars.progressDelay = false;
 						}, 1000);
 					}
 				}
@@ -210,54 +210,63 @@
 			});
 
 
-	 	},
+			// DP *I*
+			// Pulsanti view e download
+			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
+			//document.getElementById('view-button').href = activeslide.href;
+			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
+			var link = api.getField('seed');
+			document.getElementById('view-button').href = link + 's0/';
+			document.getElementById('download-button').href = link + 's0-d/';
+			// DP *F*
+		},
 
 
-	 	/* Go To Slide
+		/* Go To Slide
 		----------------------------*/
-	 	goTo : function(){
-	 		if (api.options.progress_bar && !vars.is_paused){
+		goTo : function(){
+			if (api.options.progress_bar && !vars.is_paused){
 				$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
 				theme.progressBar();
 			}
 		},
 
-	 	/* Play & Pause Toggle
+		/* Play & Pause Toggle
 		----------------------------*/
-	 	playToggle : function(state){
+		playToggle : function(state){
 
-	 		if (state =='play'){
-	 			// If image, swap to pause
-	 			if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "pause.png");
+			if (state =='play'){
+				// If image, swap to pause
+				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "pause.png");
 				if (api.options.progress_bar && !vars.is_paused) theme.progressBar();
-	 		}else if (state == 'pause'){
-	 			// If image, swap to play
-	 			if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");
-        		if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-	 		}
+			}else if (state == 'pause'){
+				// If image, swap to play
+				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");
+				if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+			}
 
-	 	},
+		},
 
 
-	 	/* Before Slide Transition
+		/* Before Slide Transition
 		----------------------------*/
-	 	beforeAnimation : function(direction){
-		    if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+		beforeAnimation : function(direction){
+			if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
 
-		  	/* Update Fields
-		  	----------------------------*/
-		  	// Update slide caption
-		   	if ($(vars.slide_caption).length){
-		   		(api.getField('title')) ? $(vars.slide_caption).html(api.getField('title')) : $(vars.slide_caption).html('');
-		   	}
-		    // Update slide number
+			/* Update Fields
+			----------------------------*/
+			// Update slide caption
+			if ($(vars.slide_caption).length){
+				(api.getField('summary')) ? $(vars.slide_caption).html(api.getField('summary')) : $(vars.slide_caption).html('');
+			}
+			// Update slide number
 			if (vars.slide_current.length){
-			    $(vars.slide_current).html(vars.current_slide + 1);
+				$(vars.slide_current).html(vars.current_slide + 1);
 			}
 
 
-		    // Highlight current thumbnail and adjust row position
-		    if (api.options.thumb_links){
+			// Highlight current thumbnail and adjust row position
+			if (api.options.thumb_links){
 
 				$('.current-thumb').removeClass('current-thumb');
 				$('li', vars.thumb_list).eq(vars.current_slide).addClass('current-thumb');
@@ -270,10 +279,10 @@
 							vars.thumb_page = 0;
 							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 						} else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left >= vars.thumb_interval){
-	        				vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-	        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							vars.thumb_page = vars.thumb_page - vars.thumb_interval;
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 						}
-					// If previous slide direction
+						// If previous slide direction
 					}else if(direction == 'prev'){
 						if (vars.current_slide == api.options.slides.length - 1){
 							vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
@@ -281,8 +290,8 @@
 							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 						} else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left < 0){
 							if (vars.thumb_page + vars.thumb_interval > 0) return false;
-	        				vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-	        				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							vars.thumb_page = vars.thumb_page + vars.thumb_interval;
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 						}
 					}
 				}
@@ -290,31 +299,53 @@
 
 			}
 
-	 	},
+		},
 
 
-	 	/* After Slide Transition
+		/* After Slide Transition
 		----------------------------*/
-	 	afterAnimation : function(){
-	 		if (api.options.progress_bar && !vars.is_paused) theme.progressBar();	//  Start progress bar
-	 	},
+		afterAnimation : function(){
+			if (api.options.progress_bar && !vars.is_paused) theme.progressBar();	//  Start progress bar
+
+			// DP *I*
+			// Pulsanti view e download
+			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
+			//document.getElementById('view-button').href = activeslide.href;
+			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
+			var link = api.getField('seed');
+			document.getElementById('view-button').href = link + 's0/';
+			document.getElementById('download-button').href = link + 's0-d/';
+			// DP *F*
+
+			// DP *I*
+			// Ridimensionamento visualizzando immagini gia' presenti in cache (Esempio: quando si usa il tasto indietro)
+			var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
+			var image = activeslide.children[0];
+			var ratio = image.naturalHeight / image.naturalWidth;
+			var browserwidth = $.$el.width();
+			var h = browserwidth * ratio;
+			var container = document.getElementById('fuertecontainer');
+			//$(container).effect("size", { to: {width: container.offsetWidth, height: h} }, 1000);
+			container.style.height = h + 'px';
+			// DP *F*
+		},
 
 
-	 	/* Progress Bar
+		/* Progress Bar
 		----------------------------*/
 		progressBar : function(){
-    		$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 ).animate({ left:0 }, api.options.slide_interval);
-    	}
+			$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 ).animate({ left:0 }, api.options.slide_interval);
+		}
 
 
-	 };
+	};
 
 
-	 /* Theme Specific Variables
-	 ----------------------------*/
-	 $.supersized.themeVars = {
+	/* Theme Specific Variables
+	----------------------------*/
+	$.supersized.themeVars = {
 
-	 	// Internal Variables
+		// Internal Variables
 		progress_delay		:	false,				// Delay after resize before resuming slideshow
 		thumb_page 			: 	false,				// Thumbnail page
 		thumb_interval 		: 	false,				// Thumbnail interval
@@ -342,16 +373,16 @@
 
 		progress_bar		:	'#progress-bar'		// Progress bar
 
-	 };
+	};
 
-	 /* Theme Specific Options
-	 ----------------------------*/
-	 $.supersized.themeOptions = {
+	/* Theme Specific Options
+	----------------------------*/
+	$.supersized.themeOptions = {
 
 		progress_bar		:	1,		// Timer for each slide
 		mouse_scrub			:	0		// Thumbnails move with mouse
 
-	 };
+	};
 
 
 })(jQuery);

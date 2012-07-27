@@ -33,21 +33,18 @@ class OzioGalleryView00Fuerte extends JView
 {
 	function display( $tpl = null )
 	{
+		// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
+		// JHTML::_("behavior.modal");
+
 		$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
 		$user = $this->params->get("userid");
 
-		$this->gallerywidth = $this->params->get("gallerywidth", array("text" => "600", "select" => "px"));
-		$this->galleryheight = $this->params->get("galleryheight", array("text" => "400", "select" => "px"));
-
+/*
 		$album_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '?v=2';
-		$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
 		$albums = simplexml_load_file($album_feed);
-
-		//$index = rand(0, count($albums->entry) - 1);
 		$index = 1;
 		$album = $albums->entry[$index];
 
-		$images = array();
 		// get the number of photos for this album
 		$photocount = (int) $album->children('http://schemas.google.com/photos/2007')->numphotos;
 
@@ -56,6 +53,12 @@ class OzioGalleryView00Fuerte extends JView
 
 		// read photo feed for this album into a SimpleXML object
 		$photos = simplexml_load_file($photo_feed . $album_id . '?v=2');
+*/
+
+		$images = array();
+		$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
+		$galery_id = $this->params->get("gallery_id");
+		$photos = simplexml_load_file($photo_feed . $galery_id . '?v=2');
 
 		foreach ($photos->entry as $photo)
 		{
@@ -73,31 +76,52 @@ class OzioGalleryView00Fuerte extends JView
 			$last = count($pieces) - 1;
 			$filename = $pieces[$last];
 
-			// Ripiego temporaneo: se espresso in percentuale fissa l'immagine a 960 px
-			$width = $this->gallerywidth["select"] == "px" ? $this->gallerywidth["text"] : "960";
-			$pieces[$last] = "s" . $width;
-			$new_url = $url["scheme"] . "://" . $url["host"] . "/";
+			$pieces[$last] = "{%width%}";
+
+			$image['full']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
 			foreach ($pieces as $piece)
 			{
-				$new_url .= $piece . "/";
+				$image['full']['url'] .= $piece . "/";
 			}
-			$new_url .= $filename;
+			$image['full']['url'] .= $filename;
 
 			//$image['full']['url'] = (string)$group_content->attributes()->{'url'};
-			$image['full']['url'] = $new_url;
-			$image['full']['width'] = (string)$group_content->attributes()->{'width'};
-			$image['full']['height'] = (string)$group_content->attributes()->{'height'};
+			//$image['full']['width'] = (string)$group_content->attributes()->{'width'};
+			//$image['full']['height'] = (string)$group_content->attributes()->{'height'};
 
+			$pieces[$last] = "s150-c";
+			$image['thumbnail']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+			foreach ($pieces as $piece)
+			{
+				$image['thumbnail']['url'] .= $piece . "/";
+			}
+			$image['thumbnail']['url'] .= $filename;
 
 			// thumbnail information, get the 3rd (=biggest) thumbnail version
 			// change the [2] to [0] or [1] to get smaller thumbnails
-			$group_thumbnail = $media->group->thumbnail[2];
-			$image['thumbnail']['url'] = (string)$group_thumbnail->attributes()->{'url'};
-			$image['thumbnail']['width'] = (string)$group_thumbnail->attributes()->{'width'};
-			$image['thumbnail']['height'] = (string)$group_thumbnail->attributes()->{'height'};
+			//$group_thumbnail = $media->group->thumbnail[2];
+			//$image['thumbnail']['url'] = (string)$group_thumbnail->attributes()->{'url'};
+			//$image['thumbnail']['width'] = (string)$group_thumbnail->attributes()->{'width'};
+			//$image['thumbnail']['height'] = (string)$group_thumbnail->attributes()->{'height'};
 
-			$image['album'] = str_replace("'", "\\'", (string)$album->title);
-			$image['summary'] = str_replace("'", "\\'", (string)$photo->summary);
+			$pieces[$last] = "s0";
+			$image['original']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+			foreach ($pieces as $piece)
+			{
+				$image['original']['url'] .= $piece . "/";
+			}
+			$image['original']['url'] .= $filename;
+
+
+			unset($pieces[$last]);
+			$image["seed"] = $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/";
+
+			$image["album"] = str_replace("'", "\\'", (string)$photos->title);
+			$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
+
+			$image["width"] = (string)$group_content->attributes()->{"width"};
+			$image["height"] = (string)$group_content->attributes()->{"height"};
+			$image["ratio"] = $image["height"] / $image["width"];
 
 			$images[] = $image;
 		}
@@ -105,9 +129,21 @@ class OzioGalleryView00Fuerte extends JView
 		$slides = "slides : [";
 		foreach ($images as $image)
 		{
-			$slides .= "{image : '" . $image["full"]["url"] . "', title : '" . $image["album"] . " " . $image["summary"] . "', thumb : '" . $image["thumbnail"]["url"] . "', url : ''},";
+			$slides .= "{ " .
+			"image : '" . $image["full"]["url"] . "', " .
+			"title : '" . $image["album"] . " " . $image["summary"] . "', " .
+			"thumb : '" . $image["thumbnail"]["url"] . "', " .
+			//"url : '" . $image["original"]["url"] . "', " .
+			"seed : '" . $image["seed"] . "', " .
+			"width : '" . $image["width"] . "', " .
+			"height : '" . $image["height"] . "', " .
+			"ratio : '" . $image["ratio"] . "', " .
+			"album : '" . $image["album"] . "', " .
+			"summary : '" . $image['summary'] . "'" .
+			" },";
 		}
 		$slides .= "],";
+		$slides = str_replace(array("\r\n", "\r", "\n"), " ", $slides);
 
 		$slideshow = $this->params->get("slideshow", "1");
 		$autoplay = $this->params->get("autoplay", 0);
@@ -141,10 +177,10 @@ $js = <<<EOT
 					// Size & Position
 					min_width		        :   0,			// Min width allowed (in pixels)
 					min_height		        :   0,			// Min height allowed (in pixels)
-					vertical_center         :   1,			// Vertically center background
-					horizontal_center       :   1,			// Horizontally center background
-					fit_always				:	0,			// Image will never exceed browser width or height (Ignores min. dimensions)
-					fit_portrait         	:   1,			// Portrait images will not exceed browser height
+					vertical_center         :   0,			// Vertically center background
+					horizontal_center       :   0,			// Horizontally center background
+					fit_always				:	1,			// Image will never exceed browser width or height (Ignores min. dimensions)
+					fit_portrait         	:   0,			// Portrait images will not exceed browser height
 					fit_landscape			:   0,			// Landscape images will not exceed browser width
 
 					// Components
@@ -163,7 +199,8 @@ EOT;
 	$document = JFactory::getDocument();
 	$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 	$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
-	$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js");
+	//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js");
+	$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js");
 	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
 	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/supersized.js");
 	$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";

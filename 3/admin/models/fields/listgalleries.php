@@ -22,45 +22,19 @@
 jimport("joomla.form.formfield");
 
 JFormHelper::loadFieldClass("list");
-class JFormFieldSelext extends JFormFieldList
-//class JFormFieldSelext extends JFormField
+class JFormFieldListGalleries extends JFormFieldList
 {
-	protected $type = "Selext";
-
-	public function __construct($form = null)
-	{
-		parent::__construct($form);
-
-		$this->com_name = basename(realpath(dirname(__FILE__) . "/../.."));
-		$this->ext_name = substr($this->com_name, 4);
-
-		$this->document = JFactory::getDocument();
-
-		if (!isset($GLOBALS[$this->ext_name . "_fields_js_loaded"]))
-		{
-			$this->document->addScript(JURI::base(true) . '/components/' . $this->com_name . "/models/fields/fields.js");
-			$this->document->addStyleSheet(JURI::base(true) . '/components/' . $this->com_name . "/models/fields/fields.css");
-			$GLOBALS[$this->ext_name . "_fields_js_loaded"] = true;
-		}
-	}
-
+	protected $type = "ListGalleries";
 
 	protected function getInput()
 	{
 		// Initialize variables.
 		$html = array();
-		$attr = "";
-
-		if (!is_array($this->value))
-		{
-			// First time accessing options. Default value passed.
-			$this->value = explode("|", $this->value);
-			$this->value["text"] = $this->value[0];
-			$this->value["select"] = $this->value[1];
-		}
+		$attr = '';
 
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
+		$attr .= $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
 
 		// Initialize JavaScript field attributes.
 		$attr .= $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
@@ -68,11 +42,7 @@ class JFormFieldSelext extends JFormFieldList
 		// Get the field options.
 		$options = (array)$this->getOptions();
 
-		$size .= $this->element["size"] ? ' size="' . (int) $this->element["size"] . '"' : '';
-		$html[] = '<input type="text" name="' . $this->name . "[text]" . '" id="' . $this->id . '_text' . '"' . ' value="'
-		. htmlspecialchars($this->value["text"], ENT_COMPAT, 'UTF-8') . '"' . ' class="selext"' . $size . ' />';
-
-		$html[] = '<select onchange="SelextSelectChange(this);" onkeyup="SelextSelectChange(this);" name="' . $this->name . '[select]" id="jform_' . $this->fieldname . '" class="selext">';
+		$html[] = '<select name="' . $this->name . '" id="jform_' . $this->fieldname . '" class="listgalleries">';
 		foreach ($options as $option)
 		{
 			$selected = ($option->value == $this->value["select"]) ? $selected = 'selected="selected"' : "";
