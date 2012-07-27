@@ -159,6 +159,13 @@
 			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
 			vars.current_slide = start_slide - 1;
 // DP *F*
+
+			// DP *I*
+			// Calcolo dimensione immagini
+			var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+			var address;
+			// DP *F*
+
 			// If links should open in new window
 			var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
@@ -184,7 +191,12 @@
 					vars.current_slide - 1 < 0  ? loadPrev = base.options.slides.length - 1 : loadPrev = vars.current_slide - 1;	// If slide is 1, load last slide as previous
 					var imageLink = (base.options.slides[loadPrev].url) ? "href='" + base.options.slides[loadPrev].url + "'" : "";
 
-					var imgPrev = $('<img src="'+base.options.slides[loadPrev].image+'"/>');
+					//var imgPrev = $('<img src="'+base.options.slides[loadPrev].image+'"/>');
+					// DP *I*
+					// Inserimento dimensione immagine nell'URL
+					address = ('<img src="'+base.options.slides[loadPrev].image+'"/>').replace("{%width%}", actual_width);
+					var imgPrev = $(address);
+					// DP *F*
 					var slidePrev = base.el+' li:eq('+loadPrev+')';
 					imgPrev.appendTo(slidePrev).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading prevslide');
 
@@ -200,7 +212,12 @@
 
 			// Set current image
 			imageLink = (api.getField('url')) ? "href='" + api.getField('url') + "'" : "";
-			var img = $('<img src="'+api.getField('image')+'"/>');
+			// DP *I*
+			// Inserimento dimensione immagine nell'URL
+			//var img = $('<img src="'+api.getField('image')+'"/>');
+			address = ('<img src="'+api.getField('image')+'"/>').replace("{%width%}", actual_width);
+			var img = $(address);
+			// DP *F*
 
 			var slideCurrent= base.el+' li:eq('+vars.current_slide+')';
 			img.appendTo(slideCurrent).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading activeslide');
@@ -217,7 +234,13 @@
 				vars.current_slide == base.options.slides.length - 1 ? loadNext = 0 : loadNext = vars.current_slide + 1;	// If slide is last, load first slide as next
 				imageLink = (base.options.slides[loadNext].url) ? "href='" + base.options.slides[loadNext].url + "'" : "";
 
-				var imgNext = $('<img src="'+base.options.slides[loadNext].image+'"/>');
+				// DP *I*
+				// Inserimento dimensione immagine nell'URL
+				//var imgNext = $('<img src="'+base.options.slides[loadNext].image+'"/>');
+				address = ('<img src="'+base.options.slides[loadNext].image+'"/>').replace("{%width%}", actual_width);
+				var imgNext = $(address);
+				// DP *F*
+
 				var slideNext = base.el+' li:eq('+loadNext+')';
 				imgNext.appendTo(slideNext).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading');
 
@@ -341,7 +364,7 @@
 
         /* Resize Images
 		----------------------------*/
-		base.resizeNow = function(){
+		base.resizeNow_backup = function(){
 
 			return base.$el.each(function() {
 		  		//  Resize each image seperately
@@ -351,7 +374,6 @@
 					var ratio = (thisSlide.data('origHeight')/thisSlide.data('origWidth')).toFixed(2);	// Define image ratio
 
 					// Gather browser size
-					// DP *I* Calcolo larghezza e altezza
 					var browserwidth = base.$el.width(),
 						browserheight = base.$el.height(),
 						offset;
@@ -492,6 +514,73 @@
 		};
 
 
+        /* Resize Images
+		----------------------------*/
+		base.resizeNow = function(){
+
+			return base.$el.each(function() {
+		  		//  Resize each image seperately
+		  		$('img', base.el).each(function(){
+
+					thisSlide = $(this);
+					//var ratio = (thisSlide.data('origHeight') / thisSlide.data('origWidth')).toFixed(2);
+					// width, height, clientWidth, clientHeight, naturalWidth, naturalHeight
+					var original_width = this.naturalWidth;
+					var original_height = this.naturalHeight;
+					var ratio = original_height / original_width;
+
+					// Gather browser size
+					// DP *I* Calcolo larghezza e altezza
+					var browserwidth = base.$el.width();
+					var browserheight = base.$el.height();
+					// Altezza calcolata in base alle proporzioni dell'aspetto + 42 pixel della barra semitrasparente in basso
+					var h = browserwidth * ratio;
+					thisSlide.width(browserwidth);
+					thisSlide.height(h);
+
+					for (var i = 0; i < this.parentElement.parentElement.classList.length; ++i)
+					{
+					   if (this.parentElement.parentElement.classList[i] === 'activeslide')
+						{
+							var container = document.getElementById('fuertecontainer');
+							container.style.height = h + 'px';
+						}
+					}
+
+					/*-----End Resize Functions-----*/
+
+					if (thisSlide.parents('li').hasClass('image-loading')){
+						$('.image-loading').removeClass('image-loading');
+					}
+
+					// Horizontally Center
+					if (base.options.horizontal_center){
+						$(this).css('left', (browserwidth - $(this).width())/2);
+					}
+
+					// Vertically Center
+					if (base.options.vertical_center){
+						$(this).css('top', (browserheight - $(this).height())/2);
+					}
+
+				});
+
+				// Basic image drag and right click protection
+				if (base.options.image_protect){
+
+					$('img', base.el).bind("contextmenu mousedown",function(){
+						return false;
+					});
+
+				}
+
+				return false;
+
+			});
+
+		};
+
+
         /* Next Slide
 		----------------------------*/
 		base.nextSlide = function(){
@@ -529,7 +618,13 @@
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
-				var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+				//var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+				// DP *I*
+				// Inserimento dimensione immagine nell'URL
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+				var address = ('<img src="'+base.options.slides[loadSlide].image+'"/>').replace("{%width%}", actual_width);
+				var img = $(address);
+				// DP *F*
 
 				img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
 
@@ -643,7 +738,12 @@ window.location.href = '#' + parseInt(vars.current_slide + 1);
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
-				var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+// DP *I*
+				//var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+				var address = ('<img src="'+base.options.slides[loadSlide].image+'"/>').replace("{%width%}", actual_width);
+				var img = $(address);
+// DP *F*
 
 				img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
 
@@ -760,6 +860,10 @@ window.location.href = '#' + parseInt(vars.current_slide + 1);
 // DP *I* Si applica a ogni funzione che utrilizza api.goTo()
 // Cambio url per deeplink
 window.location.href = '#' + targetSlide;
+/*
+var container = document.getElementById('fuertecontainer');
+container.style.height = "490px";
+*/
 // DP *F*
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
@@ -838,8 +942,12 @@ window.location.href = '#' + targetSlide;
 					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
-					var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
-
+// DP *I*
+					//var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+					var address = ('<img src="'+base.options.slides[loadSlide].image+'"/>').replace("{%width%}", actual_width);
+					var img = $(address);
+// DP *F*
 					img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
 
 					img.load(function(){
@@ -861,8 +969,12 @@ window.location.href = '#' + targetSlide;
 					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
-					var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
-
+// DP *I*
+					//var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+					var address = ('<img src="'+base.options.slides[loadSlide].image+'"/>').replace("{%width%}", actual_width);
+					var img = $(address);
+// DP *F*
 					img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
 
 					img.load(function(){
