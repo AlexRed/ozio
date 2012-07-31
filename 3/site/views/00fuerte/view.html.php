@@ -1,166 +1,165 @@
 <?php
-/**
-* This file is part of Ozio Gallery 3
-*
-* Ozio Gallery 3 is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 2 of the License, or
-* (at your option) any later version.
-*
-* Ozio Gallery is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with Ozio Gallery.  If not, see <http://www.gnu.org/licenses/>.
-*
-* @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
-*/
+	/**
+	* This file is part of Ozio Gallery 3
+	*
+	* Ozio Gallery 3 is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 2 of the License, or
+	* (at your option) any later version.
+	*
+	* Ozio Gallery is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
+	*
+	* You should have received a copy of the GNU General Public License
+	* along with Ozio Gallery.  If not, see <http://www.gnu.org/licenses/>.
+	*
+	* @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
+	* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
+	*/
 
-/*
-Default gallery width and height fixed and set to 100%, 484px
-Language files fixed
-Deep link fixed
-Dark background while loading
-*/
+	/*
+	Default gallery width and height fixed and set to 100%, 484px
+	Language files fixed
+	Deep link fixed
+	Dark background while loading
+	*/
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.view');
+	defined( '_JEXEC' ) or die( 'Restricted access' );
+	jimport( 'joomla.application.component.view');
 
-class OzioGalleryView00Fuerte extends JView
-{
-	function display( $tpl = null )
+	class OzioGalleryView00Fuerte extends JView
 	{
-		// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
-		// JHTML::_("behavior.modal");
-
-		$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
-		$user = $this->params->get("userid");
-
-/*
-		$album_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '?v=2';
-		$albums = simplexml_load_file($album_feed);
-		$index = 1;
-		$album = $albums->entry[$index];
-
-		// get the number of photos for this album
-		$photocount = (int) $album->children('http://schemas.google.com/photos/2007')->numphotos;
-
-		// get the ID of the current album
-		$album_id = $album->children('http://schemas.google.com/photos/2007')->id;
-
-		// read photo feed for this album into a SimpleXML object
-		$photos = simplexml_load_file($photo_feed . $album_id . '?v=2');
-*/
-
-		$images = array();
-		$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
-		$galery_id = $this->params->get("gallery_id");
-		$photos = simplexml_load_file($photo_feed . $galery_id . '?v=2');
-
-		foreach ($photos->entry as $photo)
+		function display( $tpl = null )
 		{
-			$image = array();
+			// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
+			// JHTML::_("behavior.modal");
 
-			// get the photo and thumbnail information
-			$media = $photo->children('http://search.yahoo.com/mrss/');
+			$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
+			$user = $this->params->get("userid");
 
-			// full image information
-			$group_content = $media->group->content;
+			/*
+			$album_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '?v=2';
+			$albums = simplexml_load_file($album_feed);
+			$index = 1;
+			$album = $albums->entry[$index];
 
-			$url = parse_url((string)$group_content->attributes()->{'url'});
-			$relative_path = substr($url["path"], 1);
-			$pieces = explode("/", $relative_path);
-			$last = count($pieces) - 1;
-			$filename = $pieces[$last];
+			// get the number of photos for this album
+			$photocount = (int) $album->children('http://schemas.google.com/photos/2007')->numphotos;
 
-			$pieces[$last] = "{%width%}";
+			// get the ID of the current album
+			$album_id = $album->children('http://schemas.google.com/photos/2007')->id;
 
-			$image['full']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
-			foreach ($pieces as $piece)
+			// read photo feed for this album into a SimpleXML object
+			$photos = simplexml_load_file($photo_feed . $album_id . '?v=2');
+			*/
+
+			$images = array();
+			$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
+			$galery_id = $this->params->get("gallery_id");
+			$photos = simplexml_load_file($photo_feed . $galery_id . '?v=2');
+
+			foreach ($photos->entry as $photo)
 			{
-				$image['full']['url'] .= $piece . "/";
+				$image = array();
+
+				// get the photo and thumbnail information
+				$media = $photo->children('http://search.yahoo.com/mrss/');
+
+				// full image information
+				$group_content = $media->group->content;
+
+				$url = parse_url((string)$group_content->attributes()->{'url'});
+				$relative_path = substr($url["path"], 1);
+				$pieces = explode("/", $relative_path);
+				$last = count($pieces) - 1;
+				$filename = $pieces[$last];
+
+				$pieces[$last] = "{%width%}";
+
+				$image['full']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+				foreach ($pieces as $piece)
+				{
+					$image['full']['url'] .= $piece . "/";
+				}
+				$image['full']['url'] .= $filename;
+
+				//$image['full']['url'] = (string)$group_content->attributes()->{'url'};
+				//$image['full']['width'] = (string)$group_content->attributes()->{'width'};
+				//$image['full']['height'] = (string)$group_content->attributes()->{'height'};
+
+				$pieces[$last] = "s150-c";
+				$image['thumbnail']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+				foreach ($pieces as $piece)
+				{
+					$image['thumbnail']['url'] .= $piece . "/";
+				}
+				$image['thumbnail']['url'] .= $filename;
+
+				// thumbnail information, get the 3rd (=biggest) thumbnail version
+				// change the [2] to [0] or [1] to get smaller thumbnails
+				//$group_thumbnail = $media->group->thumbnail[2];
+				//$image['thumbnail']['url'] = (string)$group_thumbnail->attributes()->{'url'};
+				//$image['thumbnail']['width'] = (string)$group_thumbnail->attributes()->{'width'};
+				//$image['thumbnail']['height'] = (string)$group_thumbnail->attributes()->{'height'};
+
+				$pieces[$last] = "s0";
+				$image['original']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+				foreach ($pieces as $piece)
+				{
+					$image['original']['url'] .= $piece . "/";
+				}
+				$image['original']['url'] .= $filename;
+
+
+				unset($pieces[$last]);
+				$image["seed"] = $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/";
+
+				$image["album"] = str_replace("'", "\\'", (string)$photos->title);
+				$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
+
+				$image["width"] = (string)$group_content->attributes()->{"width"};
+				$image["height"] = (string)$group_content->attributes()->{"height"};
+				$image["ratio"] = $image["height"] / $image["width"];
+
+				$images[] = $image;
 			}
-			$image['full']['url'] .= $filename;
 
-			//$image['full']['url'] = (string)$group_content->attributes()->{'url'};
-			//$image['full']['width'] = (string)$group_content->attributes()->{'width'};
-			//$image['full']['height'] = (string)$group_content->attributes()->{'height'};
-
-			$pieces[$last] = "s150-c";
-			$image['thumbnail']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
-			foreach ($pieces as $piece)
+			$slides = "slides : [";
+			foreach ($images as $image)
 			{
-				$image['thumbnail']['url'] .= $piece . "/";
+				$slides .= "{ " .
+				"image : '" . $image["full"]["url"] . "', " .
+				"title : '" . $image["album"] . " " . $image["summary"] . "', " .
+				"thumb : '" . $image["thumbnail"]["url"] . "', " .
+				//"url : '" . $image["original"]["url"] . "', " .
+				"seed : '" . $image["seed"] . "', " .
+				"width : '" . $image["width"] . "', " .
+				"height : '" . $image["height"] . "', " .
+				"ratio : '" . $image["ratio"] . "', " .
+				"album : '" . $image["album"] . "', " .
+				"summary : '" . $image['summary'] . "'" .
+				" },";
 			}
-			$image['thumbnail']['url'] .= $filename;
+			$slides .= "],";
+			$slides = str_replace(array("\r\n", "\r", "\n"), " ", $slides);
 
-			// thumbnail information, get the 3rd (=biggest) thumbnail version
-			// change the [2] to [0] or [1] to get smaller thumbnails
-			//$group_thumbnail = $media->group->thumbnail[2];
-			//$image['thumbnail']['url'] = (string)$group_thumbnail->attributes()->{'url'};
-			//$image['thumbnail']['width'] = (string)$group_thumbnail->attributes()->{'width'};
-			//$image['thumbnail']['height'] = (string)$group_thumbnail->attributes()->{'height'};
+			$autoplay = $this->params->get("autoplay", 0);
+			$stop_loop = $this->params->get("stop_loop", 0);
+			$slide_interval = $this->params->get("slide_interval", 3000);
+			$transition = $this->params->get("transition", "slideRight");
+			$transition_speed = $this->params->get("transition_speed", "1000");
+			$pause_hover = $this->params->get("pause_hover", 0);
+			$progress_bar = $this->params->get("progress_bar", 1);
 
-			$pieces[$last] = "s0";
-			$image['original']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
-			foreach ($pieces as $piece)
-			{
-				$image['original']['url'] .= $piece . "/";
-			}
-			$image['original']['url'] .= $filename;
-
-
-			unset($pieces[$last]);
-			$image["seed"] = $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/";
-
-			$image["album"] = str_replace("'", "\\'", (string)$photos->title);
-			$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
-
-			$image["width"] = (string)$group_content->attributes()->{"width"};
-			$image["height"] = (string)$group_content->attributes()->{"height"};
-			$image["ratio"] = $image["height"] / $image["width"];
-
-			$images[] = $image;
-		}
-
-		$slides = "slides : [";
-		foreach ($images as $image)
-		{
-			$slides .= "{ " .
-			"image : '" . $image["full"]["url"] . "', " .
-			"title : '" . $image["album"] . " " . $image["summary"] . "', " .
-			"thumb : '" . $image["thumbnail"]["url"] . "', " .
-			//"url : '" . $image["original"]["url"] . "', " .
-			"seed : '" . $image["seed"] . "', " .
-			"width : '" . $image["width"] . "', " .
-			"height : '" . $image["height"] . "', " .
-			"ratio : '" . $image["ratio"] . "', " .
-			"album : '" . $image["album"] . "', " .
-			"summary : '" . $image['summary'] . "'" .
-			" },";
-		}
-		$slides .= "],";
-		$slides = str_replace(array("\r\n", "\r", "\n"), " ", $slides);
-
-		$slideshow = $this->params->get("slideshow", "1");
-		$autoplay = $this->params->get("autoplay", 0);
-		$stop_loop = $this->params->get("stop_loop", 0);
-		$slide_interval = $this->params->get("slide_interval", 3000);
-		$transition = $this->params->get("transition", "slideRight");
-		$transition_speed = $this->params->get("transition_speed", "1000");
-		$pause_hover = $this->params->get("pause_hover", 0);
-		$progress_bar = $this->params->get("progress_bar", 1);
-
-$js = <<<EOT
+			$js = <<<EOT
 			jQuery(function($){
 
 				$.supersized({
 
 					// Functionality
-					slideshow : $slideshow, // Slideshow on/off
+					slideshow : 1, // Slideshow on/off
 					autoplay : $autoplay, // Slideshow starts playing automatically
 					start_slide             :   1,			// Start slide (0 is random)
 					stop_loop : $stop_loop, // Pauses slideshow on last slide
@@ -187,7 +186,7 @@ $js = <<<EOT
 					slide_links				:	'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 					thumb_links				:	1,			// Individual thumb links for each slide
 					thumbnail_navigation    :   0,			// Thumbnail navigation
-$slides
+					$slides
 					// Theme Options
 					progress_bar : $progress_bar, // Timer for each slide
 					mouse_scrub				:	0
@@ -196,24 +195,27 @@ $slides
 		    });
 EOT;
 
-	$document = JFactory::getDocument();
-	$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
-	$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
-	//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js");
-	$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js");
-	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
-	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/supersized.js");
-	$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
-	$menu = JFactory::getApplication()->getMenu();
-	$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-	$itemid = "&amp;Itemid=" . $itemid->id;
-	$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
-	$document->addScriptDeclaration($js);
-	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery-ui-1.7.2.js");
-	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
-	$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/barbecue.js");
+			$document = JFactory::getDocument();
+			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
+			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
+			//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js");
+			$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/supersized.js");
+			$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
+			$menu = JFactory::getApplication()->getMenu();
+			$itemid = $menu->getActive() or $itemid = $menu->getDefault();
+			$itemid = "&amp;Itemid=" . $itemid->id;
+			$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
+			$document->addScriptDeclaration($js);
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery-ui-1.7.2.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/barbecue.js");
 
-		parent::display($tpl);
+			$this->gallerywidth = $this->params->get("gallerywidth", array("text" => "100", "select" => "%"));
+			$this->play_button_style = $this->params->get("play_button", "0") ? '' : 'style="display:none;"';
+
+			parent::display($tpl);
+		}
 	}
-}
 ?>

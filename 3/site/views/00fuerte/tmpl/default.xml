@@ -49,7 +49,7 @@
 
 		<fieldset name="slides" label="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS">
 
-			<field type="radio" name="slideshow" label="COM_OZIOGALLERY3_SLIDESHOW_LBL" description="COM_OZIOGALLERY3_SLIDESHOW_DSC" default="1">
+			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
