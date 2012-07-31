@@ -68,7 +68,7 @@ class JFormFieldSelext extends JFormFieldList
 		// Get the field options.
 		$options = (array)$this->getOptions();
 
-		$size .= $this->element["size"] ? ' size="' . (int) $this->element["size"] . '"' : '';
+		$size = $this->element["size"] ? ' size="' . (int) $this->element["size"] . '"' : '';
 		$html[] = '<input type="text" name="' . $this->name . "[text]" . '" id="' . $this->id . '_text' . '"' . ' value="'
 		. htmlspecialchars($this->value["text"], ENT_COMPAT, 'UTF-8') . '"' . ' class="selext"' . $size . ' />';
 

@@ -46,7 +46,7 @@
 <div id="controls-wrapper" class="load-item">
 	<div id="controls">
 
-		<a id="play-button" class="oziobutton"><img id="pauseplay" src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/pause.png"/></a>
+		<a id="play-button" class="oziobutton" <?php echo $this->play_button_style; ?>><img id="pauseplay" src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/pause.png"/></a>
 <?php if ($this->params->get("fullsize_button", true)) { ?>
 		<a id="view-button" class="oziobutton"><img src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/view.png"/></a>
 <?php } ?>
