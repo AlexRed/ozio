@@ -9,6 +9,11 @@
 	License : MIT License / GPL License
 
 */
+// DP *I*
+// Evita conflitti con mootools
+// http://api.jquery.com/jQuery.noConflict/
+jQuery.noConflict();
+// DP *F*
 
 (function($){
 

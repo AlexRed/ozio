@@ -8,7 +8,6 @@
 
 
 		<fieldset name="basic">
-
 			<field type="text" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" onchange="LoadAlbums()" />
 <!--			<field type="list" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC">
 			</field> -->
@@ -44,11 +43,9 @@
 				<option value="carouselLeft">COM_OZIOGALLERY3_TRANSITION_CAROUSELLEFT</option>
 			</field>
 			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="1000"/>
-
 		</fieldset>
 
 		<fieldset name="slides" label="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS">
-
 			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -61,7 +58,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="text" name="slide_interval" label="COM_OZIOGALLERY3_SLIDE_INTERVAL_LBL" description="COM_OZIOGALLERY3_SLIDE_INTERVAL_DSC" default="3000"/>
+			<field type="text" name="slide_interval" label="COM_OZIOGALLERY3_SLIDE_INTERVAL_LBL" description="COM_OZIOGALLERY3_SLIDE_INTERVAL_DSC" size="6" default="3000"/>
 			<field type="radio" name="progress_bar" label="COM_OZIOGALLERY3_PROGRESSBAR_LBL" description="COM_OZIOGALLERY3_PROGRESSBAR_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -78,7 +75,13 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+		</fieldset>
 
+		<fieldset name="advanced">
+			<field type="list" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 		</fieldset>
 
 	</fields>

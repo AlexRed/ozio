@@ -198,17 +198,19 @@ EOT;
 			$document = JFactory::getDocument();
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
-			//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js");
-			$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js");
-			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
+			if ($this->params->get("jquery", 1))
+				// protocol: https, location: googleapis,
+				$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+			// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/supersized.js");
+			// Solo per l'effetto easeOutExpo
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
 			$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 			$menu = JFactory::getApplication()->getMenu();
 			$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 			$itemid = "&amp;Itemid=" . $itemid->id;
 			$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
 			$document->addScriptDeclaration($js);
-			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery-ui-1.7.2.js");
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/barbecue.js");
 
