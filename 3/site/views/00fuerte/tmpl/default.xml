@@ -75,6 +75,14 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field type="radio" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="show_summary" label="COM_OZIOGALLERY3_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY3_SHOWSUMMARY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 		</fieldset>
 
 		<fieldset name="advanced">

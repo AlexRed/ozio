@@ -216,10 +216,13 @@ License : MIT License / GPL License
 			//document.getElementById('view-button').href = activeslide.href;
 			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
-			view_button = document.getElementById('view-button');
+			var view_button = document.getElementById('view-button');
 			if (view_button) view_button.href = link + 's0/';
-			download_button = document.getElementById('download-button');
+			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
+			// Top bar
+			var top_title = document.getElementById('oziotoptitle');
+			if (top_title) top_title.innerHTML = api.getField('album');
 			// DP *F*
 		},
 
@@ -315,9 +318,9 @@ License : MIT License / GPL License
 			//document.getElementById('view-button').href = activeslide.href;
 			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
-			view_button = document.getElementById('view-button');
+			var view_button = document.getElementById('view-button');
 			if (view_button) view_button.href = link + 's0/';
-			download_button = document.getElementById('download-button');
+			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
 
 			// DP *F*
