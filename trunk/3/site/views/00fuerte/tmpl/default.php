@@ -1,4 +1,4 @@
-<?php defined("_JEXEC") or die("Restricted access");
+<?php defined('_JEXEC') or die("Restricted access");
 	/**
 	* This file is part of Ozio Gallery 3
 	*
