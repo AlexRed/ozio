@@ -19,19 +19,12 @@
 	* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 	*/
 
-	/*
-	Default gallery width and height fixed and set to 100%, 484px
-	Language files fixed
-	Deep link fixed
-	Dark background while loading
-	*/
-
 	defined( '_JEXEC' ) or die( 'Restricted access' );
 	jimport( 'joomla.application.component.view');
 
 	class OzioGalleryView00Fuerte extends JView
 	{
-		function display( $tpl = null )
+		function display($tpl = null)
 		{
 			// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
 			// JHTML::_("behavior.modal");
@@ -56,9 +49,10 @@
 			*/
 
 			$images = array();
+
 			$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
-			$galery_id = $this->params->get("gallery_id");
-			$photos = simplexml_load_file($photo_feed . $galery_id . '?v=2');
+			//$photos = simplexml_load_file($photo_feed . $this->params->get("gallery_id") . '?v=2') or
+			$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 
 			foreach ($photos->entry as $photo)
 			{
@@ -139,7 +133,7 @@
 				"height : '" . $image["height"] . "', " .
 				"ratio : '" . $image["ratio"] . "', " .
 				"album : '" . $image["album"] . "', " .
-				"summary : '" . $image['summary'] . "'" .
+				"summary : '" . JText::_($image['summary']) . "'" .
 				" },";
 			}
 			$slides .= "],";
@@ -212,7 +206,6 @@ EOT;
 			$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
 			$document->addScriptDeclaration($js);
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
-			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/barbecue.js");
 
 			$this->gallerywidth = $this->params->get("gallerywidth", array("text" => "100", "select" => "%"));
 			$this->play_button_style = $this->params->get("play_button", "0") ? '' : 'style="display:none;"';
