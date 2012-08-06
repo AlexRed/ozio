@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <table width="100%" cellpadding="4" cellspacing="0" border="0" align="center" class="contentpane<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
 <tr>
 	<td valign="top" class="contentdescription<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
-		<?php echo $this->escape($this->params->get('introtext')); ?>	
+		<?php echo $this->escape($this->params->get('introtext')); ?>
 	</td>
 </tr>
 </table>
@@ -44,7 +44,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php if( $this->flickr == 1 ) : ?>
 					s1.addVariable("file","http://api.flickr.com/services/feeds/photos_public.gne?id=<?php echo $this->user_id ?>&format=rss_200");
 <?php elseif  ( $this->xml_moder == 0 ) : ?>
-					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1); 
+					s1.addVariable("file","<?php echo JURI::root() ?>components/com_oziogallery3/skin/imagerotator/xml/imagerotator_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);
 <?php elseif  ( $this->xml_moder == 1 ) : ?>
 					s1.addVariable("file","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
@@ -52,33 +52,32 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					s1.addVariable("height","<?php echo $this->altezza ?>");
 					s1.addVariable("transition","<?php echo $this->transition ?>");
 					s1.addVariable("rotatetime","<?php echo $this->rotatetime ?>");
-					s1.addVariable("screencolor","0x<?php echo $this->screencolor ?>");	
+					s1.addVariable("screencolor","0x<?php echo $this->screencolor ?>");
 					s1.addVariable("shownavigation","<?php echo $this->shownavigation ?>");
 					s1.addVariable("kenburns","<?php echo $this->movimento ?>");
-					s1.addVariable("overstretch","<?php echo $this->overstretch ?>");	
+					s1.addVariable("overstretch","<?php echo $this->overstretch ?>");
 					s1.addVariable("shuffle","<?php echo $this->shuffle ?>");
 					s1.addParam("allowfullscreen","true");
-					
+
 <?php if( $this->logo != 0 ) : ?>
 					s1.addVariable("logo","<?php echo JURI::root() . $this->logopath ?>");
-<?php endif; ?>						
+<?php endif; ?>
 <?php if( $this->audio != 0 ) : ?>
-					s1.addVariable("audio","<?php echo JURI::root() . $this->audiopath ?>");	
+					s1.addVariable("audio","<?php echo JURI::root() . $this->audiopath ?>");
 					s1.addVariable("volume","<?php echo $this->volume ?>");
-<?php endif; ?>					
+<?php endif; ?>
 					s1.addParam("wmode", "transparent");
 					s1.write("oziocontainer");
 				</script>
    </td></tr></table>
-<?php if ( $this->modifiche == 1 ) : ?>   
-	<table align="<?php echo $this->table ?>"><tr><td>   
-		<?php echo $this->tempo ?> 
-	</td></tr></table> 
-<?php endif; ?>	
-<?php if ( $this->debug == 1 ) : ?>   
-	<table class="oziopre"><tr><td>   
-		<?php echo $this->oziodebug ?> 
-	</td></tr></table> 
-<?php endif; ?>	    
-<?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."assets".DS."css".DS."ozio.css");  ?> 
+<?php if ( $this->modifiche == 1 ) : ?>
+	<table align="<?php echo $this->table ?>"><tr><td>
+		<?php echo $this->tempo ?>
+	</td></tr></table>
+<?php endif; ?>
+<?php if ( $this->debug == 1 ) : ?>
+	<table class="oziopre"><tr><td>
+		<?php echo $this->oziodebug ?>
+	</td></tr></table>
+<?php endif; ?>
 <div class="clr"><br /></div>
