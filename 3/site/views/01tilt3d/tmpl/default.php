@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <table width="100%" cellpadding="4" cellspacing="0" border="0" align="center" class="contentpane<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
 <tr>
 	<td valign="top" class="contentdescription<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
-		<?php echo $this->escape($this->params->get('introtext')); ?>	
+		<?php echo $this->escape($this->params->get('introtext')); ?>
 	</td>
 </tr>
 </table>
@@ -44,7 +44,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 					//FLICKR GALLERY OPTIONS
 					// To use images from Flickr, uncomment this block
-<?php if  	  ( $this->flickr == 1 ) : ?>					
+<?php if  	  ( $this->flickr == 1 ) : ?>
 					fo.addVariable("user_id", "<?php echo $this->user_id ?>");
 					fo.addVariable("tags", "<?php echo $this->tags ?>");
 					fo.addVariable("text", "<?php echo $this->text ?>");
@@ -53,12 +53,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			        fo.addVariable("sort", "<?php echo $this->sort ?>");
 			        fo.addVariable("group_id", "<?php echo $this->group_id ?>");
 					fo.addVariable("set_id", "<?php echo $this->set_id ?>");
-<?php endif; ?>					
+<?php endif; ?>
 					// To use local images defined in an XML document, use this block
 					fo.addVariable("useFlickr", "<?php echo $this->flickrs ?>");
-		
+
 <?php if  	  ( $this->xml_mode == 0 ) : ?>
-					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery3/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1); 
+					fo.addVariable("xmlURL","<?php echo JURI::root() ?>components/com_oziogallery3/skin/tiltviewer/xml/tiltviewer_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);
 <?php else: ?>
 					fo.addVariable("xmlURL","<?php echo JURI::root() ?><?php echo $this->manualxmlname ?>");
 <?php endif; ?>
@@ -66,7 +66,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					//GENERAL OPTIONS
 					fo.addVariable("useReloadButton", "false");
 					fo.addVariable("width","<?php echo $this->larghezza ?>");
-					fo.addVariable("height","<?php echo $this->altezza ?>");					
+					fo.addVariable("height","<?php echo $this->altezza ?>");
 					fo.addVariable("columns", "<?php echo $this->columns ?>");
 					fo.addVariable("rows", "<?php echo $this->rows ?>");
 					fo.addVariable("showFlipButton", "<?php echo $this->flipbutton ?>");
@@ -79,7 +79,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					//fo.addVariable("langGoFull", "Go Fullscreen");
 					//fo.addVariable("langExitFull", "Exit Fullscreen");
 					//fo.addVariable("langAbout", "About");
-					
+
 				//PRO OPTIONS
 					//fo.addVariable("bkgndTransparent", "true");
 					//fo.addVariable("showFullscreenOption", "false");
@@ -96,22 +96,21 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					//fo.addVariable("textColor", "0xFFFFFF");
 					//fo.addVariable("linkTextColor", "0x000000");
 					//fo.addVariable("linkBkgndColor", "0xFFFFFF");
-					
-				// END TILTVIEWER CONFIGURATION OPTIONS					
+
+				// END TILTVIEWER CONFIGURATION OPTIONS
 					fo.addParam("wmode", "transparent");
 					fo.addParam("allowFullScreen","true");
 					fo.write("ozioflashcontent");
 				</script>
    </td></tr></table>
-<?php if ( $this->modifiche == 1 ) : ?>   
-	<table align="<?php echo $this->table ?>"><tr><td>   
-		<?php echo $this->tempo ?> 
-	</td></tr></table> 
-<?php endif; ?>	 
-<?php if ( $this->debug == 1 ) : ?>   
-	<table class="oziopre"><tr><td>   
-		<?php echo $this->oziodebug ?> 
-	</td></tr></table> 
+<?php if ( $this->modifiche == 1 ) : ?>
+	<table align="<?php echo $this->table ?>"><tr><td>
+		<?php echo $this->tempo ?>
+	</td></tr></table>
 <?php endif; ?>
-<?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."assets".DS."css".DS."ozio.css");  ?> 
-<div class="clr"></div>	
+<?php if ( $this->debug == 1 ) : ?>
+	<table class="oziopre"><tr><td>
+		<?php echo $this->oziodebug ?>
+	</td></tr></table>
+<?php endif; ?>
+<div class="clr"></div>

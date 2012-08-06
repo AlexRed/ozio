@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <table width="100%" cellpadding="4" cellspacing="0" border="0" align="center" class="contentpane<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
 <tr>
 	<td valign="top" class="contentdescription<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
-		<?php echo $this->escape($this->params->get('introtext')); ?>	
+		<?php echo $this->escape($this->params->get('introtext')); ?>
 	</td>
 </tr>
 </table>
@@ -44,24 +44,23 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					so.addParam("quality", "high");
 					so.addParam("allowFullScreen", "true");
 					so.addParam("wmode", "transparent");
-					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery3/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);					
-<?php if ( $this->flickr == 1 ) : ?>						
+					so.addVariable("color_path","<?php echo JURI::root() ?>components/com_oziogallery3/skin/flashgallery/xml/settings_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1);
+<?php if ( $this->flickr == 1 ) : ?>
 					so.addVariable("content_path","http://www.flickr.com/photos/<?php echo $this->user_id ?>");
-<?php else: ?>	
+<?php else: ?>
 					so.addVariable("script_path","<?php echo JURI::root() ?>components/com_oziogallery3/skin/flashgallery/xml/flashgallery_<?php echo $this->nomexml ?>.ozio?"+Math.random()*1 );
-<?php endif; ?>						
+<?php endif; ?>
 					so.write("oziogallery");
 				</script>
    </td></tr></table>
-<?php if ( $this->modifiche == 1 ) : ?>   
-	<table align="<?php echo $this->table ?>"><tr><td>   
-		<?php echo $this->tempo ?> 
-	</td></tr></table> 
-<?php endif; ?>	  
-<?php if ( $this->debug == 1 ) : ?>   
-	<table class="oziopre"><tr><td>   
-		<?php echo $this->oziodebug ?> 
-	</td></tr></table> 
+<?php if ( $this->modifiche == 1 ) : ?>
+	<table align="<?php echo $this->table ?>"><tr><td>
+		<?php echo $this->tempo ?>
+	</td></tr></table>
 <?php endif; ?>
-<?php require(JPATH_COMPONENT_ADMINISTRATOR.DS."assets".DS."css".DS."ozio.css");  ?> 
-<div class="clr"><br /></div> 
+<?php if ( $this->debug == 1 ) : ?>
+	<table class="oziopre"><tr><td>
+		<?php echo $this->oziodebug ?>
+	</td></tr></table>
+<?php endif; ?>
+<div class="clr"><br /></div>

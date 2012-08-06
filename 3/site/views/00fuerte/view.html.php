@@ -58,13 +58,8 @@
 			{
 				$image = array();
 
-				// get the photo and thumbnail information
-				$media = $photo->children('http://search.yahoo.com/mrss/');
+				$url = parse_url((string)$photo->content->attributes()->{"src"});
 
-				// full image information
-				$group_content = $media->group->content;
-
-				$url = parse_url((string)$group_content->attributes()->{'url'});
 				$relative_path = substr($url["path"], 1);
 				$pieces = explode("/", $relative_path);
 				$last = count($pieces) - 1;
@@ -72,50 +67,34 @@
 
 				$pieces[$last] = "{%width%}";
 
-				$image['full']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+				$image['full']['url'] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" : "";
 				foreach ($pieces as $piece)
 				{
 					$image['full']['url'] .= $piece . "/";
 				}
 				$image['full']['url'] .= $filename;
 
-				//$image['full']['url'] = (string)$group_content->attributes()->{'url'};
-				//$image['full']['width'] = (string)$group_content->attributes()->{'width'};
-				//$image['full']['height'] = (string)$group_content->attributes()->{'height'};
-
 				$pieces[$last] = "s150-c";
-				$image['thumbnail']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
+				$image['thumbnail']['url'] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" : "";
 				foreach ($pieces as $piece)
 				{
 					$image['thumbnail']['url'] .= $piece . "/";
 				}
 				$image['thumbnail']['url'] .= $filename;
 
-				// thumbnail information, get the 3rd (=biggest) thumbnail version
-				// change the [2] to [0] or [1] to get smaller thumbnails
-				//$group_thumbnail = $media->group->thumbnail[2];
-				//$image['thumbnail']['url'] = (string)$group_thumbnail->attributes()->{'url'};
-				//$image['thumbnail']['width'] = (string)$group_thumbnail->attributes()->{'width'};
-				//$image['thumbnail']['height'] = (string)$group_thumbnail->attributes()->{'height'};
-
-				$pieces[$last] = "s0";
-				$image['original']['url'] = $url["scheme"] . "://" . $url["host"] . "/";
-				foreach ($pieces as $piece)
-				{
-					$image['original']['url'] .= $piece . "/";
-				}
-				$image['original']['url'] .= $filename;
-
-
 				unset($pieces[$last]);
-				$image["seed"] = $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/";
+				$image["seed"] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/" : "";
 
 				$image["album"] = str_replace("'", "\\'", (string)$photos->title);
 				$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
 
-				$image["width"] = (string)$group_content->attributes()->{"width"};
-				$image["height"] = (string)$group_content->attributes()->{"height"};
-				$image["ratio"] = $image["height"] / $image["width"];
+				$gphoto = $photo->children('gphoto', true);
+				$image["width"] = (string)$gphoto->width;
+				$image["height"] = (string)$gphoto->height;
+
+				// Avoids divisions by 0
+				if ($image["width"]) $image["ratio"] = $image["height"] / $image["width"];
+				else $image["ratio"] = 1;
 
 				$images[] = $image;
 			}
@@ -127,12 +106,11 @@
 				"image : '" . $image["full"]["url"] . "', " .
 				"title : '" . $image["album"] . " " . $image["summary"] . "', " .
 				"thumb : '" . $image["thumbnail"]["url"] . "', " .
-				//"url : '" . $image["original"]["url"] . "', " .
 				"seed : '" . $image["seed"] . "', " .
 				"width : '" . $image["width"] . "', " .
 				"height : '" . $image["height"] . "', " .
 				"ratio : '" . $image["ratio"] . "', " .
-				"album : '" . $image["album"] . "', " .
+				"album : '" . JText::_($image["album"]) . "', " .
 				"summary : '" . JText::_($image['summary']) . "'" .
 				" },";
 			}
