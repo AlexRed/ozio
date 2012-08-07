@@ -65,14 +65,6 @@
 				$last = count($pieces) - 1;
 				$filename = $pieces[$last];
 
-				$pieces[$last] = "{%width%}";
-
-				$image['full']['url'] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" : "";
-				foreach ($pieces as $piece)
-				{
-					$image['full']['url'] .= $piece . "/";
-				}
-				$image['full']['url'] .= $filename;
 
 				$pieces[$last] = "s150-c";
 				$image['thumbnail']['url'] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" : "";
@@ -103,9 +95,6 @@
 			foreach ($images as $image)
 			{
 				$slides .= "{ " .
-				"image : '" . $image["full"]["url"] . "', " .
-				"title : '" . $image["album"] . " " . $image["summary"] . "', " .
-				"thumb : '" . $image["thumbnail"]["url"] . "', " .
 				"seed : '" . $image["seed"] . "', " .
 				"width : '" . $image["width"] . "', " .
 				"height : '" . $image["height"] . "', " .
