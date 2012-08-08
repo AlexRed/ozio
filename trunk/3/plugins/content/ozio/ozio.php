@@ -23,92 +23,46 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class plgContentOzio extends JPlugin
 {
-	static $test = 0;
-
 	public function onContentPrepare($context, &$article, &$params, $page = 0)
 	{
-
-		if (strpos($article->text, 'oziogallery') === false) {
-			return true;
-		}
-
-
-		if (self::$test == 1) {
-			return;
-		}
-		
-
 		$regex		= '/{oziogallery\s+(.*?)}/i';
 		$matches	= array();
 
+		// Search for {oziogallery xxx} occurrences
 		preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
 
-		foreach ($matches as $match) {
-			$style ='';
-			$output = $this->_load($match[1], $style);
+		// If at least one is found, load related javascript only once
+		empty($matches) or JFactory::getDocument()->addScript(JURI::root(true) . '/components/com_oziogallery3/assets/js/autoHeight.js');
+
+		// translate {oziogallery xxx} calls into iframe code
+		foreach ($matches as $match)
+		{
+			$output = $this->_load($match[1]);
 			$article->text = str_replace($match[0], $output, $article->text);
 		}
-
-		self::$test = 1;
 	}
+
 
 	protected function _load($galleriaozio)
 	{
-
+		// Load the component url from the database
 		$db = JFactory::getDBO();
-
-		$query = 'SELECT published, link, id, access, params'
-				. ' FROM #__menu'
-				. ' WHERE id='.(int) $galleriaozio
-				;
-
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName("link"));
+		$query->from($db->quoteName("#__menu"));
+		$query->where($db->quoteName("id") . " = " . $db->quote($galleriaozio));
+		$query->where($db->quoteName("published") . " > " . $db->quote("0"));
+		$query->where($db->quoteName("link") . " LIKE " . $db->quote("%com_oziogallery3%"));
 		$db->setQuery($query);
-  		$codice = $db->loadObject();
-		
+		$codice = $db->loadObject();
 
-		$query = 'SELECT *'
-				. ' FROM #__menu'
-				. ' WHERE (link LIKE "index.php?option=com_oziogallery2&view=01tilt3d" 
-						OR link LIKE "index.php?option=com_oziogallery2&view=02flashgallery"
-						OR link LIKE "index.php?option=com_oziogallery2&view=03futura"
-						OR link LIKE "index.php?option=com_oziogallery2&view=04carousel"
-						OR link LIKE "index.php?option=com_oziogallery2&view=05imagerotator"
-						OR link LIKE "index.php?option=com_oziogallery2&view=06accordion"	
-						OR link LIKE "index.php?option=com_oziogallery2&view=07flickrslidershow"
-						OR link LIKE "index.php?option=com_oziogallery2&view=08flickrphoto"		
-						OR link LIKE "index.php?option=com_oziogallery2&view=09mediagallery"
-						OR link LIKE "index.php?option=com_oziogallery2&view=10cooliris"
-						OR link LIKE "index.php?option=com_oziogallery2&view=11pictobrowser"	
-						OR link LIKE "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-						OR link LIKE "index.php?option=com_oziogallery3&view=14pupngoo"							
-						)'
-				;				
-		$db->setQuery($query);
-  		$cp = $db->loadObject();	
-		
-		
-	$document	= JFactory::getDocument();
+		// Generate and return the iframe code
+		return $codice ?
+		'<div class="clr"></div>
+		<iframe src="' . JURI::root() . $codice->link .'&Itemid=' . $galleriaozio . '&amp;tmpl=component" width="100%" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight">
+		</iframe>
+		<div class="clr"></div>' :
+		'';
+	}
 
-        if (@$cp->id = $galleriaozio) :
-		
-				@$gall 	= JURI::root(). $codice->link .'&Itemid='. $galleriaozio;
-				//$parametar un tentativo di Vamba che stranamente va
-				$parametar = new JRegistry;
-				$parametar->loadJSON($codice->params);
-
-			if (@$codice->published != 0 && @$codice->published != -2) :
-				$document->addScript(JURI::root(true).'/components/com_oziogallery3/assets/js/autoHeight.js');			
-				$contents = '';
-                $contents .='<div class="clr"></div>';				
-				$contents .= '<iframe src="'.$gall.'&amp;tmpl=component" width="'.$parametar->get("width").'" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight">';				
-				$contents .= '</iframe>';
-				$contents .='<div class="clr"></div>';				
-
-				return $contents;
-			endif;
-		endif;	
-
-	
-	}	
-	
-}	
+}
