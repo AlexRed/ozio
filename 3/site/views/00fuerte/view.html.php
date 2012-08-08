@@ -63,20 +63,9 @@
 				$relative_path = substr($url["path"], 1);
 				$pieces = explode("/", $relative_path);
 				$last = count($pieces) - 1;
-				$filename = $pieces[$last];
-
-
-				$pieces[$last] = "s150-c";
-				$image['thumbnail']['url'] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" : "";
-				foreach ($pieces as $piece)
-				{
-					$image['thumbnail']['url'] .= $piece . "/";
-				}
-				$image['thumbnail']['url'] .= $filename;
-
 				unset($pieces[$last]);
-				$image["seed"] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/" : "";
 
+				$image["seed"] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/" : "";
 				$image["album"] = str_replace("'", "\\'", (string)$photos->title);
 				$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
 
