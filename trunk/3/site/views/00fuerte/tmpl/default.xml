@@ -8,19 +8,15 @@
 
 
 		<fieldset name="basic">
-			<field type="text" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" onchange="LoadAlbums()" />
-<!--			<field type="list" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC">
-			</field> -->
-			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/>
+			<field type="text" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" onchange="OnUseridChanged()" />
+			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
+
+<!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->
 
 			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="100|%">
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
-<!--			<field type="selext" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="4" default="484|px">
-				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
-			</field> -->
-
 
 		</fieldset>
 

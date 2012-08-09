@@ -28,6 +28,7 @@ class JFormFieldListGalleries extends JFormFieldList
 
 	protected function getInput()
 	{
+/*
 		// Initialize variables.
 		$html = array();
 		$attr = '';
@@ -50,6 +51,13 @@ class JFormFieldListGalleries extends JFormFieldList
 		}
 		$html[] = '</select>';
 		return implode($html);
+*/
+	return
+		parent::getInput() .
+		'<img id="jform_params_gallery_id_loader" style="display:none;" src="' . JURI::root(true) . '/components/com_oziogallery3/views/00fuerte/img/progress.gif">' .
+		'<span id="jform_params_gallery_id_selected" style="display:none;" ">' . $this->value . '</span>';
 	}
+
+
 
 }
