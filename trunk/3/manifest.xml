@@ -22,6 +22,7 @@
 		<folder>assets</folder>
 		<folder>js</folder>
 		<folder>language</folder>
+		<folder>lib</folder>
 		<folder>skin</folder>
 		<folder>views</folder>
 	</files>
@@ -33,6 +34,8 @@
 		<filename>oziogallery3.php</filename>
 		<folder>assets</folder>
 		<folder>classes</folder>
+		<folder>css</folder>
+		<folder>js</folder>
 		<folder>models</folder>
 		<folder>views</folder>
 		<folder>language</folder>

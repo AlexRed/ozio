@@ -52,6 +52,14 @@ class JFormFieldListGalleries extends JFormFieldList
 		$html[] = '</select>';
 		return implode($html);
 */
+		$classname = get_class($this);
+		if (empty($GLOBALS[$classname]))
+			{
+			$document = JFactory::getDocument();
+			$document->addScript(JURI::current() . "?option=com_oziogallery3&amp;view=loader&amp;type=js&amp;filename=" . "listgalleries");
+			$GLOBALS[get_class($this)] = true;
+			}
+
 	return
 		parent::getInput() .
 		'<img id="jform_params_gallery_id_loader" style="display:none;" src="' . JURI::root(true) . '/components/com_oziogallery3/views/00fuerte/img/progress.gif">' .
