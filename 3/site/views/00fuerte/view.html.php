@@ -51,7 +51,10 @@
 			$images = array();
 
 			$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
-			$photos = simplexml_load_file($photo_feed . $this->params->get("gallery_id") . '?v=2') or
+	$url = $photo_feed . $this->params->get("gallery_id") . '?v=2';
+	$url = $photo_feed . "posts" . '?v=2';
+	$photos = simplexml_load_file($url) or
+			//$photos = simplexml_load_file($photo_feed . $this->params->get("gallery_id") . '?v=2') or
 			$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 
 			foreach ($photos->entry as $photo)

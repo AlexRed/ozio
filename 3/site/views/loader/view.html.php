@@ -20,13 +20,14 @@
 */
 
 jimport('joomla.application.component.view');
+require_once(JPATH_COMPONENT_SITE . "/lib/loader.php");
 
 class OzioGalleryViewLoader extends JView
 {
 	function display($tpl = null)
 	{
 		// @ avoids Warning: ini_set() has been disabled for security reasons in /var/www/libraries/joomla/[...]
-		$application = @JFactory::getApplication('site');  // Needed to get the correct session with JFactory::getSession() below
+		$application = @JFactory::getApplication();  // Needed to get the correct session with JFactory::getSession() below
 		$menu = @$application->getMenu();
 		$params = $menu->getParams(intval(JRequest::getVar("Itemid", 0, "GET")));
 
@@ -40,96 +41,3 @@ class OzioGalleryViewLoader extends JView
 	}
 }
 
-abstract class Loader
-{
-	abstract protected function type();
-	abstract protected function http_headers();
-	abstract protected function content_header();
-	abstract protected function content_footer();
-
-
-	public function Show()
-	{
-		$this->headers();
-		$this->http_headers();
-		$this->content_header();
-		$this->load();
-		$this->content_footer();
-
-		//die();
-		JFactory::getApplication()->close();
-	}
-
-
-	private function headers()
-	{
-		// Prepare some useful headers
-		header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		// must not be cached by the client browser or any proxy
-		header("Cache-Control: no-store, no-cache, must-revalidate");
-		header("Cache-Control: post-check=0, pre-check=0", false);
-		header("Pragma: no-cache");
-	}
-
-
-	protected function load()
-	{
-		// Complete the script name with its path
-		$filename = JRequest::getVar("filename", "", "GET");
-		// Only admit lowercase a-z, underscore and minus. Forbid numbers, symbols, slashes and other stuff.
-		// For your security, *don't* touch the following regular expression.
-		preg_match('/^[a-z_-]+$/', $filename) or $filename = "invalid";
-		$local_name = realpath(dirname(__FILE__) . "/../../" . $this->type() . "/" . $filename . "." . $this->type());
-
-		require_once $local_name;
-	}
-
-}
-
-
-class cssLoader extends Loader
-{
-	protected function type()
-	{
-		return "css";
-	}
-
-	protected function http_headers()
-	{
-		header('content-type: text/css');
-	}
-
-	protected function content_header()
-	{
-		echo "/* css generator begin */\n";
-	}
-
-	protected function content_footer()
-	{
-		echo "\n/* css generator end */";
-	}
-}
-
-class jsLoader extends Loader
-{
-	protected function type()
-	{
-		return "js";
-	}
-
-	protected function http_headers()
-	{
-		header('content-type: application/javascript');
-	}
-
-	protected function content_header()
-	{
-		// echo "//<![CDATA[\n";
-	}
-
-	protected function content_footer()
-	{
-		// echo "\n//]]>";
-	}
-}
