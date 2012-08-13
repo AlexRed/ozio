@@ -8,7 +8,7 @@
 
 
 		<fieldset name="basic">
-			<field type="text" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" onchange="OnUseridChanged()" />
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" />
 			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
 
 <!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->

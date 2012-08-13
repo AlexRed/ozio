@@ -21,26 +21,75 @@ function TrigAllSelextChange()
 }
 
 
-function OnUseridChanged()
+function OnUseridExit()
 {
 	var input = $('jform_params_userid');
 	var re = new RegExp('^[0-9]{21}');
 
-	if (input.value.match(re))
-	{
-		LoadAlbums();
-	}
-	else
-	{
+	if (!input.value.match(re))
+		{
+		// Clear previous options
+		$('jform_params_gallery_id').options.length = 0;
+
 		alert('<?php echo JText::_("COM_OZIOGALLERY3_ERR_INVALID_USER"); ?>');
 		input.value = input.defaultValue;
 	}
 }
 
 
+function OnUseridChange(value)
+{
+	// Dalla DomReady arriva semna il parametro value
+	if (!value) value = $('jform_params_userid').value;
+
+	var re = new RegExp('^[0-9]{21}');
+
+	//if (input.value.match(re))
+	if (value.match(re))
+		{
+		LoadAlbums();
+	}
+}
+
+
+function OnUseridPaste(e)
+{
+	// Leggere la clipboard e' una pena
+	/*
+	var pastedText = undefined;
+	if (window.clipboardData && window.clipboardData.getData)
+	{
+	pastedText = window.clipboardData.getData('Text'); // IE
+	OnUseridChange(pastedText);
+	}
+	else if (e.event.clipboardData && e.event.clipboardData.getData)
+	{
+	pastedText = e.event.clipboardData.getData('text/plain');
+	OnUseridChange(pastedText);
+	}
+	*/
+	// Innesca un evento OnUseridChange che funziona bene
+	var myvar = setTimeout(OnUseridChange, 10);
+}
+
+function OnUseridCut(value)
+{
+}
+
+
+
 function LoadAlbums()
 {
-	var input = $('jform_params_userid');
+	//var input = $('jform_params_userid');
+	var input = document.id('jform_params_userid');
+	/*
+	// Evento onChange
+	input.addEvent('realChange', OnUseridChange);
+	input.addEvent('paste', OnUseridPaste);
+	input.addEvent('cut', OnUseridCut);
+	input.addEvent('change', OnUseridExit);
+	*/
+	// Altri eventi
 
 	var xhrOnRequest = function()
 	{
@@ -63,7 +112,7 @@ function LoadAlbums()
 		var select = $('jform_params_gallery_id');
 		// Clear previous options
 		select.options.length = 0;
-		select.setStyle('width', '50%');
+		//select.setStyle('width', '50%');
 
 		var tabella = new Array();
 		tabella['NONE']='<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
@@ -169,13 +218,88 @@ function SelectCurrentAlbum()
 	for (var i = 0; i < options.length; ++i)
 	{
 		if (options[i].value == spia.innerHTML)
-		{
+			{
 			options[i].selected = true;
 		}
 	}
 
 }
 
-window.addEvent('domready', LoadAlbums);
+/*
+https://github.com/Mogzor/mootools-event-realChange
 
-//window.addEvent('domready', TrigAllSelextChange);
+description: Event.realChange
+license: MIT-style
+
+authors:
+- Hugo Mougard
+
+requires:
+- Element
+- Element.Event
+
+provides: [Element.Events.realChange]
+*/
+
+(function() {
+	Element.Properties.realChange = {
+		get: function() {
+			return this.retrieve('_realChangeEvents');
+		},
+		set: function(events) {
+			this.store('_realChangeEvents', $splat(events));
+			return this;
+		}
+	};
+	Element.Events.realChange = {
+		'base' : 'click',
+		condition : $lambda(false),
+		onAdd : function() {
+			if (this.retrieve('_realChangeRunning')) return this;
+			this.store('_realChangeRunning', true);
+			this.store('_realChangeValue', this.get('value'));
+			var self = this,
+			fire = function() {
+				var value = self.get('value');
+				if(value !== self.retrieve('_realChangeValue')) {
+					self.fireEvent('realChange', value);
+					self.store('_realChangeValue', self.get('value'));
+				}
+			},
+			events = this.get('realChange');
+			if (! events)
+				this.set('realChange', events = ['keyup', 'click']);
+			this.store('_realChangeFire', fire);
+			events.each(function(event) {
+				self.addEvent(event, fire);
+			});
+			return this;
+		},
+		onRemove: function() {
+			if (! this.retrieve('events').realChange.keys
+			||
+			this.retrieve('events').realChange.keys.length === 0) {
+				var fire = this.retrieve('_realChangeFire'),
+				self = this;
+				this.get('realChange').each(function(event){
+					self.removeEvent(event, fire);
+				});
+			}
+		}
+	}
+})();
+
+// Inizializzazione
+window.addEvent('domready', function() {
+	var input = document.id('jform_params_userid');
+
+	// Evento onChange
+	input.addEvent('realChange', OnUseridChange);
+	input.addEvent('paste', OnUseridPaste);
+	input.addEvent('cut', OnUseridCut);
+	input.addEvent('change', OnUseridExit);
+}
+);
+
+// Possibile caricamento necessario
+window.addEvent('domready', OnUseridChange);
