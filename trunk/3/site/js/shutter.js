@@ -217,7 +217,13 @@ License : MIT License / GPL License
 			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
-			if (view_button) view_button.href = link + 's0/';
+			if (view_button)
+            {
+                //view_button.href = link + 's0/';
+                view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false})";
+                //view_button.href = "javascript:TINY.box.show({image:'" + link + 's0/' + "',boxid:'frameless',width:2048,height:1536,fixed:false})";
+
+            }
 			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
 			// Top bar
@@ -319,7 +325,11 @@ License : MIT License / GPL License
 			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
-			if (view_button) view_button.href = link + 's0/';
+			if (view_button)
+            {
+                // view_button.href = link + 's0/';
+                view_button.href = "javascript:TINY.box.show({iframe:'http://www.scriptiny.com/',boxid:'frameless',width:750,height:450,fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}})";
+            }
 			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
 
