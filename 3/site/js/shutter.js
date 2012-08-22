@@ -328,7 +328,7 @@ License : MIT License / GPL License
 			if (view_button)
             {
                 // view_button.href = link + 's0/';
-                view_button.href = "javascript:TINY.box.show({iframe:'http://www.scriptiny.com/',boxid:'frameless',width:750,height:450,fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}})";
+                view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false})";
             }
 			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
