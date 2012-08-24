@@ -218,12 +218,10 @@ License : MIT License / GPL License
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
 			if (view_button)
-            {
-                //view_button.href = link + 's0/';
-                view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false})";
-                //view_button.href = "javascript:TINY.box.show({image:'" + link + 's0/' + "',boxid:'frameless',width:2048,height:1536,fixed:false})";
-
-            }
+				{
+				//view_button.href = link + 's0/';
+				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+			}
 			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
 			// Top bar
@@ -326,10 +324,10 @@ License : MIT License / GPL License
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
 			if (view_button)
-            {
-                // view_button.href = link + 's0/';
-                view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false})";
-            }
+				{
+				//view_button.href = link + 's0/';
+				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+			}
 			var download_button = document.getElementById('download-button');
 			if (download_button) download_button.href = link + 's0-d/';
 

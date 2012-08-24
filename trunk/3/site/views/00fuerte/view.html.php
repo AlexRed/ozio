@@ -65,7 +65,7 @@
 				$last = count($pieces) - 1;
 				unset($pieces[$last]);
 
-				$image["seed"] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/" : "";
+				$image["seed"] = $url["scheme"] ? $url["scheme"] . "://" . $url["host"] . "/" . implode("/", $pieces) . "/" : JURI::root() . implode("/", $pieces) . "/empty.png";
 				$image["album"] = str_replace("'", "\\'", (string)$photos->title);
 				$image["summary"] = str_replace("'", "\\'", (string)$photo->summary);
 
