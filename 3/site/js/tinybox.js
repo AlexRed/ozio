@@ -8,10 +8,12 @@ TINY.box=function(){
 		show:function(o){
 			v={opacity:70,close:1,animate:1,fixed:1,mask:1,maskid:'',boxid:'',topsplit:2,url:0,post:0,height:0,width:0,html:0,iframe:0};
 
-            v.width = window.innerWidth;
-            v.height = window.innerHeight;
+			var stylesheet_margin = 32; // 32 = 2 x 16px margin. See .tbox{}
+			var additional_margin = 64;
+			v.width = Math.min(window.innerWidth - stylesheet_margin - additional_margin, o.maxwidth + 16);
+			v.height = Math.min(window.innerHeight - stylesheet_margin - additional_margin, o.maxheight + 16);
 
-            for(s in o){v[s]=o[s]}
+			for(s in o){v[s]=o[s]}
 			if(!p){
 				j=document.createElement('div'); j.className='tbox';
 				p=document.createElement('div'); p.className='tinner';
@@ -28,7 +30,7 @@ TINY.box=function(){
 				p.style.backgroundImage='none'; b.innerHTML=v.html; b.style.display='';
 				p.style.width=v.width?v.width+'px':'auto'; p.style.height=v.height?v.height+'px':'auto'
 			}else{
-				b.style.display='none'; 
+				b.style.display='none';
 				if(!v.animate&&v.width&&v.height){
 					p.style.width=v.width+'px'; p.style.height=v.height+'px'
 				}else{
@@ -50,9 +52,9 @@ TINY.box=function(){
 						if(x.readyState==4&&x.status==200){p.style.backgroundImage=''; TINY.box.psh(x.responseText,a,w,h)}
 					};
 					if(k){
-    	            	x.open('POST',c,true); x.setRequestHeader('Content-type','application/x-www-form-urlencoded'); x.send(k)
+						x.open('POST',c,true); x.setRequestHeader('Content-type','application/x-www-form-urlencoded'); x.send(k)
 					}else{
-       	         		x.open('GET',c,true); x.send(null)
+						x.open('GET',c,true); x.send(null)
 					}
 				}
 			}else{
@@ -79,7 +81,7 @@ TINY.box=function(){
 			var t;
 			if(typeof v.top!='undefined'){t=v.top}else{t=(this.height()/v.topsplit)-(j.offsetHeight/2); t=t<20?20:t}
 			if(!v.fixed&&!v.top){t+=this.top()}
-			j.style.top=t+'px'; 
+			j.style.top=t+'px';
 			j.style.left=typeof v.left!='undefined'?v.left+'px':(this.width()/2)-(j.offsetWidth/2)+'px'
 		},
 		alpha:function(e,d,a){

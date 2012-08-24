@@ -100,13 +100,17 @@ jQuery.noConflict();
 					{
 					// Slide links
 					if (base.options.slide_links)
-					{
+						{
 						markers = markers+'<li class="slide-link-'+thisSlide+' current-slide"><a>'+markerContent+'</a></li>';
 					}
 					// Slide Thumbnail Links
 					if (base.options.thumb_links)
-					{
-						thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+						{
+						if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
+							thumbImage = base.options.slides[thisSlide].seed;
+						else
+							thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+
 						thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + ' current-thumb"><img src="' + thumbImage + '"/></li>';
 					};
 				}
@@ -114,13 +118,17 @@ jQuery.noConflict();
 					{
 					// Slide links
 					if (base.options.slide_links)
-					{
+						{
 						markers = markers+'<li class="slide-link-'+thisSlide+'" ><a>'+markerContent+'</a></li>';
 					}
 					// Slide Thumbnail Links
 					if (base.options.thumb_links)
-					{
-						thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+						{
+						if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
+							thumbImage = base.options.slides[thisSlide].seed;
+						else
+							thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+
 						thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + '"><img src="' + thumbImage + '"/></li>';
 					};
 				}
@@ -130,7 +138,7 @@ jQuery.noConflict();
 			if (base.options.slide_links) $(vars.slide_list).html(markers);
 
 			if (base.options.thumb_links && vars.thumb_tray.length)
-			{
+				{
 				$(vars.thumb_tray).append('<ul id="'+vars.thumb_list.replace('#','')+'">'+thumbMarkers+'</ul>');
 			}
 
@@ -138,14 +146,20 @@ jQuery.noConflict();
 
 			// Add in thumbnails
 			if (base.options.thumbnail_navigation)
-			{
+				{
 				// Load previous thumbnail
 				vars.current_slide - 1 < 0  ? prevThumb = base.options.slides.length - 1 : prevThumb = vars.current_slide - 1;
-				$(vars.prev_thumb).show().html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+				if (base.options.slides[prevThumb].seed.indexOf('empty.png') != -1)
+					$(vars.prev_thumb).show().html($("<img/>").attr("src", base.options.slides[prevThumb].seed));
+				else
+					$(vars.prev_thumb).show().html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
 
 				// Load next thumbnail
 				vars.current_slide == base.options.slides.length - 1 ? nextThumb = 0 : nextThumb = vars.current_slide + 1;
-				$(vars.next_thumb).show().html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
+				if (base.options.slides[nextThumb].seed.indexOf('empty.png') != -1)
+					$(vars.next_thumb).show().html($("<img/>").attr("src", base.options.slides[nextThumb].seed));
+				else
+					$(vars.next_thumb).show().html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
 			}
 
 			base._start(); // Get things started
@@ -172,7 +186,7 @@ jQuery.noConflict();
 
 			// DP *I*
 			// Calcolo dimensione immagini
-			var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
+			var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
 			var address;
 			// DP *F*
 
@@ -203,7 +217,8 @@ jQuery.noConflict();
 
 					// DP *I*
 					// Inserimento dimensione immagine nell'URL
-					address = ('<img src="' + base.options.slides[loadPrev].seed + actual_width + '/"/>');
+					if (base.options.slides[loadPrev].seed.indexOf('empty.png') != -1) actual_width = '';
+					address = '<img src="' + base.options.slides[loadPrev].seed + actual_width + '"/>';
 					var imgPrev = $(address);
 					// DP *F*
 					var slidePrev = base.el+' li:eq('+loadPrev+')';
@@ -225,7 +240,8 @@ jQuery.noConflict();
 			// Inserimento dimensione immagine nell'URL
 			//var img = $('<img src="'+api.getField('image')+'"/>');
 			//address = ('<img src="'+api.getField('image')+'"/>').replace("{%width%}", actual_width);
-			address = ('<img src="' + api.getField('seed') + actual_width + '/"/>');
+			if (api.getField('seed').indexOf('empty.png') != -1) actual_width = '';
+			address = ('<img src="' + api.getField('seed') + actual_width + '"/>');
 			var img = $(address);
 			// DP *F*
 
@@ -246,7 +262,8 @@ jQuery.noConflict();
 
 				// DP *I*
 				// Inserimento dimensione immagine nell'URL
-				address = ('<img src="' + base.options.slides[loadNext].seed + actual_width + '/"/>');
+				if (base.options.slides[loadNext].seed.indexOf('empty.png') != -1) actual_width = '';
+				address = ('<img src="' + base.options.slides[loadNext].seed + actual_width + '"/>');
 				var imgNext = $(address);
 				// DP *F*
 
@@ -629,8 +646,9 @@ jQuery.noConflict();
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
 				// Inserimento dimensione immagine nell'URL
-				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
-				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '/"/>');
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
 				var img = $(address);
 				// DP *F*
 
@@ -644,14 +662,21 @@ jQuery.noConflict();
 
 			// Update thumbnails (if enabled)
 			if (base.options.thumbnail_navigation == 1)
-			{
+				{
 				// Load previous thumbnail
 				vars.current_slide - 1 < 0  ? prevThumb = base.options.slides.length - 1 : prevThumb = vars.current_slide - 1;
-				$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+				if (base.options.slides[prevThumb].seed.indexOf('empty.png') != -1)
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed));
+				else
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+
 
 				// Load next thumbnail
 				nextThumb = loadSlide;
-				$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
+				if (base.options.slides[nextThumb].seed.indexOf('empty.png') != -1)
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed));
+				else
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
 			}
 
 
@@ -746,8 +771,9 @@ jQuery.noConflict();
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
-				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
-				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '/"/>');
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
 				var img = $(address);
 				// DP *F*
 
@@ -761,15 +787,21 @@ jQuery.noConflict();
 
 			// Update thumbnails (if enabled)
 			if (base.options.thumbnail_navigation == 1)
-			{
+				{
 				// Load previous thumbnail
 				//prevThumb = loadSlide;
 				loadSlide == 0 ? prevThumb = base.options.slides.length - 1 : prevThumb = loadSlide - 1;
-				$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+				if (base.options.slides[prevThumb].seed.indexOf('empty.png') != -1)
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed));
+				else
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
 
 				// Load next thumbnail
 				vars.current_slide == base.options.slides.length - 1 ? nextThumb = 0 : nextThumb = vars.current_slide + 1;
-				$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
+				if (base.options.slides[nextThumb].seed.indexOf('empty.png') != -1)
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed));
+				else
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
 			}
 
 			/*-----End Load Image-----*/
@@ -949,8 +981,9 @@ jQuery.noConflict();
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					// DP *I*
-					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
-					var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '/"/>');
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+					var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
 					var img = $(address);
 					// DP *F*
 					img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
@@ -975,8 +1008,9 @@ jQuery.noConflict();
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					// DP *I*
-					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth;
-					var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '/"/>');
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+					var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
 					var img = $(address);
 					// DP *F*
 					img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');

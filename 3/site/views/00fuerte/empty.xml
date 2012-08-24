@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:exif='http://schemas.google.com/photos/exif/2007' xmlns:gphoto='http://schemas.google.com/photos/2007' xmlns:media='http://search.yahoo.com/mrss/' xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'>
+	<title type='text'>COM_OZIOGALLERY3_FAILURE_READING_GP</title>
+
+	<entry>
+		<summary type='text'>COM_OZIOGALLERY3_FAILURE_READING_GP</summary>
+		<content type='image/jpeg' src='/components/com_oziogallery3/views/00fuerte/img/empty.png'/>
+		<gphoto:width>640</gphoto:width>
+		<gphoto:height>480</gphoto:height>
+	</entry>
+
+</feed>
