@@ -93,6 +93,8 @@ class Com_OzioGallery3InstallerScript
 		}
 
 		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6/1.7/2.5! has been installed successfully</p>';
+		echo "<p><img src=\"" . JURI::base(true) . "/components/com_oziogallery3/assets/images/buy_now.jpg" . "\"></p>";
+		echo "<p>Take a look to 'Fuerte': our new, responsive and adaptive skin." . "</p>";
 	}
 
 	function uninstall($parent)
