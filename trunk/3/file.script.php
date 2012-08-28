@@ -139,7 +139,7 @@ class Com_OzioGallery3InstallerScript
 			echo "<p>" .
 			'
 			<div style="float:left;margin-right:16px;margin-left:10px;">
-			<a href="https://secure.shareit.com/shareit/checkout.html?productid=300541229&js=-1" target="_blank">
+			<a href="http://www.opensourcesolutions.es/index.php?option=com_content&view=article&id=25%3Aozio-gallery" target="_blank">
 			<img src="' . JURI::base(true) . '/components/com_oziogallery3/assets/images/buy_now.jpg" border="0" alt="Buy now">
 			</a>
 			</div>
