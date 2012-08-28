@@ -27,8 +27,9 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_oziogallery3')) {
 }
 
 // Include dependencies
+require_once JPATH_COMPONENT_SITE . "/oziogallery.inc";
 jimport('joomla.application.component.controller');
-require_once (JPATH_COMPONENT.DS.'classes'.DS.'ozio.helper.php');
+require_once (JPATH_COMPONENT . '/classes/ozio.helper.php');
 $controller	= JController::getInstance('Ozio');
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
@@ -44,7 +45,7 @@ if (strpos($task, "reset") === 0)
 			case 'accordion'			: ozio_helper::accordion($dir); 		break;
 			case 'carousel'				: ozio_helper::carousel($dir); 			break;
 			case 'flashgallery'			: ozio_helper::flashgallery($dir); 		break;
-			case 'imagerotator'			: ozio_helper::imagerotator($dir); 		break;			
+			case 'imagerotator'			: ozio_helper::imagerotator($dir); 		break;
 			case 'tilt'					: ozio_helper::tilt($dir); 				break;
 			case 'mediagallery'			: ozio_helper::mediagallery($dir); 		break;
 			case 'futura'				: ozio_helper::futura($dir); 			break;

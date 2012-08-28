@@ -89,12 +89,9 @@ class Com_OzioGallery3InstallerScript
 				.' <span style="color:#009933">exists!</span></b></p>';
 				$error[] = 0;
 			}
-
 		}
 
-		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6/1.7/2.5! has been installed successfully</p>';
-		echo "<p><img src=\"" . JURI::base(true) . "/components/com_oziogallery3/assets/images/buy_now.jpg" . "\"></p>";
-		echo "<p>Take a look to 'Fuerte': our new, responsive and adaptive skin." . "</p>";
+		$this->message();
 	}
 
 	function uninstall($parent)
@@ -117,6 +114,8 @@ class Com_OzioGallery3InstallerScript
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
 			$installer->install($plg);
 		}
+
+		$this->message();
 	}
 
 
@@ -127,4 +126,26 @@ class Com_OzioGallery3InstallerScript
 	function postflight($type, $parent)
 	{
 	}
+
+	function message()
+	{
+		echo '<p>Congratulations! Ozio Gallery 3 Component for Joomla 1.6/1.7/2.5! has been installed successfully</p>';
+		echo "<p><img src=\"" . JURI::base(true) . "/components/com_oziogallery3/assets/images/responsive.jpg" . "\"></p>";
+		echo "<p>Take a look to 'Fuerte': our new, responsive and adaptive skin." . "</p>";
+
+		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
+		if (!$GLOBALS["oziogallery3"]["registered"])
+		{
+			echo "<p>" .
+			'
+			<div style="float:left;margin-right:16px;margin-left:10px;">
+			<a href="https://secure.shareit.com/shareit/checkout.html?productid=300541229&js=-1" target="_blank">
+			<img src="' . JURI::base(true) . '/components/com_oziogallery3/assets/images/buy_now.jpg" border="0" alt="Buy now">
+			</a>
+			</div>
+			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature [Powered by Ozio Gallery] below each gallery, by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
+			' . "</p>";
+		}
+	}
+
 }
