@@ -25,33 +25,19 @@ jimport('joomla.application.component.model');
 
 class OzioModelOzio extends JModel
 {
-
 	function __construct()
 	{
 		parent::__construct();
 	}
 
+
 	function getPubblicate()
 	{
-	
-	
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
 				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
-				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
-						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03futura"
-						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
-						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
-						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
-						OR i.link = "index.php?option=com_oziogallery3&view=07flickrslidershow"
-						OR i.link = "index.php?option=com_oziogallery3&view=08flickrphoto"
-						OR i.link = "index.php?option=com_oziogallery3&view=09mediagallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
-						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"	
-						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-				)'
-				. ' AND i.published = 1'				
+				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+				. ' AND i.published = 1'
 				. ' ORDER BY i.title ASC'
 				;
 
@@ -59,30 +45,17 @@ class OzioModelOzio extends JModel
   		$genstats = $this->_db->loadObjectList();
 
   		return $genstats;
-	}	
-	
+	}
+
+
 	function getNonpubblicate()
 	{
-	
-	
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
 				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
-				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
-						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03futura"
-						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
-						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
-						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
-						OR i.link = "index.php?option=com_oziogallery3&view=07flickrslidershow"
-						OR i.link = "index.php?option=com_oziogallery3&view=08flickrphoto"
-						OR i.link = "index.php?option=com_oziogallery3&view=09mediagallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
-						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"	
-						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-				)'
-				. ' AND published  = 0'	
-				. ' AND published != -2'				
+				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+				. ' AND published  = 0'
+				. ' AND published != -2'
 				. ' ORDER BY title ASC'
 				;
 
@@ -95,25 +68,11 @@ class OzioModelOzio extends JModel
 
 	function getCestinate()
 	{
-	
-	
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
 				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'				
-				. ' WHERE (i.link = "index.php?option=com_oziogallery3&view=01tilt3d" 
-						OR i.link = "index.php?option=com_oziogallery3&view=02flashgallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=03futura"
-						OR i.link = "index.php?option=com_oziogallery3&view=04carousel"
-						OR i.link = "index.php?option=com_oziogallery3&view=05imagerotator"
-						OR i.link = "index.php?option=com_oziogallery3&view=06accordion"	
-						OR i.link = "index.php?option=com_oziogallery3&view=07flickrslidershow"
-						OR i.link = "index.php?option=com_oziogallery3&view=08flickrphoto"
-						OR i.link = "index.php?option=com_oziogallery3&view=09mediagallery"
-						OR i.link = "index.php?option=com_oziogallery3&view=10cooliris"
-						OR i.link = "index.php?option=com_oziogallery3&view=11pictobrowser"
-						OR i.link = "index.php?option=com_oziogallery3&view=12pictobrowser2"	
-				)'
-				. ' AND i.published = -2'				
+				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+				. ' AND i.published = -2'
 				. ' ORDER BY i.title ASC'
 				;
 
@@ -121,7 +80,7 @@ class OzioModelOzio extends JModel
   		$genstats3 = $this->_db->loadObjectList();
 
   		return $genstats3;
-	}		
-	
+	}
+
 }
 ?>
