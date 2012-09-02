@@ -337,7 +337,9 @@ License : MIT License / GPL License
 			// Ridimensionamento visualizzando immagini gia' presenti in cache (Esempio: quando si usa il tasto indietro)
 			var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			var image = activeslide.children[0];
-			var ratio = image.naturalHeight / image.naturalWidth;
+			// naturalWidth and naturalHeight are not supported by IE 7 and 8, so we can't use them
+			// var ratio = image.naturalHeight / image.naturalWidth;
+			var ratio = image.height / image.width;
 			var browserwidth = $.$el.width();
 			var h = browserwidth * ratio;
 			var container = document.getElementById('fuertecontainer');

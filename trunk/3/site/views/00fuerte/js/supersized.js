@@ -76,6 +76,7 @@ jQuery.noConflict();
 			thumbImage;
 
 			while(thisSlide <= base.options.slides.length-1){
+
 				//Determine slide link content
 				switch(base.options.slide_links){
 					case 'num':
@@ -213,6 +214,7 @@ jQuery.noConflict();
 				if(base.options.slides.length > 2){
 					// Set previous image
 					vars.current_slide - 1 < 0  ? loadPrev = base.options.slides.length - 1 : loadPrev = vars.current_slide - 1;	// If slide is 1, load last slide as previous
+
 					var imageLink = (base.options.slides[loadPrev].url) ? "href='" + base.options.slides[loadPrev].url + "'" : "";
 
 					// DP *I*
@@ -551,8 +553,13 @@ jQuery.noConflict();
 					thisSlide = $(this);
 					//var ratio = (thisSlide.data('origHeight') / thisSlide.data('origWidth')).toFixed(2);
 					// width, height, clientWidth, clientHeight, naturalWidth, naturalHeight
+					// naturalWidth and naturalHeight are not supported by IE 7 and 8, so we can't use them
+					/*
 					var original_width = this.naturalWidth;
 					var original_height = this.naturalHeight;
+					*/
+					var original_width = this.width;
+					var original_height = this.height;
 					var ratio = original_height / original_width;
 
 					// Gather browser size
@@ -564,6 +571,8 @@ jQuery.noConflict();
 					thisSlide.width(browserwidth);
 					thisSlide.height(h);
 
+					// classList is html5 so we can't use it.
+					/*
 					for (var i = 0; i < this.parentElement.parentElement.classList.length; ++i)
 					{
 						if (this.parentElement.parentElement.classList[i] === 'activeslide')
@@ -572,6 +581,13 @@ jQuery.noConflict();
 							container.style.height = h + 'px';
 						}
 					}
+					*/
+					if ($(this.parentElement.parentElement).hasClass('activeslide'))
+						{
+						var container = document.getElementById('fuertecontainer');
+						container.style.height = h + 'px';
+					}
+
 
 					/*-----End Resize Functions-----*/
 
@@ -727,7 +743,7 @@ jQuery.noConflict();
 					break;
 			}
 
-			// DP *I* Si applica a ogni funzione che utrilizza .nextSlide()
+			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deeplink
 			//window.location.href = '#' + loadSlide;
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
@@ -849,7 +865,7 @@ jQuery.noConflict();
 					liveslide.animate({left : 0}, 0 ).animate({ left: -base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
 					break;
 			}
-			// DP *I* Si applica a ogni funzione che utrilizza .nextSlide()
+			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deeplink
 			//window.location.href = '#' + loadSlide;
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
@@ -895,7 +911,7 @@ jQuery.noConflict();
 		----------------------------*/
 		base.goTo = function(targetSlide){
 
-			// DP *I* Si applica a ogni funzione che utrilizza api.goTo()
+			// DP *I* Si applica a ogni funzione che utilizza api.goTo()
 			// Cambio url per deeplink
 			window.location.href = '#' + targetSlide;
 			/*

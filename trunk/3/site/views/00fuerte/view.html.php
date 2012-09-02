@@ -81,16 +81,18 @@
 			}
 
 			$slides = "slides : [";
+			$separator = "";
 			foreach ($images as $image)
 			{
-				$slides .= "{ " .
+				$slides .= $separator . "{ " .
 				"seed : '" . $image["seed"] . "', " .
 				"width : '" . $image["width"] . "', " .
 				"height : '" . $image["height"] . "', " .
 				"ratio : '" . $image["ratio"] . "', " .
 				"album : '" . JText::_($image["album"]) . "', " .
 				"summary : '" . JText::_($image['summary']) . "'" .
-				" },";
+				" }";
+				$separator = ",";
 			}
 			$slides .= "],";
 			$slides = str_replace(array("\r\n", "\r", "\n"), " ", $slides);
@@ -147,7 +149,8 @@ EOT;
 
 			$document = JFactory::getDocument();
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
-            $document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
+			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
+
 			if ($this->params->get("jquery", 1))
 				// protocol: https, location: googleapis,
 				$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
@@ -160,8 +163,8 @@ EOT;
 			$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 			$itemid = "&amp;Itemid=" . $itemid->id;
 			$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
-            $document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . $itemid);
-            $document->addScriptDeclaration($js);
+			$document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . $itemid);
+			$document->addScriptDeclaration($js);
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
 
 			$this->gallerywidth = $this->params->get("gallerywidth", array("text" => "100", "select" => "%"));
