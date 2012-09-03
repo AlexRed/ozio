@@ -108,7 +108,11 @@ ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
 /* Thumbnail Tray
 ----------------------------*/
-#thumb-tray{ z-index:3; bottom:0; left:0; background:url(../img/bg-black.png); height:150px; width:100%; overflow:hidden; text-align:center; -moz-box-shadow: 0px 0px 4px #000; -webkit-box-shadow: 0px 0px 4px #000; box-shadow: 0px 0px 4px #000; position: relative; }
+#thumb-tray { z-index:3; bottom:0; left:0; background:url(../img/bg-black.png); height:150px; width:100%; overflow:hidden; text-align:center; -moz-box-shadow: 0px 0px 4px #000; -webkit-box-shadow: 0px 0px 4px #000; box-shadow: 0px 0px 4px #000; position: relative; }
+@media only screen and (max-width: 767px)
+{
+	#thumb-tray {display:none !important;}
+}
 
 #thumb-back, #thumb-forward{ position:absolute; z-index:5; height:150px; width:40px; }
 #thumb-back{ left:0; background: url('../img/thumb-back.png') no-repeat center center;}
