@@ -214,7 +214,6 @@ License : MIT License / GPL License
 			// Pulsanti view e download
 			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			//document.getElementById('view-button').href = activeslide.href;
-			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
 			if (view_button)
@@ -222,8 +221,6 @@ License : MIT License / GPL License
 				//view_button.href = link + 's0/';
 				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 			}
-			var download_button = document.getElementById('download-button');
-			if (download_button) download_button.href = link + 's0-d/';
 			// Top bar
 			var top_title = document.getElementById('oziotoptitle');
 			if (top_title) top_title.innerHTML = api.getField('album');
@@ -320,7 +317,6 @@ License : MIT License / GPL License
 			// Pulsanti view e download
 			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			//document.getElementById('view-button').href = activeslide.href;
-			//document.getElementById('download-button').href = activeslide.href.replace('/s0/', '/s0-d/');
 			var link = api.getField('seed');
 			var view_button = document.getElementById('view-button');
 			if (view_button)
@@ -328,9 +324,6 @@ License : MIT License / GPL License
 				//view_button.href = link + 's0/';
 				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 			}
-			var download_button = document.getElementById('download-button');
-			if (download_button) download_button.href = link + 's0-d/';
-
 			// DP *F*
 
 			// DP *I*

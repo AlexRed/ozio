@@ -57,9 +57,6 @@
 			<?php if ($this->params->get("fullsize_button", true)) { ?>
 				<a id="view-button" class="oziobutton"><img src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/view.png"/></a>
 				<?php } ?>
-			<?php if ($this->params->get("download_button", false)) { ?>
-				<a id="download-button" class="oziobutton"><img src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/download.png"/></a>
-				<?php } ?>
 
 			<!--Slide counter-->
 			<div id="slidecounter">

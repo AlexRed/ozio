@@ -104,6 +104,7 @@
 			$transition_speed = $this->params->get("transition_speed", "1000");
 			$pause_hover = $this->params->get("pause_hover", 0);
 			$progress_bar = $this->params->get("progress_bar", 1);
+			$image_protect = $this->params->get("image_protect", 1);
 
 			$js = <<<EOT
 			jQuery(function($){
@@ -123,7 +124,7 @@
 					pause_hover : $pause_hover, // Pause slideshow on hover
 					keyboard_nav            :   1,			// Keyboard navigation on/off
 					performance				:	1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-					image_protect			:	1,			// Disables image dragging and right click with Javascript
+					image_protect			:	$image_protect,			// Disables image dragging and right click with Javascript
 
 					// Size & Position
 					min_width		        :   0,			// Min width allowed (in pixels)
