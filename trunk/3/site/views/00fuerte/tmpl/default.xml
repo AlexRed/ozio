@@ -67,10 +67,6 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="download_button" label="COM_OZIOGALLERY3_DOWNLOADBUTTON_LBL" description="COM_OZIOGALLERY3_DOWNLOADBUTTON_DSC" default="0">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
 			<field type="radio" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -82,7 +78,11 @@
 		</fieldset>
 
 		<fieldset name="advanced">
-			<field type="list" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
+			<field type="radio" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="image_protect" label="COM_OZIOGALLERY3_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY3_IMAGEPROTECT_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
