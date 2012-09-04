@@ -78,7 +78,7 @@ License : MIT License / GPL License
 
 			/* Thumbnail Tray Navigation
 			----------------------------*/
-			if (api.options.thumb_links){
+			if (api.options.thumb_links && ($(window).width() >= 768)){
 				//Hide thumb arrows if not needed
 				if ($(vars.thumb_list).width() <= $(vars.thumb_tray).width()){
 					$(vars.thumb_back +','+vars.thumb_forward).fadeOut(0);
@@ -193,7 +193,7 @@ License : MIT License / GPL License
 				}
 
 				// Thumb Links
-				if (api.options.thumb_links && vars.thumb_tray.length){
+				if (api.options.thumb_links && vars.thumb_tray.length && ($(window).width() >= 768)){
 					// Update Thumb Interval & Page
 					vars.thumb_page = 0;
 					vars.thumb_interval = Math.floor($(vars.thumb_tray).width() / $('> li', vars.thumb_list).outerWidth(true)) * $('> li', vars.thumb_list).outerWidth(true);
@@ -272,7 +272,7 @@ License : MIT License / GPL License
 
 
 			// Highlight current thumbnail and adjust row position
-			if (api.options.thumb_links){
+			if (api.options.thumb_links && ($(window).width() >= 768)){
 
 				$('.current-thumb').removeClass('current-thumb');
 				$('li', vars.thumb_list).eq(vars.current_slide).addClass('current-thumb');

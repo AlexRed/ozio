@@ -8,8 +8,14 @@
 
 
 		<fieldset name="basic">
-			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" />
+
+			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
+
+			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
+
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
 			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
+<!--			<field type="text" name="limitedlink" label="COM_OZIOGALLERY3_LIMITEDLINK_LBL" description="COM_OZIOGALLERY3_LIMITEDLINK_DSC" /> -->
 
 <!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->
 
@@ -18,10 +24,8 @@
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
 
-		</fieldset>
 
-
-        <fieldset name="gallery" label="COM_OZIOGALLERY3_EFFECTS_SETTINGS">
+		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 <!--
 			<field type="list" name="viewmode" label="COM_OZIOGALLERY3_VIEWMODE_LBL" description="COM_OZIOGALLERY3_VIEWMODE_DSC">
 				<option value="0">COM_OZIOGALLERY3_NORMAL</option>
@@ -39,9 +43,9 @@
 				<option value="carouselLeft">COM_OZIOGALLERY3_TRANSITION_CAROUSELLEFT</option>
 			</field>
 			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="1000"/>
-		</fieldset>
 
-		<fieldset name="slides" label="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS">
+		  <field type="ossheader" default="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
+
 			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -75,9 +79,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-		</fieldset>
 
-		<fieldset name="advanced">
 			<field type="radio" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -86,7 +88,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-		</fieldset>
 
+		</fieldset>
 	</fields>
 </metadata>
