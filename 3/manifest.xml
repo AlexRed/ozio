@@ -7,7 +7,7 @@
 	<authorUrl>http://www.joomla.it</authorUrl>
 	<copyright>(C) 2008 - 2012 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.3.4 beta 6</version>
+	<version>3.3.4 beta 7</version>
 	<description>Ozio Gallery for Joomla! 2.5</description>
 
 	<uninstallfile>uninstall.oziogallery.php</uninstallfile>
@@ -26,30 +26,30 @@
 		<folder>skin</folder>
 		<folder>views</folder>
 	</files>
-<administration>
-	<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">OzioGallery3</menu>
-	<files folder="admin">
-		<filename>controller.php</filename>
-		<filename>index.html</filename>
-		<filename>oziogallery3.php</filename>
-		<folder>assets</folder>
-		<folder>classes</folder>
-		<folder>css</folder>
-		<folder>js</folder>
-		<folder>models</folder>
-		<folder>views</folder>
-		<folder>language</folder>
-	</files>
+	<administration>
+		<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">OzioGallery3</menu>
+		<files folder="admin">
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>oziogallery3.php</filename>
+			<folder>assets</folder>
+			<folder>classes</folder>
+			<folder>css</folder>
+			<folder>js</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<folder>language</folder>
+		</files>
 
 	</administration>
 	<plugins>
 		<plugin folder="plugins/content" plugin="ozio" name="OzioGallery into articles" group="content" />
 	</plugins>
-	    <install>
-        </install>
-        <uninstall>
-        </uninstall>
+	<install>
+	</install>
+	<uninstall>
+	</uninstall>
 	<updateservers>
-		<server type="extension" priority="1" name="Ozio Gallery3 update site"><![CDATA[http://oziogallery.joomla.it/com_oziogallery3.xml]]></server>
-    </updateservers>
+		<server type="extension" priority="1" name="Ozio Gallery3 update site"><![CDATA[http://www.opensourcesolutions.es/download/oziogallery.xml]]></server>
+	</updateservers>
 </extension>
