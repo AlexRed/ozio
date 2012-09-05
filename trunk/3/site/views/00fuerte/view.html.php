@@ -50,12 +50,16 @@
 
 			$images = array();
 
-			// Google sometimes returns a 404 error for the following URL
-			//$photos = simplexml_load_file("https://picasaweb.google.com/data/feed/api/user/110359559620842741677/albumid/5760919934024175761?authkey=CNXg98HWwPqlLA");
-			// which corresponds to https://plus.google.com/photos/110359559620842741677/albums/5760919934024175761?authkey=CNXg98HWwPqlLA
+			$albumid = $this->params->get("gallery_id");
+			$authcode = "";
+			if ($this->params->get("albumvisibility") == "limited")
+			{
+				$albumid = $this->params->get("limitedalbum");
+				$authcode = "&authkey=Gv1sRg" . $this->params->get("limitedpassword");
+			}
 
-			$photo_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '/albumid/';
-			$photos = simplexml_load_file($photo_feed . $this->params->get("gallery_id") . '?v=2') or
+			$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+			$photos = simplexml_load_file($feed) or
 			$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 
 			foreach ($photos->entry as $photo)

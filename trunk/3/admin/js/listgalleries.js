@@ -39,7 +39,7 @@ function OnUseridExit()
 
 function OnUseridChange(value)
 {
-	// Dalla DomReady arriva semna il parametro value
+	// Dalla DomReady arriva senza il parametro value
 	if (!value) value = $('jform_params_userid').value;
 
 	var re = new RegExp('^[0-9]{21}');
@@ -289,6 +289,34 @@ provides: [Element.Events.realChange]
 	}
 })();
 
+
+function OnAlbumVisibilityChange()
+{
+	var select = $('jform_params_albumvisibility');
+	var value = select.options[select.selectedIndex].value;
+	if (value == 'public')
+		{
+		$('jform_params_gallery_id-lbl').style.display = 'inline';
+		$('album_selection').style.display = 'inline';
+
+		$('jform_params_limitedalbum-lbl').style.display = 'none';
+		$('jform_params_limitedalbum').style.display = 'none';
+		$('jform_params_limitedpassword-lbl').style.display = 'none';
+		$('jform_params_limitedpassword').style.display = 'none';
+	}
+	else
+		{
+		$('jform_params_limitedalbum-lbl').style.display = 'inline';
+		$('jform_params_limitedalbum').style.display = 'inline';
+		$('jform_params_limitedpassword-lbl').style.display = 'inline';
+		$('jform_params_limitedpassword').style.display = 'inline';
+
+		$('jform_params_gallery_id-lbl').style.display = 'none';
+		$('album_selection').style.display = 'none';
+	}
+}
+
+
 // Inizializzazione
 window.addEvent('domready', function() {
 	var input = document.id('jform_params_userid');
@@ -303,3 +331,5 @@ window.addEvent('domready', function() {
 
 // Possibile caricamento necessario
 window.addEvent('domready', OnUseridChange);
+window.addEvent('domready', OnAlbumVisibilityChange);
+

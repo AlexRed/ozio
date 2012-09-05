@@ -23,6 +23,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class Com_OzioGallery3InstallerScript
 {
+	protected $component_name;
+	protected $extension_name;
 
 	function install($parent)
 	{
@@ -103,10 +105,10 @@ class Com_OzioGallery3InstallerScript
 
 	function update($parent)
 	{
-		$manifest 	= $parent->get("manifest");
-		$parent 	= $parent->getParent();
-		$source 	= $parent->getPath("source");
-		$installer 	= new JInstaller();
+		$manifest = $parent->get("manifest");
+		$parent = $parent->getParent();
+		$source = $parent->getPath("source");
+		$installer = new JInstaller();
 
 		foreach($manifest->plugins->plugin as $plugin)
 		{
@@ -115,12 +117,27 @@ class Com_OzioGallery3InstallerScript
 			$installer->install($plg);
 		}
 
+		$db = JFactory::getDBO();
+
+		// Fixes a Joomla bug, wich adds a second repository rather than overwrite the first one if they are different
+		$query = "DELETE FROM `#__update_sites` WHERE `name` = '" . $this->extension_name . " update site';";
+		$db->setQuery($query);
+		$db->query();
+
+		// Clear updates cache related to this extension
+		$query = "DELETE FROM `#__updates` WHERE `name` = '" . $this->extension_name . "';";
+		$db->setQuery($query);
+		$db->query();
+
+		// Shows the installation/upgrade message
 		$this->message();
 	}
 
 
 	function preflight($type, $parent)
 	{
+		$this->component_name = $parent->get("element");
+		$this->extension_name = substr($this->component_name, 4);
 	}
 
 	function postflight($type, $parent)
