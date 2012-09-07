@@ -34,56 +34,52 @@ class OzioModelOzio extends JModel
 	function getPubblicate()
 	{
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
-				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
-				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
-				. " AND link NOT LIKE '%view=00fuerte%'"
-				. ' AND i.published = 1'
-				. ' ORDER BY i.title ASC'
-				;
+		. ' FROM #__menu AS i'
+		. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+		. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+		. ' AND i.published = 1'
+		. ' ORDER BY i.title ASC'
+		;
 
 		$this->_db->SetQuery($query);
-  		$genstats = $this->_db->loadObjectList();
+		$genstats = $this->_db->loadObjectList();
 
-  		return $genstats;
+		return $genstats;
 	}
 
 
 	function getNonpubblicate()
 	{
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
-				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
-				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
-				. " AND link NOT LIKE '%view=00fuerte%'"
-				. ' AND published  = 0'
-				. ' AND published != -2'
-				. ' ORDER BY title ASC'
-				;
+		. ' FROM #__menu AS i'
+		. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+		. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+		. ' AND published  = 0'
+		. ' AND published != -2'
+		. ' ORDER BY title ASC'
+		;
 
 		$this->_db->SetQuery($query);
-  		$genstats2 = $this->_db->loadObjectList();
+		$genstats2 = $this->_db->loadObjectList();
 
-  		return $genstats2;
+		return $genstats2;
 	}
 
 
 	function getCestinate()
 	{
 		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
-				. ' FROM #__menu AS i'
-				. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
-				. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
-				. " AND link NOT LIKE '%view=00fuerte%'"
-				. ' AND i.published = -2'
-				. ' ORDER BY i.title ASC'
-				;
+		. ' FROM #__menu AS i'
+		. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
+		. " WHERE i.link LIKE '%com_oziogallery3&view=%'"
+		. ' AND i.published = -2'
+		. ' ORDER BY i.title ASC'
+		;
 
 		$this->_db->SetQuery($query);
-  		$genstats3 = $this->_db->loadObjectList();
+		$genstats3 = $this->_db->loadObjectList();
 
-  		return $genstats3;
+		return $genstats3;
 	}
 
 }
-?>

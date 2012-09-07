@@ -576,11 +576,11 @@ jQuery.noConflict();
 					/*
 					for (var i = 0; i < this.parentElement.parentElement.classList.length; ++i)
 					{
-						if (this.parentElement.parentElement.classList[i] === 'activeslide')
-							{
-							var container = document.getElementById('fuertecontainer');
-							container.style.height = h + 'px';
-						}
+					if (this.parentElement.parentElement.classList[i] === 'activeslide')
+					{
+					var container = document.getElementById('fuertecontainer');
+					container.style.height = h + 'px';
+					}
 					}
 					*/
 					if ($(this.parentElement.parentElement).hasClass('activeslide'))

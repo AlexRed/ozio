@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>oziogallery3@joomla.it</authorEmail>
 	<authorUrl>www.joomla.it</authorUrl>
-	<version>3.2</version>
+	<version>3.3</version>
 	<description>COM_OZIOGALLERY3_PLG_OZIO_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="ozio">ozio.php</filename>

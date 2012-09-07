@@ -20,6 +20,7 @@
 */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
+require_once JPATH_ROOT . "/components/com_oziogallery3/oziogallery.inc";
 
 class plgContentOzio extends JPlugin
 {
@@ -213,7 +214,7 @@ EOT;
 
 		ob_start();
 		require JPATH_SITE . "/components/com_oziogallery3/views/00fuerte/tmpl/default.php";
-		$result = ob_get_contents();
+		$result = JPATH_COMPONENT("com_oziogallery3/views/00fuerte/tmpl/default.php") . ob_get_contents();
 		ob_end_clean();
 		return $result;
 	}

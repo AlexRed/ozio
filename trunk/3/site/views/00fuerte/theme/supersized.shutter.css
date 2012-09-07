@@ -123,7 +123,7 @@ ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
 
 ul#thumb-list{ display:inline-block; list-style:none; position:relative; left:0px; padding:0 0px; }
-ul#thumb-list li{ background:#111; list-style:none; display:inline; width:150px; overflow:hidden; float:left; margin:0; }
+ul#thumb-list li{ background:#111 !important; list-style:none; display:inline; width:150px; overflow:hidden; float:left; margin:0; padding:0 !important;}
 ul#thumb-list li img { width: auto; opacity:0.5; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; filter:alpha(opacity=60); -webkit-transition: all 100ms ease-in-out; -moz-transition: all 100ms ease-in-out; -o-transition: all 100ms ease-in-out; -ms-transition: all 100ms ease-in-out; transition: all 100ms ease-in-out;
 	/* Corregge effetti indesiderati con alcuni templates */
 	/*height: 150px !important;*/
