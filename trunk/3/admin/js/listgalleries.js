@@ -102,7 +102,7 @@ function LoadAlbums()
 	var xhrOnComplete = function(response)
 	{
 		// Show the select
-		$('jform_params_gallery_id').show();
+		//$('jform_params_gallery_id').show();
 		// Hide the loader
 		$('jform_params_gallery_id_loader').hide();
 	};
@@ -124,6 +124,14 @@ function LoadAlbums()
 		// select.style.display = 'none';
 
 		var numbuzz = 0;
+		if (!responseXML)
+			{
+			$('jform_params_gallery_id_warning').show();
+			return;
+		}
+		// Show the select
+		$('jform_params_gallery_id').show();
+
 		var feed = responseXML.childNodes[0];
 		var albums = feed.getElements('entry');
 		for (var a = 0; a < albums.length; ++a)
@@ -172,8 +180,7 @@ function LoadAlbums()
 
 	var xhrOnFailure = function(response)
 	{
-		var r = new Element('span', {'html': 'request failed'});
-		r.inject(board);
+			$('jform_params_gallery_id_warning').show();
 	};
 
 	var options =

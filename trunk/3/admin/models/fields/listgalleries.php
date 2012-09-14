@@ -49,7 +49,8 @@ class JFormFieldListGalleries extends JFormFieldList
 		'<div id="album_selection">' .
 		parent::getInput() .
 		'<img id="jform_params_' . (string)$this->element["name"] . '_loader" style="display:none;" src="' . JURI::root(true) . '/components/' . $name . '/views/00fuerte/img/progress.gif">' .
-		'<span id="jform_params_' . (string)$this->element["name"] . '_selected" style="display:none;" ">' . $this->value . '</span>' .
+		'<span id="jform_params_' . (string)$this->element["name"] . '_warning" style="display:none;">' . JText::_("COM_OZIOGALLERY3_OUTGOING_CONNECTION_FAILED") . '</span>' .
+		'<span id="jform_params_' . (string)$this->element["name"] . '_selected" style="display:none;">' . $this->value . '</span>' .
 		'</div>';
 	}
 
