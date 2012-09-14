@@ -2,3 +2,7 @@
 {
 	width: 50%;
 }
+
+#album_selection {
+float:left;
+}
