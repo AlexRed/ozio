@@ -1,6 +1,6 @@
 <?php
 /**
-* This file is part of Ozio Gallery 3.
+* This file is part of Ozio Gallery
 *
 * Ozio Gallery 3 is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,11 @@ class Com_OzioGallery3InstallerScript
 		$manifest 	= $parent->get("manifest");
 		$parent 	= $parent->getParent();
 		$source 	= $parent->getPath("source");
-		$installer 	= new JInstaller();
 
 		foreach($manifest->plugins->plugin as $plugin)
 		{
+			$installer 	= new JInstaller();
+
 			$attributes = $plugin->attributes();
 			$plg = $source . DS . $attributes['folder'].DS.$attributes['plugin'];
 			$installer->install($plg);
@@ -108,10 +109,11 @@ class Com_OzioGallery3InstallerScript
 		$manifest = $parent->get("manifest");
 		$parent = $parent->getParent();
 		$source = $parent->getPath("source");
-		$installer = new JInstaller();
 
 		foreach($manifest->plugins->plugin as $plugin)
 		{
+			$installer = new JInstaller();
+
 			$attributes = $plugin->attributes();
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
 			$installer->install($plg);
