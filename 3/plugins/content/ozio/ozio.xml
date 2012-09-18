@@ -2,7 +2,7 @@
 <extension type="plugin" group="content" version="1.6.0" method="upgrade">
 	<name>plg_content_ozio</name>
 	<author>Vamba</author>
-	<creationDate>Maggio 2010</creationDate>
+	<creationDate>09/2012</creationDate>
 	<copyright>Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>oziogallery3@joomla.it</authorEmail>
