@@ -124,7 +124,9 @@ function LoadAlbums()
 		// select.style.display = 'none';
 
 		var numbuzz = 0;
-		if (!responseXML)
+		// This doesn't work on firefox
+		//if (!responseXML)
+		if (responseText == '')
 			{
 			$('jform_params_gallery_id_warning').show();
 			return;
