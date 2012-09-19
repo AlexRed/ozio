@@ -28,7 +28,12 @@ License : MIT License / GPL License
 				if (api.options.progress_bar) theme.progressBar();
 			}else{
 				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");	// If pause play button is image, swap src
-				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );	//  Place progress bar
+
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+//				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );	//  Place progress bar
+				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({width : '0%'}, 0 );	//  Place progress bar
+// DP *F*
 			}
 
 
@@ -178,7 +183,11 @@ License : MIT License / GPL License
 					if (vars.slideshow_interval) clearInterval(vars.slideshow_interval);
 					if (api.options.slides.length - 1 > 0) clearInterval(vars.slideshow_interval);
 
-					$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+					//$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+					$(vars.progress_bar).stop().animate({width : '0%'}, 0 );
+// DP *F*
 
 					if (!vars.progressDelay && api.options.slideshow){
 						// Delay slideshow from resuming so Chrome can refocus images
@@ -232,7 +241,12 @@ License : MIT License / GPL License
 		----------------------------*/
 		goTo : function(){
 			if (api.options.progress_bar && !vars.is_paused){
-				$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+				//$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+				$(vars.progress_bar).stop().animate({width : '0%'}, 0 );
+// DP *F*
 				theme.progressBar();
 			}
 		},
@@ -248,7 +262,12 @@ License : MIT License / GPL License
 			}else if (state == 'pause'){
 				// If image, swap to play
 				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");
-				if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+				//if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+				if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({width : '0%'}, 0 );
+// DP *F*
 			}
 
 		},
@@ -257,7 +276,11 @@ License : MIT License / GPL License
 		/* Before Slide Transition
 		----------------------------*/
 		beforeAnimation : function(direction){
-			if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+			//if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
+			if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({width : '0%'}, 0 );
+// DP *F*
 
 			/* Update Fields
 			----------------------------*/
@@ -345,7 +368,17 @@ License : MIT License / GPL License
 		/* Progress Bar
 		----------------------------*/
 		progressBar : function(){
-			$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 ).animate({ left:0 }, api.options.slide_interval);
+// DP *I*
+// L'animazione standard non e' concepita per stare dentro ad un contenitore
+//			$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 ).animate({ left:0 }, api.options.slide_interval);
+			$(vars.progress_bar).stop().animate({width : '0%'}, 0 ).animate({width : '100%'}, api.options.slide_interval);
+/*
+			var obj = $(vars.progress_bar);
+			obj = obj.stop();
+			obj = obj.animate({width : '0%'}, 0);
+			obj = obj.animate({width : '100%'}, api.options.slide_interval);
+*/
+// DP *F*
 		}
 
 
