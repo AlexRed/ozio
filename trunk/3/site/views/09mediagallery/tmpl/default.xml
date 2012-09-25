@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_09MEDIAGALLERY_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY3_09MEDIAGALLERY_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="mediag" 
+			label="MediaGallery Skin" 
+			/>				
+	
+			<field name="folder" type="text"
+			description="COM_OZIOGALLERY3_PERCORSO_CARTELLA_DESC"			
+			label="COM_OZIOGALLERY3_PERCORSO_CARTELLA" 
+			size="40" 
+			default="images/oziogallery3" 			
+			/>
+			
+		<field name="reset" type="mediagalleryreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>				
+			
+			<field name="primagalleria" type="text" 
+			default="Ozio Gallery3" 
+			label="COM_OZIOGALLERY3_First_gallery_name" 
+			size="40" 
+			description="COM_OZIOGALLERY3_First_gallery_name_desc"
+			required="true"		
+			/>	
+			
+		</fieldset>	
+	
+		<fieldset name="basic">	
+			<field name="show_page_title" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
+			label="COM_OZIOGALLERY3_TITOLO_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>			
+		
+			<field name="introtext" type="textarea"
+			description="COM_OZIOGALLERY3_INTRO_DESC"
+			label="COM_OZIOGALLERY3_INTRO"
+			cols="25"
+			rows="5"			
+			/>
+			
+			<field name="showintrotext" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_INTRO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="xmlnamesuff" type="text"
+			description="COM_OZIOGALLERY3_SUFFISSO_NOME_XML_DESC"			
+			label="COM_OZIOGALLERY3_SUFFISSO_NOME_XML" 
+			size="30" 
+			/>		
+		
+			<field name="xml_mode" type="list" 
+			description="COM_OZIOGALLERY3_METODO_XML_DESC" 
+			label="COM_OZIOGALLERY3_METODO_XML" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_XML_AUTOMATICO</option>
+				<option value="1">COM_OZIOGALLERY3_XML_MANUALE</option>
+			</field>
+
+			<field name="xml_cache_time" type="text" 
+			description="COM_OZIOGALLERY3_XML_CACHE_TIME_DESC" 
+			label="COM_OZIOGALLERY3_XML_CACHE_TIME" 
+			size="6" 
+			default="0" 
+			/>			
+			
+			<field name="manualxmlname" type="text" 
+			description="COM_OZIOGALLERY3_PATH_XML_MANUALE_DESC"
+			label="COM_OZIOGALLERY3_PATH_XML_MANUALE" 
+			size="60"  			
+			default="components/com_oziogallery3/skin/mediagallery/manual-xml/mediagallery.ozio" 
+			/>
+		</fieldset>
+		
+		
+        <fieldset
+        name="gallery"
+        label="COM_OZIOGALLERY3_GALLERY_SETTINGS"
+		>	
+
+			<field name="ordinamento" type="list"
+			description="COM_OZIOGALLERY3_ORDINE_IMMAGINI_DESC"			
+			label="COM_OZIOGALLERY3_ORDINE_IMMAGINI" 
+			default="3" 
+			>
+				<option value="0">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO</option>
+				<option value="1">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO_INVERSO</option>		  
+				<option value="2">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_RECENTI</option>
+				<option value="3">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_MENO_RECENTI</option>	
+				<option value="4">COM_OZIOGALLERY3_CASUALE</option>		  
+			</field>
+		
+		
+		
+		
+			<field name="columns" type="text" 
+			default="3" 
+			label="COM_OZIOGALLERY3_ROWS" 
+			size="2" 
+			description="COM_OZIOGALLERY3_ROWS_DESC" 
+			/>
+			
+			<field name="rows" type="text" 
+			default="3" 
+			label="COM_OZIOGALLERY3_COLUMNS" 
+			size="2" 
+			description="COM_OZIOGALLERY3_COLUMNS_DESC" 
+			/>
+			
+			<field name="showtooltips" type="radio" 
+			default="1" 
+			label="COM_OZIOGALLERY3_SHOW_TOOLTIPS" 
+			description="COM_OZIOGALLERY3_SHOW_TOOLTIPS_DESC" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+			
+			<field name="titolo" type="radio" 
+			default="1" 
+			label="COM_OZIOGALLERY3_Titolo_immagine" 
+			description="COM_OZIOGALLERY3_Showhide_image_title" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+			
+			<field name="originalsize" type="radio" 
+			default="1" 
+			label="COM_OZIOGALLERY3_Original_size_link" 
+			description="COM_OZIOGALLERY3_Original_size_link_DESC" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+			
+			<field name="originalsizetxt" type="text" 
+			default="Original size" 
+			label="COM_OZIOGALLERY3_Original_size_text" 
+			size="25" 
+			description="COM_OZIOGALLERY3_Original_size_text_DESC" 
+			/>
+
+			<field name="style" type="list" 
+			default="0" 
+			label="COM_OZIOGALLERY3_STYLE_GALLERIA" 
+			description="COM_OZIOGALLERY3_STYLE_GALLERIA_DESC" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_BLACK</option>
+				  <option value="1">COM_OZIOGALLERY3_WHITE</option>
+			</field>
+			
+			<field name="width" type="text" 
+			description="COM_OZIOGALLERY3_LARGHEZZA_DESC" 
+			label="COM_OZIOGALLERY3_LARGHEZZA" 
+			size="4" 
+			default="640" 			
+			/>
+			
+			<field name="height" type="text" 
+			description="COM_OZIOGALLERY3_ALTEZZA_DESC"			
+			label="COM_OZIOGALLERY3_ALTEZZA"
+			default="480"			
+			size="4" 
+			/>
+
+
+			<field name="behind" type="radio" 
+			default="0" 
+			label="COM_OZIOGALLERY3_BEHIND" 
+			description="COM_OZIOGALLERY3_BEHIND_DESC" 
+			>
+				  <option value="0">COM_OZIOGALLERY3_No</option>
+				  <option value="1">COM_OZIOGALLERY3_Yes</option>
+			</field>
+			
+			<field name="menuwidth" type="text" 
+			description="COM_OZIOGALLERY3_MENUWIDTH_DESC"			
+			label="COM_OZIOGALLERY3_MENUWIDTH"
+			default="170"			
+			size="4" 
+			/>
+		
+			<field name="table" type="list" 
+			description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" 
+			label="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA" 			
+			default="2" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_LEFT</option>
+				<option value="1">COM_OZIOGALLERY3_RIGHT</option>
+				<option value="2">COM_OZIOGALLERY3_CENTERED</option>
+			</field>	
+			
+			<field name="rotatoralign" type="list" 
+			description="COM_OZIOGALLERY3_ALLINEAMENTO_CONTENUTO_DESC" 
+			label="COM_OZIOGALLERY3_ALLINEAMENTO_CONTENUTO" 
+			default="2" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_LEFT</option>
+				<option value="1">COM_OZIOGALLERY3_RIGHT</option>
+				<option value="2">COM_OZIOGALLERY3_INHERIT</option>
+			</field>
+		</fieldset>
+		
+        <fieldset
+        name="debug"
+        label="COM_OZIOGALLERY3_DEBUG_SETTINGS"
+		>				
+	
+			<field name="modifiche" type="radio" 
+			description="COM_OZIOGALLERY3_DATA_E_ORA_MODIFICHE_DESC" 
+			label="COM_OZIOGALLERY3_DATA_E_ORA_MODIFICHE" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="debug" type="radio" 
+			description="COM_OZIOGALLERY3_DEBUG_INFO" 			
+			label="COM_OZIOGALLERY3_DEBUG" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+		
+		</fieldset>
+	</fields>
+</metadata>

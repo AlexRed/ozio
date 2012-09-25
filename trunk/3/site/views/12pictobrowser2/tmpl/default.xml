@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_12PICTOBROWSER2_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY3_12PICTOBROWSER2_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="pictop" 
+			label="Pictobrowser Picasa Skin" 
+			/>		
+		
+			<field name="user_namep" type="text" 
+			description="COM_OZIOGALLERY3_NOME_UTENTE_PICASA_DESC" 			
+			label="COM_OZIOGALLERY3_NOME_UTENTE_PICASA" 
+			size="30" 
+			default="caoyao04"
+			required="true"				
+			/>			
+
+			<field name="sourcep" type="list" 
+			description="COM_OZIOGALLERY3_PICASA_SOURCE_DESC" 			
+			label="COM_OZIOGALLERY3_PICASA_SOURCE" 
+			default="0"
+
+			>
+				<option value="0">COM_OZIOGALLERY3_ALBUM</option>
+				<option value="1">COM_OZIOGALLERY3_TAGS</option>
+			</field>
+			
+			<field name="album_id" type="text"
+			description="COM_OZIOGALLERY3_ALBUMID_DESC"
+			label="COM_OZIOGALLERY3_ALBUMID"
+			size="28" 
+			default="5226602065989561249"			
+			/>				
+
+			<field name="gnamep" type="text"
+			description="COM_OZIOGALLERY3_PICASA_TAGS_DESC"
+			label="COM_OZIOGALLERY3_PICASA_TAGS"
+			size="28" 
+			default="PesciCornice"
+			required="true"				
+			/>
+
+			
+		</fieldset>		
+		
+		<fieldset name="basic">
+		
+			<field name="show_page_title" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_TITOLO"
+			default="1"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>			
+		
+			<field name="introtext" type="textarea"
+			description="COM_OZIOGALLERY3_INTRO_DESC"
+			label="COM_OZIOGALLERY3_INTRO"
+			cols="25"
+			rows="5"			
+			/>
+			
+			<field name="showintrotext" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_INTRO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+		</fieldset>
+
+        <fieldset
+        name="gallery"
+        label="COM_OZIOGALLERY3_GALLERY_SETTINGS"
+		>				
+			
+			<field name="width" type="text" 
+			description="COM_OZIOGALLERY3_LARGHEZZA_DESC" 
+			label="COM_OZIOGALLERY3_LARGHEZZA" 
+			size="4" 
+			default="500" 			
+			/>
+			
+			<field name="height" type="text" 
+			description="COM_OZIOGALLERY3_ALTEZZA_DESC"			
+			label="COM_OZIOGALLERY3_ALTEZZA"
+			default="365"			
+			size="4" 
+			/>
+			
+			<field name="table" type="list" 
+			description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" 
+			label="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA" 			
+			default="2" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_LEFT</option>
+				<option value="1">COM_OZIOGALLERY3_RIGHT</option>
+				<option value="2">COM_OZIOGALLERY3_CENTERED</option>
+			</field>	
+			
+
+			<field name="titles" type="radio" 
+			description="COM_OZIOGALLERY3_TITLES_DESC" 			
+			label="COM_OZIOGALLERY3_TITLES" 
+			default="1" 
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="note" type="radio" 
+			description="COM_OZIOGALLERY3_NOTE_MODE_DESC"
+			label="COM_OZIOGALLERY3_NOTE_MODE" 
+			default="1" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+				<option value="2">COM_OZIOGALLERY3_ALWAYS</option>				
+			</field>
+			
+
+			<field name="autohide" type="radio" 
+			description="COM_OZIOGALLERY3_AUTOHIDE_MODE_DESC"
+			label="COM_OZIOGALLERY3_AUTOHIDE_MODE" 
+			default="1" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>	
+
+			<field name="imagesize" type="list" 
+			description="COM_OZIOGALLERY3_IMAGESIZE_MODE_DESC"
+			label="COM_OZIOGALLERY3_IMAGESIZE_MODE" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_MEDIUM</option>
+				<option value="1">COM_OZIOGALLERY3_ORIGINAL</option>
+			</field>	
+
+			<field name="valign" type="list" 
+			description="COM_OZIOGALLERY3_VALIGN_MODE_DESC"
+			label="COM_OZIOGALLERY3_VALIGN_MODE" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_TOP</option>
+				<option value="1">COM_OZIOGALLERY3_MIDDLE</option>
+				<option value="2">COM_OZIOGALLERY3_CENTER</option>
+				<option value="3">COM_OZIOGALLERY3_BOTTOM</option>				
+			</field>
+
+			<field name="zoom" type="radio" 
+			description="COM_OZIOGALLERY3_ZOOM_MODE_DESC"
+			label="COM_OZIOGALLERY3_ZOOM_MODE" 
+			default="1" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+
+
+			<field name="scale" type="radio" 
+			description="COM_OZIOGALLERY3_SCALE_MODE_DESC"
+			label="COM_OZIOGALLERY3_SCALE_MODE" 
+			default="1" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="bg" type="colorpicker" 
+			class="color {hash:true,required:false}" 
+			default="#FFFFFF" 
+			description="COM_OZIOGALLERY3_BG_DESC"
+			label="COM_OZIOGALLERY3_BG"
+			size="8" 
+			/>				
+
+			<field name="bgalpha" type="text"
+			description="COM_OZIOGALLERY3_BGALPHA_DESC"
+			label="COM_OZIOGALLERY3_BGALPHA"
+			size="4" 
+			default="80" 			
+			/>			
+
+			<field name="offset" type="text"
+			description="COM_OZIOGALLERY3_OFFSET_DESC"
+			label="COM_OZIOGALLERY3_OFFSET"
+			size="4" 
+			default="0" 			
+			/>	
+
+		</fieldset>
+		
+		
+		<fieldset
+        name="debug"
+        label="COM_OZIOGALLERY3_DEBUG_SETTINGS"
+		>				
+			<field name="debug" type="radio" 
+			description="COM_OZIOGALLERY3_DEBUG_INFO" 			
+			label="COM_OZIOGALLERY3_DEBUG" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+		
+		</fieldset>
+	</fields>
+</metadata>
