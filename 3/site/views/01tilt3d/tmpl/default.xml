@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_01TILT3D_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY3_01TILT3D_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>	
+	
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="cartella"
+		label="COM_OZIOGALLERY3_IMPORTANT_SETTINGS"
+		>		
+			<field name="info" type="tilt3d" 
+			label="Tilt 3D Skin" 
+			/>				
+		
+			<field name="folder" type="text"
+			description="COM_OZIOGALLERY3_PERCORSO_CARTELLA_DESC"			
+			label="COM_OZIOGALLERY3_PERCORSO_CARTELLA" 
+			size="40" 
+			default="images/oziogallery3" 			
+			/>
+			
+		<field name="reset" type="tiltreset" 
+			default="" 
+			label="COM_OZIOGALLERY3_RESET_XML" 
+			description="COM_OZIOGALLERY3_RESET_XML_DESC" 
+			/>	
+
+		</fieldset>	
+	
+		<fieldset name="basic">
+		
+			<field name="show_page_title" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_TITOLO_DESC"
+			label="COM_OZIOGALLERY3_TITOLO_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>			
+		
+			<field name="introtext" type="textarea"
+			description="COM_OZIOGALLERY3_INTRO_DESC"
+			label="COM_OZIOGALLERY3_INTRO"
+			cols="25"
+			rows="5"			
+			/>
+			
+			<field name="showintrotext" type="radio"
+			description="COM_OZIOGALLERY3_MOSTRA_INTRO_DESC"
+			label="COM_OZIOGALLERY3_MOSTRA_INTRO"
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="xmlnamesuff" type="text"
+			description="COM_OZIOGALLERY3_SUFFISSO_NOME_XML_DESC"			
+			label="COM_OZIOGALLERY3_SUFFISSO_NOME_XML" 
+			size="30" 
+			/>
+			
+			<field name="flickr" type="list" 
+			description="COM_OZIOGALLERY3_SELEZIONA_METODO_DESC"	
+			label="COM_OZIOGALLERY3_SELEZIONA_METODO" 			
+			default="0" 
+			>
+				<option value="0">COM_OZIOGALLERY3_XML</option>
+				<option value="1">COM_OZIOGALLERY3_FLICKR</option>
+			</field>
+			
+			<field name="xml_mode" type="list" 
+			description="COM_OZIOGALLERY3_METODO_XML_DESC" 
+			label="COM_OZIOGALLERY3_METODO_XML" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_XML_AUTOMATICO</option>
+				<option value="1">COM_OZIOGALLERY3_XML_MANUALE</option>
+			</field>
+			
+			<field name="manualxmlname" type="text" 
+			description="COM_OZIOGALLERY3_PATH_XML_MANUALE_DESC"
+			label="COM_OZIOGALLERY3_PATH_XML_MANUALE" 
+			size="60"  			
+			default="components/com_oziogallery3/skin/tiltviewer/manual-xml/tiltviewer.ozio" 
+			/>
+		</fieldset>
+		
+		
+        <fieldset
+        name="gallery"
+        label="COM_OZIOGALLERY3_GALLERY_SETTINGS"
+		>	
+			<field name="ordinamento" type="list"
+			description="COM_OZIOGALLERY3_ORDINE_IMMAGINI_DESC"			
+			label="COM_OZIOGALLERY3_ORDINE_IMMAGINI" 
+			default="3" 
+			>
+				<option value="0">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO</option>
+				<option value="1">COM_OZIOGALLERY3_PER_NOME_ORDINE_ALFABETICO_INVERSO</option>		  
+				<option value="2">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_RECENTI</option>
+				<option value="3">COM_OZIOGALLERY3_PER_DATA_-_PRIMA_I_MENO_RECENTI</option>	
+				<option value="4">COM_OZIOGALLERY3_CASUALE</option>		  
+			</field>
+			
+			<field name="retrotext" type="textarea"
+			description="COM_OZIOGALLERY3_TESTO_IMMAGINI_DESC"			
+			label="COM_OZIOGALLERY3_TESTO_IMMAGINI" 
+			rows="5" 
+			cols="30" 
+			default="Ozio Gallery - Joomla! extension by www.joomla.it" 
+			/>
+		
+			<field name="width" type="text" 
+			description="COM_OZIOGALLERY3_LARGHEZZA_DESC" 
+			label="COM_OZIOGALLERY3_LARGHEZZA" 
+			size="4" 
+			default="640" 			
+			/>
+			
+			<field name="height" type="text" 
+			description="COM_OZIOGALLERY3_ALTEZZA_DESC"			
+			label="COM_OZIOGALLERY3_ALTEZZA"
+			default="480"			
+			size="4" 
+			/>
+			
+			<field name="maximagesize" type="text"
+			description="COM_OZIOGALLERY3_MAX_IMAGE_SIZE_DESC" 
+			label="COM_OZIOGALLERY3_MAX_IMAGE_SIZE" 			
+			default="640" 
+			size="4" 
+			/>
+			
+			<field name="framecolor" type="colorpicker" 
+			description="COM_OZIOGALLERY3_COLORE_BORDO_IMMAGINI_DESC"			
+			label="COM_OZIOGALLERY3_COLORE_BORDO_IMMAGINI" 			
+			class="color {hash:true,required:false}" 
+			default="#FFFFFF" 
+			size="10" 
+			/>
+			
+			<field name="bkgndretro" type="colorpicker" 
+			description="COM_OZIOGALLERY3_COLORE_RETRO_IMMAGINE_DESC"			
+			label="COM_OZIOGALLERY3_COLORE_RETRO_IMMAGINE" 			
+			class="color {hash:true,required:false}" 
+			size="10" 
+			default="#FFFF66"			
+			/>
+			
+			<field name="bkgndinnercolor" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_CENTER_DESC"			
+			label="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_CENTER" 			
+			class="color {hash:true,required:false}" 
+			size="10"
+			default="#333333" 			
+			/>
+			
+			<field name="bkgndoutercolor" type="colorpicker"
+			description="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_EDGE_DESC"			
+			label="COM_OZIOGALLERY3_BACKGROUND_GRADIENT_EDGE" 			
+			class="color {hash:true,required:false}" 
+			size="10" 
+			default="#000000" 			
+			/>
+			
+			<field name="columns" type="text" 
+			description="COM_OZIOGALLERY3_COLUMNS_DESC"
+			label="COM_OZIOGALLERY3_COLUMNS" 
+			size="2" 
+			default="3" 			
+			/>
+			
+			<field name="rows" type="text" 
+			description="COM_OZIOGALLERY3_ROWS_DESC" 
+			label="COM_OZIOGALLERY3_ROWS" 
+			size="2" 
+			default="3" 
+			/>	
+			
+			<field name="table" type="list" 
+			description="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA_DESC" 
+			label="COM_OZIOGALLERY3_ALLINEAMENTO_TABELLA" 			
+			default="2" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_LEFT</option>
+				<option value="1">COM_OZIOGALLERY3_RIGHT</option>
+				<option value="2">COM_OZIOGALLERY3_CENTERED</option>
+			</field>	
+			
+			<field name="rotatoralign" type="list" 
+			description="COM_OZIOGALLERY3_ALLINEAMENTO_CONTENUTO_DESC" 
+			label="COM_OZIOGALLERY3_ALLINEAMENTO_CONTENUTO" 
+			default="2" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_LEFT</option>
+				<option value="1">COM_OZIOGALLERY3_RIGHT</option>
+				<option value="2">COM_OZIOGALLERY3_INHERIT</option>
+			</field>
+			
+			<field name="downloads" type="radio" 
+			description="COM_OZIOGALLERY3_USE_DOWNLOAD_DESC" 			
+			label="COM_OZIOGALLERY3_USE_DOWNLOAD" 
+			default="0"
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="downloadtxt" type="text"
+			description="COM_OZIOGALLERY3_DOWNLOADTXT_DESC" 			
+			label="COM_OZIOGALLERY3_DOWNLOADTXT" 
+			size="25"
+			default="Download" 			
+			/>
+			
+			<field name="flipbutton" type="radio" 
+			description="COM_OZIOGALLERY3_SHOW_FLIP_BUTTON_DESC" 
+			label="COM_OZIOGALLERY3_SHOW_FLIP_BUTTON" 
+			default="1" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+
+		</fieldset>		
+		
+        <fieldset
+        name="flickr"
+        label="COM_OZIOGALLERY3_FLICKR_SETTINGS"
+		>		
+			<field name="user_id" type="text" 
+			description="COM_OZIOGALLERY3_ID_UTENTE_FLICKR_DESC" 			
+			label="COM_OZIOGALLERY3_ID_UTENTE_FLICKR" 
+			size="30" 
+			default="" 
+			/>
+			
+			<field name="set_id" type="text"
+			description="COM_OZIOGALLERY3_ID_SET_FLICKR_DESC" 			
+			label="COM_OZIOGALLERY3_ID_SET_FLICKR" 
+			size="30" 
+			default=""
+			/>
+			
+			<field name="group_id" type="text"
+			description="COM_OZIOGALLERY3_ID_GRUPPO_FLICKR_DESC" 			
+			label="COM_OZIOGALLERY3_ID_GRUPPO_FLICKR" 
+			size="30" 
+			default="" 
+			/>
+		
+		
+			<field name="sort" type="radio" 
+			description="COM_OZIOGALLERY3_RELEVANCE_DESC" 			
+			label="COM_OZIOGALLERY3_RELEVANCE" 
+			default="0" 
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="tag_mode" type="radio" 
+			description="COM_OZIOGALLERY3_TAG_MODE_DESC"
+			label="COM_OZIOGALLERY3_TAG_MODE" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_ANY</option>
+				<option value="1">COM_OZIOGALLERY3_ALL</option>
+			</field>
+			
+			<field name="tags" type="text" 
+			description="COM_OZIOGALLERY3_TAGS_DESC" 
+			label="COM_OZIOGALLERY3_TAGS" 
+			size="40" 
+			default="" 			
+			/>	
+			
+			<field name="text" type="text" 
+			description="COM_OZIOGALLERY3_TESTO_DESC" 
+			label="COM_OZIOGALLERY3_TESTO" 
+			size="40" 
+			default="" 
+			/>
+		</fieldset>
+		
+        <fieldset
+        name="debug"
+        label="COM_OZIOGALLERY3_DEBUG_SETTINGS"
+		>				
+	
+			<field name="modifiche" type="radio" 
+			description="COM_OZIOGALLERY3_DATA_E_ORA_MODIFICHE_DESC" 
+			label="COM_OZIOGALLERY3_DATA_E_ORA_MODIFICHE" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+			
+			<field name="debug" type="radio" 
+			description="COM_OZIOGALLERY3_DEBUG_INFO" 			
+			label="COM_OZIOGALLERY3_DEBUG" 
+			default="0" 			
+			>
+				<option value="0">COM_OZIOGALLERY3_NO</option>
+				<option value="1">COM_OZIOGALLERY3_YES</option>
+			</field>
+		
+		</fieldset>
+	</fields>
+</metadata>
