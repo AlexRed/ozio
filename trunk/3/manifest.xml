@@ -23,6 +23,7 @@
 		<folder>js</folder>
 		<folder>language</folder>
 		<folder>lib</folder>
+		<folder>skin</folder>
 		<folder>views</folder>
 	</files>
 	<administration>

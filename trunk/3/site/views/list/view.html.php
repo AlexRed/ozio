@@ -23,19 +23,21 @@ jimport('joomla.application.component.view');
 
 class OzioGalleryViewList extends JView
 {
+	protected $albumlist = array();
+
 	function display($tpl = null)
 	{
-
 		$application = JFactory::getApplication("site");
+		$this->params = $application->getParams("com_oziogallery3");
 		$menu = $application->getMenu();
 		$items = $menu->getItems("component", "com_oziogallery3");
 
-
-		$language = JFactory::getLanguage();
-		echo("<h2>" . $language->_("_ERR_PROVIDE_VALID_URL") . "</h2>");
-		echo("<ul>");
 		foreach ($items as &$item)
 		{
+			// Skip album list menu items
+			if (strpos($item->link, "&view=list") !== false) continue;
+
+			$album = new stdClass();
 			$link = "";
 			$router = JSite::getRouter();
 
@@ -48,18 +50,12 @@ class OzioGalleryViewList extends JView
 				$link = $item->link . '&Itemid=' . $item->id;
 			}
 
-			// Finally translate it in a SEF one if needed
-			$link = JRoute::_($link);
-
-			echo('<li><a href="' . $link . '">' . $item->title . '</a></li>');
-
+			$album->url = JRoute::_($link);
+			$album->title = $item->title;
+			$this->albumlist[] = $album;
 		}
-		echo("</ul>");
-
 		parent::display($tpl);
 	}
-
-
 }
 
 
