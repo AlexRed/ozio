@@ -292,49 +292,67 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+
 						<tr>
 							<td align="center">1</td>
 							<td align="center">Disabled Functions</td>
 							<td align="center"><?php
-							if (ini_get('disable_functions')) { 
-							echo (ini_get('disable_functions')); 
-							} else if (!ini_get('disable_functions')) { 
-							echo '<strong><font color="green">NO DISABLED FUNCTIONS</font></strong>'; 
-							}
+									if (ini_get('disable_functions')) {
+										echo (ini_get('disable_functions'));
+									} else if (!ini_get('disable_functions')) {
+											echo '<strong><font color="green">NO DISABLED FUNCTIONS</font></strong>';
+										}
 							?></td>
 						</tr>
-							<tr>
+						<tr>
 							<td align="center">2</td>
 							<td align="center">FOPEN</td>
 							<td align="center"><?php
-							if (ini_get('allow_url_fopen')) { 
-							echo '<strong><font color="green">OK</font></strong>'; 
-							} else if (!ini_get('allow_url_fopen')) { 
-							echo '<strong><font color="red">NO</font></strong>'; 
-							}
+									if (ini_get('allow_url_fopen')) {
+										echo '<strong><font color="green">OK</font></strong>';
+									} else if (!ini_get('allow_url_fopen')) {
+											echo '<strong><font color="red">NO</font></strong>';
+										}
 							?></td>
 						</tr>
 						<tr>
 							<td align="center">3</td>
 							<td align="center">CURL</td>
 							<td align="center"><?php
-							if (ini_get('curl_init')) { 
-							echo (ini_get('curl_init')); 
-							} else if (!ini_get('curl_init')) { 
-							echo '<strong><font color="green">OK</font></strong>'; 
-							}
+									if (ini_get('curl_init')) {
+										echo (ini_get('curl_init'));
+									} else if (!ini_get('curl_init')) {
+											echo '<strong><font color="green">OK</font></strong>';
+										}
 							?></td>
 						</tr>
+
 						<tr>
 							<td align="center">4</td>
+							<td align="center">Outbound connections</td>
+							<td align="center">
+								<?php
+									if (simplexml_load_file("https://picasaweb.google.com/data/feed/base/user/110359559620842741677"))
+									{
+										echo '<strong><font color="green">OK</font></strong>';
+									}
+									else
+									{
+										echo '<strong><font color="red">ERROR</font></strong>';
+									}
+								?>
+							</td>
+						</tr>
+
+						<tr>
+							<td align="center">5</td>
 							<td align="center">plugins/editors-xtd/oziogallery/oziogallery.php</td>
 							<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'editors-xtd'.DS.'oziogallery'.DS.'oziogallery.php') ?
 									'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_INSTALLED' ) .'</font></strong>' :
 								'<strong><font color="red">'. JText::_( 'COM_OZIOGALLERY3_NOT_INSTALLED' ) .'</font></strong>'; ?></td>
 						</tr>
 						<tr>
-							<td align="center">5</td>
+							<td align="center">6</td>
 							<td align="center">plugins/content/ozio/ozio.php</td>
 							<td align="center"><?php echo is_file(JPATH_SITE.DS.'plugins'.DS.'content'.DS.'ozio'.DS.'ozio.php') ?
 									'<strong><font color="green">'. JText::_( 'COM_OZIOGALLERY3_INSTALLED' ) .'</font></strong>' :
