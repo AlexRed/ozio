@@ -32,6 +32,12 @@ class OzioGalleryViewList extends JView
 		$menu = $application->getMenu();
 		$items = $menu->getItems("component", "com_oziogallery3");
 
+			$document = JFactory::getDocument();
+			$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+			// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery.pwi.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/pwi.js");
+
 		foreach ($items as &$item)
 		{
 			// Skip album list menu items
