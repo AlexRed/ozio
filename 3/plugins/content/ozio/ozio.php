@@ -90,7 +90,10 @@ class plgContentOzio extends JPlugin
 			$authcode = "&authkey=Gv1sRg" . $cparams->get("limitedpassword");
 		}
 
-		$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+		// Old identifier: the album number
+		//$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+		// New identifier: the album unique name
+		$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/album/" . $albumid . "?v=2" . $authcode;
 		$photos = simplexml_load_file($feed) or
 		$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 

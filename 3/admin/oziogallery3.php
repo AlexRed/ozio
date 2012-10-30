@@ -21,9 +21,10 @@
 
 defined('_JEXEC') or die;
 
-// Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_oziogallery3')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+// Access check
+if (!JFactory::getUser()->authorise("core.manage", "com_oziogallery3"))
+{
+	return JFactory::getApplication()->enqueueMessage(JText::_("JERROR_ALERTNOAUTHOR"), "error");
 }
 
 // Include dependencies
@@ -40,24 +41,23 @@ if (strpos($task, "reset") === 0)
 	ozio_helper::$task();
 
 /*
-		switch($task)
-		{
-			case 'accordion'			: ozio_helper::accordion($dir); 		break;
-			case 'carousel'				: ozio_helper::carousel($dir); 			break;
-			case 'flashgallery'			: ozio_helper::flashgallery($dir); 		break;
-			case 'imagerotator'			: ozio_helper::imagerotator($dir); 		break;
-			case 'tilt'					: ozio_helper::tilt($dir); 				break;
-			case 'mediagallery'			: ozio_helper::mediagallery($dir); 		break;
-			case 'futura'				: ozio_helper::futura($dir); 			break;
-			case 'cooliris'				: ozio_helper::cooliris($dir); 			break;
-			case 'resetImg' 			: ozio_helper::resetImg(); 				break;
-			case 'resetAcc' 			: ozio_helper::resetAcc(); 				break;
-			case 'resetCar' 			: ozio_helper::resetCar(); 				break;
-			case 'resetFLG' 			: ozio_helper::resetFLG(); 				break;
-			case 'resetTilt' 			: ozio_helper::resetTilt(); 			break;
-			case 'resetmediagallery' 	: ozio_helper::resetmediagallery(); 	break;
-			case 'resetfutura'		 	: ozio_helper::resetfutura(); 			break;
-			case 'resetcooliris' 		: ozio_helper::resetcooliris(); 		break;
-		}
+switch($task)
+{
+case 'accordion'			: ozio_helper::accordion($dir); 		break;
+case 'carousel'				: ozio_helper::carousel($dir); 			break;
+case 'flashgallery'			: ozio_helper::flashgallery($dir); 		break;
+case 'imagerotator'			: ozio_helper::imagerotator($dir); 		break;
+case 'tilt'					: ozio_helper::tilt($dir); 				break;
+case 'mediagallery'			: ozio_helper::mediagallery($dir); 		break;
+case 'futura'				: ozio_helper::futura($dir); 			break;
+case 'cooliris'				: ozio_helper::cooliris($dir); 			break;
+case 'resetImg' 			: ozio_helper::resetImg(); 				break;
+case 'resetAcc' 			: ozio_helper::resetAcc(); 				break;
+case 'resetCar' 			: ozio_helper::resetCar(); 				break;
+case 'resetFLG' 			: ozio_helper::resetFLG(); 				break;
+case 'resetTilt' 			: ozio_helper::resetTilt(); 			break;
+case 'resetmediagallery' 	: ozio_helper::resetmediagallery(); 	break;
+case 'resetfutura'		 	: ozio_helper::resetfutura(); 			break;
+case 'resetcooliris' 		: ozio_helper::resetcooliris(); 		break;
+}
 */
-?>

@@ -35,17 +35,17 @@ class OzioViewOzio extends JView
 	public function display($tpl = null)
 	{
 		jimport('joomla.html.pane');
-		$pane   = JPane::getInstance('sliders');	
-		
+		$pane   = JPane::getInstance('sliders');
+
 		$pubblicate		= $this->get( 'Pubblicate' );
 		$nonpubblicate	= $this->get( 'Nonpubblicate' );
-		$cestinate		= $this->get( 'Cestinate' );		
+		$cestinate		= $this->get( 'Cestinate' );
 
 		$this->assignRef('pane'					, $pane);
 		$this->assignRef('pubblicate'			, $pubblicate);
-		$this->assignRef('nonpubblicate'		, $nonpubblicate);	
-		$this->assignRef('cestinate'			, $cestinate);	
-	
+		$this->assignRef('nonpubblicate'		, $nonpubblicate);
+		$this->assignRef('cestinate'			, $cestinate);
+
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
@@ -53,20 +53,23 @@ class OzioViewOzio extends JView
 
 		$this->addToolbar();
 		parent::display($tpl);
-	}	
-	
-	
+	}
+
+
 	protected function addToolbar()
 	{
 		$document	= JFactory::getDocument();
 		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
-		
+
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ),'logo' );
+		// Options button
+		if (JFactory::getUser()->authorise("core.admin", "com_oziogallery3"))
+		{
+			JToolBarHelper::preferences("com_oziogallery3");
+		}
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3', true);
-		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_RESET_XML' ), 'index.php?option=com_oziogallery3&amp;view=reset');			
-		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq');	
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_RESET_XML' ), 'index.php?option=com_oziogallery3&amp;view=reset');
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq');
 
 	}
 }
-
-?>
