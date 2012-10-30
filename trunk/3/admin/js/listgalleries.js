@@ -140,7 +140,9 @@ function LoadAlbums()
 		{
 			var album = albums[a];
 			var title = album.getElement('title').textContent;
-			var id, numphotos;
+			var id;
+			var name;
+			var numphotos;
 
 			var albumtype = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
 			// getElement() doesn't work on namespaces
@@ -150,7 +152,11 @@ function LoadAlbums()
 			for (var c = 0; c < album.childNodes.length; ++c)
 			{
 				var tagName = album.childNodes[c].tagName;
+				// Old identifier: the album number
 				if (album.childNodes[c].tagName == 'gphoto:id') id = album.childNodes[c].textContent;
+				// New identifier: the album unique name
+				if (album.childNodes[c].tagName == 'gphoto:name') name = album.childNodes[c].textContent;
+
 				if (album.childNodes[c].tagName == 'gphoto:numphotos') numphotos = album.childNodes[c].textContent;
 				//if (album.childNodes[c].tagName == 'gphoto:albumType') albumtype = 'COM_OZIOGALLERY3_ALBUMTYPE_' + album.childNodes[c].textContent.toUpperCase();
 				if (album.childNodes[c].tagName == 'gphoto:albumType')
@@ -166,7 +172,7 @@ function LoadAlbums()
 			}
 			else
 				{
-				addoption(select, id, title + ' (' + numphotos + ')');
+				addoption(select, name, title + ' (' + numphotos + ')');
 			}
 		}
 
