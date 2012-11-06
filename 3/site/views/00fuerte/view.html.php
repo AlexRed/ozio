@@ -58,7 +58,8 @@
 				$authcode = "&authkey=Gv1sRg" . $this->params->get("limitedpassword");
 			}
 
-			$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+			//$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+			$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/album/" . $albumid . "?v=2" . $authcode;
 			$photos = simplexml_load_file($feed) or
 			$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 
