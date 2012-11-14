@@ -45,6 +45,9 @@ jQuery(document).ready(function ($)
 		// Filtro sugli album utente
 		albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
 
+		showAlbumThumbs: true,
+		thumbAlign: true,
+
 		// Ignora i comandi tramite parametri GET ?par=...
 		useQueryParameters: false
 	});
