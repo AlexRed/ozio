@@ -43,32 +43,34 @@ class OzioGalleryViewList extends JView
 		$itemid = "&amp;Itemid=" . $itemid->id;
 		$document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . $itemid);
 
-/*
-		$menu = $application->getMenu();
-		$items = $menu->getItems("component", "com_oziogallery3");
-		foreach ($items as &$item)
-		{
-			// Skip album list menu items
-			if (strpos($item->link, "&view=list") !== false) continue;
+		$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
 
-			$album = new stdClass();
-			$link = "";
-			$router = JSite::getRouter();
+		/*
+				$menu = $application->getMenu();
+				$items = $menu->getItems("component", "com_oziogallery3");
+				foreach ($items as &$item)
+				{
+					// Skip album list menu items
+					if (strpos($item->link, "&view=list") !== false) continue;
 
-			if ($router->getMode() == JROUTER_MODE_SEF)
-			{
-				$link = 'index.php?Itemid=' . $item->id;
-			}
-			else
-			{
-				$link = $item->link . '&Itemid=' . $item->id;
-			}
+					$album = new stdClass();
+					$link = "";
+					$router = JSite::getRouter();
 
-			$album->url = JRoute::_($link);
-			$album->title = $item->title;
-			$this->albumlist[] = $album;
-		}
-*/
+					if ($router->getMode() == JROUTER_MODE_SEF)
+					{
+						$link = 'index.php?Itemid=' . $item->id;
+					}
+					else
+					{
+						$link = $item->link . '&Itemid=' . $item->id;
+					}
+
+					$album->url = JRoute::_($link);
+					$album->title = $item->title;
+					$this->albumlist[] = $album;
+				}
+		*/
 		parent::display($tpl);
 	}
 }

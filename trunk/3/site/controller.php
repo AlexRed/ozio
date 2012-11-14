@@ -19,7 +19,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controller');
 
 class OzioGalleryController extends JController
@@ -33,7 +33,7 @@ class OzioGalleryController extends JController
 	public function proxy()
 	{
 		$uri = JFactory::getURI();
-		$query = $uri->getQuery( true );
+		$query = $uri->getQuery(true);
 
 		$user = $query["user"] ? "user/" . $query["user"] : "";
 		$urlwrapper = new UrlWrapper();
@@ -46,7 +46,6 @@ class OzioGalleryController extends JController
 	}
 
 }
-
 
 
 class UrlWrapper
@@ -83,7 +82,7 @@ class UrlWrapper
 	{
 		$handle = curl_init($url);
 		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt ($handle, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
 		$data = curl_exec($handle);
 		curl_close($handle);
 		return $data;

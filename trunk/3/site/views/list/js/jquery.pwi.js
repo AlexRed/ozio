@@ -508,7 +508,7 @@
 				// Build main album container
 				var $scAlbum = $(
 					"<div class='pwi_album' style='" +
-						(settings.albumThumbAlign ? "width:" + (settings.albumThumbSize + 1) + "px;" : "") +
+						"width:" + (settings.albumThumbSize + 1) + "px;" +
 						"'/>"
 				);
 
@@ -520,7 +520,10 @@
 						(
 							'<a href="' + settings.album_local_url + '">' +
 								"<img src='" + $thumbnail0.url +
-								"' height='" + $thumbnail0.height + "' width='" + $thumbnail0.width +
+								"' height='" + $thumbnail0.height +
+								"' width='" + $thumbnail0.width +
+
+								"' class='coverpage" +
 								"'/>" +
 								'</a>'
 						);
@@ -542,7 +545,6 @@
 				}
 				$scAlbums.append($scAlbum);
 			});
-			$scAlbums.append(strings.clearDiv);
 
 			// less albums-per-page then max so paging
 			if ($albumCounter > settings.albumsPerPage)
@@ -1020,7 +1022,6 @@
 		albumCrop:true, //-- crop thumbs on albumpage to have all albums in square thumbs (see albumThumbSize for supported sizes)
 		albumTitle:"", //-- overrule album title in 'album' mode
 		albumThumbSize:160, //-- specify thumbnail size of albumthumbs (default: 72, supported cropped/uncropped: 32, 48, 64, 72, 104, 144, 150, 160 and uncropped only: 94, 110, 128, 200, 220, 288, 320, 400, 512, 576, 640, 720, 800, 912, 1024, 1152, 1280, 1440, 1600)
-		albumThumbAlign:true, //-- Allign thumbs vertically between rows
 		albumMaxResults:999, //-- load only the first X albums
 		albumsPerPage:999, //-- show X albums per page (activates paging on albums when this amount is less then the available albums)
 		albumPage:1, //-- force load on specific album
