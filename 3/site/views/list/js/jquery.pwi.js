@@ -149,6 +149,7 @@
 		// Description:     Format date to <day>-<month>-<year>
 		// Parameters:      $dt: String containing a numeric date/time
 		// Return:          Date string
+		// Todo: compatibilita' con anno a 2 cifre, ma 12 viene interpretato 1912
 		function formatDate($dt)
 		{
 			var $today = new Date(Number($dt)),
@@ -165,6 +166,7 @@
 		//                  Time is only shown when not equal to 00:00
 		// Parameters:      $dt: String containing a numeric date/time
 		// Return:          Date/Time string
+		// Todo: compatibilita' con anno a 2 cifre, ma 12 viene interpretato 1912
 		function formatDateTime($dt)
 		{
 			var $today = new Date(Number($dt));
@@ -534,11 +536,20 @@
 				{
 					var $scAlbumTitle = $("<div class='pwi_album_title'/>");
 
-					$scAlbumTitle.append(((n.title.$t.length > settings.showAlbumTitlesLength) ?
-						n.title.$t.substring(0, settings.showCaptionLength) :
-						n.title.$t) + "<br/>" +
-						(settings.showAlbumdate ? formatDate(n.gphoto$timestamp.$t) : "") +
-						(settings.showAlbumPhotoCount ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
+					$scAlbumTitle.append(
+						((n.title.$t.length > settings.showAlbumTitlesLength) ? n.title.$t.substring(0, settings.showCaptionLength) : n.title.$t) +
+						"<br/>" +
+
+						// Modificata la formattazione della data per eliminare qualsiasi ambiguita' di formati
+						// americano: mese/giorno/anno, europeo: giorno/mese/anno, asiatico: anno/mese/giorno
+						// percio' e' stato utilizzato un formato comprensibile da tutti: giorno/mese in lettere abbreviato/anno
+						// Il nome del mese viene preso dalla lingua corrente
+						// Necessita la libreria date.format.js (http://blog.stevenlevithan.com/archives/date-time-format)
+						// (settings.showAlbumdate ? formatDate(n.gphoto$timestamp.$t) : "") +
+						(settings.showAlbumdate ? new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") : "") +
+
+						// Modificato il separatore tra la data e il numero di foto
+						(settings.showAlbumPhotoCount ? " - " +
 							n.gphoto$numphotos.$t + " " +
 							((n.gphoto$numphotos.$t == "1") ? settings.labels.photo : settings.labels.photos) : ""));
 					$scAlbum.append($scAlbumTitle);

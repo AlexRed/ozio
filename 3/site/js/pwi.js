@@ -47,6 +47,21 @@ jQuery(document).ready(function ($)
 
 		showAlbumThumbs: true,
 		thumbAlign: true,
+		showAlbumdate: true,
+
+		labels: {
+			photo: "<?php echo JText::_("COM_OZIOGALLERY3_PHOTO"); ?>",
+			photos: "<?php echo JText::_("COM_OZIOGALLERY3_PHOTOS"); ?>",
+			downloadphotos:"Download photos",
+			albums:"Back to albums",
+			noalbums:"No albums available",
+			page:"Page",
+			prev: "<?php echo JText::_("JPREVIOUS"); ?>",
+			next: "<?php echo JText::_("JNEXT"); ?>",
+			showPermaLink:"Show PermaLink",
+			showMap:"Show Map",
+			videoNotSupported:"Video not supported"
+		},
 
 		// Ignora i comandi tramite parametri GET ?par=...
 		useQueryParameters: false
