@@ -1,6 +1,7 @@
 .author
 {
 	display: inline-table;
+	margin: 16px;
 }
 
 #container
@@ -23,8 +24,9 @@
 	color: #FFFFFF;
 	display: inline-block;
 	overflow: hidden;
-
 	position: relative;
 	text-align: center;
+	margin-top: 16px;
+	padding: 8px;
 }
 

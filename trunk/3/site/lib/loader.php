@@ -77,7 +77,7 @@ class cssLoader extends Loader
 
 	protected function http_headers()
 	{
-		header('content-type: text/css');
+		header('Content-Type: text/css; charset=utf-8');
 	}
 
 	protected function content_header()
@@ -100,7 +100,7 @@ class jsLoader extends Loader
 
 	protected function http_headers()
 	{
-		header('content-type: application/javascript');
+		header('Content-Type: application/javascript; charset=utf-8');
 	}
 
 	protected function content_header()
