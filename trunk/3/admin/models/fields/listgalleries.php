@@ -29,7 +29,6 @@ class JFormFieldListGalleries extends JFormFieldList
 	protected function getInput()
 	{
 		$name = basename(realpath(dirname(__FILE__) . "/../.."));
-		$extension = substr($name, 4);
 
 		static $resources = true;
 		if ($resources)

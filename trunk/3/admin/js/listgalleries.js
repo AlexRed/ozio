@@ -14,7 +14,7 @@ function TrigAllSelextChange()
 	{
 		var select = selects[i];
 		if (select.getAttribute('class') == 'selext')
-			{
+		{
 			select.onchange(select);
 		}
 	}
@@ -27,7 +27,7 @@ function OnUseridExit()
 	var re = new RegExp('^[0-9]{21}');
 
 	if (!input.value.match(re))
-		{
+	{
 		// Clear previous options
 		$('jform_params_gallery_id').options.length = 0;
 
@@ -46,7 +46,7 @@ function OnUseridChange(value)
 
 	//if (input.value.match(re))
 	if (value.match(re))
-		{
+	{
 		LoadAlbums();
 	}
 }
@@ -56,18 +56,18 @@ function OnUseridPaste(e)
 {
 	// Leggere la clipboard e' una pena
 	/*
-	var pastedText = undefined;
-	if (window.clipboardData && window.clipboardData.getData)
-	{
-	pastedText = window.clipboardData.getData('Text'); // IE
-	OnUseridChange(pastedText);
-	}
-	else if (e.event.clipboardData && e.event.clipboardData.getData)
-	{
-	pastedText = e.event.clipboardData.getData('text/plain');
-	OnUseridChange(pastedText);
-	}
-	*/
+	 var pastedText = undefined;
+	 if (window.clipboardData && window.clipboardData.getData)
+	 {
+	 pastedText = window.clipboardData.getData('Text'); // IE
+	 OnUseridChange(pastedText);
+	 }
+	 else if (e.event.clipboardData && e.event.clipboardData.getData)
+	 {
+	 pastedText = e.event.clipboardData.getData('text/plain');
+	 OnUseridChange(pastedText);
+	 }
+	 */
 	// Innesca un evento OnUseridChange che funziona bene
 	var myvar = setTimeout(OnUseridChange, 10);
 }
@@ -77,21 +77,20 @@ function OnUseridCut(value)
 }
 
 
-
 function LoadAlbums()
 {
 	//var input = $('jform_params_userid');
 	var input = document.id('jform_params_userid');
 	/*
-	// Evento onChange
-	input.addEvent('realChange', OnUseridChange);
-	input.addEvent('paste', OnUseridPaste);
-	input.addEvent('cut', OnUseridCut);
-	input.addEvent('change', OnUseridExit);
-	*/
+	 // Evento onChange
+	 input.addEvent('realChange', OnUseridChange);
+	 input.addEvent('paste', OnUseridPaste);
+	 input.addEvent('cut', OnUseridCut);
+	 input.addEvent('change', OnUseridExit);
+	 */
 	// Altri eventi
 
-	var xhrOnRequest = function()
+	var xhrOnRequest = function ()
 	{
 		// Hide the select
 		$('jform_params_gallery_id').hide();
@@ -99,7 +98,7 @@ function LoadAlbums()
 		$('jform_params_gallery_id_loader').show();
 	};
 
-	var xhrOnComplete = function(response)
+	var xhrOnComplete = function (response)
 	{
 		// Show the select
 		//$('jform_params_gallery_id').show();
@@ -107,7 +106,7 @@ function LoadAlbums()
 		$('jform_params_gallery_id_loader').hide();
 	};
 
-	var xhrOnSuccess = function(responseText, responseXML)
+	var xhrOnSuccess = function (responseText, responseXML)
 	{
 		var select = $('jform_params_gallery_id');
 		// Clear previous options
@@ -115,10 +114,10 @@ function LoadAlbums()
 		//select.setStyle('width', '50%');
 
 		var tabella = new Array();
-		tabella['NONE']='<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
-		tabella['PROFILEPHOTOS']='<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
-		tabella['SCRAPBOOK']='<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
-		tabella['BUZZ']='<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
+		tabella['NONE'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
+		tabella['PROFILEPHOTOS'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
+		tabella['SCRAPBOOK'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
+		tabella['BUZZ'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
 
 		// Abilitazione combo
 		// select.style.display = 'none';
@@ -127,7 +126,7 @@ function LoadAlbums()
 		// This doesn't work on firefox
 		//if (!responseXML)
 		if (responseText == '')
-			{
+		{
 			$('jform_params_gallery_id_warning').show();
 			return;
 		}
@@ -151,7 +150,6 @@ function LoadAlbums()
 			//numphotos = albums[a].getElement('gphoto\\:numphotos').get('text');
 			for (var c = 0; c < album.childNodes.length; ++c)
 			{
-				var tagName = album.childNodes[c].tagName;
 				// Old identifier: the album number
 				if (album.childNodes[c].tagName == 'gphoto:id') id = album.childNodes[c].textContent;
 				// New identifier: the album unique name
@@ -160,19 +158,22 @@ function LoadAlbums()
 				if (album.childNodes[c].tagName == 'gphoto:numphotos') numphotos = album.childNodes[c].textContent;
 				//if (album.childNodes[c].tagName == 'gphoto:albumType') albumtype = 'COM_OZIOGALLERY3_ALBUMTYPE_' + album.childNodes[c].textContent.toUpperCase();
 				if (album.childNodes[c].tagName == 'gphoto:albumType')
-					{
+				{
 					//title = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_"); ?>' + album.childNodes[c].textContent.toUpperCase();
 					title = tabella[album.childNodes[c].textContent.toUpperCase()];
 				}
 			}
 
 			if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
-				{
+			{
 				numbuzz += parseInt(numphotos);
 			}
 			else
-				{
-				addoption(select, name, title + ' (' + numphotos + ')');
+			{
+				// Old identifier: the album number
+				addoption(select, id, title + ' (' + numphotos + ')');
+				// New identifier: the album unique name
+				//addoption(select, name, title + ' (' + numphotos + ')');
 			}
 		}
 
@@ -186,20 +187,20 @@ function LoadAlbums()
 		SelectCurrentAlbum();
 	};
 
-	var xhrOnFailure = function(response)
+	var xhrOnFailure = function (response)
 	{
-			$('jform_params_gallery_id_warning').show();
+		$('jform_params_gallery_id_warning').show();
 	};
 
 	var options =
 	{
-		url: '../index.php',
-		method: 'GET',
-		data: 'option=com_oziogallery3&view=00fuerte&task=proxy&user=' + input.value + '&v=2',
-		onRequest: xhrOnRequest,
-		onComplete: xhrOnComplete,
-		onSuccess: xhrOnSuccess,
-		onFailure: xhrOnFailure
+		url:'../index.php',
+		method:'GET',
+		data:'option=com_oziogallery3&view=00fuerte&task=proxy&user=' + input.value + '&v=2',
+		onRequest:xhrOnRequest,
+		onComplete:xhrOnComplete,
+		onSuccess:xhrOnSuccess,
+		onFailure:xhrOnFailure
 	};
 
 	var request = new Request(options);
@@ -233,7 +234,7 @@ function SelectCurrentAlbum()
 	for (var i = 0; i < options.length; ++i)
 	{
 		if (options[i].value == spia.innerHTML)
-			{
+		{
 			options[i].selected = true;
 		}
 	}
@@ -241,62 +242,72 @@ function SelectCurrentAlbum()
 }
 
 /*
-https://github.com/Mogzor/mootools-event-realChange
+ https://github.com/Mogzor/mootools-event-realChange
 
-description: Event.realChange
-license: MIT-style
+ description: Event.realChange
+ license: MIT-style
 
-authors:
-- Hugo Mougard
+ authors:
+ - Hugo Mougard
 
-requires:
-- Element
-- Element.Event
+ requires:
+ - Element
+ - Element.Event
 
-provides: [Element.Events.realChange]
-*/
+ provides: [Element.Events.realChange]
+ */
 
-(function() {
+(function ()
+{
 	Element.Properties.realChange = {
-		get: function() {
+		get:function ()
+		{
 			return this.retrieve('_realChangeEvents');
 		},
-		set: function(events) {
+		set:function (events)
+		{
 			this.store('_realChangeEvents', $splat(events));
 			return this;
 		}
 	};
 	Element.Events.realChange = {
-		'base' : 'click',
-		condition : $lambda(false),
-		onAdd : function() {
+		'base':'click',
+		condition:$lambda(false),
+		onAdd:function ()
+		{
 			if (this.retrieve('_realChangeRunning')) return this;
 			this.store('_realChangeRunning', true);
 			this.store('_realChangeValue', this.get('value'));
 			var self = this,
-			fire = function() {
-				var value = self.get('value');
-				if(value !== self.retrieve('_realChangeValue')) {
-					self.fireEvent('realChange', value);
-					self.store('_realChangeValue', self.get('value'));
-				}
-			},
-			events = this.get('realChange');
-			if (! events)
+				fire = function ()
+				{
+					var value = self.get('value');
+					if (value !== self.retrieve('_realChangeValue'))
+					{
+						self.fireEvent('realChange', value);
+						self.store('_realChangeValue', self.get('value'));
+					}
+				},
+				events = this.get('realChange');
+			if (!events)
 				this.set('realChange', events = ['keyup', 'click']);
 			this.store('_realChangeFire', fire);
-			events.each(function(event) {
+			events.each(function (event)
+			{
 				self.addEvent(event, fire);
 			});
 			return this;
 		},
-		onRemove: function() {
-			if (! this.retrieve('events').realChange.keys
-			||
-			this.retrieve('events').realChange.keys.length === 0) {
+		onRemove:function ()
+		{
+			if (!this.retrieve('events').realChange.keys
+				||
+				this.retrieve('events').realChange.keys.length === 0)
+			{
 				var fire = this.retrieve('_realChangeFire'),
-				self = this;
-				this.get('realChange').each(function(event){
+					self = this;
+				this.get('realChange').each(function (event)
+				{
 					self.removeEvent(event, fire);
 				});
 			}
@@ -310,7 +321,7 @@ function OnAlbumVisibilityChange()
 	var select = $('jform_params_albumvisibility');
 	var value = select.options[select.selectedIndex].value;
 	if (value == 'public')
-		{
+	{
 		$('jform_params_gallery_id-lbl').style.display = 'inline';
 		$('album_selection').style.display = 'inline';
 
@@ -320,7 +331,7 @@ function OnAlbumVisibilityChange()
 		$('jform_params_limitedpassword').style.display = 'none';
 	}
 	else
-		{
+	{
 		$('jform_params_limitedalbum-lbl').style.display = 'inline';
 		$('jform_params_limitedalbum').style.display = 'inline';
 		$('jform_params_limitedpassword-lbl').style.display = 'inline';
@@ -333,15 +344,16 @@ function OnAlbumVisibilityChange()
 
 
 // Inizializzazione
-window.addEvent('domready', function() {
-	var input = document.id('jform_params_userid');
+window.addEvent('domready', function ()
+	{
+		var input = document.id('jform_params_userid');
 
-	// Evento onChange
-	input.addEvent('realChange', OnUseridChange);
-	input.addEvent('paste', OnUseridPaste);
-	input.addEvent('cut', OnUseridCut);
-	input.addEvent('change', OnUseridExit);
-}
+		// Evento onChange
+		input.addEvent('realChange', OnUseridChange);
+		input.addEvent('paste', OnUseridPaste);
+		input.addEvent('cut', OnUseridCut);
+		input.addEvent('change', OnUseridExit);
+	}
 );
 
 // Possibile caricamento necessario
