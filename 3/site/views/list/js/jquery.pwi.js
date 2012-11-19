@@ -442,56 +442,55 @@
 			{
 				if (i >= settings.albumMaxResults) return false;
 				var $albumDate = new Date(Number(n.gphoto$timestamp.$t));
-				if ((($.inArray(n.gphoto$name.$t, settings.albums) > -1) ||
-					(settings.albums.length === 0)) &&
-					($.inArray(n.gphoto$name.$t, settings.removeAlbums) == -1) &&
-					((n.gphoto$albumType === undefined) ||
-						($.inArray(n.gphoto$albumType.$t, settings.removeAlbumTypes) == -1)) &&
-					((settings.albumStartDateTime == "" || $albumDate >= $startDate) &&
-						(settings.albumEndDateTime == "" || $albumDate <= $endDate)))
-				{
 
-					var $keywordMatch = true;
-					if (settings.albumKeywords.length > 0)
+				// Identifica gli album con l'id univoco (gphoto$id), oltre che con il nome (gphoto$name), che potrebbe anche cambiare
+				if (settings.albumStartDateTime != "" && $albumDate >= $startDate) return false;
+				if (settings.albumEndDateTime != "" && $albumDate <= $endDate) return false;
+				if ((n.gphoto$albumType !== undefined) && ($.inArray(n.gphoto$albumType.$t, settings.removeAlbumTypes) != -1)) return false;
+				if (($.inArray(n.gphoto$id.$t, settings.albums) == -1) && ($.inArray(n.gphoto$name.$t, settings.albums) == -1)) return false;
+				if (($.inArray(n.gphoto$id.$t, settings.removeAlbums) > -1) || ($.inArray(n.gphoto$name.$t, settings.removeAlbums) > -1)) return false;
+
+				var $keywordMatch = true;
+				if (settings.albumKeywords.length > 0)
+				{
+					$keywordMatch = false;
+					var $matched = n.summary.$t.match(/\[keywords\s*:\s*(.*)\s*\]/);
+					if ($matched)
 					{
-						$keywordMatch = false;
-						var $matched = n.summary.$t.match(/\[keywords\s*:\s*(.*)\s*\]/);
-						if ($matched)
+						var $keywordArray = new Array();
+						var $keywords = $matched[1].split(/,/);
+						for (var p in $keywords)
 						{
-							var $keywordArray = new Array();
-							var $keywords = $matched[1].split(/,/);
-							for (var p in $keywords)
+							var $newmatch = $keywords[p].match(/\s*['"](.*)['"]\s*/);
+							if ($newmatch)
 							{
-								var $newmatch = $keywords[p].match(/\s*['"](.*)['"]\s*/);
-								if ($newmatch)
-								{
-									$keywordArray.push($newmatch[1]);
-								}
+								$keywordArray.push($newmatch[1]);
 							}
-							if ($keywordArray.length > 0)
+						}
+						if ($keywordArray.length > 0)
+						{
+							$keywordMatch = true;
+							for (var p in settings.albumKeywords)
 							{
-								$keywordMatch = true;
-								for (var p in settings.albumKeywords)
+								if ($.inArray(settings.albumKeywords[p], $keywordArray) < 0)
 								{
-									if ($.inArray(settings.albumKeywords[p], $keywordArray) < 0)
-									{
-										$keywordMatch = false;
-										break;
-									}
+									$keywordMatch = false;
+									break;
 								}
 							}
 						}
 					}
-					if ($keywordMatch == false)
-						return false;
-
-					$albumCounter++;
-					if (($albumCounter > (settings.albumsPerPage * settings.albumPage)) ||
-						($albumCounter <= (settings.albumsPerPage * (settings.albumPage - 1))))
-						return false;
-					else
-						return true;
 				}
+				if ($keywordMatch == false)
+					return false;
+
+				$albumCounter++;
+				if (($albumCounter > (settings.albumsPerPage * settings.albumPage)) ||
+					($albumCounter <= (settings.albumsPerPage * (settings.albumPage - 1))))
+					return false;
+				else
+					return true;
+
 				return false;
 			});
 
@@ -538,20 +537,20 @@
 
 					$scAlbumTitle.append(
 						((n.title.$t.length > settings.showAlbumTitlesLength) ? n.title.$t.substring(0, settings.showCaptionLength) : n.title.$t) +
-						"<br/>" +
+							"<br/>" +
 
-						// Modificata la formattazione della data per eliminare qualsiasi ambiguita' di formati
-						// americano: mese/giorno/anno, europeo: giorno/mese/anno, asiatico: anno/mese/giorno
-						// percio' e' stato utilizzato un formato comprensibile da tutti: giorno/mese in lettere abbreviato/anno
-						// Il nome del mese viene preso dalla lingua corrente
-						// Necessita la libreria date.format.js (http://blog.stevenlevithan.com/archives/date-time-format)
-						// (settings.showAlbumdate ? formatDate(n.gphoto$timestamp.$t) : "") +
-						(settings.showAlbumdate ? new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") : "") +
+							// Modificata la formattazione della data per eliminare qualsiasi ambiguita' di formati
+							// americano: mese/giorno/anno, europeo: giorno/mese/anno, asiatico: anno/mese/giorno
+							// percio' e' stato utilizzato un formato comprensibile da tutti: giorno/mese in lettere abbreviato/anno
+							// Il nome del mese viene preso dalla lingua corrente
+							// Necessita la libreria date.format.js (http://blog.stevenlevithan.com/archives/date-time-format)
+							// (settings.showAlbumdate ? formatDate(n.gphoto$timestamp.$t) : "") +
+							(settings.showAlbumdate ? new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") : "") +
 
-						// Modificato il separatore tra la data e il numero di foto
-						(settings.showAlbumPhotoCount ? " - " +
-							n.gphoto$numphotos.$t + " " +
-							((n.gphoto$numphotos.$t == "1") ? settings.labels.photo : settings.labels.photos) : ""));
+							// Modificato il separatore tra la data e il numero di foto
+							(settings.showAlbumPhotoCount ? " - " +
+								n.gphoto$numphotos.$t + " " +
+								((n.gphoto$numphotos.$t == "1") ? settings.labels.photo : settings.labels.photos) : ""));
 					$scAlbum.append($scAlbumTitle);
 				}
 				$scAlbums.append($scAlbum);

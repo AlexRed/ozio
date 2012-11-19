@@ -32,22 +32,6 @@
 			$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
 			$user = $this->params->get("userid");
 
-			/*
-			$album_feed = 'http://picasaweb.google.com/data/feed/api/user/' . $user . '?v=2';
-			$albums = simplexml_load_file($album_feed);
-			$index = 1;
-			$album = $albums->entry[$index];
-
-			// get the number of photos for this album
-			$photocount = (int) $album->children('http://schemas.google.com/photos/2007')->numphotos;
-
-			// get the ID of the current album
-			$album_id = $album->children('http://schemas.google.com/photos/2007')->id;
-
-			// read photo feed for this album into a SimpleXML object
-			$photos = simplexml_load_file($photo_feed . $album_id . '?v=2');
-			*/
-
 			$images = array();
 
 			$albumid = $this->params->get("gallery_id");
@@ -58,8 +42,10 @@
 				$authcode = "&authkey=Gv1sRg" . $this->params->get("limitedpassword");
 			}
 
-			//$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
-			$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/album/" . $albumid . "?v=2" . $authcode;
+			// Old identifier: the album number
+			$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/albumid/" . $albumid . "?v=2" . $authcode;
+			// New identifier: the album unique name
+			//$feed = "http://picasaweb.google.com/data/feed/api/user/" . $user . "/album/" . $albumid . "?v=2" . $authcode;
 			$photos = simplexml_load_file($feed) or
 			$photos = new SimpleXMLElement(file_get_contents(JPATH_COMPONENT . "/views/00fuerte/empty.xml"));
 
