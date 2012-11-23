@@ -35,9 +35,7 @@ class OzioGalleryViewList extends JView
 		// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery-noconflict.js");
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery.pwi.js");
-		//$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/date.format.js");
 
-		//$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/pwi.js");
 		$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
@@ -47,32 +45,6 @@ class OzioGalleryViewList extends JView
 
 		$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
 
-		/*
-				$menu = $application->getMenu();
-				$items = $menu->getItems("component", "com_oziogallery3");
-				foreach ($items as &$item)
-				{
-					// Skip album list menu items
-					if (strpos($item->link, "&view=list") !== false) continue;
-
-					$album = new stdClass();
-					$link = "";
-					$router = JSite::getRouter();
-
-					if ($router->getMode() == JROUTER_MODE_SEF)
-					{
-						$link = 'index.php?Itemid=' . $item->id;
-					}
-					else
-					{
-						$link = $item->link . '&Itemid=' . $item->id;
-					}
-
-					$album->url = JRoute::_($link);
-					$album->title = $item->title;
-					$this->albumlist[] = $album;
-				}
-		*/
 		parent::display($tpl);
 	}
 }

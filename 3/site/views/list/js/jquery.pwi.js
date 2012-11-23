@@ -523,7 +523,7 @@
 								"<img src='" + $thumbnail0.url +
 								"' height='" + $thumbnail0.height +
 								"' width='" + $thumbnail0.width +
-
+								"' alt='" + n.title.$t +
 								"' class='coverpage" +
 								"'/>" +
 								'</a>'
@@ -531,28 +531,35 @@
 				}
 
 				// Build album title
-				if (settings.showAlbumTitles)
+				if (settings.showAlbumTitle)
 				{
-					var $scAlbumTitle = $("<div class='pwi_album_title'/>");
-
-					$scAlbumTitle.append(
-						((n.title.$t.length > settings.showAlbumTitlesLength) ? n.title.$t.substring(0, settings.showCaptionLength) : n.title.$t) +
-							"<br/>" +
-
-							// Modificata la formattazione della data per eliminare qualsiasi ambiguita' di formati
-							// americano: mese/giorno/anno, europeo: giorno/mese/anno, asiatico: anno/mese/giorno
-							// percio' e' stato utilizzato un formato comprensibile da tutti: giorno/mese in lettere abbreviato/anno
-							// Il nome del mese viene preso dalla lingua corrente
-							// Necessita la libreria date.format.js (http://blog.stevenlevithan.com/archives/date-time-format)
-							// (settings.showAlbumdate ? formatDate(n.gphoto$timestamp.$t) : "") +
-							(settings.showAlbumdate ? new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") : "") +
-
-							// Modificato il separatore tra la data e il numero di foto
-							(settings.showAlbumPhotoCount ? " - " +
-								n.gphoto$numphotos.$t + " " +
-								((n.gphoto$numphotos.$t == "1") ? settings.labels.photo : settings.labels.photos) : ""));
-					$scAlbum.append($scAlbumTitle);
+					// Google Plus Album title
+					var title = $("<div class='pwi_album_title'/>");
+					title.append(((n.title.$t.length > settings.showAlbumTitlesLength) ? n.title.$t.substring(0, settings.showCaptionLength) : n.title.$t));
+					$scAlbum.append(title);
 				}
+
+				if (settings.showCustomTitle)
+				{
+					// Custom local album title
+					var title = $("<div class='pwi_album_title'/>");
+					title.append(settings.album_local_title);
+					$scAlbum.append(title);
+				}
+
+if (settings.showAlbumdate)
+{
+					var date = $("<div class='pwi_album_title'/>");
+					date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.numphotos + '">' + new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
+					$scAlbum.append(date);
+}
+if (settings.showAlbumPhotoCount)
+{
+					var numphotos = $("<div class='pwi_album_title'/>");
+					numphotos.append('<span class="indicator og-camera" ' + 'title="' + settings.labels.numphotos + '">' + n.gphoto$numphotos.$t + '</span> ');
+					$scAlbum.append(numphotos);
+}
+
 				$scAlbums.append($scAlbum);
 			});
 
@@ -1052,7 +1059,7 @@
 		sortPhotos:"none", // Can be none, ASC_DATE, DESC_DATE, ASC_NAME, DESC_NAME
 		removeAlbums:[], //-- Albums with this type in the gphoto$albumType will not be shown. Known types are Blogger, ScrapBook, ProfilePhotos, Buzz, CameraSync
 		removeAlbumTypes:[], //-- Albums with this type in the gphoto$albumType will not be shown. Known types are Blogger, ScrapBook, ProfilePhotos, Buzz, CameraSync
-		showAlbumTitles:true, //--following settings should be self-explanatory
+		showAlbumTitle:true, //--following settings should be self-explanatory
 		showAlbumTitlesLength:9999,
 		showAlbumThumbs:true,
 		showAlbumdate:true,
