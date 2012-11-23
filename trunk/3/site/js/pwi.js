@@ -23,10 +23,11 @@ jQuery(document).ready(function ($)
 			{
 				$link = $item->link . '&Itemid=' . $item->id;
 			}
-
+/*
 			$album->url = JRoute::_($link);
 			$album->title = $item->title;
 			$this->albumlist[] = $album;
+*/
 ?>
 	// Crea un nuovo sottocontenitore e lo appende al principale
 	jQuery("#container").append(
@@ -38,6 +39,7 @@ jQuery(document).ready(function ($)
 	{
 		// Destinazione del link
 		album_local_url: '<?php echo JRoute::_($link); ?>',
+		album_local_title: '<?php echo $item->title; ?>',
 
 		// accettato l'id numerico e il nome utente come stringa
 		username: '<?php echo $item->params->get("userid"); ?>',
@@ -48,10 +50,12 @@ jQuery(document).ready(function ($)
 		showAlbumThumbs: true,
 		thumbAlign: true,
 		showAlbumdate: true,
+		showAlbumTitle: false,
+		showCustomTitle: true,
+		albumThumbSize: <?php echo $this->Params->get("images_size", 180); ?>,
 
 		labels: {
-			photo: "<?php echo JText::_("COM_OZIOGALLERY3_PHOTO"); ?>",
-			photos: "<?php echo JText::_("COM_OZIOGALLERY3_PHOTOS"); ?>",
+			numphotos: "<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",
 			downloadphotos:"Download photos",
 			albums:"Back to albums",
 			noalbums:"No albums available",

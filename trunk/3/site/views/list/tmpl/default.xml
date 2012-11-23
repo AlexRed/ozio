@@ -9,17 +9,7 @@
 
 	<fields name="params">
 		<fieldset name="basic">
-
-			<field name="order" type="list" description="JGLOBAL_CATEGORY_ORDER_DESC" label="JGLOBAL_CATEGORY_ORDER_LABEL">
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="none">JGLOBAL_No_Order</option>
-				<option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
-				<option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
-				<option value="order">JGLOBAL_CATEGORY_MANAGER_ORDER</option>
-				<option value="date">JGLOBAL_OLDEST_FIRST</option>
-				<option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
-			</field>
-
+			<field name="images_size" type="text" label="COM_OZIOGALLERY3_IMAGES_SIZE_LBL" description="COM_OZIOGALLERY3_IMAGES_SIZE_DSC" default="180" />
 		</fieldset>
 
 	</fields>
