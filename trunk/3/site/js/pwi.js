@@ -42,14 +42,16 @@ jQuery(document).ready(function ($)
 		album_local_title: '<?php echo $item->title; ?>',
 
 		// accettato l'id numerico e il nome utente come stringa
-		username: '<?php echo $item->params->get("userid"); ?>',
+//		username: '<?php echo $item->params->get("userid"); ?>',
+		username: 'demis.palma',
 
 		// Filtro sugli album utente
 		albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
 
 		showAlbumThumbs: true,
 		thumbAlign: true,
-		showAlbumdate: true,
+		showAlbumdate: <?php echo $this->Params->get("show_date", 1); ?>,
+		showAlbumPhotoCount: <?php echo $this->Params->get("show_counter", 1); ?>,
 		showAlbumTitle: false,
 		showCustomTitle: true,
 		albumThumbSize: <?php echo $this->Params->get("images_size", 180); ?>,

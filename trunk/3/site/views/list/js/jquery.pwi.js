@@ -87,12 +87,14 @@
 
 		function _start()
 		{
+
 			if (settings.username === '')
 			{
 				alert('Make sure you specify at least your username.' + '\n' +
 					'See http://pwi.googlecode.com for more info');
 				return;
 			}
+
 			if (settings.useQueryParameters)
 			{
 				var $url = document.URL.split("?", 2);
@@ -413,7 +415,7 @@
 		// Albums callback
 		function albums(j)
 		{
-			var $scAlbums = $("<div/>"), i = 0;
+			var $scAlbums = $("<div class='scAlbums'/>"), i = 0;
 			var $startDate, $endDate;
 			if (navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i) == null)
 			{
@@ -494,6 +496,7 @@
 				return false;
 			});
 
+/*
 			if ($albumsToShow.length == 0)
 			{
 				$scAlbums = $("<div class='pwi_album_description'/>");
@@ -501,6 +504,15 @@
 				show(false, $scAlbums);
 				return;
 			}
+*/
+			if ($albumsToShow.length == 0)
+			{
+				var obj = $.parseJSON(
+					'{"feed":{"entry":[{"title":{"$t":"unknown"},"gphoto$timestamp":{"$t":0},"gphoto$numphotos":{"$t":0},"media$group":{"media$thumbnail":[{"url":"http://unknown.jpg","height":180,"width":180}]}}]}}'
+				);
+				$albumsToShow = obj.feed.entry;
+			}
+
 
 			// Show the selected albums
 			$.each($albumsToShow, function (i, n)
@@ -547,18 +559,19 @@
 					$scAlbum.append(title);
 				}
 
-if (settings.showAlbumdate)
-{
+				if (settings.showAlbumdate)
+				{
 					var date = $("<div class='pwi_album_title'/>");
 					date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.numphotos + '">' + new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
 					$scAlbum.append(date);
-}
-if (settings.showAlbumPhotoCount)
-{
+				}
+
+				if (settings.showAlbumPhotoCount)
+				{
 					var numphotos = $("<div class='pwi_album_title'/>");
 					numphotos.append('<span class="indicator og-camera" ' + 'title="' + settings.labels.numphotos + '">' + n.gphoto$numphotos.$t + '</span> ');
 					$scAlbum.append(numphotos);
-}
+				}
 
 				$scAlbums.append($scAlbum);
 			});
@@ -1026,6 +1039,7 @@ if (settings.showAlbumPhotoCount)
 		_initialize();
 	};
 
+
 	$.fn.pwi.defaults = {
 		mode:'albums', //-- can be: album, albums, latest (keyword = obsolete but backwards compatible, now just fill in a keyword in the settings to enable keyword-photos)
 		username:'', //-- Must be explicitly set!!!
@@ -1060,6 +1074,7 @@ if (settings.showAlbumPhotoCount)
 		removeAlbums:[], //-- Albums with this type in the gphoto$albumType will not be shown. Known types are Blogger, ScrapBook, ProfilePhotos, Buzz, CameraSync
 		removeAlbumTypes:[], //-- Albums with this type in the gphoto$albumType will not be shown. Known types are Blogger, ScrapBook, ProfilePhotos, Buzz, CameraSync
 		showAlbumTitle:true, //--following settings should be self-explanatory
+		showCustomTitle: false,
 		showAlbumTitlesLength:9999,
 		showAlbumThumbs:true,
 		showAlbumdate:true,
@@ -1178,6 +1193,8 @@ if (settings.showAlbumPhotoCount)
 		clearDiv:"<div style='clear: both;height:0px;'/>",
 		picasaUrl:"http://picasaweb.google.com/data/feed/api/user/"
 	};
+
+
 })(jQuery);
 
 // This function is called by FancyBox to format the title of a picture
