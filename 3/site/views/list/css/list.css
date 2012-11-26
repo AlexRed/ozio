@@ -38,7 +38,8 @@
 }
 
 .og-calendar {
-	background: url("../img/dark/16/calendar.png") no-repeat scroll left 50% transparent;
+    padding-left: 0 !important;
+/*background: url("../img/dark/16/calendar.png") no-repeat scroll left 50% transparent;*/
 }
 
 .og-camera{
