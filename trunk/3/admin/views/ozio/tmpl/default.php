@@ -37,7 +37,7 @@
 											<?php if (!$GLOBALS["oziogallery3"]["registered"]) { ?>
 												<tr><td>
 														<div style="float:left;margin-right:16px;margin-left:10px;">
-															<a href="http://www.opensourcesolutions.es/index.php?option=com_content&view=article&id=25%3Aozio-gallery" target="_blank">
+															<a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="_blank">
 																<img src="<?php echo JURI::base(true) . "/components/com_oziogallery3/assets/images/buy_now.jpg"; ?>" border="0" alt="Buy now">
 															</a>
 														</div>
@@ -55,7 +55,7 @@
 											</tr>
 											<tr>
 												<td align="left" valign="bottom">
-													<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery2/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://www.opensourcesolutions.es/index.php?option=com_content&view=article&id=25" target="blank">Ozio Gallery download and info page</a></b>  -  <b><a href="http://www.opensourcesolutions.es/ozio" target="blank">Ozio Gallery DEMO</a></b>
+													<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery2/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank">Ozio Gallery download and info page</a></b>  -  <b><a href="http://www.opensourcesolutions.es/ozio" target="blank">Ozio Gallery DEMO</a></b>
 												</td>
 											</tr>
 										</table>
@@ -372,7 +372,7 @@
 							<br /><br />
 							Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 							Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
-							<h3 align="right">June 02nd, 2010. Component developed by AlexRed & Ste & Vamba - <a href="http://www.opensourcesolutions.es/index.php?option=com_content&view=article&id=25">opensourcesolutions.es</a></h3><br />
+							<h3 align="right">June 02nd, 2010. Component developed by AlexRed & Ste & Vamba - <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html">opensourcesolutions.es</a></h3><br />
 						</td>
 					</tr>
 				</table>
