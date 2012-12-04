@@ -634,7 +634,28 @@
 			alignPictures('div.pwi_album');
 		}
 
-		function album(j)
+        // Error retrieving albums callback
+        function handle_albums_error(data)
+        {
+            var $scAlbums = $("<div class='scAlbums'/>");
+            // Build main album container
+            var $scAlbum = $(
+                "<div class='pwi_album' style='" +
+                    "width:" + (settings.albumThumbSize + 1) + "px;" +
+                    "'/>"
+            );
+
+                // Custom local album title
+                var title = $("<div class='pwi_album_title'/>");
+                title.append(settings.labels.ajax_error);
+                $scAlbum.append(title);
+
+            $scAlbums.append($scAlbum);
+            show(false, $scAlbums);
+
+        }
+
+        function album(j)
 		{
 			var $scPhotos, $scPhotosDesc, tmp = "",
 				$np = j.feed.openSearch$totalResults.$t,
@@ -934,10 +955,41 @@
 			else
 			{
 				show(true, '');
+
 				var $u = strings.picasaUrl + settings.username +
 					'?kind=album&access=' + settings.albumTypes + '&alt=json&thumbsize=' +
 					settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
+
+               /*
 				$.getJSON($u, 'callback=?', albums);
+*/
+/*
+                $.ajax({
+                    url: $u,
+                    dataType: 'json',
+                    success: function( data ) {
+                        alert( "SUCCESS:  " + data );
+                    },
+                    error: function( data ) {
+                        alert( "ERROR:  " + data );
+                    }
+                });
+*/
+                $.ajax({
+                    url: $u,
+                    dataType: 'json',
+                    success: albums,
+                    error: handle_albums_error
+                });
+
+                /*
+                $.get($u, 'callback=?', albums)
+                    //.success(function() { alert("second success"); })
+                    .error(function() { alert("error"); })
+                    .complete(function() { alert("complete"); });
+*/
+
+
 			}
 			return $self;
 		}
