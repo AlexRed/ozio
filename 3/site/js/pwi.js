@@ -61,6 +61,7 @@ jQuery(document).ready(function ($)
 			downloadphotos:"Download photos",
 			albums:"Back to albums",
 			unknown:"<?php echo JText::_("JLIB_UNKNOWN"); ?>",
+            ajax_error:"<?php echo JText::_("JLIB_UTIL_ERROR_LOADING_FEED_DATA"); ?>",
 			page:"Page",
 			prev: "<?php echo JText::_("JPREVIOUS"); ?>",
 			next: "<?php echo JText::_("JNEXT"); ?>",
