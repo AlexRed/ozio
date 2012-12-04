@@ -21,7 +21,7 @@
 
 if (!class_exists("ZipArchive"))
 {
-    die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
+	die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
 }
 
 $zip = new ZipArchive();
@@ -29,7 +29,7 @@ $name = str_replace(".inc", "", __FILE__);
 
 if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
 {
-    die("Error while opening my own zip file.");
+	die("Error while opening my own zip file.");
 }
 
 $zipcode = $zip->getFromName(basename($name) . ".php");

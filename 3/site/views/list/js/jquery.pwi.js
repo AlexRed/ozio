@@ -496,23 +496,14 @@
 				return false;
 			});
 
-/*
-			if ($albumsToShow.length == 0)
-			{
-				$scAlbums = $("<div class='pwi_album_description'/>");
-				$scAlbums.append("<div class='title'>" + settings.labels.noalbums + "</div>");
-				show(false, $scAlbums);
-				return;
-			}
-*/
+			// In caso di caricamento fallito, adesso crea un album vuoto e prosegue
 			if ($albumsToShow.length == 0)
 			{
 				var obj = $.parseJSON(
-					'{"feed":{"entry":[{"title":{"$t":"unknown"},"gphoto$timestamp":{"$t":0},"gphoto$numphotos":{"$t":0},"media$group":{"media$thumbnail":[{"url":"http://unknown.jpg","height":180,"width":180}]}}]}}'
+					'{"feed":{"entry":[{"title":{"$t":"' + settings.labels.unknown + '"},"gphoto$timestamp":{"$t":0},"gphoto$numphotos":{"$t":0},"media$group":{"media$thumbnail":[{"url":"http://unknown.jpg","height":180,"width":180}]}}]}}'
 				);
 				$albumsToShow = obj.feed.entry;
 			}
-
 
 			// Show the selected albums
 			$.each($albumsToShow, function (i, n)
@@ -1099,7 +1090,7 @@
 			photos:"photos",
 			downloadphotos:"Download photos",
 			albums:"Back to albums",
-			noalbums:"No albums available",
+			unknown:"Unknown",
 			page:"Page",
 			prev:"Previous",
 			next:"Next",
