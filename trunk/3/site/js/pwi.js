@@ -42,8 +42,8 @@ jQuery(document).ready(function ($)
 		album_local_title: '<?php echo $item->title; ?>',
 
 		// accettato l'id numerico e il nome utente come stringa
-//		username: '<?php echo $item->params->get("userid"); ?>',
-		username: 'demis.palma',
+		username: '<?php echo $item->params->get("userid"); ?>',
+//		username: 'demis.palma',
 
 		// Filtro sugli album utente
 		albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
@@ -60,7 +60,7 @@ jQuery(document).ready(function ($)
 			numphotos: "<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",
 			downloadphotos:"Download photos",
 			albums:"Back to albums",
-			noalbums:"No albums available",
+			unknown:"<?php echo JText::_("JLIB_UNKNOWN"); ?>",
 			page:"Page",
 			prev: "<?php echo JText::_("JPREVIOUS"); ?>",
 			next: "<?php echo JText::_("JNEXT"); ?>",
