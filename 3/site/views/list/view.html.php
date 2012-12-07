@@ -30,20 +30,29 @@ class OzioGalleryViewList extends JView
 		$application = JFactory::getApplication("site");
 		$this->params = $application->getParams("com_oziogallery3");
 
-		$document = JFactory::getDocument();
-		$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+        // Set Meta Description
+        if ($description = $this->params->get('menu-meta_description'))
+            $this->document->setDescription($description);
+        // Set Meta Keywords
+        if ($keywords = $this->params->get('menu-meta_keywords'))
+            $this->document->setMetadata('keywords', $keywords);
+        // Set robots (index, follow)
+        if ($robots = $this->params->get('robots'))
+            $this->document->setMetadata('robots', $robots);
+
+		$this->document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
 		// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery-noconflict.js");
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery.pwi.js");
+		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery-noconflict.js");
+		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery.pwi.js");
 
 		$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 		$itemid = "&amp;Itemid=" . $itemid->id;
-		$document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . $itemid);
-		$document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . $itemid);
+		$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . $itemid);
+		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . $itemid);
 
-		$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+		$this->document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
 
 		parent::display($tpl);
 	}
