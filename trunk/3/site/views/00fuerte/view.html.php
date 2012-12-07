@@ -32,6 +32,16 @@
 			$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
 			$user = $this->params->get("userid");
 
+            // Set Meta Description
+            if ($description = $this->params->get('menu-meta_description'))
+                $this->document->setDescription($description);
+            // Set Meta Keywords
+            if ($keywords = $this->params->get('menu-meta_keywords'))
+                $this->document->setMetadata('keywords', $keywords);
+            // Set robots (index, follow)
+            if ($robots = $this->params->get('robots'))
+                $this->document->setMetadata('robots', $robots);
+
 			$images = array();
 
 			$albumid = $this->params->get("gallery_id");

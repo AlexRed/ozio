@@ -43,10 +43,20 @@ jQuery(document).ready(function ($)
 
 		// accettato l'id numerico e il nome utente come stringa
 		username: '<?php echo $item->params->get("userid"); ?>',
-//		username: 'demis.palma',
 
 		// Filtro sugli album utente
 		albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
+
+    //mode:'album',
+    //album: "FUERTEventura",
+    //album: "<?php echo $item->params->get("gallery_id"); ?>",
+
+        //mode:'album',
+        //album: "<?php echo $item->params->get("limitedalbum"); ?>",
+        //authKey: "<?php echo $item->params->get("limitedpassword"); ?>",
+
+        //mode:'album_cover',
+        //album: "<?php echo $item->params->get("gallery_id"); ?>",
 
 		showAlbumThumbs: true,
 		thumbAlign: true,

@@ -141,6 +141,9 @@
 				case 'keyword':
 					getAlbum();
 					break;
+                case 'album_cover':
+                    GetAlbumCover();
+                    break;
 				default:
 					getAlbums();
 					break;
@@ -655,6 +658,7 @@
 
         }
 
+
         function album(j)
 		{
 			var $scPhotos, $scPhotosDesc, tmp = "",
@@ -835,48 +839,202 @@
 				$scPhotos.append($permaShowBox);
 			}
 
-
 			settings.photostore[settings.album] = j;
 			var $s = $(".pwi_photo", $scPhotos).css(settings.thumbCss);
-			if ((settings.popupPlugin === "fancybox") || (settings.popupPlugin === "colorbox"))
-			{
-				settings.popupExt($s.find("a[rel='lb-" + $relUsername + "']"));
-				settings.popupExt($s.find("a[rel='yt-" + $relUsername + "']"), "yt");
-				settings.popupExt($s.find("a[rel='map-" + $relUsername + "']"), "map");
-				var $s = $(".pwi_overviewmap", $scPhotos).css(settings.thumbCss);
-				settings.popupExt($s.find("a[rel='map_overview-" + $relUsername + "']"), "map_overview");
-			}
-			else if (settings.popupPlugin === "slimbox")
-			{
-				$s.find("a[rel='lb-" + $relUsername + "']").slimbox(settings.slimbox_config,
-					function (el)
-					{
-						var $newTitle = el.title;
-						if (el.parentNode.childNodes && (el.parentNode.childNodes.length > 1))
-						{
-							var $caption = $(".captiontext", el.parentNode);
-							if ($caption.length > 0)
-							{
-								$newTitle = $caption[0].innerHTML;
-							}
-							var $links = $(".downloadlink", el.parentNode);
-							if ($links.length > 0)
-							{
-								var downloadLink = '<a href="' + $links[0].href + '">Download</a>';
-								$newTitle = $newTitle + "&nbsp;&nbsp;" + downloadLink;
-							}
-						}
-						return [el.href, $newTitle];
-					}
-				);
-			}
-
 			$scPhotos.append(strings.clearDiv);
-
 			show(false, $scPhotos);
 
 			alignPictures('div.pwi_photo');
 		}
+
+        function albumCover(j)
+        {
+            var $scPhotos, $scPhotosDesc, tmp = "",
+                $np = j.feed.openSearch$totalResults.$t,
+                $at = "", $navRow = "",
+                $loc = j.feed.gphoto$location === undefined ? "" : j.feed.gphoto$location.$t,
+                $ad,
+                $album_date = formatDate(j.feed.gphoto$timestamp === undefined ? '' : j.feed.gphoto$timestamp.$t),
+                $item_plural = ($np == "1") ? false : true;
+            var $relUsername = settings.username.replace(/[@\.]/g, "_");
+
+            if (j.feed.subtitle === undefined)
+            {
+                $ad = "";
+            }
+            else
+            {
+                var $matched = j.feed.subtitle.$t.match(/\[keywords\s*:\s*.*\s*\](.*)/);
+                if ($matched)
+                {
+                    $ad = $matched[1];
+                }
+                else
+                {
+                    $ad = j.feed.subtitle.$t;
+                }
+            }
+
+            $at = (j.feed.title === "undefined" || settings.albumTitle.length > 0) ? settings.albumTitle : j.feed.title.$t;
+            $scPhotos = $("<div/>");
+            if (settings.mode != 'album' && settings.mode != 'keyword')
+            {
+                tmp = $("<div class='pwi_album_backlink'>" + settings.labels.albums + "</div>").bind('click.pwi', function (e)
+                {
+                    e.stopPropagation();
+                    getAlbums();
+                    return false;
+                });
+                $scPhotos.append(tmp);
+            }
+            if (settings.showAlbumDescription)
+            {
+                $scPhotosDesc = $("<div class='pwi_album_description'/>");
+                $scPhotosDesc.append("<div class='title'>" + $at + "</div>");
+                $scPhotosDesc.append("<div class='details'>" + $np + " " +
+                    ($item_plural ? settings.labels.photos : settings.labels.photo) +
+                    (settings.showAlbumdate ? ", " + $album_date : "") +
+                    (settings.showAlbumLocation && $loc ? ", " + $loc : "") + "</div>");
+                $scPhotosDesc.append("<div class='description'>" + $ad + "</div>");
+                $scPhotos.append($scPhotosDesc);
+            }
+
+            if ((settings.popupPlugin !== "slimbox") && (settings.showPhotoLocation) && (typeof(google) != "undefined"))
+            {
+                var $geoTagged = $.grep(j.feed.entry, function (n, i)
+                {
+                    if ((n.georss$where) && (n.georss$where.gml$Point) &&
+                        (n.georss$where.gml$Point.gml$pos))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false
+                    }
+                });
+
+                var $globalMap = $("<div class='pwi_overviewmap' />");
+                var $link = $("<a class='fancybox.inline' href='#map_canvas' rel='map_overview-" + $relUsername + "' >" +
+                    settings.labels.showMap + "</a>");
+                if (($.browser.msie) && (parseFloat($.browser.version) < 8.0))
+                {
+                    // For some reason the href field contains the complete path
+                    $link[0].href = "#map_canvas";
+                }
+                $globalMap.append($link);
+                $scPhotos.append($globalMap);
+                $scPhotos.append(strings.clearDiv);
+
+                var $mapDiv = $("<div style='display:none' />");
+                var $windowHeight = $(window).height() * 0.75;
+                var $windowWidth = $(window).width() * 0.75;
+                $mapDiv.append("<div id='map_canvas' style='width: " + $windowWidth + "px; height: " + $windowHeight + "px' />");
+                $scPhotos.append($mapDiv);
+                $.fn.pwi.additionalMapsSettings = $geoTagged;
+            }
+
+            if ($np > settings.maxResults)
+            {
+                $pageCount = ($np / settings.maxResults);
+                var $ppage = $("<div class='pwi_prevpage'/>").text(settings.labels.prev),
+                    $npage = $("<div class='pwi_nextpage'/>").text(settings.labels.next);
+                $navRow = $("<div class='pwi_pager'/>");
+                if (settings.page > 1)
+                {
+                    $ppage.addClass('link').bind('click.pwi', function (e)
+                    {
+                        e.stopPropagation();
+                        settings.page = (parseInt(settings.page, 10) - 1);
+                        getAlbum();
+                        return false;
+                    });
+                }
+                $navRow.append($ppage);
+                for (var p = 1; p < $pageCount + 1; p++)
+                {
+                    if (p == settings.page)
+                    {
+                        tmp = "<div class='pwi_pager_current'>" + p + "</div> ";
+                    }
+                    else
+                    {
+                        tmp = $("<div class='pwi_pager_page'>" + p + "</div>").bind('click.pwi', p, function (e)
+                        {
+                            e.stopPropagation();
+                            settings.page = e.data;
+                            getAlbum();
+                            return false;
+                        });
+                    }
+                    $navRow.append(tmp);
+                }
+                if (settings.page < $pageCount)
+                {
+                    $npage.addClass('link').bind('click.pwi', function (e)
+                    {
+                        e.stopPropagation();
+                        settings.page = (parseInt(settings.page, 10) + 1);
+                        getAlbum();
+                        return false;
+                    });
+                }
+                $navRow.append($npage);
+                $navRow.append(strings.clearDiv);
+            }
+
+            if ($navRow.length > 0 && (settings.showPager === 'both' || settings.showPager === 'top'))
+            {
+                $scPhotos.append($navRow);
+            }
+
+            sortData(j.feed.entry, settings.sortPhotos);
+
+            var startShow = ((settings.page - 1) * settings.maxResults);
+            var endShow = settings.maxResults * settings.page;
+            for (var i = 0; i < $np; i++)
+            {
+                var $scPhoto = photo(j.feed.entry[i], !((i >= startShow) && (i < endShow)), $relUsername);
+                $scPhotos.append($scPhoto);
+            }
+
+            if ($navRow.length > 0 && (settings.showPager === 'both' || settings.showPager === 'bottom'))
+            {
+                $scPhotos.append($navRow.clone(true));
+            }
+
+            if (settings.showPermaLink)
+            {
+                $scPhotos.append(strings.clearDiv);
+                var $permaLinkEnable = $("<div id='permalinkenable' class='pwi_nextpage'/>").text(settings.labels.showPermaLink).bind('click.pwi', p, function (e)
+                {
+                    e.stopPropagation();
+                    $('#permalinkbox').show();
+                    $('#permalinkenable').hide();
+                    return false;
+                });
+                ;
+                var $url = document.URL.split("?", 2);
+                var $permalinkUrl = $url[0] + "?pwi_album_selected=" + j.feed.gphoto$name.$t +
+                    "&pwi_albumpage=" + settings.page;
+
+                $scPhotos.append($permaLinkEnable);
+                var $permaShowBox = $("<div style='display:none;' id='permalinkbox' />");
+                var $permaShowBoxForm = $("<form />");
+                var $permalinkInputBox = $("<input type='text' size='40' name='PermaLink' readonly />").val($permalinkUrl);
+                $permaShowBoxForm.append($permalinkInputBox);
+                $permaShowBox.append($permaShowBoxForm);
+                $scPhotos.append($permaShowBox);
+            }
+
+            settings.photostore[settings.album] = j;
+            var $s = $(".pwi_photo", $scPhotos).css(settings.thumbCss);
+            $scPhotos.append(strings.clearDiv);
+            show(false, $scPhotos);
+
+            alignPictures('div.pwi_photo');
+        }
+
 
 		function latest(j)
 		{
@@ -1024,8 +1182,14 @@
 			}
 			else
 			{
+                // Aggiunto supporto per album id numerico
+                var numeric = settings.album.match(/^[0-9]{19}$/);
+                var album_type;
+                if (numeric) album_type = 'albumid';
+                else album_type = 'album';
+
 				var $u = strings.picasaUrl + settings.username +
-					((settings.album !== "") ? '/album/' + settings.album : "") + '?kind=photo&alt=json' +
+					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
 					((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
 					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 					'&imgmax=d&thumbsize=' + settings.thumbSize +
@@ -1035,6 +1199,34 @@
 			}
 			return $self;
 		}
+
+
+        function GetAlbumCover()
+        {
+            if (settings.photostore[settings.album])
+            {
+                album(settings.photostore[settings.album]);
+            }
+            else
+            {
+                // Aggiunto supporto per album id numerico
+                var numeric = settings.album.match(/^[0-9]{19}$/);
+                var album_type;
+                if (numeric) album_type = 'albumid';
+                else album_type = 'album';
+
+                var $u = strings.picasaUrl + settings.username +
+                    ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
+                    ((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
+                    ((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
+                    '&imgmax=d&thumbsize=' + settings.thumbSize +
+                    ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
+                show(true, '');
+                $.getJSON($u, 'callback=?', albumCover);
+            }
+            return $self;
+        }
+
 
 		function getLatest()
 		{
