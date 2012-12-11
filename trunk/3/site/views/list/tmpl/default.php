@@ -20,10 +20,10 @@
 	*/
 ?>
 
-<div class="album-list<?php echo $this->pageclass_sfx;?>">
+<div class="album-list<?php echo $this->Params->get("pageclass_sfx", ""); ?>">
 
-	<?php if ($this->params->get("show_page_heading", 1)) { ?>
-		<h1><?php echo $this->escape($this->params->get("page_heading")); ?></h1>
+	<?php if ($this->Params->get("show_page_heading", 1)) { ?>
+		<h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
 		<?php } ?>
 
 	<ul>

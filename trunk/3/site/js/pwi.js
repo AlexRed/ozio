@@ -45,18 +45,16 @@ jQuery(document).ready(function ($)
 		username: '<?php echo $item->params->get("userid"); ?>',
 
 		// Filtro sugli album utente
-		albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
+		//mode: 'albums' // mode predefinito
+		//albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
 
-    //mode:'album',
-    //album: "FUERTEventura",
-    //album: "<?php echo $item->params->get("gallery_id"); ?>",
-
-        //mode:'album',
-        //album: "<?php echo $item->params->get("limitedalbum"); ?>",
-        //authKey: "<?php echo $item->params->get("limitedpassword"); ?>",
-
-        //mode:'album_cover',
-        //album: "<?php echo $item->params->get("gallery_id"); ?>",
+        mode:'album_cover',
+        <?php if ($item->params->get("albumvisibility") == "public") { ?>
+        album: "<?php echo $item->params->get("gallery_id"); ?>",
+			<?php } else { ?>
+        album: "<?php echo $item->params->get("limitedalbum"); ?>",
+        authKey: "<?php echo $item->params->get("limitedpassword"); ?>",
+			<?php } ?>
 
 		showAlbumThumbs: true,
 		thumbAlign: true,
@@ -65,6 +63,9 @@ jQuery(document).ready(function ($)
 		showAlbumTitle: false,
 		showCustomTitle: true,
 		albumThumbSize: <?php echo $this->Params->get("images_size", 180); ?>,
+		thumbSize:<?php echo $this->Params->get("images_size", 180); ?>,
+		albumCrop: true,
+		thumbCrop: true,
 
 		labels: {
 			numphotos: "<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",

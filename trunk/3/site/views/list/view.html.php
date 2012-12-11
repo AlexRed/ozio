@@ -24,20 +24,21 @@ jimport('joomla.application.component.view');
 class OzioGalleryViewList extends JView
 {
 	protected $albumlist = array();
+	protected $Params;
 
 	function display($tpl = null)
 	{
 		$application = JFactory::getApplication("site");
-		$this->params = $application->getParams("com_oziogallery3");
+		$this->Params = $application->getParams("com_oziogallery3");
 
         // Set Meta Description
-        if ($description = $this->params->get('menu-meta_description'))
+        if ($description = $this->Params->get('menu-meta_description'))
             $this->document->setDescription($description);
         // Set Meta Keywords
-        if ($keywords = $this->params->get('menu-meta_keywords'))
+        if ($keywords = $this->Params->get('menu-meta_keywords'))
             $this->document->setMetadata('keywords', $keywords);
         // Set robots (index, follow)
-        if ($robots = $this->params->get('robots'))
+        if ($robots = $this->Params->get('robots'))
             $this->document->setMetadata('robots', $robots);
 
 		$this->document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");

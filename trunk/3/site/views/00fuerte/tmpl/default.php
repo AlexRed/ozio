@@ -20,7 +20,7 @@
 	*/
 ?>
 
-<div class="fuertecontainer" id="fuertecontainer" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>; height:0;">
+<div class="fuertecontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>" id="fuertecontainer" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>; height:0;">
 
 	<!--Thumbnail Navigation-->
 	<div id="prevthumb"></div>
@@ -42,7 +42,7 @@
 		<div id="progress-bar"></div>
 	</div>
 
-	<?php if ($this->params->get("show_album", false)) { ?>
+	<?php if ($this->Params->get("show_album", false)) { ?>
 		<!-- Top Bar -->
 		<div id="oziotopbar" class="load-item oziobar">
 			<div id="oziotoptitle" class="oziotitle"></div>
@@ -54,7 +54,7 @@
 		<div id="controls">
 
 			<a id="play-button" class="oziobutton" <?php echo $this->play_button_style; ?>><img id="pauseplay" src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/pause.png"/></a>
-			<?php if ($this->params->get("fullsize_button", true)) { ?>
+			<?php if ($this->Params->get("fullsize_button", true)) { ?>
 				<a id="view-button" class="oziobutton"><img src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/view.png"/></a>
 				<?php } ?>
 
@@ -63,7 +63,7 @@
 				<span class="slidenumber"></span> / <span class="totalslides"></span>
 			</div>
 
-			<?php if ($this->params->get("show_summary", true)) { ?>
+			<?php if ($this->Params->get("show_summary", true)) { ?>
 				<div id="slidecaption" class="oziotitle"></div>
 				<?php } ?>
 
