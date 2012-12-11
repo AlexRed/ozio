@@ -24,32 +24,34 @@
 
 	class OzioGalleryView00Fuerte extends JView
 	{
+		protected $Params;
+
 		function display($tpl = null)
 		{
 			// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
 			// JHTML::_("behavior.modal");
 
-			$this->params = JFactory::getApplication()->getParams("com_oziogallery3");
-			$user = $this->params->get("userid");
+			$this->Params = JFactory::getApplication()->getParams("com_oziogallery3");
+			$user = $this->Params->get("userid");
 
             // Set Meta Description
-            if ($description = $this->params->get('menu-meta_description'))
+            if ($description = $this->Params->get('menu-meta_description'))
                 $this->document->setDescription($description);
             // Set Meta Keywords
-            if ($keywords = $this->params->get('menu-meta_keywords'))
+            if ($keywords = $this->Params->get('menu-meta_keywords'))
                 $this->document->setMetadata('keywords', $keywords);
             // Set robots (index, follow)
-            if ($robots = $this->params->get('robots'))
+            if ($robots = $this->Params->get('robots'))
                 $this->document->setMetadata('robots', $robots);
 
 			$images = array();
 
-			$albumid = $this->params->get("gallery_id");
+			$albumid = $this->Params->get("gallery_id");
 			$authcode = "";
-			if ($this->params->get("albumvisibility") == "limited")
+			if ($this->Params->get("albumvisibility") == "limited")
 			{
-				$albumid = $this->params->get("limitedalbum");
-				$authcode = "&authkey=Gv1sRg" . $this->params->get("limitedpassword");
+				$albumid = $this->Params->get("limitedalbum");
+				$authcode = "&authkey=Gv1sRg" . $this->Params->get("limitedpassword");
 			}
 
 			// Old identifier: the album number
@@ -102,14 +104,14 @@
 			$slides .= "],";
 			$slides = str_replace(array("\r\n", "\r", "\n"), " ", $slides);
 
-			$autoplay = $this->params->get("autoplay", 0);
-			$stop_loop = $this->params->get("stop_loop", 0);
-			$slide_interval = $this->params->get("slide_interval", 3000);
-			$transition = $this->params->get("transition", "slideRight");
-			$transition_speed = $this->params->get("transition_speed", "1000");
-			$pause_hover = $this->params->get("pause_hover", 0);
-			$progress_bar = $this->params->get("progress_bar", 1);
-			$image_protect = $this->params->get("image_protect", 1);
+			$autoplay = $this->Params->get("autoplay", 0);
+			$stop_loop = $this->Params->get("stop_loop", 0);
+			$slide_interval = $this->Params->get("slide_interval", 3000);
+			$transition = $this->Params->get("transition", "slideRight");
+			$transition_speed = $this->Params->get("transition_speed", "1000");
+			$pause_hover = $this->Params->get("pause_hover", 0);
+			$progress_bar = $this->Params->get("progress_bar", 1);
+			$image_protect = $this->Params->get("image_protect", 1);
 
 			$js = <<<EOT
 			jQuery(function($){
@@ -157,7 +159,7 @@ EOT;
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
 
-			if ($this->params->get("jquery", 1))
+			if ($this->Params->get("jquery", 1))
 				// protocol: https, location: googleapis,
 				$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
 			// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
@@ -173,8 +175,8 @@ EOT;
 			$document->addScriptDeclaration($js);
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
 
-			$this->gallerywidth = $this->params->get("gallerywidth", array("text" => "100", "select" => "%"));
-			$this->play_button_style = $this->params->get("play_button", "0") ? '' : 'style="display:none;"';
+			$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
+			$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';
 
 			parent::display($tpl);
 		}
