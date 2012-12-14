@@ -3,13 +3,18 @@ jQuery(document).ready(function ($)
 	var author;
 
 <?php
+
 		$application = JFactory::getApplication("site");
 		$menu = $application->getMenu();
-		$items = $menu->getItems("component", "com_oziogallery3");
-		foreach ($items as &$item)
+		//$items = $menu->getItems("component", "com_oziogallery3");
+		$selected_items = $this->Params->get("menuitems_filter_items", array());
+
+		foreach ($selected_items as &$i)
 		{
 			// Skip album list menu items
-			if (strpos($item->link, "&view=list") !== false) continue;
+			//if (strpos($item->link, "&view=list") !== false) continue;
+
+			$item = $menu->getItem($i);
 
 			$album = new stdClass();
 			$link = "";
@@ -23,11 +28,6 @@ jQuery(document).ready(function ($)
 			{
 				$link = $item->link . '&Itemid=' . $item->id;
 			}
-/*
-			$album->url = JRoute::_($link);
-			$album->title = $item->title;
-			$this->albumlist[] = $album;
-*/
 ?>
 	// Crea un nuovo sottocontenitore e lo appende al principale
 	jQuery("#container").append(
