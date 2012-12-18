@@ -24,6 +24,8 @@ require_once JPATH_ROOT . "/components/com_oziogallery3/oziogallery.inc";
 
 class plgContentOzio extends JPlugin
 {
+	protected $Params;
+
 	public function onContentPrepare($context, &$article, &$params, $page = 0)
 	{
 		$regex		= '/{oziogallery\s+(.*?)}/i';
@@ -215,6 +217,7 @@ EOT;
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
 		$this->play_button_style = $cparams->get("play_button", "0") ? '' : 'style="display:none;"';
 
+		$this->Params = $cparams;
 		ob_start();
 		require JPATH_SITE . "/components/com_oziogallery3/views/00fuerte/tmpl/default.php";
 		$result = JPATH_COMPONENT("com_oziogallery3/views/00fuerte/tmpl/default.php") . ob_get_contents();
