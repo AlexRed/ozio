@@ -6,15 +6,33 @@ jQuery(document).ready(function ($)
 
 		$application = JFactory::getApplication("site");
 		$menu = $application->getMenu();
-		//$items = $menu->getItems("component", "com_oziogallery3");
-		$selected_items = $this->Params->get("menuitems_filter_items", array());
-
-		foreach ($selected_items as &$i)
+		$menuitems_filter_type = $this->Params->get('menuitems_filter_type', 0);  // Can be "IN", "NOT IN" or "0"
+		$selected_ids = $this->Params->get("menuitems_filter_items", array());
+		$all_items = $menu->getItems("component", "com_oziogallery3");
+		$all_ids = array();
+		foreach ($all_items as $item)
 		{
-			// Skip album list menu items
-			//if (strpos($item->link, "&view=list") !== false) continue;
+			$all_ids[] = $item->id;
+		}
 
+		if ($menuitems_filter_type == 'IN')
+		{
+				$ids = $selected_ids;
+		}
+		else if ($menuitems_filter_type == 'NOT IN')
+		{
+				$ids = array_diff($all_ids, $selected_ids);
+		}
+		else
+		{
+				$ids = $all_ids;
+		}
+
+		foreach ($ids as &$i)
+		{
 			$item = $menu->getItem($i);
+			// Skip album list menu items
+			if (strpos($item->link, "&view=list") !== false) continue;
 
 			$album = new stdClass();
 			$link = "";
