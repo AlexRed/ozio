@@ -32,7 +32,7 @@ jQuery(document).ready(function ($)
 		{
 			$item = $menu->getItem($i);
 			// Skip album list menu items
-			if (strpos($item->link, "&view=list") !== false) continue;
+			if (strpos($item->link, "&view=00fuerte") === false) continue;
 
 			$album = new stdClass();
 			$link = "";

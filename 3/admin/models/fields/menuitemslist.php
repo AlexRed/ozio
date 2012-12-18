@@ -43,7 +43,7 @@ class JFormFieldMenuItemsList extends JFormFieldList
 			// Filter on the published state.
 			$query->where("published = 1");
 
-			$query->order($db->quote("title"));
+			$query->order($db->quoteName("lft"));
 
 			// Set the query and get the result list.
 			$db->setQuery($query);
