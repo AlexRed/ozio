@@ -23,13 +23,13 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-<!--
-				<field name="menuitems_filter_type" type="list" default="0" label="OZIOGALLERY_FILTERINGTYPE_LBL" description="OZIOGALLERY_FILTERINGTYPE_DSC">
-					<option value="IN">OZIOGALLERY_INCLUSIVE</option>
-					<option value="NOT IN">OZIOGALLERY_EXCLUSIVE</option>
+
+				<field name="menuitems_filter_type" type="list" default="0" label="COM_OZIOGALLERY3_FILTERINGTYPE_LBL" description="COM_OZIOGALLERY3_FILTERINGTYPE_DSC">
+					<option value="IN">COM_OZIOGALLERY3_INCLUSIVE</option>
+					<option value="NOT IN">COM_OZIOGALLERY3_EXCLUSIVE</option>
 					<option value="0">JDISABLED</option>
 				</field>
--->
+
 			<field name="menuitems_filter_items" type="menuitemslist" multiple="true" size="5" label="COM_OZIOGALLERY3_MENUITEMLIST_LBL" description="COM_OZIOGALLERY3_MENUITEMLIST_DSC"
 				component="com_oziogallery3">
 			</field>
