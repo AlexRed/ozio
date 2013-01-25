@@ -43,13 +43,13 @@ class OzioGalleryViewList extends JView
 
 		$this->document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
 		// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
-		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery-noconflict.js");
-		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/list/js/jquery.pwi.js");
+		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
 
 		$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 		$itemid = "&amp;Itemid=" . $itemid->id;
+		$this->document->addScript($prefix . "&amp;filename=jquery-pwi&amp;type=js" . $itemid);
 		$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . $itemid);
 		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . $itemid);
 
