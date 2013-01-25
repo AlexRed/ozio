@@ -60,7 +60,7 @@ abstract class Loader
 		// Only admit lowercase a-z, underscore and minus. Forbid numbers, symbols, slashes and other stuff.
 		// For your security, *don't* touch the following regular expression.
 		preg_match('/^[a-z_-]+$/', $filename) or $filename = "invalid";
-		$local_name = JPATH_COMPONENT . "/" . $this->type() . "/" . $filename . "." . $this->type();
+		$local_name = $this->IncludePath . "/" . $this->type() . "/" . $filename . "." . $this->type();
 
 		require_once $local_name;
 	}

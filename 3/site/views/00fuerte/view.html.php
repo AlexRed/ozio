@@ -43,7 +43,8 @@
             // Set robots (index, follow)
             if ($robots = $this->Params->get('robots'))
                 $this->document->setMetadata('robots', $robots);
-
+// Rimosso il caricamento delle informazioni da parte del server
+/*
 			$images = array();
 
 			$albumid = $this->Params->get("gallery_id");
@@ -154,7 +155,7 @@
 				});
 		    });
 EOT;
-
+*/
 			$document = JFactory::getDocument();
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 			$document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
@@ -163,17 +164,20 @@ EOT;
 				// protocol: https, location: googleapis,
 				$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
 			// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
-			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/supersized.js");
-			// Solo per l'effetto easeOutExpo
-			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.easing.min.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/supersized.js");
+			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
 			$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 			$menu = JFactory::getApplication()->getMenu();
 			$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 			$itemid = "&amp;Itemid=" . $itemid->id;
 			$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
 			$document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . $itemid);
-			$document->addScriptDeclaration($js);
+			//$document->addScriptDeclaration($js);
 			$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
+
+			$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . $itemid);
+			$document->addScript($prefix . "&amp;filename=jquery-pwi&amp;type=js" . $itemid);
 
 			$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
 			$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';

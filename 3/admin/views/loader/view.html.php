@@ -31,11 +31,19 @@ class OzioViewLoader extends JView
 		$menu = @$application->getMenu();
 		$params = $menu->getParams(intval(JRequest::getVar("Itemid", 0, "GET")));
 
-		$type = JRequest::getVar("type", "", "GET");
+		$type = JFactory::getApplication()->input->get("type", "");
+		// Only admit lowercase a-z, underscore and minus. Forbid numbers, symbols, slashes and other stuff.
+		preg_match('/^[a-z_-]+$/', $type) or $type = "";
+
+		$view = JFactory::getApplication()->input->get("v", "");
+		// Only admit lowercase a-z, underscore and minus. Forbid numbers, symbols, slashes and other stuff.
+		preg_match('/^[0-9a-z_-]+$/', $view) or $view = "";
+		$view = $view ? "/views/" . $view : "";
 
 		// Instantiate the loader
 		$classname = $type . "Loader";
 		$loader = new $classname();
+		$loader->IncludePath = JPATH_ADMINISTRATOR . "/components/com_oziogallery3" . $view;
 		$loader->Params = &$params;
 		$loader->Show();
 	}
