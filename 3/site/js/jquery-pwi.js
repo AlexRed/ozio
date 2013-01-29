@@ -949,6 +949,9 @@ seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 				  	});
 			}
 
+			// Loading finished. Disables the hourglass on the cursor
+			show(false, '');
+
 			jQuery(function($){
 				$.supersized({
 					// Functionality
