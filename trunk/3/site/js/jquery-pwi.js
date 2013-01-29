@@ -1202,6 +1202,12 @@ slides : s,
 				if (numeric) album_type = 'albumid';
 				else album_type = 'album';
 
+				// Aggiunto supporto per album privati
+				if (settings.albumvisibility == 'limited')
+				{
+					settings.album = settings.limitedalbum;
+				}
+
 				var $u = strings.picasaUrl + settings.username +
 					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
 					((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
