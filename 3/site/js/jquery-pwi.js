@@ -1197,7 +1197,8 @@ slides : s,
 			else
 			{
 				// Aggiunto supporto per album id numerico
-				var numeric = settings.album.match(/^[0-9]{19}$/);
+				// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
+				var numeric = settings.album.match(/^[0-9]{19}|posts$/);
 				var album_type;
 				if (numeric) album_type = 'albumid';
 				else album_type = 'album';
