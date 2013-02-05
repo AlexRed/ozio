@@ -558,7 +558,7 @@
 				if (settings.showAlbumdate)
 				{
 					var date = $("<div class='pwi_album_title'/>");
-					date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.numphotos + '">' + new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
+					date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.date + '">' + new Date(Number(n.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
 					$scAlbum.append(date);
 				}
 
@@ -897,7 +897,7 @@
 			if (settings.showAlbumdate)
 			{
 				var date = $("<div class='pwi_album_title'/>");
-				date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.numphotos + '">' + new Date(Number(j.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
+				date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.date + '">' + new Date(Number(j.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
 				$scAlbum.append(date);
 			}
 
