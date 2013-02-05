@@ -87,6 +87,7 @@ jQuery(document).ready(function ($)
 
 		labels: {
 			numphotos: "<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",
+			date: "<?php echo JText::_("JDATE"); ?>",
 			downloadphotos:"Download photos",
 			albums:"Back to albums",
 			unknown:"<?php echo JText::_("JLIB_UNKNOWN"); ?>",
