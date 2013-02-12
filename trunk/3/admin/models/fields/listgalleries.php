@@ -35,11 +35,21 @@ class JFormFieldListGalleries extends JFormFieldList
 		{
 			$resources = false;
 			$document = JFactory::getDocument();
+			$prefix = JURI::current() . "?option=" . $name . "&amp;view=loader";
+
+			// jquery
+			$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+			$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
+
+			// pwi
+			$document->addScript(JURI::root(true) . "/index.php?option=" . $name . "&amp;view=loader" . "&amp;filename=jquery-pwi&amp;type=js");
+
 			// Alternative code: $type = strtolower($this->type);
 			$type = (string)$this->element["type"];
 
 			if (file_exists(JPATH_ADMINISTRATOR . "/components/" . $name . "/js/" . $type . ".js"))
-				$document->addScript(JURI::current() . "?option=" . $name . "&amp;view=loader&amp;type=js&amp;filename=" . $type);
+				$document->addScript($prefix . "&amp;type=js&amp;filename=" . $type);
+
 			if (file_exists(JPATH_ADMINISTRATOR . "/components/" . $name . "/css/" . $type . ".css"))
 				$document->addStyleSheet(JURI::base(true) . "/components/" . $name . "/css/" . $type . ".css");
 		}
@@ -48,7 +58,7 @@ class JFormFieldListGalleries extends JFormFieldList
 		'<div id="album_selection">' .
 		parent::getInput() .
 		'<img id="jform_params_' . (string)$this->element["name"] . '_loader" style="display:none;" src="' . JURI::root(true) . '/components/' . $name . '/views/00fuerte/img/progress.gif">' .
-		'<span id="jform_params_' . (string)$this->element["name"] . '_warning" style="display:none;">' . JText::_("COM_OZIOGALLERY3_OUTGOING_CONNECTION_FAILED") . '</span>' .
+		'<span id="jform_params_' . (string)$this->element["name"] . '_warning" style="display:none;">' . JText::_("COM_OZIOGALLERY3_CONNECTION_FAILED") . '</span>' .
 		'<span id="jform_params_' . (string)$this->element["name"] . '_selected" style="display:none;">' . $this->value . '</span>' .
 		'</div>';
 	}

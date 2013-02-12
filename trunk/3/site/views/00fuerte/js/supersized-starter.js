@@ -13,6 +13,4 @@ jQuery(document).ready(function ($)
 			// Ignora i comandi tramite parametri GET ?par=...
 			useQueryParameters:false
 		});
-
-
 });

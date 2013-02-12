@@ -146,6 +146,9 @@
 				case 'album_data':
 					GetAlbumData();
 					break;
+				case 'user_albums':
+					GetUserAlbums('atom');
+					break;
 				default:
 					getAlbums();
 					break;
@@ -1111,6 +1114,32 @@ slides : s,
 			}
 			return $self;
 		}
+
+
+		function GetUserAlbums(alt)
+		{
+			/*
+			alt can be 'json', 'rss' or 'atom' (https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats)
+			 */
+			var url = strings.picasaUrl + settings.username +
+				'?kind=album' +
+				'&access=' + settings.albumTypes +
+				'&alt=' + 'json' +
+				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
+
+			// http://api.jquery.com/jQuery.ajax/
+			$.ajax({
+				'url': url,
+				//'dataType': 'xml',
+				'beforeSend': settings.beforeSend,
+				'success': settings.success,
+				'error': settings.error,
+				'complete': settings.complete
+			});
+
+			return $self;
+		}
+
 
 		function checkPhotoSize(photoSize)
 		{

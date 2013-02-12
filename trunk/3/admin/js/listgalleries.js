@@ -77,136 +77,6 @@ function OnUseridCut(value)
 }
 
 
-function LoadAlbums()
-{
-	//var input = $('jform_params_userid');
-	var input = document.id('jform_params_userid');
-	/*
-	 // Evento onChange
-	 input.addEvent('realChange', OnUseridChange);
-	 input.addEvent('paste', OnUseridPaste);
-	 input.addEvent('cut', OnUseridCut);
-	 input.addEvent('change', OnUseridExit);
-	 */
-	// Altri eventi
-
-	var xhrOnRequest = function ()
-	{
-		// Hide the select
-		$('jform_params_gallery_id').hide();
-		// Show the loader
-		$('jform_params_gallery_id_loader').show();
-	};
-
-	var xhrOnComplete = function (response)
-	{
-		// Show the select
-		//$('jform_params_gallery_id').show();
-		// Hide the loader
-		$('jform_params_gallery_id_loader').hide();
-	};
-
-	var xhrOnSuccess = function (responseText, responseXML)
-	{
-		var select = $('jform_params_gallery_id');
-		// Clear previous options
-		select.options.length = 0;
-		//select.setStyle('width', '50%');
-
-		var tabella = new Array();
-		tabella['NONE'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
-		tabella['PROFILEPHOTOS'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
-		tabella['SCRAPBOOK'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
-		tabella['BUZZ'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
-
-		// Abilitazione combo
-		// select.style.display = 'none';
-
-		var numbuzz = 0;
-		// This doesn't work on firefox
-		//if (!responseXML)
-		if (responseText == '')
-		{
-			$('jform_params_gallery_id_warning').show();
-			return;
-		}
-		// Show the select
-		$('jform_params_gallery_id').show();
-
-		var feed = responseXML.childNodes[0];
-		var albums = feed.getElements('entry');
-		for (var a = 0; a < albums.length; ++a)
-		{
-			var album = albums[a];
-			var title = album.getElement('title').textContent;
-			var id;
-			var name;
-			var numphotos;
-
-			var albumtype = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
-			// getElement() doesn't work on namespaces
-			//title = albums[a].getElement('title').get('text');
-			//id = albums[a].getElement('gphoto\\:id').get('text');
-			//numphotos = albums[a].getElement('gphoto\\:numphotos').get('text');
-			for (var c = 0; c < album.childNodes.length; ++c)
-			{
-				// Old identifier: the album number
-				if (album.childNodes[c].tagName == 'gphoto:id') id = album.childNodes[c].textContent;
-				// New identifier: the album unique name
-				if (album.childNodes[c].tagName == 'gphoto:name') name = album.childNodes[c].textContent;
-
-				if (album.childNodes[c].tagName == 'gphoto:numphotos') numphotos = album.childNodes[c].textContent;
-				//if (album.childNodes[c].tagName == 'gphoto:albumType') albumtype = 'COM_OZIOGALLERY3_ALBUMTYPE_' + album.childNodes[c].textContent.toUpperCase();
-				if (album.childNodes[c].tagName == 'gphoto:albumType')
-				{
-					//title = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_"); ?>' + album.childNodes[c].textContent.toUpperCase();
-					title = tabella[album.childNodes[c].textContent.toUpperCase()];
-				}
-			}
-
-			if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
-			{
-				numbuzz += parseInt(numphotos);
-			}
-			else
-			{
-				// Old identifier: the album number
-				addoption(select, id, title + ' (' + numphotos + ')');
-				// New identifier: the album unique name
-				//addoption(select, name, title + ' (' + numphotos + ')');
-			}
-		}
-
-		addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
-
-		// Todo: Predisposto ma lasciato incompleto
-		// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
-		// come quella utilizzata dal selettore posizione modulo in Joomla 1.5
-		// ...
-		//addoption(select, 0, 'Selezione manuale');
-		SelectCurrentAlbum();
-	};
-
-	var xhrOnFailure = function (response)
-	{
-		$('jform_params_gallery_id_warning').show();
-	};
-
-	var options =
-	{
-		url:'../index.php',
-		method:'GET',
-		data:'option=com_oziogallery3&view=00fuerte&task=proxy&user=' + input.value + '&v=2',
-		onRequest:xhrOnRequest,
-		onComplete:xhrOnComplete,
-		onSuccess:xhrOnSuccess,
-		onFailure:xhrOnFailure
-	};
-
-	var request = new Request(options);
-	request.send();
-}
-
 function addoption(select, value, text)
 {
 	var option = document.createElement('option');
@@ -222,6 +92,110 @@ function addoption(select, value, text)
 		// IE only
 		select.add(option);
 	}
+}
+
+
+// jquery album loading
+function LoadAlbums()
+{
+	var input = document.id('jform_params_userid');
+
+	jQuery("#album_selection").pwi(
+		{
+			mode:'user_albums',
+			username:input.value,
+			beforeSend:OnBeforeSend,
+			success:OnLoadSuccess,
+			error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+			complete:OnLoadComplete,
+
+			// Ignora i comandi tramite parametri GET ?par=...
+			useQueryParameters:false
+		});
+}
+
+function OnBeforeSend(jqXHR, settings)
+{
+	// Hide the select
+	$('jform_params_gallery_id').hide();
+	// Hide the warning
+	$('jform_params_gallery_id_warning').hide();
+	// Show the loader
+	$('jform_params_gallery_id_loader').show();
+}
+
+function OnLoadSuccess(result, textStatus, jqXHR)
+{
+	var select = $('jform_params_gallery_id');
+	// Clear previous options
+	select.options.length = 0;
+
+	// Show the select
+	select.show();
+
+	var tabella = new Array();
+	tabella['NONE'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
+	tabella['PROFILEPHOTOS'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
+	tabella['SCRAPBOOK'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
+	tabella['BUZZ'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
+
+	var numbuzz = 0;
+
+	var albums = result.feed.entry;
+	for (var a = 0; a < albums.length; ++a)
+	{
+		var album = albums[a];
+		var id = album.gphoto$id.$t;
+		// Album unique name (see below)
+		// var name = album.gphoto$name.$t;
+		var numphotos = album.gphoto$numphotos.$t;
+
+		var title;
+		if (album.hasOwnProperty('gphoto$albumType'))
+		// Equivalent code
+		// if ('gphoto$albumType' in album)
+		{
+			// Special album
+			title = tabella[album.gphoto$albumType.$t.toUpperCase()];
+		}
+		else
+		{
+			// Standard album
+			title = album.title.$t;
+		}
+
+		if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
+		{
+			numbuzz += parseInt(numphotos);
+		}
+		else
+		{
+			// Old identifier: the album number
+			addoption(select, id, title + ' (' + numphotos + ')');
+			// New identifier: the album unique name
+			//addoption(select, name, title + ' (' + numphotos + ')');
+		}
+	}
+
+	addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
+
+	// Todo: Predisposto ma lasciato incompleto
+	// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
+	// come quella utilizzata dal selettore posizione modulo in Joomla 1.5
+	// ...
+	//addoption(select, 0, 'Selezione manuale');
+	SelectCurrentAlbum();
+}
+
+function OnLoadError(jqXHR, textStatus, error)
+{
+	$('jform_params_gallery_id_warning').show();
+}
+
+function OnLoadComplete(jqXHR, textStatus)
+{
+	// Hide the loader
+	$('jform_params_gallery_id_loader').hide();
 }
 
 
