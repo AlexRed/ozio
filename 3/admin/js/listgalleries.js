@@ -100,6 +100,7 @@ function LoadAlbums()
 {
 	var input = document.id('jform_params_userid');
 
+	// Se our parameters and trig the loading
 	jQuery("#album_selection").pwi(
 		{
 			mode:'user_albums',
@@ -109,7 +110,7 @@ function LoadAlbums()
 			error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
 			complete:OnLoadComplete,
 
-			// Ignora i comandi tramite parametri GET ?par=...
+			// Tell the library to ignore parameters through GET ?par=...
 			useQueryParameters:false
 		});
 }
