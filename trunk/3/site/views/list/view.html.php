@@ -23,7 +23,6 @@ jimport('joomla.application.component.view');
 
 class OzioGalleryViewList extends JView
 {
-	protected $albumlist = array();
 	protected $Params;
 
 	function display($tpl = null)
