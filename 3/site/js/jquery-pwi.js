@@ -855,154 +855,6 @@
 			alignPictures('div.pwi_photo');
 		}
 
-		function albumCover(j)
-		{
-			var $scAlbums = $("<div class='scAlbums'/>");
-
-			// Build main album container
-			var $scAlbum = $(
-				"<div class='pwi_album' style='" +
-					"width:" + (settings.albumThumbSize + 1) + "px;" +
-					"'/>"
-			);
-
-			// Build album thumbnail image including the link to the local album url
-			if (settings.showAlbumThumbs)
-			{
-				var $thumbnail0 = j.feed.entry[0].media$group.media$thumbnail[0];
-				$scAlbum.append
-					(
-						'<a href="' + settings.album_local_url + '">' +
-							"<img src='" + $thumbnail0.url +
-							"' height='" + $thumbnail0.height +
-							"' width='" + $thumbnail0.width +
-							"' alt='" + j.feed.title.$t +
-							"' class='coverpage" +
-							"'/>" +
-							'</a>'
-					);
-			}
-
-			// Build album title
-			if (settings.showAlbumTitle)
-			{
-				// Google Plus Album title
-				var title = $("<div class='pwi_album_title'/>");
-				title.append(((j.feed.title.$t.length > settings.showAlbumTitlesLength) ? j.feed.title.$t.substring(0, settings.showCaptionLength) : j.feed.title.$t));
-				$scAlbum.append(title);
-			}
-
-			if (settings.showCustomTitle)
-			{
-				// Custom local album title
-				var title = $("<div class='pwi_album_title'/>");
-				title.append(settings.album_local_title);
-				$scAlbum.append(title);
-			}
-
-			if (settings.showAlbumdate)
-			{
-				var date = $("<div class='pwi_album_title'/>");
-				date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.date + '">' + new Date(Number(j.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
-				$scAlbum.append(date);
-			}
-
-			if (settings.showAlbumPhotoCount)
-			{
-				var numphotos = $("<div class='pwi_album_title'/>");
-				numphotos.append('<span class="indicator og-camera" ' + 'title="' + settings.labels.numphotos + '">' + j.feed.gphoto$numphotos.$t + '</span> ');
-				$scAlbum.append(numphotos);
-			}
-
-			$scAlbums.append($scAlbum);
-
-			settings.albumstore = j;
-			show(false, $scAlbums);
-
-			alignPictures('div.pwi_album');
-
-
-
-
-		}
-
-
-		function albumData(j)
-		{
-			var s = [];
-			for (var i = 0; i < j.feed.entry.length; ++i)
-			{
-
-				// Todo: di default prende il /d nell'URL che serve per il download
-				var seed = j.feed.entry[i].content.src.substring(0, j.feed.entry[i].content.src.lastIndexOf("/"));
-				seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
-
-				// Avoids divisions by 0
-				var width = j.feed.entry[i].gphoto$width.$t;
-				var height = j.feed.entry[i].gphoto$height.$t
-				var ratio = 1;
-				// Avoids divisions by 0
-				if (width) ratio = height / width;
-
-        		s.push({
-					// Removes the file.ext part of the URL
-					'seed': seed,
-					'width': width,
-					'height': height,
-					'ratio': ratio,
-				  	'album': j.feed.title.$t,
-				  	'summary':j.feed.entry[i].summary.$t
-
-				  	});
-			}
-
-			// Loading finished. Disables the hourglass on the cursor
-			show(false, '');
-
-			jQuery(function($){
-				$.supersized({
-					// Functionality
-					slideshow : 1, // Slideshow on/off
-					autoplay : <?php echo $this->Params->get("autoplay", 0); ?>, // Slideshow starts playing automatically
-					start_slide             :   1,			// Start slide (0 is random)
-					stop_loop : <?php echo $this->Params->get("stop_loop", 0); ?>, // Pauses slideshow on last slide
-					random					: 	0,			// Randomize slide order (Ignores start slide)
-					slide_interval : <?php echo $this->Params->get("slide_interval", 3000); ?>, // Length between transitions
-					transition : '<?php echo $this->Params->get("transition", "fade"); ?>', // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-					transition_speed : <?php echo $this->Params->get("transition_speed", 1000); ?>, // Speed of transition
-					new_window				:	1,			// Image links open in new window/tab
-					pause_hover : <?php echo $this->Params->get("pause_hover", 0); ?>, // Pause slideshow on hover
-					keyboard_nav            :   1,			// Keyboard navigation on/off
-					performance				:	1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-					image_protect			:	<?php echo $this->Params->get("image_protect", 0); ?>,			// Disables image dragging and right click with Javascript
-
-					// Size & Position
-					min_width		        :   0,			// Min width allowed (in pixels)
-					min_height		        :   0,			// Min height allowed (in pixels)
-					vertical_center         :   0,			// Vertically center background
-					horizontal_center       :   0,			// Horizontally center background
-					fit_always				:	1,			// Image will never exceed browser width or height (Ignores min. dimensions)
-					fit_portrait         	:   0,			// Portrait images will not exceed browser height
-					fit_landscape			:   0,			// Landscape images will not exceed browser width
-
-					// Components
-					slide_links				:	'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
-					thumb_links				:	1,			// Individual thumb links for each slide
-					thumbnail_navigation    :   0,			// Thumbnail navigation
-
-					//slides : [{ seed : 'http://lh3.ggpht.com/-zZ0EYO5eYqE/UKeKwJzfKcI/AAAAAAAAAzA/qJqjm2EOQsQ/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-foHA1okfyiw/UKeKxMj27FI/AAAAAAAAAiQ/oVjrL1fh1_k/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-iG_K-otazK0/UKeKwPcwEHI/AAAAAAAAAiI/NadaNRxMW1w/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-yPBqpeJ5WPQ/UKeLAEaKMEI/AAAAAAAAAio/YCIfDMJ3uZM/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh3.ggpht.com/-SQQB84SbqbY/UKeK8d0CzoI/AAAAAAAAAig/Oi8x2adn09c/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-H18fzndatFA/UKeK_8HF-NI/AAAAAAAAAis/83ZNfzckW4k/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-rkSIvc1cpD0/UKeLL-1_83I/AAAAAAAAAi4/YVKYSGY45Tg/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-VWHWzM4movc/UKeLOJQGlLI/AAAAAAAAAjA/xkps5m0jFFg/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-8khvDfJrfcw/UKeLTlY7etI/AAAAAAAAAjI/-ApmHsRc0jQ/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-vD3VvIYTjBM/UKeLZfU5xKI/AAAAAAAAAjQ/06aUGwdh0EU/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-oURm9OMCsl4/UKeLbxsdYkI/AAAAAAAAAjY/-ebEOxmk-Mg/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-b8Y6KJzxXQs/UKeLfxa7dnI/AAAAAAAAAjg/BsYbWNCRt5w/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-tSJuu0vyurY/UKeLk9LmuyI/AAAAAAAAAjo/fQ6crj69ugQ/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-uZP7Y83bnA0/UKeLm_R9DZI/AAAAAAAAAjw/jbJAhGyeAyg/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-NsUsOY-8F1g/UKeLzNO9III/AAAAAAAAAj4/nCcB4XcGOdQ/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-VTbDWY8RExw/UKeLzkiwqKI/AAAAAAAAAj8/X0LaJM08BSI/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-yuNZOnPLDa4/UKeL3K-y4LI/AAAAAAAAAkI/SQ0dJ9QkQTo/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-jiEkiYJqgCs/UKeMEwel0MI/AAAAAAAAAkY/_unOZmTUoMw/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-Y58Cq7uQd44/UKeMDgnvWmI/AAAAAAAAAkQ/BxDp3Wb7ww4/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-Ve4dgSjDaHs/UKeMF6ujSEI/AAAAAAAAAkc/ziJzEYra5mQ/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-HTdLEpC81hE/UKeMPVZoeGI/AAAAAAAAAko/VhftqYegvVk/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-wdDpVSAGIkM/UKeMVRC9shI/AAAAAAAAAk4/FlxwUlrBTXU/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-d2pBxpCkO1U/UKeMUF_O_OI/AAAAAAAAAkw/U0VVxOFfQxE/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-Daj_Yyp000I/UKeMgQ3rkBI/AAAAAAAAAlA/6X7TlJxDY1I/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-8YuTcAiouSw/UKeMmlBK3hI/AAAAAAAAAlI/8IYKcgDnYRk/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-qAup_hW8cRI/UKeMqXvPm9I/AAAAAAAAAlQ/vnaCKkI-KUo/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-3POJpix8lso/UKeMxxB1QAI/AAAAAAAAAlY/-TPiJ0Kg0EE/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-B9b9O7wRDjs/UKeM3FNM1vI/AAAAAAAAAlg/dDVCtjiHhUI/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-d7d9KyybWjA/UKeM3zi-2oI/AAAAAAAAAlk/xUCSA7EXji4/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-J4_fx0iOeug/UKeNAlZ8uaI/AAAAAAAAAlw/y5EHuneLH4o/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh3.ggpht.com/--tKADTjwXYg/UKeNA-IY3TI/AAAAAAAAAl0/3XRrBzuqnko/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh3.ggpht.com/-A9T47uh9qVI/UKeNJjN938I/AAAAAAAAAmA/L1S4T9ihMpU/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-sxfRFWziHl4/UKeNLE5qb_I/AAAAAAAAAmI/9pYC7bWCs2g/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-VnuZKz2fspA/UKeNRJKR7II/AAAAAAAAAmU/QLaDuQVd2cY/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-Y4uI8_mXnx0/UKeNUMGMqjI/AAAAAAAAAmc/IA6vBHtyvLk/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh3.ggpht.com/-Fa8ldiQi1Zs/UKeNbqRF9aI/AAAAAAAAAmk/I--od2O2x1w/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-bL9qqv2a7R0/UKeNhvT8AjI/AAAAAAAAAms/y1U7wlSxTBw/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-8ZSMztn9K7k/UKeNjQ9ZqmI/AAAAAAAAAm0/advbCEcP6s8/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-aYD4pG_QMGk/UKeNrK8xi3I/AAAAAAAAAm8/xDcwAZTj6Is/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-2JyW4aSn6pc/UKeNslbydMI/AAAAAAAAAnE/Uj9olx1pev8/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-DSO9FpDqAdc/UKeNzcJogcI/AAAAAAAAAnM/qMH3vEQfJbA/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-PTvN-Kp1x4Y/UKeN1uTXKMI/AAAAAAAAAnU/rMf1UkYbFSM/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh5.ggpht.com/-mQBfZgBNmy4/UKeN8j6_tqI/AAAAAAAAAnc/RBpvadqreIs/', width : '1365', height : '2048', ratio : '1.5003663003663', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-jkx7lq2j7PU/UKeN_DOoAtI/AAAAAAAAAnk/wOK-EoNOHa8/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-Z8hwkrODDJs/UKeOFxK3FDI/AAAAAAAAAns/6quTByDouOY/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh6.ggpht.com/-XmiDeRDFDuA/UKeOJJ0CUNI/AAAAAAAAAn0/jIbXYH7WVyc/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' },{ seed : 'http://lh4.ggpht.com/-Lk2jm4tNCSw/UKeOLgEmltI/AAAAAAAAAn8/vYi1ob-Hlis/', width : '2048', height : '1365', ratio : '0.66650390625', album : 'FUERTEventura', summary : '' }],
-					slides : s,
-
-					// Theme Options
-					progress_bar : <?php echo $this->Params->get("progress_bar", 1); ?>, // Timer for each slide
-					mouse_scrub				:	0
-
-				});
-		    });
-
-
-		}
-
 
 		function latest(j)
 		{
@@ -1150,21 +1002,30 @@
 
 		function GetAlbumCover()
 		{
-				// Aggiunto supporto per album id numerico
-				// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
-				var numeric = settings.album.match(/^[0-9]{19}|posts$/);
-				var album_type;
-				if (numeric) album_type = 'albumid';
-				else album_type = 'album';
+			// Aggiunto supporto per album id numerico
+			// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
+			var numeric = settings.album.match(/^[0-9]{19}|posts$/);
+			var album_type;
+			if (numeric) album_type = 'albumid';
+			else album_type = 'album';
 
-				var $u = strings.picasaUrl + settings.username +
-					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
-					((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
-					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
-					'&imgmax=d&thumbsize=' + settings.thumbSize +
-					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
-				show(true, '');
-				$.getJSON($u, 'callback=?', albumCover);
+			var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
+				'?imgmax=d' +
+				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
+				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
+				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
+				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
+
+			// http://api.jquery.com/jQuery.ajax/
+			$.ajax({
+				'url':url,
+				//'dataType': 'json',
+				'beforeSend':settings.beforeSend,
+				'success':settings.success,
+				'error':settings.error,
+				'complete':settings.complete
+			});
 
 			return $self;
 		}
@@ -1172,27 +1033,30 @@
 
 		function GetAlbumData()
 		{
-				// Aggiunto supporto per album id numerico
-				// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
-				var numeric = settings.album.match(/^[0-9]{19}|posts$/);
-				var album_type;
-				if (numeric) album_type = 'albumid';
-				else album_type = 'album';
+			// Aggiunto supporto per album id numerico
+			// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
+			var numeric = settings.album.match(/^[0-9]{19}|posts$/);
+			var album_type;
+			if (numeric) album_type = 'albumid';
+			else album_type = 'album';
 
-				// Aggiunto supporto per album privati
-				if (settings.albumvisibility == 'limited')
-				{
-					settings.album = settings.limitedalbum;
-				}
+			var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
+				'?imgmax=d' +
+				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
+				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
+				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
+				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
 
-				var $u = strings.picasaUrl + settings.username +
-					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
-					((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
-					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
-					'&imgmax=d&thumbsize=' + settings.thumbSize +
-					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
-				show(true, '');
-				$.getJSON($u, 'callback=?', albumData);
+			// http://api.jquery.com/jQuery.ajax/
+			$.ajax({
+				'url':url,
+				//'dataType': 'json',
+				'beforeSend':settings.beforeSend,
+				'success':settings.success,
+				'error':settings.error,
+				'complete':settings.complete
+			});
 
 			return $self;
 		}
@@ -1201,20 +1065,20 @@
 		function GetUserAlbums()
 		{
 			var url = strings.picasaUrl + settings.username +
-				'?kind=album' +
-				'&access=' + settings.albumTypes +
 				// alt can be 'json', 'rss' or 'atom' (https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats), but we need it as json to work with cross domain
-				'&alt=json' +
+				'?alt=json' +
+				// '&kind=album' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
+				'&access=' + settings.albumTypes +
 				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
-				'url': url,
-				//'dataType': 'xml',
-				'beforeSend': settings.beforeSend,
-				'success': settings.success,
-				'error': settings.error,
-				'complete': settings.complete
+				'url':url,
+				//'dataType': 'json',
+				'beforeSend':settings.beforeSend,
+				'success':settings.success,
+				'error':settings.error,
+				'complete':settings.complete
 			});
 
 			return $self;
@@ -1232,12 +1096,12 @@
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
-				'url': url,
+				'url':url,
 				//'dataType': 'xml',
-				'beforeSend': settings.beforeSend,
-				'success': settings.success,
-				'error': settings.error,
-				'complete': settings.complete
+				'beforeSend':settings.beforeSend,
+				'success':settings.success,
+				'error':settings.error,
+				'complete':settings.complete
 			});
 
 			return $self;

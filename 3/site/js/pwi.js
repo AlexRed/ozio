@@ -2,8 +2,7 @@ jQuery(document).ready(function ($)
 {
 	var author;
 
-<?php
-
+//<?php
 		$application = JFactory::getApplication("site");
 		$menu = $application->getMenu();
 		$menuitems_filter_type = $this->Params->get('menuitems_filter_type', 0);  // Can be "IN", "NOT IN" or "0"
@@ -46,7 +45,8 @@ jQuery(document).ready(function ($)
 			{
 				$link = $item->link . '&Itemid=' . $item->id;
 			}
-?>
+//?>
+
 	// Crea un nuovo sottocontenitore e lo appende al principale
 	jQuery("#container").append(
 		author = jQuery("<div/>", {'id': 'author<?php echo $item->id; ?>', 'class': 'author'})
@@ -59,29 +59,23 @@ jQuery(document).ready(function ($)
 		album_local_url: '<?php echo JRoute::_($link); ?>',
 		album_local_title: '<?php echo $item->title; ?>',
 
-		// accettato l'id numerico e il nome utente come stringa
+      mode:'album_cover',
 		username: '<?php echo $item->params->get("userid"); ?>',
-
-		// Filtro sugli album utente
-		//mode: 'albums' // mode predefinito
-		//albums: ["<?php echo $item->params->get("gallery_id"); ?>"],
-
-        mode:'album_cover',
-        <?php if ($item->params->get("albumvisibility") == "public") { ?>
-        album: "<?php echo $item->params->get("gallery_id"); ?>",
-			<?php } else { ?>
-        album: "<?php echo $item->params->get("limitedalbum"); ?>",
-        authKey: "<?php echo $item->params->get("limitedpassword"); ?>",
-			<?php } ?>
+		album:'<?php echo ($item->params->get("albumvisibility") == "public") ? $item->params->get("gallery_id", "") : $item->params->get("limitedalbum"); ?>',
+      authKey: "<?php echo $item->params->get("limitedpassword"); ?>",
+		beforeSend:OnBeforeSend,
+		success:OnLoadSuccess,
+		error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+		complete:OnLoadComplete,
 
 		showAlbumThumbs: true,
 		thumbAlign: true,
-		showAlbumdate: <?php echo $this->Params->get("show_date", 1); ?>,
-		showAlbumPhotoCount: <?php echo $this->Params->get("show_counter", 1); ?>,
+		showAlbumdate: '<?php echo $this->Params->get("show_date", 1); ?>',
+		showAlbumPhotoCount: '<?php echo $this->Params->get("show_counter", 1); ?>',
 		showAlbumTitle: false,
 		showCustomTitle: true,
-		albumThumbSize: <?php echo $this->Params->get("images_size", 180); ?>,
-		thumbSize:<?php echo $this->Params->get("images_size", 180); ?>,
+		albumThumbSize: '<?php echo $this->Params->get("images_size", 180); ?>',
+		thumbSize: '<?php echo $this->Params->get("images_size", 180); ?>',
 		albumCrop: true,
 		thumbCrop: true,
 
@@ -104,6 +98,87 @@ jQuery(document).ready(function ($)
 		useQueryParameters: false
 	});
 
-<?php } ?>
+//<?php } ?>
+
+	function OnBeforeSend(jqXHR, settings)
+	{
+				document.body.style.cursor = "wait";
+	}
+
+	function OnLoadSuccess(result, textStatus, jqXHR)
+	{
+			var $scAlbums = $("<div class='scAlbums'/>");
+
+			// Build main album container
+			var $scAlbum = $(
+				"<div class='pwi_album' style='" +
+					"width:" + (settings.albumThumbSize + 1) + "px;" +
+					"'/>"
+			);
+
+			// Build album thumbnail image including the link to the local album url
+			if (settings.showAlbumThumbs)
+			{
+				var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
+				$scAlbum.append
+					(
+						'<a href="' + settings.album_local_url + '">' +
+							"<img src='" + $thumbnail0.url +
+							"' height='" + $thumbnail0.height +
+							"' width='" + $thumbnail0.width +
+							"' alt='" + result.feed.title.$t +
+							"' class='coverpage" +
+							"'/>" +
+							'</a>'
+					);
+			}
+
+			// Build album title
+			if (settings.showAlbumTitle)
+			{
+				// Google Plus Album title
+				var title = $("<div class='pwi_album_title'/>");
+				title.append(((result.feed.title.$t.length > settings.showAlbumTitlesLength) ? result.feed.title.$t.substring(0, settings.showCaptionLength) : result.feed.title.$t));
+				$scAlbum.append(title);
+			}
+
+			if (settings.showCustomTitle)
+			{
+				// Custom local album title
+				var title = $("<div class='pwi_album_title'/>");
+				title.append(settings.album_local_title);
+				$scAlbum.append(title);
+			}
+
+			if (settings.showAlbumdate)
+			{
+				var date = $("<div class='pwi_album_title'/>");
+				date.append('<span class="indicator og-calendar" ' + 'title="' + settings.labels.date + '">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span> ');
+				$scAlbum.append(date);
+			}
+
+			if (settings.showAlbumPhotoCount)
+			{
+				var numphotos = $("<div class='pwi_album_title'/>");
+				numphotos.append('<span class="indicator og-camera" ' + 'title="' + settings.labels.numphotos + '">' + result.feed.gphoto$numphotos.$t + '</span> ');
+				$scAlbum.append(numphotos);
+			}
+
+			$scAlbums.append($scAlbum);
+
+			settings.albumstore = j;
+			show(false, $scAlbums);
+
+			alignPictures('div.pwi_album');		
+	}
+
+	function OnLoadError(jqXHR, textStatus, error)
+	{
+	}
+
+	function OnLoadComplete(jqXHR, textStatus)
+	{
+				document.body.style.cursor = "default";
+	}
 
 });
