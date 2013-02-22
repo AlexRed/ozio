@@ -42,7 +42,7 @@ class JFormFieldListGalleries extends JFormFieldList
 			$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
 
 			// pwi
-			$document->addScript(JURI::root(true) . "/index.php?option=" . $name . "&amp;view=loader" . "&amp;filename=jquery-pwi&amp;type=js");
+			$document->addScript(JURI::root(true) . "/components/" . $name . "/js/jquery-pwi.js");
 
 			// Alternative code: $type = strtolower($this->type);
 			$type = (string)$this->element["type"];

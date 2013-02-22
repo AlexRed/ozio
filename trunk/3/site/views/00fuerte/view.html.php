@@ -65,7 +65,7 @@ class OzioGalleryView00Fuerte extends JView
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
 
 		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . $itemid);
-		$document->addScript($prefix . "&amp;filename=jquery-pwi&amp;type=js" . $itemid);
+		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
 		$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
 		$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';
