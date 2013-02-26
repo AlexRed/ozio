@@ -1,3 +1,5 @@
+// http://www.appelsiini.net/projects/lazyload
+
 (function ($)
 {
 	var elem, opts = {};
@@ -1024,7 +1026,11 @@
 				'beforeSend':settings.beforeSend,
 				'success':settings.success,
 				'error':settings.error,
-				'complete':settings.complete
+				'complete':settings.complete,
+
+				'album_local_url':settings.album_local_url,
+				'album_local_title':settings.album_local_title,
+				'album_id':settings.album_id
 			});
 
 			return $self;

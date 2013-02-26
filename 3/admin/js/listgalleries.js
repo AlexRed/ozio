@@ -100,7 +100,7 @@ function LoadAlbums()
 {
 	var input = document.id('jform_params_userid');
 
-	// Se our parameters and trig the loading
+	// Set our parameters and trig the loading
 	jQuery("#album_selection").pwi(
 		{
 			mode:'user_albums',
