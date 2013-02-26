@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($)
 {
-	// Se our parameters and trig the loading
+	// Set our parameters and trig the loading
 	jQuery("#supersized").pwi(
 		{
 			mode:'album_data',
