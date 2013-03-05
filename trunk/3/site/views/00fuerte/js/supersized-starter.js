@@ -7,6 +7,8 @@ jQuery(document).ready(function ($)
 			username:'<?php echo $this->Params->get("userid", ""); ?>',
 			album:'<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey:'<?php echo $this->Params->get("limitedpassword", ""); ?>',
+			StartIndex:1,
+			MaxResults:50,
 			beforeSend:OnBeforeSend,
 			success:OnLoadSuccess,
 			error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
@@ -54,18 +56,18 @@ jQuery(document).ready(function ($)
 				$.supersized({
 					// Functionality
 					slideshow : 1, // Slideshow on/off
-					autoplay : '<?php echo $this->Params->get("autoplay", 0); ?>', // Slideshow starts playing automatically
+					autoplay : parseInt('<?php echo $this->Params->get("autoplay", 0); ?>'), // Slideshow starts playing automatically
 					start_slide             :   1,			// Start slide (0 is random)
-					stop_loop : '<?php echo $this->Params->get("stop_loop", 0); ?>', // Pauses slideshow on last slide
+					stop_loop : parseInt('<?php echo $this->Params->get("stop_loop", 0); ?>'), // Pauses slideshow on last slide
 					random					: 	0,			// Randomize slide order (Ignores start slide)
-					slide_interval : '<?php echo $this->Params->get("slide_interval", 3000); ?>', // Length between transitions
+					slide_interval : parseInt('<?php echo $this->Params->get("slide_interval", 3000); ?>'), // Length between transitions
 					transition : '<?php echo $this->Params->get("transition", "fade"); ?>', // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-					transition_speed : '<?php echo $this->Params->get("transition_speed", 1000); ?>', // Speed of transition
+					transition_speed : parseInt('<?php echo $this->Params->get("transition_speed", 1000); ?>'), // Speed of transition
 					new_window				:	1,			// Image links open in new window/tab
-					pause_hover : '<?php echo $this->Params->get("pause_hover", 0); ?>', // Pause slideshow on hover
+					pause_hover : parseInt('<?php echo $this->Params->get("pause_hover", 0); ?>'), // Pause slideshow on hover
 					keyboard_nav            :   1,			// Keyboard navigation on/off
 					performance				:	1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-					image_protect			:	'<?php echo $this->Params->get("image_protect", 0); ?>',			// Disables image dragging and right click with Javascript
+					image_protect			:	parseInt('<?php echo $this->Params->get("image_protect", 0); ?>'),			// Disables image dragging and right click with Javascript
 
 					// Size & Position
 					min_width		        :   0,			// Min width allowed (in pixels)
@@ -82,9 +84,10 @@ jQuery(document).ready(function ($)
 					thumbnail_navigation    :   0,			// Thumbnail navigation
 
 					slides : s,
+					slide_total : result.feed.openSearch$totalResults.$t,
 
 					// Theme Options
-					progress_bar : '<?php echo $this->Params->get("progress_bar", 1); ?>', // Timer for each slide
+					progress_bar : parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
 					mouse_scrub				:	0
 
 				});

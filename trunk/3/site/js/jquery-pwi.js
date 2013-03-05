@@ -1,4 +1,5 @@
 // http://www.appelsiini.net/projects/lazyload
+// http://www.electrictoolbox.com/jquery-store-data-in-dom/
 
 (function ($)
 {
@@ -150,9 +151,6 @@
 					break;
 				case 'user_albums':
 					GetUserAlbums();
-					break;
-				case 'thumbnails':
-					GetThumbnails();
 					break;
 				default:
 					getAlbums();
@@ -1022,7 +1020,7 @@
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
 				'url':url,
-				//'dataType': 'json',
+				'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
 				'beforeSend':settings.beforeSend,
 				'success':settings.success,
 				'error':settings.error,
@@ -1052,12 +1050,15 @@
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
-				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
+				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
 				'url':url,
-				//'dataType': 'json',
+				'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
 				'beforeSend':settings.beforeSend,
 				'success':settings.success,
 				'error':settings.error,
@@ -1080,30 +1081,7 @@
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
 				'url':url,
-				//'dataType': 'json',
-				'beforeSend':settings.beforeSend,
-				'success':settings.success,
-				'error':settings.error,
-				'complete':settings.complete
-			});
-
-			return $self;
-		}
-
-
-		function GetThumbnails()
-		{
-			var url = strings.picasaUrl + settings.username +
-				'?kind=album' +
-				'&access=' + settings.albumTypes +
-				// alt can be 'json', 'rss' or 'atom' (https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats), but we need it as json to work with cross domain
-				'&alt=json' +
-				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
-
-			// http://api.jquery.com/jQuery.ajax/
-			$.ajax({
-				'url':url,
-				//'dataType': 'xml',
+				'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
 				'beforeSend':settings.beforeSend,
 				'success':settings.success,
 				'error':settings.error,
