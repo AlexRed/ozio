@@ -108,10 +108,8 @@ jQuery(document).ready(function ($)
 
 		function OnLoadSuccess(result, textStatus, jqXHR)
 		{
-			var $scAlbums = $("<div class='scAlbums'/>");
-
 			// Build main album container
-			var $scAlbum = $(
+			var scAlbum = $(
 				"<div class='pwi_album' style='" +
 					"width:" + (parseInt('<?php echo $this->Params->get("images_size", 180); ?>') + 1) + "px;" +
 					"'/>"
@@ -121,7 +119,7 @@ jQuery(document).ready(function ($)
 			/*<?php if (true) { ?>*/
 			// Always show thumbnails
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
-			$scAlbum.append
+			scAlbum.append
 				(
 					'<a href="' + this.album_local_url + '">' +
 						"<img src='" + $thumbnail0.url +
@@ -134,35 +132,37 @@ jQuery(document).ready(function ($)
 				);
 			/*<?php } ?>*/
 
-			// Build album title
-			var title = $("<div class='pwi_album_title'/>");
-
 			/*<?php if (false) { ?>*/
 			// Never show Google Plus Album title
+			var googletitle = $("<div class='pwi_album_title'/>");
 			var length = 64;
-			title.append(((result.feed.title.$t.length > length) ? result.feed.title.$t.substring(0, length) : result.feed.title.$t));
-			$scAlbum.append(title);
+			googletitle.append(((result.feed.title.$t.length > length) ? result.feed.title.$t.substring(0, length) : result.feed.title.$t));
+			scAlbum.append(googletitle);
 			/*<?php } ?>*/
 
 			/*<?php if (true) { ?>*/
 			// Always show our custom local album title
-			title.append(this.album_local_title);
-			$scAlbum.append(title);
+			var localtitle = $("<div class='pwi_album_title'/>");
+			localtitle.append(this.album_local_title);
+			scAlbum.append(localtitle);
 			/*<?php } ?>*/
 
 			/*<?php if ($this->Params->get("show_date", 1)) { ?>*/
-			title.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
-			$scAlbum.append(title);
+			var date = $("<div class='pwi_album_title'/>");
+			date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
+			scAlbum.append(date);
 			/*<?php } ?>*/
 
 			/*<?php if ($this->Params->get("show_counter", 1)) { ?>*/
-			title.append('<span class="indicator og-camera" ' + 'title="<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>">' + result.feed.gphoto$numphotos.$t + '</span> ');
-			$scAlbum.append(title);
+			var counter = $("<div class='pwi_album_title'/>");
+			counter.append('<span class="indicator og-camera" ' + 'title="<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>">' + result.feed.gphoto$numphotos.$t + '</span> ');
+			scAlbum.append(counter);
 			/*<?php } ?>*/
 
-			$scAlbums.append($scAlbum);
+			var scAlbums = $("<div class='scAlbums'/>");
+			scAlbums.append(scAlbum);
 			// show();
-			jQuery('#author' + this.album_id).append($scAlbums);
+			jQuery('#author' + this.album_id).append(scAlbums);
 			alignPictures('div.pwi_album');
 		}
 

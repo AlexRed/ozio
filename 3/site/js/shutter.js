@@ -76,8 +76,11 @@ License : MIT License / GPL License
 			$(vars.thumb_list).width($('> li', vars.thumb_list).length * $('> li', vars.thumb_list).outerWidth(true));	//Adjust to true width of thumb markers
 
 			// Display total slides
-			if ($(vars.slide_total).length){
-				$(vars.slide_total).html(api.options.slides.length);
+			if ($(vars.slide_total).length)
+			{
+				// Supersized contava le slide. La paginazione richiede una variabile distinta per il totale.
+				// $(vars.slide_total).html(api.options.slides.length);
+				$(vars.slide_total).html(api.options.slide_total);
 			}
 
 
