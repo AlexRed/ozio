@@ -95,49 +95,36 @@
 
 				slideSet = slideSet + '<li class="slide-' + thisSlide + '"></li>';
 
-				// DP *I*
 				// Deep-link
 				//if(thisSlide == base.options.start_slide-1)
 				var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+
+				// Add a special class to the current selected slide
+				var current_slide = '';
+				var current_thumb = '';
 				if (thisSlide == start_slide - 1)
-				// DP *F*
 				{
-					// Slide links
-					if (base.options.slide_links)
-					{
-						markers = markers + '<li class="slide-link-' + thisSlide + ' current-slide"><a>' + markerContent + '</a></li>';
-					}
-					// DP *I* Non carica le miniature su dispositivi mobili (base.$el.width() >= 768);
-					// Slide Thumbnail Links
-					if (base.options.thumb_links && ($(window).width() >= 768))
-					{
-						if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
-							thumbImage = base.options.slides[thisSlide].seed;
-						else
-							thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
-
-						thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + ' current-thumb"><img src="' + thumbImage + '"/></li>';
-					}
-					;
+					current_slide = ' current-slide';
+					current_thumb = ' current-thumb';
 				}
-				else
-				{
-					// Slide links
-					if (base.options.slide_links)
-					{
-						markers = markers + '<li class="slide-link-' + thisSlide + '" ><a>' + markerContent + '</a></li>';
-					}
-					// Slide Thumbnail Links
-					if (base.options.thumb_links && ($(window).width() >= 768))
-					{
-						if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
-							thumbImage = base.options.slides[thisSlide].seed;
-						else
-							thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
 
-						thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + '"><img src="' + thumbImage + '"/></li>';
+				// Slide links
+				if (base.options.slide_links)
+				{
+					markers = markers + '<li class="slide-link-' + thisSlide + current_slide + '"><a>' + markerContent + '</a></li>';
+				}
+				// Slide Thumbnail Links
+				if (base.options.thumb_links && ($(window).width() >= 768))
+				{
+					if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
+					{
+						thumbImage = base.options.slides[thisSlide].seed;
 					}
-					;
+					else
+					{
+						thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+					}
+					thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + current_thumb + '"><img src="' + thumbImage + '"/></li>';
 				}
 				thisSlide++;
 			}
