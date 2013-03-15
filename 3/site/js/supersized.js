@@ -12,16 +12,6 @@
 
 (function ($)
 {
-
-	/* Place Supersized Elements
-	 ----------------------------*/
-	$(document).ready(function ()
-	{
-		//		$('body').append('<div id="supersized-loader"></div><ul id="supersized"></ul>');
-		//		$('#main').append('<div id="supersized-loader"></div><ul id="supersized"></ul>');
-	});
-
-
 	$.supersized = function (options)
 	{
 
@@ -75,8 +65,8 @@
 				markerContent,
 				thumbMarkers = '',
 				thumbImage;
-
-			while (thisSlide <= base.options.slides.length - 1)
+			//while (thisSlide <= base.options.slides.length - 1)
+			while (thisSlide <= base.options.slide_total - 1)
 			{
 
 				//Determine slide link content
@@ -116,9 +106,17 @@
 				// Slide Thumbnail Links
 				if (base.options.thumb_links && ($(window).width() >= 768))
 				{
+/*
 					if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
 					{
 						thumbImage = base.options.slides[thisSlide].seed;
+					}
+*/
+					if (thisSlide >= base.options.slides.length)
+					{
+						// Sta lavorando su elementi in overflow del vettore slides[].
+						// Se ne conosce l'esistenza, ma non sono ancora stati caricati, quindi la relativa slides[thisSlide] non esiste
+						thumbImage = 'components/com_oziogallery3/views/00fuerte/img/progress.gif';
 					}
 					else
 					{
