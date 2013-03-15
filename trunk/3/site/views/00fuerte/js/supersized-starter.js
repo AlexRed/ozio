@@ -1,14 +1,23 @@
+/*
+Passaggi per la paginazione
+0) Verificare bene in supersized e shutter di tutte le occorrenze di base.options.slides.length, quali dovranno essere sostituite con base.options.slide_total e quali no
+1) Determinare in base alla larghezza disponibile il numero di miniature da caricare inizialmente (paginazione iniziale)
+La dimensione di una pagina pero' puo' variare successivamente ridimensionando la finestra (o ruotando il dispositivo)
+2) Generare comunque un numero di slot (vuoti) pari al totale delle foto
+3) La prima pagina non e' da 1 a Math.ceil(ss.width() / 150), Va sfalsata di un offset che dipende dall'hash (#)
+ */
 jQuery(document).ready(function ($)
 {
+	var ss = jQuery("#supersized");
 	// Set our parameters and trig the loading
-	jQuery("#supersized").pwi(
+	ss.pwi(
 		{
 			mode:'album_data',
 			username:'<?php echo $this->Params->get("userid", ""); ?>',
 			album:'<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey:'<?php echo $this->Params->get("limitedpassword", ""); ?>',
 			StartIndex:1,
-			MaxResults:50,
+			MaxResults: Math.ceil(ss.width() / 150),
 			beforeSend:OnBeforeSend,
 			success:OnLoadSuccess,
 			error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
