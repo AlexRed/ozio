@@ -106,12 +106,12 @@
 				// Slide Thumbnail Links
 				if (base.options.thumb_links && ($(window).width() >= 768))
 				{
-/*
-					if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
-					{
-						thumbImage = base.options.slides[thisSlide].seed;
-					}
-*/
+					/*
+					 if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
+					 {
+					 thumbImage = base.options.slides[thisSlide].seed;
+					 }
+					 */
 					if (thisSlide >= base.options.slides.length)
 					{
 						// Sta lavorando su elementi in overflow del vettore slides[].
@@ -1042,6 +1042,79 @@
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
 			// DP *F*
 			return false;
+		};
+
+
+		base.loadpage = function ()
+		{
+			var ss = jQuery("#supersized");
+
+			var thumblist = jQuery(this); // ul#thumb-list
+			var start = Math.abs(thumblist.position().left / 150);
+			// Start va corretto di 2.
+			// 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
+			// 1 altro perche' la prima miniatura sulla sinistra e' gia' stata caricata. Ci interessa la successiva.
+			start += 2;
+			var length = Math.ceil(ss.width() / 150);
+			// length va corretto di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata.
+			length -= 1;
+
+			// Set our parameters and trig the loading
+			ss.pwi(
+				{
+					mode: 'album_data',
+
+					// Riprende i valori da supersized-starter
+					username: base.options.username,
+					album: base.options.album,
+					authKey: base.options.authkey,
+
+					StartIndex:start,
+					MaxResults:length,
+					beforeSend:OnBeforeSend,
+					success:OnLoadSuccess,
+					error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+					complete:OnLoadComplete,
+
+					// Tell the library to ignore parameters through GET ?par=...
+					useQueryParameters:false
+				});
+
+			function OnBeforeSend(jqXHR, settings)
+			{
+			}
+
+			function OnLoadSuccess(result, textStatus, jqXHR)
+			{
+				for (var i = 0; i < result.feed.entry.length; ++i)
+				{
+					// Todo: di default prende il /d nell'URL che serve per il download
+					var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+					seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+
+					// Avoids divisions by 0
+					var width = result.feed.entry[i].gphoto$width.$t;
+					var height = result.feed.entry[i].gphoto$height.$t
+					var ratio = 1;
+					// Avoids divisions by 0
+					if (width) ratio = height / width;
+
+					var thumbindex = parseInt(start - 1 + i);
+					var currentthumb = jQuery(".thumb" + thumbindex + " > img");
+					currentthumb[0].src = seed + "s150-c/";
+
+				}
+
+			}
+
+			function OnLoadError(jqXHR, textStatus, error)
+			{
+			}
+
+			function OnLoadComplete(jqXHR, textStatus)
+			{
+			}
+
 		};
 
 
