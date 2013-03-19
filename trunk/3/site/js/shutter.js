@@ -113,12 +113,14 @@ if (url)
 					if (vars.thumb_page - vars.thumb_interval <= -$(vars.thumb_list).width())
 					{
 						vars.thumb_page = 0;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						//$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
 					else
 					{
 						vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						//$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:400, easing:'swing', complete:api.loadpage});
 					}
 				});
 
@@ -136,6 +138,7 @@ if (url)
 						vars.thumb_page = vars.thumb_page + vars.thumb_interval;
 						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 					}
+					api.loadpage();
 				});
 
 			}
@@ -263,7 +266,6 @@ if (url)
 */
 		},
 
-
 		/* Go To Slide
 		 ----------------------------*/
 		goTo:function ()
@@ -370,6 +372,7 @@ if (url)
 							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
 						}
 					}
+				api.loadpage();
 				}
 
 

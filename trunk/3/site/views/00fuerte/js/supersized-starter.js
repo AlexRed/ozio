@@ -1,14 +1,21 @@
 /*
 Passaggi per la paginazione
+Starter
 0) Verificare bene in supersized e shutter di tutte le occorrenze di base.options.slides.length, quali dovranno essere sostituite con base.options.slide_total e quali no
 1) Determinare in base alla larghezza disponibile il numero di miniature da caricare inizialmente (paginazione iniziale)
 La dimensione di una pagina pero' puo' variare successivamente ridimensionando la finestra (o ruotando il dispositivo)
 2) Generare comunque un numero di slot (vuoti) pari al totale delle foto
 3) La prima pagina non e' da 1 a Math.ceil(ss.width() / 150), Va sfalsata di un offset che dipende dall'hash (#)
+A seguito di cambio pagina (che potrebbe avvenire anche a causa di passaggio all'immagine successiva o all'URL (#))
+1) Determinare quali miniature sono nell'area visibile
+2) Determinare quali necessitano il caricamento
+3) Caricare quelli mancanti
+4) Visualizzare
  */
 jQuery(document).ready(function ($)
 {
 	var ss = jQuery("#supersized");
+	var length = Math.ceil(ss.width() / 150);
 	// Set our parameters and trig the loading
 	ss.pwi(
 		{
@@ -17,7 +24,7 @@ jQuery(document).ready(function ($)
 			album:'<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey:'<?php echo $this->Params->get("limitedpassword", ""); ?>',
 			StartIndex:1,
-			MaxResults: Math.ceil(ss.width() / 150),
+			MaxResults: length,
 			beforeSend:OnBeforeSend,
 			success:OnLoadSuccess,
 			error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
@@ -97,7 +104,11 @@ jQuery(document).ready(function ($)
 
 					// Theme Options
 					progress_bar : parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
-					mouse_scrub				:	0
+					mouse_scrub				:	0,
+
+			username:'<?php echo $this->Params->get("userid", ""); ?>',
+			album:'<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+			authKey:'<?php echo $this->Params->get("limitedpassword", ""); ?>',
 
 				});
 		    });
