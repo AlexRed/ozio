@@ -2,15 +2,15 @@
 Passaggi per la paginazione
 Starter
 0) Verificare bene in supersized e shutter di tutte le occorrenze di base.options.slides.length, quali dovranno essere sostituite con base.options.slide_total e quali no
-1) Determinare in base alla larghezza disponibile il numero di miniature da caricare inizialmente (paginazione iniziale)
-La dimensione di una pagina pero' puo' variare successivamente ridimensionando la finestra (o ruotando il dispositivo)
-2) Generare comunque un numero di slot (vuoti) pari al totale delle foto
 3) La prima pagina non e' da 1 a Math.ceil(ss.width() / 150), Va sfalsata di un offset che dipende dall'hash (#)
 A seguito di cambio pagina (che potrebbe avvenire anche a causa di passaggio all'immagine successiva o all'URL (#))
-1) Determinare quali miniature sono nell'area visibile
-2) Determinare quali necessitano il caricamento
-3) Caricare quelli mancanti
-4) Visualizzare
+
+La procedura iniziale attribuiva molte proprieta' alle miniature, ad esempio la destinazione del link.
+Vanno implementate anche per quelle caricate dinamicamente.
+
+Sembra che ricarichi anche le pagine gia' caricate in precedenza.
+Non funziona il Deep link su pagine ancora sconosciute. Non funziona nemmeno partendo dall'indirizzo base e poi aggiungendo il solo #. Funziona invece con le miniature su pagine gia' caricate.
+Ridimensionando la pagina l'elenco delle miniature torna all'inizio.
  */
 jQuery(document).ready(function ($)
 {
@@ -46,10 +46,10 @@ jQuery(document).ready(function ($)
 			{
 
 				// Todo: di default prende il /d nell'URL che serve per il download
+				// Removes the file.ext part of the URL
 				var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
 				seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
-				// Avoids divisions by 0
 				var width = result.feed.entry[i].gphoto$width.$t;
 				var height = result.feed.entry[i].gphoto$height.$t
 				var ratio = 1;
@@ -57,14 +57,12 @@ jQuery(document).ready(function ($)
 				if (width) ratio = height / width;
 
         		s.push({
-					// Removes the file.ext part of the URL
 					'seed': seed,
 					'width': width,
 					'height': height,
 					'ratio': ratio,
 				  	'album': result.feed.title.$t,
 				  	'summary':result.feed.entry[i].summary.$t
-
 				  	});
 			}
 

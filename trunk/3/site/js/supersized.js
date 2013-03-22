@@ -826,54 +826,54 @@
 					break;
 				case 1:
 				case 'fade':   // Fade
-					nextslide.animate({opacity:0}, 0).css('visibility', 'visible').animate({opacity:1, avoidTransforms:false}, base.options.transition_speed, function ()
+					nextslide.animate({opacity: 0}, 0).css('visibility', 'visible').animate({opacity: 1, avoidTransforms: false}, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 2:
 				case 'slideTop':   // Slide Top
-					nextslide.animate({top:-base.$el.height()}, 0).css('visibility', 'visible').animate({ top:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({top: -base.$el.height()}, 0).css('visibility', 'visible').animate({ top: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 3:
 				case 'slideRight':   // Slide Right
-					nextslide.animate({left:base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 4:
 				case 'slideBottom': // Slide Bottom
-					nextslide.animate({top:base.$el.height()}, 0).css('visibility', 'visible').animate({ top:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({top: base.$el.height()}, 0).css('visibility', 'visible').animate({ top: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 5:
 				case 'slideLeft':  // Slide Left
-					nextslide.animate({left:-base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: -base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 6:
 				case 'carouselRight':   // Carousel Right
-					nextslide.animate({left:base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
-					liveslide.animate({ left:-base.$el.width(), avoidTransforms:false }, base.options.transition_speed);
+					liveslide.animate({ left: -base.$el.width(), avoidTransforms: false }, base.options.transition_speed);
 					break;
 				case 7:
 				case 'carouselLeft':   // Carousel Left
-					nextslide.animate({left:-base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: -base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
-					liveslide.animate({ left:base.$el.width(), avoidTransforms:false }, base.options.transition_speed);
+					liveslide.animate({ left: base.$el.width(), avoidTransforms: false }, base.options.transition_speed);
 					break;
 			}
 
@@ -986,54 +986,54 @@
 					break;
 				case 1:
 				case 'fade':   // Fade
-					nextslide.animate({opacity:0}, 0).css('visibility', 'visible').animate({opacity:1, avoidTransforms:false}, base.options.transition_speed, function ()
+					nextslide.animate({opacity: 0}, 0).css('visibility', 'visible').animate({opacity: 1, avoidTransforms: false}, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 2:
 				case 'slideTop':   // Slide Top (reverse)
-					nextslide.animate({top:base.$el.height()}, 0).css('visibility', 'visible').animate({ top:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({top: base.$el.height()}, 0).css('visibility', 'visible').animate({ top: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 3:
 				case 'slideRight':   // Slide Right (reverse)
-					nextslide.animate({left:-base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: -base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 4:
 				case 'slideBottom': // Slide Bottom (reverse)
-					nextslide.animate({top:-base.$el.height()}, 0).css('visibility', 'visible').animate({ top:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({top: -base.$el.height()}, 0).css('visibility', 'visible').animate({ top: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 5:
 				case 'slideLeft':  // Slide Left (reverse)
-					nextslide.animate({left:base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
 					break;
 				case 6:
 				case 'carouselRight':   // Carousel Right (reverse)
-					nextslide.animate({left:-base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: -base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
-					liveslide.animate({left:0}, 0).animate({ left:base.$el.width(), avoidTransforms:false}, base.options.transition_speed);
+					liveslide.animate({left: 0}, 0).animate({ left: base.$el.width(), avoidTransforms: false}, base.options.transition_speed);
 					break;
 				case 7:
 				case 'carouselLeft':   // Carousel Left (reverse)
-					nextslide.animate({left:base.$el.width()}, 0).css('visibility', 'visible').animate({ left:0, avoidTransforms:false }, base.options.transition_speed, function ()
+					nextslide.animate({left: base.$el.width()}, 0).css('visibility', 'visible').animate({ left: 0, avoidTransforms: false }, base.options.transition_speed, function ()
 					{
 						base.afterAnimation();
 					});
-					liveslide.animate({left:0}, 0).animate({ left:-base.$el.width(), avoidTransforms:false }, base.options.transition_speed);
+					liveslide.animate({left: 0}, 0).animate({ left: -base.$el.width(), avoidTransforms: false }, base.options.transition_speed);
 					break;
 			}
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
@@ -1050,14 +1050,10 @@
 			var ss = jQuery("#supersized");
 
 			var thumblist = jQuery(this); // ul#thumb-list
-			var start = Math.abs(thumblist.position().left / 150);
-			// Start va corretto di 2.
-			// 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
-			// 1 altro perche' la prima miniatura sulla sinistra e' gia' stata caricata. Ci interessa la successiva.
-			start += 2;
+			// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
+			// Sfogliando verso destra si potrebbe incrementare ulteriormente di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata, ma questo non e' piu' valido se si sfoglia verso sinistra.
+			var start = Math.abs(thumblist.position().left / 150) + 1;
 			var length = Math.ceil(ss.width() / 150);
-			// length va corretto di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata.
-			length -= 1;
 
 			// Set our parameters and trig the loading
 			ss.pwi(
@@ -1069,15 +1065,15 @@
 					album: base.options.album,
 					authKey: base.options.authkey,
 
-					StartIndex:start,
-					MaxResults:length,
-					beforeSend:OnBeforeSend,
-					success:OnLoadSuccess,
-					error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
-					complete:OnLoadComplete,
+					StartIndex: start,
+					MaxResults: length,
+					beforeSend: OnBeforeSend,
+					success: OnLoadSuccess,
+					error: OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+					complete: OnLoadComplete,
 
 					// Tell the library to ignore parameters through GET ?par=...
-					useQueryParameters:false
+					useQueryParameters: false
 				});
 
 			function OnBeforeSend(jqXHR, settings)
@@ -1089,6 +1085,7 @@
 				for (var i = 0; i < result.feed.entry.length; ++i)
 				{
 					// Todo: di default prende il /d nell'URL che serve per il download
+					// Removes the file.ext part of the URL
 					var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
 					seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
@@ -1103,6 +1100,15 @@
 					var currentthumb = jQuery(".thumb" + thumbindex + " > img");
 					currentthumb[0].src = seed + "s150-c/";
 
+					var index = parseInt(result.feed.entry[i].gphoto$position.$t);
+					base.options.slides[index] = {
+						'seed': seed,
+						'width': width,
+						'height': height,
+						'ratio': ratio,
+						'album': result.feed.title.$t,
+						'summary': result.feed.entry[i].summary.$t
+					};
 				}
 
 			}
@@ -1370,18 +1376,18 @@
 	$.supersized.vars = {
 
 		// Elements
-		thumb_tray:'#thumb-tray', // Thumbnail tray
-		thumb_list:'#thumb-list', // Thumbnail list
-		slide_list:'#slide-list', // Slide link list
+		thumb_tray: '#thumb-tray', // Thumbnail tray
+		thumb_list: '#thumb-list', // Thumbnail list
+		slide_list: '#slide-list', // Slide link list
 
 		// Internal variables
-		current_slide:0, // Current slide number
-		in_animation:false, // Prevents animations from stacking
-		is_paused:false, // Tracks paused on/off
-		hover_pause:false, // If slideshow is paused from hover
-		slideshow_interval:false, // Stores slideshow timer
-		update_images:false, // Trigger to update images after slide jump
-		options:{}         // Stores assembled options list
+		current_slide: 0, // Current slide number
+		in_animation: false, // Prevents animations from stacking
+		is_paused: false, // Tracks paused on/off
+		hover_pause: false, // If slideshow is paused from hover
+		slideshow_interval: false, // Stores slideshow timer
+		update_images: false, // Trigger to update images after slide jump
+		options: {}         // Stores assembled options list
 
 	};
 
@@ -1391,34 +1397,34 @@
 	$.supersized.defaultOptions = {
 
 		// Functionality
-		slideshow:1, // Slideshow on/off
-		autoplay:1, // Slideshow starts playing automatically
-		start_slide:1, // Start slide (0 is random)
-		stop_loop:0, // Stops slideshow on last slide
-		random:0, // Randomize slide order (Ignores start slide)
-		slide_interval:5000, // Length between transitions
-		transition:1, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-		transition_speed:750, // Speed of transition
-		new_window:1, // Image links open in new window/tab
-		pause_hover:0, // Pause slideshow on hover
-		keyboard_nav:1, // Keyboard navigation on/off
-		performance:1, // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed //  (Only works for Firefox/IE, not Webkit)
-		image_protect:1, // Disables image dragging and right click with Javascript
+		slideshow: 1, // Slideshow on/off
+		autoplay: 1, // Slideshow starts playing automatically
+		start_slide: 1, // Start slide (0 is random)
+		stop_loop: 0, // Stops slideshow on last slide
+		random: 0, // Randomize slide order (Ignores start slide)
+		slide_interval: 5000, // Length between transitions
+		transition: 1, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+		transition_speed: 750, // Speed of transition
+		new_window: 1, // Image links open in new window/tab
+		pause_hover: 0, // Pause slideshow on hover
+		keyboard_nav: 1, // Keyboard navigation on/off
+		performance: 1, // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed //  (Only works for Firefox/IE, not Webkit)
+		image_protect: 1, // Disables image dragging and right click with Javascript
 
 		// Size & Position
-		fit_always:0, // Image will never exceed browser width or height (Ignores min. dimensions)
-		fit_landscape:0, // Landscape images will not exceed browser width
-		fit_portrait:1, // Portrait images will not exceed browser height
-		min_width:0, // Min width allowed (in pixels)
-		min_height:0, // Min height allowed (in pixels)
-		horizontal_center:1, // Horizontally center background
-		vertical_center:1, // Vertically center background
+		fit_always: 0, // Image will never exceed browser width or height (Ignores min. dimensions)
+		fit_landscape: 0, // Landscape images will not exceed browser width
+		fit_portrait: 1, // Portrait images will not exceed browser height
+		min_width: 0, // Min width allowed (in pixels)
+		min_height: 0, // Min height allowed (in pixels)
+		horizontal_center: 1, // Horizontally center background
+		vertical_center: 1, // Vertically center background
 
 
 		// Components
-		slide_links:1, // Individual links for each slide (Options: false, 'num', 'name', 'blank')
-		thumb_links:1, // Individual thumb links for each slide
-		thumbnail_navigation:0         // Thumbnail navigation
+		slide_links: 1, // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+		thumb_links: 1, // Individual thumb links for each slide
+		thumbnail_navigation: 0         // Thumbnail navigation
 
 	};
 
