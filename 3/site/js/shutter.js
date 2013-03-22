@@ -120,7 +120,7 @@ if (url)
 					{
 						vars.thumb_page = vars.thumb_page - vars.thumb_interval;
 						//$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:400, easing:'swing', complete:api.loadpage});
+						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:400, easing:'easeOutExpo', complete:api.loadpage});
 					}
 				});
 
@@ -131,14 +131,13 @@ if (url)
 					{
 						vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
 						if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
 					else
 					{
 						vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
-					api.loadpage();
 				});
 
 			}
@@ -348,12 +347,12 @@ if (url)
 						if (vars.current_slide == 0)
 						{
 							vars.thumb_page = 0;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 						}
 						else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left >= vars.thumb_interval)
 						{
 							vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 						}
 						// If previous slide direction
 					}
@@ -363,16 +362,15 @@ if (url)
 						{
 							vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
 							if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 						}
 						else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left < 0)
 						{
 							if (vars.thumb_page + vars.thumb_interval > 0) return false;
 							vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
+							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 						}
 					}
-				api.loadpage();
 				}
 
 
