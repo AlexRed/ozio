@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" version="1.6" method="upgrade" group="editors-xtd">
 	<name>plg_editors-xtd_oziogallery</name>
-	<creationDate>09/2012</creationDate>
+	<creationDate>2013</creationDate>
 	<author>Open Source Solutions</author>
 	<authorEmail>demis@opensourcesolutions.es</authorEmail>
 	<authorUrl>http://www.opensourcesolutions.es/</authorUrl>

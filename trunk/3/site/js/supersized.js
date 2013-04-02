@@ -51,6 +51,10 @@
 				api.goTo(url);
 				window.location.href = '#' + url;
 			}
+
+			vars.thumb_page = -(parseInt(url) - 1) * 150;
+			$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
+
 		});
 		// DP *F*
 
@@ -212,6 +216,8 @@
 				{
 					// Set previous image
 					vars.current_slide - 1 < 0 ? loadPrev = base.options.slides.length - 1 : loadPrev = vars.current_slide - 1;	// If slide is 1, load last slide as previous
+
+if (loadPrev > base.options.slides.length) return;
 
 					var imageLink = (base.options.slides[loadPrev].url) ? "href='" + base.options.slides[loadPrev].url + "'" : "";
 
@@ -759,6 +765,8 @@
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
+if (loadSlide > base.options.slides.length) return;
+
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
 				// Inserimento dimensione immagine nell'URL
@@ -921,6 +929,9 @@
 			{
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+
+if (loadSlide > base.options.slides.length) return;
+
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
 				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
@@ -1049,10 +1060,11 @@
 		{
 			var ss = jQuery("#supersized");
 
-			var thumblist = jQuery(this); // ul#thumb-list
+			//var thumblist = jQuery(this); // ul#thumb-list
+			var thumblist = jQuery("ul#thumb-list"); // ul#thumb-list
 			// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
 			// Sfogliando verso destra si potrebbe incrementare ulteriormente di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata, ma questo non e' piu' valido se si sfoglia verso sinistra.
-			var start = Math.abs(thumblist.position().left / 150) + 1;
+			var start = Math.ceil(Math.abs(thumblist.position().left / 150) + 1);
 			var length = Math.ceil(ss.width() / 150);
 
 			// Set our parameters and trig the loading
@@ -1177,7 +1189,8 @@
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
 
-			var totalSlides = base.options.slides.length;
+			//var totalSlides = base.options.slides.length;
+			var totalSlides = base.options.slide_total;
 
 			// If target outside range
 			if (targetSlide < 0)
@@ -1253,7 +1266,6 @@
 
 			if (place == 'next')
 			{
-
 				vars.current_slide == base.options.slides.length - 1 ? loadSlide = 0 : loadSlide = vars.current_slide + 1;	// Determine next slide
 
 				var targetList = base.el + ' li:eq(' + loadSlide + ')';
@@ -1263,6 +1275,8 @@
 					// If links should open in new window
 					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
+if (loadSlide > base.options.slides.length) return;
+
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					// DP *I*
 					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
@@ -1278,14 +1292,10 @@
 						base.resizeNow();
 					});	// End Load
 				}
-				;
-
 				base.nextSlide();
-
 			}
 			else if (place == 'prev')
 			{
-
 				vars.current_slide - 1 < 0 ? loadSlide = base.options.slides.length - 1 : loadSlide = vars.current_slide - 1;	// Determine next slide
 
 				var targetList = base.el + ' li:eq(' + loadSlide + ')';
@@ -1295,6 +1305,7 @@
 					// If links should open in new window
 					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
+if (loadSlide > base.options.slides.length) return;
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					// DP *I*
 					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
@@ -1310,7 +1321,6 @@
 						base.resizeNow();
 					});	// End Load
 				}
-				;
 				base.prevSlide();
 			}
 

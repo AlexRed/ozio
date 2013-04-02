@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>com_oziogallery3</name>
-	<creationDate>09/2012</creationDate>
+	<creationDate>2013</creationDate>
 	<author>Alexred</author>
 	<authorEmail>info@joomla.it</authorEmail>
 	<authorUrl>http://www.joomla.it</authorUrl>
