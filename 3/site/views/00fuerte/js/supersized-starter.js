@@ -5,9 +5,6 @@ Starter
 3) La prima pagina non e' da 1 a Math.ceil(ss.width() / 150), Va sfalsata di un offset che dipende dall'hash (#)
 A seguito di cambio pagina (che potrebbe avvenire anche a causa di passaggio all'immagine successiva o all'URL (#))
 
-La procedura iniziale attribuiva molte proprieta' alle miniature, ad esempio la destinazione del link.
-Vanno implementate anche per quelle caricate dinamicamente.
-
 Sembra che ricarichi anche le pagine gia' caricate in precedenza.
 Non funziona il Deep link su pagine ancora sconosciute. Non funziona nemmeno partendo dall'indirizzo base e poi aggiungendo il solo #. Funziona invece con le miniature su pagine gia' caricate.
 Ridimensionando la pagina l'elenco delle miniature torna all'inizio.
@@ -15,7 +12,10 @@ Ridimensionando la pagina l'elenco delle miniature torna all'inizio.
 jQuery(document).ready(function ($)
 {
 	var ss = jQuery("#supersized");
+
+	var start_slide = $.param.fragment() ? $.param.fragment() : 1;
 	var length = Math.ceil(ss.width() / 150);
+
 	// Set our parameters and trig the loading
 	ss.pwi(
 		{
@@ -23,7 +23,7 @@ jQuery(document).ready(function ($)
 			username:'<?php echo $this->Params->get("userid", ""); ?>',
 			album:'<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey:'<?php echo $this->Params->get("limitedpassword", ""); ?>',
-			StartIndex:1,
+			StartIndex: start_slide,
 			MaxResults: length,
 			beforeSend:OnBeforeSend,
 			success:OnLoadSuccess,

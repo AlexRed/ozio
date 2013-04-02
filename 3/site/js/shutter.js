@@ -16,7 +16,7 @@
 	theme = {
 		/* Initial Placement
 		 ----------------------------*/
-		_init:function ()
+		_init: function ()
 		{
 			// Center Slide Links
 			if (api.options.slide_links) $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2);
@@ -32,7 +32,7 @@
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 //				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );	//  Place progress bar
-				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({width:'0%'}, 0);	//  Place progress bar
+				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({width: '0%'}, 0);	//  Place progress bar
 // DP *F*
 			}
 
@@ -46,7 +46,7 @@
 			// Tasto apri/chiudi miniature cambiato stato iniziale in "chiudi"
 			// Invertito il codice in toggle per fare collassare (al posto di espandere)la barra al primo click
 			// $(vars.thumb_tray).animate({bottom : -$(vars.thumb_tray).height()}, 0 );
-			$(vars.thumb_tray).stop().animate({bottom:0, avoidTransforms:true}, 300);
+			$(vars.thumb_tray).stop().animate({bottom: 0, avoidTransforms: true}, 300);
 			if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
 			/*
 			 // Thumbnail Tray Toggle
@@ -63,12 +63,12 @@
 			// Thumbnail Tray Toggle
 			$(vars.tray_button).toggle(function ()
 			{
-				$(vars.thumb_tray).stop().animate({bottom:-$(vars.thumb_tray).height(), avoidTransforms:true}, 300);
+				$(vars.thumb_tray).stop().animate({bottom: -$(vars.thumb_tray).height(), avoidTransforms: true}, 300);
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
 				return false;
 			}, function ()
 			{
-				$(vars.thumb_tray).stop().animate({bottom:0, avoidTransforms:true}, 300);
+				$(vars.thumb_tray).stop().animate({bottom: 0, avoidTransforms: true}, 300);
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
 				return false;
 			});
@@ -100,12 +100,12 @@
 				vars.thumb_interval = Math.floor($(vars.thumb_tray).width() / $('> li', vars.thumb_list).outerWidth(true)) * $('> li', vars.thumb_list).outerWidth(true);
 				vars.thumb_page = 0;
 
-var url = $.param.fragment();
-if (url)
-{
-	// Allinea la barra delle thumbnails
-	theme.beforeAnimation("next");
-}
+				var url = $.param.fragment();
+				if (url)
+				{
+					// Allinea la barra delle thumbnails
+					theme.beforeAnimation("next");
+				}
 
 				// Cycle thumbs forward
 				$(vars.thumb_forward).click(function ()
@@ -113,15 +113,12 @@ if (url)
 					if (vars.thumb_page - vars.thumb_interval <= -$(vars.thumb_list).width())
 					{
 						vars.thumb_page = 0;
-						//$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
 					else
 					{
 						vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-						//$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo'});
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:400, easing:'easeOutExpo', complete:api.loadpage});
 					}
+					$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 				});
 
 				// Cycle thumbs backwards
@@ -131,13 +128,12 @@ if (url)
 					{
 						vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
 						if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
 					else
 					{
 						vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-						$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
 					}
+					$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 				});
 
 			}
@@ -160,10 +156,10 @@ if (url)
 			{
 				$(vars.prev_slide + ',' + vars.next_slide).mouseover(function ()
 				{
-					$(this).stop().animate({opacity:1}, 100);
+					$(this).stop().animate({opacity: 1}, 100);
 				}).mouseout(function ()
 					{
-						$(this).stop().animate({opacity:0.6}, 100);
+						$(this).stop().animate({opacity: 0.6}, 100);
 					});
 			}
 
@@ -201,7 +197,7 @@ if (url)
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 					//$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-					$(vars.progress_bar).stop().animate({width:'0%'}, 0);
+					$(vars.progress_bar).stop().animate({width: '0%'}, 0);
 // DP *F*
 
 					if (!vars.progressDelay && api.options.slideshow)
@@ -230,7 +226,7 @@ if (url)
 					if ($(vars.thumb_list).width() > $(vars.thumb_tray).width())
 					{
 						$(vars.thumb_back + ',' + vars.thumb_forward).fadeIn('fast');
-						$(vars.thumb_list).stop().animate({'left':0}, 200);
+						$(vars.thumb_list).stop().animate({'left': 0}, 200);
 					}
 					else
 					{
@@ -256,18 +252,18 @@ if (url)
 			var top_title = document.getElementById('oziotoptitle');
 			if (top_title) top_title.innerHTML = api.getField('album');
 			// DP *F*
-/*
-			var url = $.param.fragment();
-			if (url)
-			{
-				api.goTo(url);
-			}
-*/
+			/*
+			 var url = $.param.fragment();
+			 if (url)
+			 {
+			 api.goTo(url);
+			 }
+			 */
 		},
 
 		/* Go To Slide
 		 ----------------------------*/
-		goTo:function ()
+		goTo: function ()
 		{
 			if (api.options.progress_bar && !vars.is_paused)
 			{
@@ -275,7 +271,7 @@ if (url)
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 				//$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-				$(vars.progress_bar).stop().animate({width:'0%'}, 0);
+				$(vars.progress_bar).stop().animate({width: '0%'}, 0);
 // DP *F*
 				theme.progressBar();
 			}
@@ -283,7 +279,7 @@ if (url)
 
 		/* Play & Pause Toggle
 		 ----------------------------*/
-		playToggle:function (state)
+		playToggle: function (state)
 		{
 
 			if (state == 'play')
@@ -300,7 +296,7 @@ if (url)
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 				//if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-				if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({width:'0%'}, 0);
+				if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().animate({width: '0%'}, 0);
 // DP *F*
 			}
 
@@ -309,12 +305,12 @@ if (url)
 
 		/* Before Slide Transition
 		 ----------------------------*/
-		beforeAnimation:function (direction)
+		beforeAnimation: function (direction)
 		{
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 			//if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-			if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({width:'0%'}, 0);
+			if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({width: '0%'}, 0);
 // DP *F*
 
 			/* Update Fields
@@ -347,12 +343,12 @@ if (url)
 						if (vars.current_slide == 0)
 						{
 							vars.thumb_page = 0;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 						}
 						else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left >= vars.thumb_interval)
 						{
 							vars.thumb_page = vars.thumb_page - vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 						}
 						// If previous slide direction
 					}
@@ -362,13 +358,13 @@ if (url)
 						{
 							vars.thumb_page = Math.floor($(vars.thumb_list).width() / vars.thumb_interval) * -vars.thumb_interval;
 							if ($(vars.thumb_list).width() <= -vars.thumb_page) vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 						}
 						else if ($('.current-thumb').offset().left - $(vars.thumb_tray).offset().left < 0)
 						{
 							if (vars.thumb_page + vars.thumb_interval > 0) return false;
 							vars.thumb_page = vars.thumb_page + vars.thumb_interval;
-							$(vars.thumb_list).stop().animate({'left':vars.thumb_page}, {duration:500, easing:'easeOutExpo', complete:api.loadpage});
+							$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 						}
 					}
 				}
@@ -381,7 +377,7 @@ if (url)
 
 		/* After Slide Transition
 		 ----------------------------*/
-		afterAnimation:function ()
+		afterAnimation: function ()
 		{
 			if (api.options.progress_bar && !vars.is_paused) theme.progressBar();	//  Start progress bar
 
@@ -416,12 +412,12 @@ if (url)
 
 		/* Progress Bar
 		 ----------------------------*/
-		progressBar:function ()
+		progressBar: function ()
 		{
 // DP *I*
 // L'animazione standard non e' concepita per stare dentro ad un contenitore
 //			$(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 ).animate({ left:0 }, api.options.slide_interval);
-			$(vars.progress_bar).stop().animate({width:'0%'}, 0).animate({width:'100%'}, api.options.slide_interval);
+			$(vars.progress_bar).stop().animate({width: '0%'}, 0).animate({width: '100%'}, api.options.slide_interval);
 			/*
 			 var obj = $(vars.progress_bar);
 			 obj = obj.stop();
@@ -440,38 +436,38 @@ if (url)
 	$.supersized.themeVars = {
 
 		// Internal Variables
-		progress_delay:false, // Delay after resize before resuming slideshow
-		thumb_page:false, // Thumbnail page
-		thumb_interval:false, // Thumbnail interval
-		image_path:'<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/', // Default image path
+		progress_delay: false, // Delay after resize before resuming slideshow
+		thumb_page: false, // Thumbnail page
+		thumb_interval: false, // Thumbnail interval
+		image_path: '<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/', // Default image path
 
 		// General Elements
-		play_button:'#pauseplay', // Play/Pause button
-		next_slide:'#nextslide', // Next slide button
-		prev_slide:'#prevslide', // Prev slide button
-		next_thumb:'#nextthumb', // Next slide thumb button
-		prev_thumb:'#prevthumb', // Prev slide thumb button
+		play_button: '#pauseplay', // Play/Pause button
+		next_slide: '#nextslide', // Next slide button
+		prev_slide: '#prevslide', // Prev slide button
+		next_thumb: '#nextthumb', // Next slide thumb button
+		prev_thumb: '#prevthumb', // Prev slide thumb button
 
-		slide_caption:'#slidecaption', // Slide caption
-		slide_current:'.slidenumber', // Current slide number
-		slide_total:'.totalslides', // Total Slides
-		slide_list:'#slide-list', // Slide jump list
+		slide_caption: '#slidecaption', // Slide caption
+		slide_current: '.slidenumber', // Current slide number
+		slide_total: '.totalslides', // Total Slides
+		slide_list: '#slide-list', // Slide jump list
 
-		thumb_tray:'#thumb-tray', // Thumbnail tray
-		thumb_list:'#thumb-list', // Thumbnail list
-		thumb_forward:'#thumb-forward', // Cycles forward through thumbnail list
-		thumb_back:'#thumb-back', // Cycles backwards through thumbnail list
-		tray_arrow:'#tray-arrow', // Thumbnail tray button arrow
-		tray_button:'#tray-button', // Thumbnail tray button
+		thumb_tray: '#thumb-tray', // Thumbnail tray
+		thumb_list: '#thumb-list', // Thumbnail list
+		thumb_forward: '#thumb-forward', // Cycles forward through thumbnail list
+		thumb_back: '#thumb-back', // Cycles backwards through thumbnail list
+		tray_arrow: '#tray-arrow', // Thumbnail tray button arrow
+		tray_button: '#tray-button', // Thumbnail tray button
 
-		progress_bar:'#progress-bar'      // Progress bar
+		progress_bar: '#progress-bar'      // Progress bar
 
 	};
 
 	/* Theme Specific Options
 	 ----------------------------*/
 	$.supersized.themeOptions = {
-		progress_bar:1 // Timer for each slide
+		progress_bar: 1 // Timer for each slide
 	};
 
 })(jQuery);
