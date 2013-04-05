@@ -48,9 +48,8 @@ class OzioGalleryViewList extends JView
 		$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-		$itemid = "&amp;Itemid=" . $itemid->id;
-		$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . $itemid);
-		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . $itemid);
+		$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
+		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 
 		$this->document->addStyleSheet(JURI::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
 

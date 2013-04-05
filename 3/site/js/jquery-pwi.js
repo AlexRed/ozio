@@ -1015,7 +1015,9 @@
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
-				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
+				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({

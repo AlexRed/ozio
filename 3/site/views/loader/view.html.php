@@ -29,7 +29,7 @@ class OzioGalleryViewLoader extends JView
 		// @ avoids Warning: ini_set() has been disabled for security reasons in /var/www/libraries/joomla/[...]
 		$application = @JFactory::getApplication();  // Needed to get the correct session with JFactory::getSession() below
 		$menu = @$application->getMenu();
-		$params = $menu->getParams(intval(JRequest::getVar("Itemid", 0, "GET")));
+		$params = $menu->getParams(intval(JRequest::getVar("id", 0, "GET")));
 
 		$type = JFactory::getApplication()->input->get("type", "");
 		// Only admit lowercase a-z, underscore and minus. Forbid numbers, symbols, slashes and other stuff.
