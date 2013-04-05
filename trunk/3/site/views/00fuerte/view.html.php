@@ -29,11 +29,7 @@ class OzioGalleryView00Fuerte extends JView
 
 	function display($tpl = null)
 	{
-		// SqueezeBox (e' una richiesta ajax cross-domain quindi non funziona. Usare Lightbox)
-		// JHTML::_("behavior.modal");
-
 		$this->Params = JFactory::getApplication()->getParams("com_oziogallery3");
-		$user = $this->Params->get("userid");
 
 		// Set Meta Description
 		if ($description = $this->Params->get('menu-meta_description'))
@@ -59,12 +55,11 @@ class OzioGalleryView00Fuerte extends JView
 		$prefix = JURI::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-		$itemid = "&amp;Itemid=" . $itemid->id;
-		$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . $itemid);
-		$document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . $itemid);
+		$document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
+		$document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
 
-		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . $itemid);
+		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
 		$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));

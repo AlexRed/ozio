@@ -64,6 +64,8 @@ jQuery(document).ready(function ($)
 				username:'<?php echo $item->params->get("userid"); ?>',
 				album:'<?php echo ($item->params->get("albumvisibility") == "public") ? $item->params->get("gallery_id", "") : $item->params->get("limitedalbum"); ?>',
 				authKey:"<?php echo $item->params->get("limitedpassword"); ?>",
+				StartIndex: 1,
+				MaxResults: 1,
 				beforeSend:OnBeforeSend,
 				success:OnLoadSuccess,
 				error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
