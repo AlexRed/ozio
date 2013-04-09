@@ -1,6 +1,3 @@
-// http://www.appelsiini.net/projects/lazyload
-// http://www.electrictoolbox.com/jquery-store-data-in-dom/
-
 (function ($)
 {
 	var elem, opts = {};
@@ -1030,7 +1027,8 @@
 
 				'album_local_url':settings.album_local_url,
 				'album_local_title':settings.album_local_title,
-				'album_id':settings.album_id
+				'album_id':settings.album_id,
+				'manual_date':settings.manual_date
 			});
 
 			return $self;
