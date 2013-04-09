@@ -82,6 +82,10 @@ jQuery(document).ready(function ($)
 				albumCrop:true,
 				thumbCrop:true,
 
+				/*<?php if ($item->params->get("gallery_date", "")) { ?>*/
+				manual_date: '<?php echo $item->params->get("gallery_date", ""); ?>',
+				/*<?php } ?>*/
+
 				labels:{
 					numphotos:"<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",
 					date:"<?php echo JText::_("JDATE"); ?>",
@@ -151,7 +155,15 @@ jQuery(document).ready(function ($)
 
 			/*<?php if ($this->Params->get("show_date", 1)) { ?>*/
 			var date = $("<div class='pwi_album_title'/>");
-			date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
+			if (this.hasOwnProperty("manual_date"))
+			{
+				date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + this.manual_date + '</span>');
+			}
+			else
+			{
+				date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
+			}
+
 			scAlbum.append(date);
 			/*<?php } ?>*/
 
@@ -183,6 +195,8 @@ jQuery(document).ready(function ($)
 		// Return:          none
 		function alignPictures(divName)
 		{
+			return;
+
 			// Now make sure all divs have the same width and heigth
 			var divHeigth = 0;
 			var divWidth = 0;

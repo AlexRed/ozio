@@ -18,6 +18,7 @@
 			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
 
 <!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->
+			<field type="text" name="gallery_date" label="COM_OZIOGALLERY3_GALLERY_DATE_LBL" description="COM_OZIOGALLERY3_GALLERY_DATE_DSC" />
 
 			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="100|%">
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
