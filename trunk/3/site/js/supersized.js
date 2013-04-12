@@ -45,6 +45,7 @@
 		{
 			// Get the hash (fragment) as a string, with any leading # removed. Note that
 			// in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+//if (window.antiloop) return;
 			var url = $.param.fragment();
 			if (url)
 			{
@@ -69,6 +70,10 @@
 				markerContent,
 				thumbMarkers = '',
 				thumbImage;
+
+			// Deep-link
+			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+
 			//while (thisSlide <= base.options.slides.length - 1)
 			while (thisSlide <= base.options.slide_total - 1)
 			{
@@ -89,13 +94,10 @@
 
 				slideSet = slideSet + '<li class="slide-' + thisSlide + '"></li>';
 
-				// Deep-link
-				//if(thisSlide == base.options.start_slide-1)
-				var start_slide = $.param.fragment() ? $.param.fragment() : 1;
-
 				// Add a special class to the current selected slide
 				var current_slide = '';
 				var current_thumb = '';
+				//if(thisSlide == base.options.start_slide-1)
 				if (thisSlide == start_slide - 1)
 				{
 					current_slide = ' current-slide';
@@ -110,13 +112,7 @@
 				// Slide Thumbnail Links
 				if (base.options.thumb_links && ($(window).width() >= 768))
 				{
-					/*
-					 if (base.options.slides[thisSlide].seed.indexOf('empty.png') != -1)
-					 {
-					 thumbImage = base.options.slides[thisSlide].seed;
-					 }
-					 */
-					if (thisSlide >= base.options.slides.length)
+					if (thisSlide < start_slide - 1 || thisSlide >= start_slide - 1 + base.options.slides.length)
 					{
 						// Sta lavorando su elementi in overflow del vettore slides[].
 						// Se ne conosce l'esistenza, ma non sono ancora stati caricati, quindi la relativa slides[thisSlide] non esiste
@@ -124,8 +120,9 @@
 					}
 					else
 					{
-						thumbImage = base.options.slides[thisSlide].seed + 's150-c/';
+						thumbImage = base.options.slides[thisSlide + 1 - start_slide].seed + 's150-c/';
 					}
+
 					thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + current_thumb + '"><img src="' + thumbImage + '"/></li>';
 				}
 				thisSlide++;
@@ -159,6 +156,7 @@
 			}
 
 			base._start(); // Get things started
+
 		};
 
 
@@ -383,7 +381,7 @@ if (loadPrev > base.options.slides.length) return;
 			{
 				$(vars.thumb_list + '> li').click(function ()
 				{
-
+window.antiloop = 1;
 					index = $(vars.thumb_list + '> li').index(this);
 					targetSlide = index + 1;
 					api.goTo(targetSlide);
