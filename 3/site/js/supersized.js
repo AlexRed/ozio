@@ -167,15 +167,8 @@
 
 			// DP *I*
 			// Deep-link
-			/*
-			 // Determine if starting slide random
-			 if (base.options.start_slide){
-			 vars.current_slide = base.options.start_slide - 1;
-			 }else{
-			 vars.current_slide = Math.floor(Math.random()*base.options.slides.length);	// Generate random slide number
-			 }
-			 */
-			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			//var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			var start_slide = 1;
 			vars.current_slide = start_slide - 1;
 			// DP *F*
 
@@ -1372,6 +1365,14 @@ if (loadSlide > base.options.slides.length) return;
 		base.getField = function (field)
 		{
 			return base.options.slides[vars.current_slide][field];
+		};
+
+		base.getFieldNew = function (field)
+		{
+			var offset = $.param.fragment() ? $.param.fragment() : 1;
+			offset = parseInt(offset) - 1;
+			var result = base.options.slides[vars.current_slide - offset][field];
+			return result;
 		};
 
 		// Make it go!
