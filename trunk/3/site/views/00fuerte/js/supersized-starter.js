@@ -13,7 +13,11 @@ jQuery(document).ready(function ($)
 {
 	var ss = jQuery("#supersized");
 
+	// Deep-link
+	/*
 	var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+	*/
+	var start_slide = 1;
 	var length = Math.ceil(ss.width() / 150);
 
 	// Set our parameters and trig the loading

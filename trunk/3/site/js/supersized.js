@@ -41,11 +41,11 @@
 		// Deep-link
 		// Si applica a: cambio dell'hash manuale dalla barra dell'URL
 		// Individuazione parametri per deep-link e caricamento immagine associata se presente
+/*
 		$(window).bind('hashchange', function (e)
 		{
 			// Get the hash (fragment) as a string, with any leading # removed. Note that
 			// in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-//if (window.antiloop) return;
 			var url = $.param.fragment();
 			if (url)
 			{
@@ -57,6 +57,7 @@
 			$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 
 		});
+*/
 		// DP *F*
 
 		/* Build Elements
@@ -72,7 +73,10 @@
 				thumbImage;
 
 			// Deep-link
+			/*
 			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			*/
+			var start_slide = 1;
 
 			//while (thisSlide <= base.options.slides.length - 1)
 			while (thisSlide <= base.options.slide_total - 1)
@@ -167,7 +171,9 @@
 
 			// DP *I*
 			// Deep-link
-			//var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			/*
+			var start_slide = $.param.fragment() ? $.param.fragment() : 1;
+			*/
 			var start_slide = 1;
 			vars.current_slide = start_slide - 1;
 			// DP *F*
@@ -742,7 +748,6 @@ window.antiloop = 1;
 			// If hybrid mode is on drop quality for transition
 			if (base.options.performance == 1) base.$el.removeClass('quality').addClass('speed');
 
-
 			/*-----Load Image-----*/
 
 			loadSlide = false;
@@ -756,7 +761,7 @@ window.antiloop = 1;
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
-if (loadSlide > base.options.slides.length) return;
+if (loadSlide >= base.options.slides.length) return;
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
@@ -877,9 +882,10 @@ if (loadSlide > base.options.slides.length) return;
 			}
 
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deeplink
-			//window.location.href = '#' + loadSlide;
+			// Cambio url per deep-link
+			/*
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			*/
 			// DP *F*
 
 			return false;
@@ -921,7 +927,7 @@ if (loadSlide > base.options.slides.length) return;
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
-if (loadSlide > base.options.slides.length) return;
+if (loadSlide >= base.options.slides.length) return;
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
@@ -1039,9 +1045,10 @@ if (loadSlide > base.options.slides.length) return;
 					break;
 			}
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deeplink
-			//window.location.href = '#' + loadSlide;
+			// Cambio url per deep-link
+			/*
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			*/
 			// DP *F*
 			return false;
 		};
@@ -1170,12 +1177,10 @@ if (loadSlide > base.options.slides.length) return;
 		{
 
 			// DP *I* Si applica a ogni funzione che utilizza api.goTo()
-			// Cambio url per deeplink
-			window.location.href = '#' + targetSlide;
+			// Cambio url per deep-link
 			/*
-			 var container = document.getElementById('fuertecontainer');
-			 container.style.height = "490px";
-			 */
+			window.location.href = '#' + targetSlide;
+			*/
 			// DP *F*
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
