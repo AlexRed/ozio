@@ -100,12 +100,15 @@
 				vars.thumb_interval = Math.floor($(vars.thumb_tray).width() / $('> li', vars.thumb_list).outerWidth(true)) * $('> li', vars.thumb_list).outerWidth(true);
 				vars.thumb_page = 0;
 
+				// Deep-link
+				/*
 				var url = $.param.fragment();
 				if (url)
 				{
 					// Allinea la barra delle thumbnails
 					theme.beforeAnimation("next");
 				}
+				*/
 
 				// Cycle thumbs forward
 				$(vars.thumb_forward).click(function ()
@@ -252,13 +255,6 @@
 			var top_title = document.getElementById('oziotoptitle');
 			if (top_title) top_title.innerHTML = api.getField('album');
 			// DP *F*
-			/*
-			 var url = $.param.fragment();
-			 if (url)
-			 {
-			 api.goTo(url);
-			 }
-			 */
 		},
 
 		/* Go To Slide
@@ -396,6 +392,7 @@
 
 			// DP *I*
 			// Ridimensionamento visualizzando immagini gia' presenti in cache (Esempio: quando si usa il tasto indietro)
+var x = $.$el.find('.activeslide');
 			var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			var image = activeslide.children[0];
 			// naturalWidth and naturalHeight are not supported by IE 7 and 8, so we can't use them

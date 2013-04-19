@@ -146,14 +146,14 @@ jQuery(document).ready(function ($)
 			scAlbum.append(googletitle);
 			/*<?php } ?>*/
 
-			/*<?php if (true) { ?>*/
+			/*<?php if ($this->Params->get("show_title", 0)) { ?>*/
 			// Always show our custom local album title
 			var localtitle = $("<div class='pwi_album_title'/>");
 			localtitle.append(this.album_local_title);
 			scAlbum.append(localtitle);
 			/*<?php } ?>*/
 
-			/*<?php if ($this->Params->get("show_date", 1)) { ?>*/
+			/*<?php if ($this->Params->get("show_date", 0)) { ?>*/
 			var date = $("<div class='pwi_album_title'/>");
 			if (this.hasOwnProperty("manual_date"))
 			{
@@ -167,7 +167,7 @@ jQuery(document).ready(function ($)
 			scAlbum.append(date);
 			/*<?php } ?>*/
 
-			/*<?php if ($this->Params->get("show_counter", 1)) { ?>*/
+			/*<?php if ($this->Params->get("show_counter", 0)) { ?>*/
 			var counter = $("<div class='pwi_album_title'/>");
 			counter.append('<span class="indicator og-camera" ' + 'title="<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>">' + result.feed.gphoto$numphotos.$t + '</span> ');
 			scAlbum.append(counter);
