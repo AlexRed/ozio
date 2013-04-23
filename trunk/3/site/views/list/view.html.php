@@ -27,7 +27,6 @@ class OzioGalleryViewList extends JView
 
 	function display($tpl = null)
 	{
-		die();
 		$application = JFactory::getApplication("site");
 		$this->Params = $application->getParams("com_oziogallery3");
 

@@ -1,12 +1,6 @@
 /*
 Passaggi per la paginazione
-Starter
 0) Verificare bene in supersized e shutter di tutte le occorrenze di base.options.slides.length, quali dovranno essere sostituite con base.options.slide_total e quali no
-3) La prima pagina non e' da 1 a Math.ceil(ss.width() / 150), Va sfalsata di un offset che dipende dall'hash (#)
-A seguito di cambio pagina (che potrebbe avvenire anche a causa di passaggio all'immagine successiva o all'URL (#))
-
-Sembra che ricarichi anche le pagine gia' caricate in precedenza.
-Non funziona il Deep link su pagine ancora sconosciute. Non funziona nemmeno partendo dall'indirizzo base e poi aggiungendo il solo #. Funziona invece con le miniature su pagine gia' caricate.
 Ridimensionando la pagina l'elenco delle miniature torna all'inizio.
  */
 jQuery(document).ready(function ($)
@@ -18,7 +12,7 @@ jQuery(document).ready(function ($)
 	var start_slide = $.param.fragment() ? $.param.fragment() : 1;
 	*/
 	var start_slide = 1;
-	var length = Math.ceil(ss.width() / 150);
+	var length = Math.ceil(ss.width() / 150) * 2;
 
 	// Set our parameters and trig the loading
 	ss.pwi(

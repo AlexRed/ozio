@@ -146,11 +146,19 @@
 			 ----------------------------*/
 			$(vars.next_slide).click(function ()
 			{
+				var active = jQuery('li.activeslide');
+				var index = active.index();
+				api.ensurevisible(index);
 				api.nextSlide();
 			});
 
 			$(vars.prev_slide).click(function ()
 			{
+				/*
+				var active = jQuery('li.activeslide');
+				var index = active.index() - 2;
+				api.ensurevisible(index);
+				*/
 				api.prevSlide();
 			});
 
@@ -392,7 +400,6 @@
 
 			// DP *I*
 			// Ridimensionamento visualizzando immagini gia' presenti in cache (Esempio: quando si usa il tasto indietro)
-var x = $.$el.find('.activeslide');
 			var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			var image = activeslide.children[0];
 			// naturalWidth and naturalHeight are not supported by IE 7 and 8, so we can't use them
