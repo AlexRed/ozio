@@ -1127,7 +1127,9 @@ if (loadSlide >= base.options.slides.length) return;
 					var currentthumb = jQuery(".thumb" + thumbindex + " > img");
 					currentthumb[0].src = seed + "s150-c/";
 
-					var index = parseInt(result.feed.entry[i].gphoto$position.$t);
+					// index provided by Google is unreliable
+					//var index = parseInt(result.feed.entry[i].gphoto$position.$t);
+					var index = start - 1 + i;
 					base.options.slides[index] = {
 						'seed': seed,
 						'width': width,
