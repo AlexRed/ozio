@@ -212,10 +212,13 @@
 				if (base.options.slides.length > 2)
 				{
 					// Set previous image
-					vars.current_slide - 1 < 0 ? loadPrev = base.options.slides.length - 1 : loadPrev = vars.current_slide - 1;	// If slide is 1, load last slide as previous
+					//vars.current_slide - 1 < 0 ? loadPrev = base.options.slides.length - 1 : loadPrev = vars.current_slide - 1;
+					vars.current_slide - 1 < 0 ? loadPrev = base.options.slide_total - 1 : loadPrev = vars.current_slide - 1;
 
-if (loadPrev > base.options.slides.length) return;
+					var li = base.el + ' li:eq(' + loadPrev + ')';
+					$(li).addClass('image-loading prevslide');
 
+					/*
 					var imageLink = (base.options.slides[loadPrev].url) ? "href='" + base.options.slides[loadPrev].url + "'" : "";
 
 					// DP *I*
@@ -232,6 +235,7 @@ if (loadPrev > base.options.slides.length) return;
 						$(this).data('origWidth', $(this).width()).data('origHeight', $(this).height());
 						base.resizeNow();	// Resize background image
 					});	// End Load
+					*/
 				}
 			}
 			else
@@ -925,7 +929,8 @@ if (loadSlide >= base.options.slides.length) return;
 			liveslide.removeClass('activeslide').addClass('prevslide');		// Remove active class & update previous slide
 
 			// Get current slide number
-			vars.current_slide == 0 ? vars.current_slide = base.options.slides.length - 1 : vars.current_slide--;
+			//vars.current_slide == 0 ? vars.current_slide = base.options.slides.length - 1 : vars.current_slide--;
+			vars.current_slide == 0 ? vars.current_slide = base.options.slide_total - 1 : vars.current_slide--;
 
 			var nextslide = $(base.el + ' li:eq(' + vars.current_slide + ')'),
 				prevslide = base.$el.find('.prevslide');
@@ -1080,7 +1085,7 @@ if (loadSlide >= base.options.slides.length) return;
 			// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
 			// Sfogliando verso destra si potrebbe incrementare ulteriormente di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata, ma questo non e' piu' valido se si sfoglia verso sinistra.
 			var start = Math.ceil(Math.abs(thumblist.position().left / 150) + 1);
-			var length = Math.ceil(ss.width() / 150) * 2;
+			var length = Math.ceil(ss.width() / 150) * 1.0;
 
 			// Set our parameters and trig the loading
 			ss.pwi(

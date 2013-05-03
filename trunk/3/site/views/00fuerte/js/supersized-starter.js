@@ -12,7 +12,7 @@ jQuery(document).ready(function ($)
 	var start_slide = $.param.fragment() ? $.param.fragment() : 1;
 	*/
 	var start_slide = 1;
-	var length = Math.ceil(ss.width() / 150) * 2;
+	var length = Math.ceil(ss.width() / 150) * 1.0;
 
 	// Set our parameters and trig the loading
 	ss.pwi(

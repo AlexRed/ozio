@@ -154,11 +154,10 @@
 
 			$(vars.prev_slide).click(function ()
 			{
-				/*
-				var active = jQuery('li.activeslide');
+/*				var active = jQuery('li.activeslide');
 				var index = active.index() - 2;
 				api.ensurevisible(index);
-				*/
+*/
 				api.prevSlide();
 			});
 
