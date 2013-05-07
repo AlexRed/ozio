@@ -782,7 +782,10 @@ window.antiloop = 1;
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
-if (loadSlide >= base.options.slides.length) return;
+				if (!base.options.slides[loadSlide])
+				{
+					alert("An attempt to load an empty slot has been detected.");
+				}
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
@@ -949,7 +952,10 @@ if (loadSlide >= base.options.slides.length) return;
 				// If links should open in new window
 				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
-if (loadSlide >= base.options.slides.length) return;
+				if (!base.options.slides[loadSlide])
+				{
+					alert("An attempt to load an empty slot has been detected.");
+				}
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				// DP *I*
