@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_00FUERTE_VIEW_DEFAULT_TITLE">
+		<message>COM_OZIOGALLERY3_00FUERTE_VIEW_DEFAULT_DESC</message>
+	</layout>
+
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="basic">
+			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
+			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
+			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public" onchange="OnAlbumVisibilityChange()">
+				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
+				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
+			</field>
+			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
+			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
+			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
+
+<!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->
+			<field type="text" name="gallery_date" label="COM_OZIOGALLERY3_GALLERY_DATE_LBL" description="COM_OZIOGALLERY3_GALLERY_DATE_DSC" />
+
+			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="100|%">
+				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
+				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
+			</field>
+		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
+<!--
+			<field type="list" name="viewmode" label="COM_OZIOGALLERY3_VIEWMODE_LBL" description="COM_OZIOGALLERY3_VIEWMODE_DSC">
+				<option value="0">COM_OZIOGALLERY3_NORMAL</option>
+				<option value="1">COM_OZIOGALLERY3_FULLSCREEN</option>
+			</field>
+-->
+			<field type="list" name="transition" label="COM_OZIOGALLERY3_TRANSITION_LBL" description="COM_OZIOGALLERY3_TRANSITION_DSC" default="fade">
+				<option value="none">COM_OZIOGALLERY3_TRANSITION_NONE</option>
+				<option value="fade">COM_OZIOGALLERY3_TRANSITION_FADE</option>
+				<option value="slideTop">COM_OZIOGALLERY3_TRANSITION_SLIDETOP</option>
+				<option value="slideRight">COM_OZIOGALLERY3_TRANSITION_SLIDERIGHT</option>
+				<option value="slideBottom">COM_OZIOGALLERY3_TRANSITION_SLIDEBOTTOM</option>
+				<option value="slideLeft">COM_OZIOGALLERY3_TRANSITION_SLIDELEFT</option>
+				<option value="carouselRight">COM_OZIOGALLERY3_TRANSITION_CAROUSELRIGHT</option>
+				<option value="carouselLeft">COM_OZIOGALLERY3_TRANSITION_CAROUSELLEFT</option>
+			</field>
+			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="1000"/>
+
+		  <field type="ossheader" default="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
+
+			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="autoplay" label="COM_OZIOGALLERY3_AUTOPLAY_LBL" description="COM_OZIOGALLERY3_AUTOPLAY_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="stop_loop" label="COM_OZIOGALLERY3_STOPLOOP_LBL" description="COM_OZIOGALLERY3_STOPLOOP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="text" name="slide_interval" label="COM_OZIOGALLERY3_SLIDE_INTERVAL_LBL" description="COM_OZIOGALLERY3_SLIDE_INTERVAL_DSC" size="6" default="3000"/>
+			<field type="radio" name="progress_bar" label="COM_OZIOGALLERY3_PROGRESSBAR_LBL" description="COM_OZIOGALLERY3_PROGRESSBAR_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="pause_hover" label="COM_OZIOGALLERY3_PAUSEHOVER_LBL" description="COM_OZIOGALLERY3_PAUSEHOVER_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="fullsize_button" label="COM_OZIOGALLERY3_FULLSIZEBUTTON_LBL" description="COM_OZIOGALLERY3_FULLSIZEBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="show_summary" label="COM_OZIOGALLERY3_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY3_SHOWSUMMARY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="image_protect" label="COM_OZIOGALLERY3_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY3_IMAGEPROTECT_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+		</fieldset>
+	</fields>
+</metadata>
