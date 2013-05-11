@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+	<name>com_oziogallery3</name>
+	<creationDate>2013</creationDate>
+	<author>Alexred</author>
+	<authorEmail>info@joomla.it</authorEmail>
+	<authorUrl>http://www.joomla.it</authorUrl>
+	<copyright>(C) 2008 - 2012 - TOT The Ozio Team</copyright>
+	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
+	<version>4.0.0</version>
+	<description>Ozio Gallery for Joomla! 2.5</description>
+
+	<scriptfile>file.script.php</scriptfile>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>oziogallery3.php</filename>
+		<filename>oziogallery.inc</filename>
+		<filename>oziogallery.zip</filename>
+		<filename>controller.php</filename>
+		<folder>assets</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>lib</folder>
+		<folder>skin</folder>
+		<folder>views</folder>
+	</files>
+	<administration>
+		<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">OzioGallery3</menu>
+		<files folder="admin">
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>oziogallery3.php</filename>
+			<folder>assets</folder>
+			<folder>css</folder>
+			<folder>js</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<folder>language</folder>
+		</files>
+
+	</administration>
+	<plugins>
+		<plugin folder="plugins/content" plugin="ozio" name="OzioGallery into articles" group="content" />
+		<plugin folder="plugins/editors-xtd" plugin="oziogallery" name="OzioGallery" group="editors-xtd" />
+	</plugins>
+	<install>
+	</install>
+	<uninstall>
+	</uninstall>
+	<updateservers>
+		<server type="extension" priority="1" name="Ozio Gallery3 update site"><![CDATA[http://www.opensourcesolutions.es/download/oziogallery.xml]]></server>
+	</updateservers>
+</extension>
