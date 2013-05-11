@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_LIST_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY3_LIST_VIEW_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="params" addfieldpath="/administrator/components/com_oziogallery3/models/fields">
+
+		<fieldset name="basic">
+
+			<field name="images_size" type="text" label="COM_OZIOGALLERY3_IMAGES_SIZE_LBL" description="COM_OZIOGALLERY3_IMAGES_SIZE_DSC" default="180" />
+			<field name="show_title" type="radio" label="COM_OZIOGALLERY3_SHOW_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_TITLE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_date" type="radio" label="COM_OZIOGALLERY3_SHOW_DATE_LBL" description="COM_OZIOGALLERY3_SHOW_DATE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_counter" type="radio" label="COM_OZIOGALLERY3_SHOW_COUNTER_LBL" description="COM_OZIOGALLERY3_SHOW_COUNTER_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+				<field name="menuitems_filter_type" type="list" default="0" label="COM_OZIOGALLERY3_FILTERINGTYPE_LBL" description="COM_OZIOGALLERY3_FILTERINGTYPE_DSC">
+					<option value="IN">COM_OZIOGALLERY3_INCLUSIVE</option>
+					<option value="NOT IN">COM_OZIOGALLERY3_EXCLUSIVE</option>
+					<option value="0">JDISABLED</option>
+				</field>
+
+			<field name="menuitems_filter_items" type="menuitemslist" multiple="true" size="5" label="COM_OZIOGALLERY3_MENUITEMLIST_LBL" description="COM_OZIOGALLERY3_MENUITEMLIST_DSC"
+				component="com_oziogallery3">
+			</field>
+
+
+		</fieldset>
+
+	</fields>
+</metadata>
