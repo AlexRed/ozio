@@ -1,0 +1,15 @@
+input.selext {
+	margin: 5px 0;
+	text-align: center;
+}
+
+html[dir="ltr"] input.selext {
+	border-right: none;
+}
+
+html[dir="rtl"] input.selext {
+	border-left: none;
+}
+
+select.selext {
+}
