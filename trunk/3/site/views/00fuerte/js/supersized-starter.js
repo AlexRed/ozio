@@ -12,7 +12,7 @@ jQuery(document).ready(function ($)
 	 var start_slide = $.param.fragment() ? $.param.fragment() : 1;
 	 */
 	var start_slide = 1;
-	var length = Math.ceil(ss.width() / 150) * 1.0;
+	var length = Math.ceil(ss.width() / 150) * 2;
 
 	// Set our parameters and trig the loading
 	ss.pwi(
@@ -35,7 +35,6 @@ jQuery(document).ready(function ($)
 	function OnBeforeSend(jqXHR, settings)
 	{
 		document.body.style.cursor = "wait";
-		var s1 = start_slide;
 	}
 
 	function OnLoadSuccess(result, textStatus, jqXHR)
@@ -66,43 +65,43 @@ jQuery(document).ready(function ($)
 		}
 
 		// Caricamento pagina precedente
-	length = Math.ceil(ss.width() / 150) * 1.0;
-	start = parseInt(result.feed.openSearch$totalResults.$t) - length + 1;
+	length = Math.ceil(ss.width() / 150) * 2;
+	var start_slide2 = parseInt(result.feed.openSearch$totalResults.$t) - length + 1;
 	ss.pwi(
 		{
 			mode: 'album_data',
 			username: '<?php echo $this->Params->get("userid", ""); ?>',
 			album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
-			StartIndex: start_slide,
+			StartIndex: start_slide2,
 			MaxResults: length,
 			success: function (result, textStatus, jqXHR){
 
-				for (var i = 0; i < result.feed.entry.length; ++i)
+				for (var j = 0; j < result.feed.entry.length; ++j)
 				{
 					// Removes the file.ext part of the URL
-					var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
-					seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+					var seed2 = result.feed.entry[j].content.src.substring(0, result.feed.entry[j].content.src.lastIndexOf("/"));
+					seed2 = seed2.substring(0, seed2.lastIndexOf("/")) + "/";
 
 					// Avoids divisions by 0
-					var width = result.feed.entry[i].gphoto$width.$t;
-					var height = result.feed.entry[i].gphoto$height.$t
-					var ratio = 1;
+					var width2 = result.feed.entry[j].gphoto$width.$t;
+					var height2 = result.feed.entry[j].gphoto$height.$t
+					var ratio2 = 1;
 					// Avoids divisions by 0
-					if (width) ratio = height / width;
+					if (width2) ratio2 = height2 / width2;
 
-					var thumbindex = parseInt(start - 1 + i);
+					var thumbindex = parseInt(start_slide2 - 1 + j);
 					var currentthumb = jQuery(".thumb" + thumbindex + " > img");
-					currentthumb[0].src = seed + "s150-c/";
+					currentthumb[0].src = seed2 + "s150-c/";
 
-					var index = start - 1 + i;
+					var index = start_slide2 - 1 + j;
 					s[index] = {
-						'seed': seed,
-						'width': width,
-						'height': height,
-						'ratio': ratio,
+						'seed': seed2,
+						'width': width2,
+						'height': height2,
+						'ratio': ratio2,
 						'album': result.feed.title.$t,
-						'summary': result.feed.entry[i].summary.$t
+						'summary': result.feed.entry[j].summary.$t
 					};
 				}
 
@@ -172,15 +171,3 @@ jQuery(document).ready(function ($)
 
 });
 
-function previouspage(lastindex)
-{
-	var ss = jQuery("#supersized");
-
-	var thumblist = jQuery("ul#thumb-list"); // ul#thumb-list
-
-	var length = Math.ceil(ss.width() / 150) * 1.0;
-	// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
-	var start = lastindex - length + 1;
-
-
-};

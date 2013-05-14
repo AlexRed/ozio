@@ -730,6 +730,8 @@ window.antiloop = 1;
 
 		base.ensurevisible = function (loadSlide)
 		{
+			if (!base.options.slides[loadSlide]) return;
+
 			var linkTarget = base.options.new_window ? ' target="_blank"' : '';
 
 			var targetList = base.el + ' li:eq(' + loadSlide + ')';
@@ -1091,7 +1093,7 @@ window.antiloop = 1;
 			// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
 			// Sfogliando verso destra si potrebbe incrementare ulteriormente di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata, ma questo non e' piu' valido se si sfoglia verso sinistra.
 			var start = Math.ceil(Math.abs(thumblist.position().left / 150) + 1);
-			var length = Math.ceil(ss.width() / 150) * 1.0;
+			var length = Math.ceil(ss.width() / 150) * 2;
 
 			// Set our parameters and trig the loading
 			ss.pwi(
