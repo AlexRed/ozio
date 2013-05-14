@@ -146,7 +146,7 @@ jQuery(document).ready(function ($)
 			scAlbum.append(googletitle);
 			/*<?php } ?>*/
 
-			/*<?php if ($this->Params->get("show_title", 0)) { ?>*/
+			/*<?php if ($this->Params->get("show_title", 1)) { ?>*/
 			// Always show our custom local album title
 			var localtitle = $("<div class='pwi_album_title'/>");
 			localtitle.append(this.album_local_title);

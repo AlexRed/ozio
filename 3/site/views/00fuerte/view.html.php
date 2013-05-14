@@ -29,7 +29,6 @@ class OzioGalleryView00Fuerte extends JView
 
 	function display($tpl = null)
 	{
-		die();
 		$this->Params = JFactory::getApplication()->getParams("com_oziogallery3");
 
 		// Set Meta Description
