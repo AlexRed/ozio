@@ -241,3 +241,7 @@ a#nextslide:focus
 	left: 6px
 }
 
+#fuertecontainer.fuertecontainer img
+{
+	max-width: none;
+}
