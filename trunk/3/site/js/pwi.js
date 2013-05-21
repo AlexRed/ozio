@@ -127,7 +127,7 @@ jQuery(document).ready(function ($)
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
 			scAlbum.append
 				(
-					'<a href="' + this.album_local_url + '">' +
+					'<a href="' + this.album_local_url + '" target="_parent">' +
 						"<img src='" + $thumbnail0.url +
 						"' height='" + $thumbnail0.height +
 						"' width='" + $thumbnail0.width +
