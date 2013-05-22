@@ -60,7 +60,7 @@ class Com_OzioGallery3InstallerScript
 	function uninstall($parent)
 	{
 
-		echo '<p>The component Ozio Gallery 4 Component for Joomla 1.6/1.7/2.5! has been uninstalled successfully.</p>';
+		echo '<p>The component Ozio Gallery 4 Component for Joomla 3! has been uninstalled successfully.</p>';
 	}
 
 
@@ -108,8 +108,8 @@ class Com_OzioGallery3InstallerScript
 
 	function message()
 	{
-		echo '<p>Congratulations! Ozio Gallery 4 Component for Joomla 1.6/1.7/2.5! has been installed successfully</p>';
-		echo "<p><img src=\"http://www.opensourcesolutions.es/logo/responsive.jpg" . "\"></p>";
+		echo '<p>Congratulations! Ozio Gallery 4 Component for Joomla 3! has been installed successfully</p>';
+		echo "<p><img src=\"http://www.opensourcesolutions.es/logo/responsive4.jpg" . "\"></p>";
 		echo "<p>Take a look to 'Fuerte': our new, responsive and adaptive skin." . "</p>";
 
 		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";

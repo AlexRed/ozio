@@ -8,7 +8,7 @@
 	<copyright>(C) 2008 - 2012 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
 	<version>4.0.0</version>
-	<description>Ozio Gallery for Joomla! 2.5</description>
+	<description>Ozio Gallery for Joomla! 3</description>
 
 	<scriptfile>file.script.php</scriptfile>
 	<files folder="site">
