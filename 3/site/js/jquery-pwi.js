@@ -986,7 +986,7 @@
 
 				var $u = strings.picasaUrl + settings.username +
 					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
-					((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
+					((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 					'&imgmax=d&thumbsize=' + settings.thumbSize +
 					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
@@ -1098,7 +1098,7 @@
 			var $u = strings.picasaUrl + settings.username +
 				(settings.album !== "" ? '/album/' + settings.album : '') +
 				'?kind=photo&max-results=' + settings.maxResults + '&alt=json&q=' +
-				((settings.authKey !== "") ? "&authkey=" + settings.authKey : "") +
+				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&imgmax=d&thumbsize=' + settings.thumbSize +
 				((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
