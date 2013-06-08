@@ -48,6 +48,9 @@ class JFormFieldListGalleries extends JFormFieldList
 
 			if (file_exists(JPATH_ADMINISTRATOR . "/components/" . $name . "/css/" . $type . ".css"))
 				$document->addStyleSheet(JUri::base(true) . "/components/" . $name . "/css/" . $type . ".css");
+
+			// per la compatibilità con Internet Explorer
+			$document->addScript(JURI::root(true) . "/components/" . $name . "/js/jQuery.XDomainRequest.js");
 		}
 
 		return

@@ -162,6 +162,7 @@ jQuery(document).ready(function ($)
 
 	function OnLoadError(jqXHR, textStatus, error)
 	{
+		console.log( jqXHR.message, textStatus, error);
 	}
 
 	function OnLoadComplete(jqXHR, textStatus)
