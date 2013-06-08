@@ -98,6 +98,9 @@ class plgContentOzio extends JPlugin
 		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
+		// per la compatibilità con Internet Explorer 
+		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+
 		$this->gallerywidth = $cparams->get("gallerywidth", array("text" => "100", "select" => "%"));
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
 		$this->play_button_style = $cparams->get("play_button", "0") ? '' : 'style="display:none;"';
