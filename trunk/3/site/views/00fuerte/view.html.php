@@ -62,6 +62,9 @@ class OzioGalleryView00Fuerte extends JView
 		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
+		// per la compatibilità con Internet Explorer 
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+		
 		$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
 		$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';
 

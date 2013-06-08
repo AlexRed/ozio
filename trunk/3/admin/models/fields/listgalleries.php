@@ -43,7 +43,6 @@ class JFormFieldListGalleries extends JFormFieldList
 
 			// pwi
 			$document->addScript(JURI::root(true) . "/components/" . $name . "/js/jquery-pwi.js");
-
 			// Alternative code: $type = strtolower($this->type);
 			$type = (string)$this->element["type"];
 
@@ -52,6 +51,9 @@ class JFormFieldListGalleries extends JFormFieldList
 
 			if (file_exists(JPATH_ADMINISTRATOR . "/components/" . $name . "/css/" . $type . ".css"))
 				$document->addStyleSheet(JURI::base(true) . "/components/" . $name . "/css/" . $type . ".css");
+
+			// per la compatibilità con Internet Explorer
+			$document->addScript(JURI::root(true) . "/components/" . $name . "/js/jQuery.XDomainRequest.js");
 		}
 
 		return
