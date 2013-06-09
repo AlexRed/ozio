@@ -91,7 +91,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-
+			<field type="text" name="big" label="COM_OZIOGALLERY3_BIG_LBL" description="COM_OZIOGALLERY3_BIG_DSC" size="6" default="0"/>
 		</fieldset>
 	</fields>
 </metadata>

@@ -1531,7 +1531,8 @@ if (loadSlide > base.options.slides.length) return;
 		slide_links: 1, // Individual links for each slide (Options: false, 'num', 'name', 'blank')
 		thumb_links: 1, // Individual thumb links for each slide
 		thumbnail_navigation: 0, // Thumbnail navigation
-		square: 0 // immagini quadrate
+		square: 0, // immagini quadrate
+		big: 0 // dimensioni dell'immagine ingrandita
 
 	};
 
