@@ -252,11 +252,21 @@
 			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			//document.getElementById('view-button').href = activeslide.href;
 			var link = api.getField('seed');
+			var bigdata = api.options.big;
 			var view_button = document.getElementById('view-button');
 			if (view_button)
 			{
 				//view_button.href = link + 's0/';
-				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+
+				if (api.options.big == 0)
+				{
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+				}
+				else
+				{
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+				}
+
 			}
 			// Top bar
 			var top_title = document.getElementById('oziotoptitle');
@@ -389,11 +399,21 @@
 			//var activeslide = $.$el.find('.activeslide')[0].childNodes[0];
 			//document.getElementById('view-button').href = activeslide.href;
 			var link = api.getField('seed');
+			var bigdata = api.options.big;
 			var view_button = document.getElementById('view-button');
 			if (view_button)
 			{
 				//view_button.href = link + 's0/';
-				view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+
+				if (api.options.big == 0)
+				{
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+				}
+				else
+				{
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+				}
+
 			}
 			// DP *F*
 
