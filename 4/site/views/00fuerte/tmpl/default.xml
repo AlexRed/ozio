@@ -45,7 +45,7 @@
 
 		  <field type="ossheader" default="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
 
-			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="0">
+			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
