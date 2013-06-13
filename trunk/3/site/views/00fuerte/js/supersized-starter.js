@@ -13,7 +13,6 @@ jQuery(document).ready(function ($)
 	 */
 	var start_slide = 1;
 	var length = Math.ceil(ss.width() / 150) * 2;
-
 	// Set our parameters and trig the loading
 	ss.pwi(
 		{
@@ -22,7 +21,7 @@ jQuery(document).ready(function ($)
 			album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 			StartIndex: start_slide,
-			MaxResults: length,
+			//MaxResults: length,
 			beforeSend: OnBeforeSend,
 			success: OnLoadSuccess,
 			error: OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
@@ -63,7 +62,7 @@ jQuery(document).ready(function ($)
 				'summary': result.feed.entry[i].summary.$t
 			});
 		}
-
+		/*
 		// Caricamento pagina precedente
 	length = Math.ceil(ss.width() / 150) * 2;
 	var start_slide2 = parseInt(result.feed.openSearch$totalResults.$t) - length + 1;
@@ -110,7 +109,7 @@ jQuery(document).ready(function ($)
 			// Tell the library to ignore parameters through GET ?par=...
 			useQueryParameters: false
 		});
-
+*/
 
 		jQuery(function ($)
 		{
@@ -155,7 +154,7 @@ jQuery(document).ready(function ($)
 				album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 				authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 				square: '<?php echo $this->Params->get("square", ""); ?>',
-				big: '<?php echo $this->Params->get("big", ""); ?>',
+				big: '<?php echo $this->Params->get("big", ""); ?>'
 
 			});
 		});
