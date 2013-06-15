@@ -35,23 +35,23 @@
 									<td valign="top">
 										<table class="adminlist">
 											<?php if (!$GLOBALS["oziogallery3"]["registered"]) { ?>
-												<tr><td>
+												<tr><td><div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>
 														<div style="float:left;margin-right:16px;margin-left:10px;">
 															<a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="_blank">
 																<img src="<?php echo JUri::base(true) . "/components/com_oziogallery3/assets/images/buy_now.jpg"; ?>" border="0" alt="Buy now">
 															</a>
 														</div>
-														<p><strong><?php echo JText::_("COM_OZIOGALLERY3_PURCHASE"); ?></strong></p>
+														<p><strong><?php echo JText::_("COM_OZIOGALLERY3_PURCHASE"); ?></strong></p></div> 
 													</td></tr>
 												<?php } ?>
 											<tr>
-												<td align="left" width="50%" valign="top"><?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_DESCRIPTION');?></td>
+												<td align="left" width="50%" valign="top"><?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_DESCRIPTION');?><br /></td>
 											</tr>
 											<tr>
-												<td align="left" valign="top"><?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_INSTRUCTIONS');	?></td>
+												<td align="left" valign="top"><br /><?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_INSTRUCTIONS');	?><br /></td>
 											</tr>
 											<tr>
-												<td align="left" width="50%" valign="top"><?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_VOTE');	?></td>
+												<td align="left" width="50%" valign="top"><br /><div class="alert alert-success"><span aria-hidden="true" class="icon-thumbs-up"></span>  <?php echo JText::_('COM_OZIOGALLERY3_COMPONENT_VOTE');	?></div></td>
 											</tr>
 											<tr>
 												<td align="left" valign="bottom">
