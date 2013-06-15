@@ -44,45 +44,44 @@
 			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="1000"/>
 
 		  <field type="ossheader" default="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
-
-			<field type="radio" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="1">
+			<field type="list" name="play_button" label="COM_OZIOGALLERY3_PLAYBUTTON_LBL" description="COM_OZIOGALLERY3_PLAYBUTTON_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="autoplay" label="COM_OZIOGALLERY3_AUTOPLAY_LBL" description="COM_OZIOGALLERY3_AUTOPLAY_DSC" default="0">
+			<field type="list" name="autoplay" label="COM_OZIOGALLERY3_AUTOPLAY_LBL" description="COM_OZIOGALLERY3_AUTOPLAY_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="stop_loop" label="COM_OZIOGALLERY3_STOPLOOP_LBL" description="COM_OZIOGALLERY3_STOPLOOP_DSC" default="0">
+			<field type="list" name="stop_loop" label="COM_OZIOGALLERY3_STOPLOOP_LBL" description="COM_OZIOGALLERY3_STOPLOOP_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field type="text" name="slide_interval" label="COM_OZIOGALLERY3_SLIDE_INTERVAL_LBL" description="COM_OZIOGALLERY3_SLIDE_INTERVAL_DSC" size="6" default="3000"/>
-			<field type="radio" name="progress_bar" label="COM_OZIOGALLERY3_PROGRESSBAR_LBL" description="COM_OZIOGALLERY3_PROGRESSBAR_DSC" default="1">
+			<field type="list" name="progress_bar" label="COM_OZIOGALLERY3_PROGRESSBAR_LBL" description="COM_OZIOGALLERY3_PROGRESSBAR_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="pause_hover" label="COM_OZIOGALLERY3_PAUSEHOVER_LBL" description="COM_OZIOGALLERY3_PAUSEHOVER_DSC" default="0">
+			<field type="list" name="pause_hover" label="COM_OZIOGALLERY3_PAUSEHOVER_LBL" description="COM_OZIOGALLERY3_PAUSEHOVER_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="fullsize_button" label="COM_OZIOGALLERY3_FULLSIZEBUTTON_LBL" description="COM_OZIOGALLERY3_FULLSIZEBUTTON_DSC" default="1">
+			<field type="list" name="fullsize_button" label="COM_OZIOGALLERY3_FULLSIZEBUTTON_LBL" description="COM_OZIOGALLERY3_FULLSIZEBUTTON_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
+			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="show_summary" label="COM_OZIOGALLERY3_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY3_SHOWSUMMARY_DSC" default="1">
+			<field type="list" name="show_summary" label="COM_OZIOGALLERY3_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY3_SHOWSUMMARY_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="image_protect" label="COM_OZIOGALLERY3_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY3_IMAGEPROTECT_DSC" default="1">
+			<field type="list" name="image_protect" label="COM_OZIOGALLERY3_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY3_IMAGEPROTECT_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="radio" name="square" label="COM_OZIOGALLERY3_SQUARE_LBL" description="COM_OZIOGALLERY3_SQUARE_DSC" default="0">
+			<field type="list" name="square" label="COM_OZIOGALLERY3_SQUARE_LBL" description="COM_OZIOGALLERY3_SQUARE_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
