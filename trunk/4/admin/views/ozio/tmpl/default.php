@@ -68,7 +68,7 @@
 			</table>
 			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'COM_OZIOGALLERY3_SYSTEM_INFORMATION' ); ?></legend>
-				<table class="adminlist">
+				<table class="table">
 
 					<p><?php echo JText::_('COM_OZIOGALLERY3_MUST_BE_GREEN');	?></p>
 					<thead>
