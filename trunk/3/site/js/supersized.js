@@ -41,23 +41,28 @@
 		// Deep-link
 		// Si applica a: cambio dell'hash manuale dalla barra dell'URL
 		// Individuazione parametri per deep-link e caricamento immagine associata se presente
-/*
+
 		$(window).bind('hashchange', function (e)
 		{
 			// Get the hash (fragment) as a string, with any leading # removed. Note that
 			// in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
 			var url = $.param.fragment();
+			if (url<1){
+				url=1;
+			}else if (url>base.options.slide_total){
+				url=base.options.slide_total;
+			}
 			if (url)
 			{
-				api.goTo(url);
+				base.goTo(url);
 				window.location.href = '#' + url;
+				hash_slide=url;
+				vars.thumb_page = -(parseInt(hash_slide) - 1) * 150;
+				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo'/*, complete: base.loadpage*/});
 			}
-
-			vars.thumb_page = -(parseInt(url) - 1) * 150;
-			$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
-
+			//vars.thumb_page = -(parseInt(url) - 1) * 150;
+			//$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
 		});
-*/
 		// DP *F*
 
 		/* Build Elements
@@ -176,6 +181,15 @@
 			*/
 			var start_slide = 1;
 			vars.current_slide = start_slide - 1;
+			/*
+			vars.current_slide = $.param.fragment() ? $.param.fragment() -1 : 0;
+			if (vars.current_slide<0 ){
+				vars.current_slide=0;
+			}
+			if (vars.current_slide>=base.options.slides.length ){
+				vars.current_slide=base.options.slides.length-1;
+			}
+			*/
 			// DP *F*
 
 			// DP *I*
@@ -305,6 +319,16 @@
 			base.$el.css('visibility', 'hidden');
 			$('.load-item').hide();
 			// DP *I*
+			
+			var hash_slide = $.param.fragment() ? $.param.fragment() : 1;
+			if (hash_slide<1){
+				hash_slide=1;
+			}else if (hash_slide>base.options.slide_total){
+				hash_slide=base.options.slide_total;
+			}
+			if (hash_slide!=1){
+				$(window).hashchange();
+			}
 		};
 
 
@@ -939,9 +963,7 @@ window.antiloop = 1;
 
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deep-link
-			/*
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
-			*/
 			// DP *F*
 
 			return false;
@@ -1116,9 +1138,7 @@ window.antiloop = 1;
 			}
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deep-link
-			/*
 			window.location.href = '#' + parseInt(vars.current_slide + 1);
-			*/
 			// DP *F*
 			return false;
 		};
@@ -1250,9 +1270,7 @@ window.antiloop = 1;
 
 			// DP *I* Si applica a ogni funzione che utilizza api.goTo()
 			// Cambio url per deep-link
-			/*
 			window.location.href = '#' + targetSlide;
-			*/
 			// DP *F*
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
@@ -1274,7 +1292,10 @@ window.antiloop = 1;
 			clearInterval(vars.slideshow_interval);	// Stop slideshow, prevent buildup
 
 			// Call theme function for goTo trigger
-			if (typeof theme != 'undefined' && typeof theme.goTo == "function") theme.goTo();
+			if (typeof theme != 'undefined' && typeof theme.goTo == "function"){
+				theme.goTo();
+				//alert('goTo');
+			}
 
 			if (vars.current_slide == totalSlides - targetSlide)
 			{
