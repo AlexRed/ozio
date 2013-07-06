@@ -245,3 +245,56 @@ a#nextslide:focus
 {
 	max-width: none;
 }
+
+
+#photo_info_box
+{
+	background: #69bfff;
+	color: #fff;
+	text-shadow: 1px 1px #5493cf;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: 0;
+	text-align:left;
+	font-size:13px;
+}
+
+#photo_info_box .tcontent
+{
+	padding: 10px 14px 11px;
+	border: 1px solid #b8daff;
+	-moz-border-radius: 5px;
+	border-radius: 5px
+}
+
+dl {
+    margin-bottom: 18px;
+}
+dt, dd {
+    line-height: 18px;
+}
+dt {
+    font-weight: bold;
+}
+dd {
+    margin-left: 9px;
+}
+.dl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+.dl-horizontal dd {
+    margin-left: 130px;
+}
+
+.img-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}

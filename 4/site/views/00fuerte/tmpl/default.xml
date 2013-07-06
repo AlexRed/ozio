@@ -69,6 +69,10 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -86,6 +90,10 @@
 				<option value="1">JYES</option>
 			</field>
 			<field type="text" name="big" label="COM_OZIOGALLERY3_BIG_LBL" description="COM_OZIOGALLERY3_BIG_DSC" size="6" default="0"/>
+			<field type="list" name="hide_thumbnails" label="COM_OZIOGALLERY3_HIDE_THUMBNAILS_LBL" description="COM_OZIOGALLERY3_HIDE_THUMBNAILS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 
 		</fieldset>
 	</fields>

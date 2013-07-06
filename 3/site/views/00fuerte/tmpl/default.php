@@ -57,6 +57,9 @@
 			<?php if ($this->Params->get("fullsize_button", true)) { ?>
 				<a id="view-button" class="oziobutton"><img src="<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/view.png" alt="view"/></a>
 				<?php } ?>
+			<?php if ($this->Params->get("info_button", false)) { ?>
+			<a id="info-button" class="oziobutton"><img src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/info.png" alt="Info" /></a>
+			<?php } ?>
 
 			<!--Slide counter-->
 			<div id="slidecounter">
@@ -85,4 +88,43 @@
 <div id="thumb-tray" class="load-item" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
 	<div id="thumb-back"></div>
 	<div id="thumb-forward"></div>
+</div>
+
+<!-- Details -->
+<div id="photo-info" style="display:none;">
+	<p></p>
+	<p>
+		<dl class="dl-horizontal">
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DATE_LBL');?></dt><dd class="pi-data"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DIMENSIONS_LBL');?></dt><dd class="pi-width_height"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILENAME_LBL');?></dt><dd class="pi-file_name"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILESIZE_LBL');?></dt><dd class="pi-file_size"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERA_LBL');?></dt><dd class="pi-model"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FOCALLENGTH_LBL');?></dt><dd class="pi-focallength"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_EXPOSURE_LBL');?></dt><dd class="pi-exposure"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FSTOP_LBL');?></dt><dd class="pi-fstop"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ISO_LBL');?></dt><dd class="pi-iso"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERAMAKE_LBL');?></dt><dd class="pi-make"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FLASH_LBL');?></dt><dd class="pi-flash"></dd>
+			<!-- <dt>Visualizzazioni</dt><dd></dd>
+			<dt>+1</dt><dd></dd> -->
+		</dl>
+	</p>
+	<p>
+		<a href="" class="btn pi-dowload">
+			<i class="icon-download"></i>
+			Download
+		</a>
+		<img class="img-polaroid  pi-image" src="" />
+	</p>
+	<!-- 
+	<p>Commenti</p> -->
+	<!--
+	<p>Mappa</p>
+	
+	 <iframe class="pi-googlemap" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
+	
+	<p></p>
 </div>
