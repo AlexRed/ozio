@@ -245,3 +245,21 @@ a#nextslide:focus
 {
 	max-width: none;
 }
+
+#photo_info_box
+{
+	background: #69bfff;
+	color: #fff;
+	text-shadow: 1px 1px #5493cf;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: 0
+}
+
+#photo_info_box .tcontent
+{
+	padding: 10px 14px 11px;
+	border: 1px solid #b8daff;
+	-moz-border-radius: 5px;
+	border-radius: 5px
+}

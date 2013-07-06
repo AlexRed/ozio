@@ -119,7 +119,7 @@
 					markers = markers + '<li class="slide-link-' + thisSlide + current_slide + '"><a>' + markerContent + '</a></li>';
 				}
 				// Slide Thumbnail Links
-				if (base.options.thumb_links && ($(window).width() >= 768))
+				if (base.options.thumbnail_show && base.options.thumb_links && ($(window).width() >= 768))
 				{
 					if (thisSlide < start_slide - 1 || thisSlide >= start_slide - 1 + base.options.slides.length)
 					{
@@ -139,7 +139,7 @@
 
 			if (base.options.slide_links) $(vars.slide_list).html(markers);
 
-			if (base.options.thumb_links && vars.thumb_tray.length && ($(window).width() >= 768))
+			if (base.options.thumbnail_show && base.options.thumb_links && vars.thumb_tray.length && ($(window).width() >= 768))
 			{
 				$(vars.thumb_tray).append('<ul id="' + vars.thumb_list.replace('#', '') + '">' + thumbMarkers + '</ul>');
 			}
@@ -163,7 +163,10 @@
 				else
 					$(vars.next_thumb).show().html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
 			}
-
+			if (!base.options.thumbnail_show){
+				$(vars.thumb_tray).addClass('thumbnail_hide');
+				
+			}
 			base._start(); // Get things started
 
 		};
@@ -414,7 +417,7 @@
 			}
 
 			// Thumb marker clicked
-			if (base.options.thumb_links && ($(window).width() >= 768))
+			if (base.options.thumbnail_show && base.options.thumb_links && ($(window).width() >= 768))
 			{
 				$(vars.thumb_list + '> li').click(function ()
 				{
@@ -1334,7 +1337,7 @@ window.antiloop = 1;
 				$(vars.slide_list + '> li').eq((totalSlides - targetSlide)).addClass('current-slide');
 			}
 
-			if (base.options.thumb_links && ($(window).width() >= 768))
+			if (base.options.thumbnail_show && base.options.thumb_links && ($(window).width() >= 768))
 			{
 				$(vars.thumb_list + '> .current-thumb').removeClass('current-thumb');
 				$(vars.thumb_list + '> li').eq((totalSlides - targetSlide)).addClass('current-thumb');

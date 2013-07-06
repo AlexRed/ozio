@@ -52,15 +52,62 @@ jQuery(document).ready(function ($)
 			var ratio = 1;
 			// Avoids divisions by 0
 			if (width) ratio = height / width;
+			var photo_data={
+					'seed': seed,
+					'width': width,
+					'height': height,
+					'ratio': ratio,
+					'album': result.feed.title.$t,
+					'summary': result.feed.entry[i].summary.$t,
+					
+					'updated':'',
+					'title':'',
+					'size':'',
+					'exif_model':'',
+					'exif_exposure':'',
+					'exif_focallength':'',
+					'exif_iso':'',
+					'exif_make':'',
+					'exif_flash':'',
+					'exif_fstop':'',
+			};
+			
+			if (typeof result.feed.entry[i].updated !== "undefined" && typeof result.feed.entry[i].updated.$t !== "undefined"){
+				photo_data['updated']=result.feed.entry[i].updated.$t;
+			}
+			if (typeof result.feed.entry[i].title !== "undefined" && typeof result.feed.entry[i].title.$t !== "undefined"){
+				photo_data['title']=result.feed.entry[i].title.$t;
+			}
+			if (typeof result.feed.entry[i].gphoto$size !== "undefined" && typeof result.feed.entry[i].gphoto$size.$t !== "undefined"){
+				photo_data['size']=result.feed.entry[i].gphoto$size.$t;
+			}
 
-			s.push({
-				'seed': seed,
-				'width': width,
-				'height': height,
-				'ratio': ratio,
-				'album': result.feed.title.$t,
-				'summary': result.feed.entry[i].summary.$t
-			});
+			if (typeof result.feed.entry[i].exif$tags !== "undefined"){
+				
+				if (typeof result.feed.entry[i].exif$tags.exif$model !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$model.$t !== "undefined"){
+					photo_data['exif_model']=result.feed.entry[i].exif$tags.exif$model.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$exposure !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$exposure.$t !== "undefined"){
+					photo_data['exif_exposure']=result.feed.entry[i].exif$tags.exif$exposure.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$focallength !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$focallength.$t !== "undefined"){
+					photo_data['exif_focallength']=result.feed.entry[i].exif$tags.exif$focallength.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$iso !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$iso.$t !== "undefined"){
+					photo_data['exif_iso']=result.feed.entry[i].exif$tags.exif$iso.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$make !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$make.$t !== "undefined"){
+					photo_data['exif_make']=result.feed.entry[i].exif$tags.exif$make.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$flash !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$flash.$t !== "undefined"){
+					photo_data['exif_flash']=result.feed.entry[i].exif$tags.exif$flash.$t;
+				}
+				if (typeof result.feed.entry[i].exif$tags.exif$fstop !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$fstop.$t !== "undefined"){
+					photo_data['exif_fstop']=result.feed.entry[i].exif$tags.exif$fstop.$t;
+				}
+			}
+			
+			s.push(photo_data);
 		}
 		/*
 		// Caricamento pagina precedente
@@ -142,6 +189,7 @@ jQuery(document).ready(function ($)
 				slide_links: 'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 				thumb_links: 1,			// Individual thumb links for each slide
 				thumbnail_navigation: 0,			// Thumbnail navigation
+				thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>'),
 
 				slides: s,
 				slide_total: result.feed.openSearch$totalResults.$t,

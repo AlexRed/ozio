@@ -6,3 +6,7 @@
 #album_selection {
 float:left;
 }
+
+#jform_params_gallery_id_chzn{
+	display:none;
+}
