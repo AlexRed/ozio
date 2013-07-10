@@ -35,6 +35,18 @@
 			base.options = $.supersized.vars.options;
 
 			base._build();
+						
+			// Kreatif - evento mobile - tablet touch
+			$("#supersized").touchwipe({
+				     wipeLeft: function() { base.nextSlideMobile(); },
+				     wipeRight: function() { base.prevSlideMobile(); },
+				     //wipeUp: function() { base.nextSlide(); },
+				     //wipeDown: function() { base.prevSlide(); },
+				     min_move_x: 20,
+				     min_move_y: 20,
+				     preventDefaultEvents: true
+				});
+			// end Kreatif
 		};
 
 		// DP *I*
@@ -972,6 +984,120 @@ window.antiloop = 1;
 			return false;
 		};
 
+		/* Next Slide touch mobile/table
+		Kreatif - evento mobile - tablet touch
+		----------------------------*/
+		base.nextSlideMobile = function(){
+
+			if(vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
+			else vars.in_animation = true;		// Otherwise set animation marker
+
+			clearInterval(vars.slideshow_interval);	// Stop slideshow
+
+			var slides = base.options.slides,					// Pull in slides array
+			liveslide = base.$el.find('.activeslide');		// Find active slide
+			$('.prevslide').removeClass('prevslide');
+			liveslide.removeClass('activeslide').addClass('prevslide');	// Remove active class & update previous slide
+
+			// Get the slide number of new slide
+			vars.current_slide + 1 == base.options.slides.length ? vars.current_slide = 0 : vars.current_slide++;
+
+			var nextslide = $(base.el+' li:eq('+vars.current_slide+')'),
+			prevslide = base.$el.find('.prevslide');
+
+			// If hybrid mode is on drop quality for transition
+			if (base.options.performance == 1) base.$el.removeClass('quality').addClass('speed');
+
+
+			/*-----Load Image-----*/
+
+			loadSlide = false;
+
+			vars.current_slide == base.options.slides.length - 1 ? loadSlide = 0 : loadSlide = vars.current_slide + 1;	// Determine next slide
+
+			var targetList = base.el+' li:eq('+loadSlide+')';
+			if (!$(targetList).html()){
+
+				// If links should open in new window
+				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+
+				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
+				// DP *I*
+				// Inserimento dimensione immagine nell'URL
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
+				var img = $(address);
+				// DP *F*
+
+				img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
+
+				img.load(function(){
+					base._origDim($(this));
+					base.resizeNow();
+				});	// End Load
+			};
+
+			// Update thumbnails (if enabled)
+			if (base.options.thumbnail_navigation == 1)
+				{
+				// Load previous thumbnail
+				vars.current_slide - 1 < 0  ? prevThumb = base.options.slides.length - 1 : prevThumb = vars.current_slide - 1;
+				if (base.options.slides[prevThumb].seed.indexOf('empty.png') != -1)
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed));
+				else
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+
+
+				// Load next thumbnail
+				nextThumb = loadSlide;
+				if (base.options.slides[nextThumb].seed.indexOf('empty.png') != -1)
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed));
+				else
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
+			}
+
+
+
+			/*-----End Load Image-----*/
+
+
+			// Call theme function for before slide transition
+			if( typeof theme != 'undefined' && typeof theme.beforeAnimation == "function" )
+				{
+				theme.beforeAnimation('next');
+			}
+
+			//Update slide markers
+			if (base.options.slide_links){
+				$('.current-slide').removeClass('current-slide');
+				$(vars.slide_list +'> li' ).eq(vars.current_slide).addClass('current-slide');
+			}
+
+			nextslide.css('visibility','hidden').addClass('activeslide');	// Update active slide
+
+			
+			// Carousel Right
+			nextslide.animate({left : base.$el.width()}, 0 ).css('visibility','visible').animate({ left:0, avoidTransforms : false }, base.options.transition_speed, function(){ base.afterAnimation(); });
+			liveslide.animate({ left: -base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
+			/*
+			// Carousel Left
+			
+			nextslide.animate({left : -base.$el.width()}, 0 ).css('visibility','visible').animate({ left:0, avoidTransforms : false }, base.options.transition_speed, function(){ base.afterAnimation(); });
+			liveslide.animate({ left: base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
+			*/
+			
+
+			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+			// Cambio url per deeplink
+			//window.location.href = '#' + loadSlide;
+			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			// DP *F*
+
+			return false;
+		};
+		// end Kreatif
+
 
 		/* Previous Slide
 		 ----------------------------*/
@@ -1145,6 +1271,109 @@ window.antiloop = 1;
 			// DP *F*
 			return false;
 		};
+
+		/* Previous Slide touch mobile/table
+		Kreatif - evento mobile - tablet touch
+		----------------------------*/
+		base.prevSlideMobile = function(){
+
+			if(vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
+			else vars.in_animation = true;		// Otherwise set animation marker
+
+			clearInterval(vars.slideshow_interval);	// Stop slideshow
+
+			var slides = base.options.slides,					// Pull in slides array
+			liveslide = base.$el.find('.activeslide');		// Find active slide
+			$('.prevslide').removeClass('prevslide');
+			liveslide.removeClass('activeslide').addClass('prevslide');		// Remove active class & update previous slide
+
+			// Get current slide number
+			vars.current_slide == 0 ?  vars.current_slide = base.options.slides.length - 1 : vars.current_slide-- ;
+
+			var nextslide =  $(base.el+' li:eq('+vars.current_slide+')'),
+			prevslide =  base.$el.find('.prevslide');
+
+			// If hybrid mode is on drop quality for transition
+			if (base.options.performance == 1) base.$el.removeClass('quality').addClass('speed');
+
+
+			/*-----Load Image-----*/
+
+			loadSlide = vars.current_slide;
+
+			var targetList = base.el+' li:eq('+loadSlide+')';
+			if (!$(targetList).html()){
+				// If links should open in new window
+				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
+				// DP *I*
+				var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
+				var address = ('<img src="' + base.options.slides[loadSlide].seed + actual_width + '"/>');
+				var img = $(address);
+				// DP *F*
+
+				img.appendTo(targetList).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading').css('visibility','hidden');
+
+				img.load(function(){
+					base._origDim($(this));
+					base.resizeNow();
+				});	// End Load
+			};
+
+			// Update thumbnails (if enabled)
+			if (base.options.thumbnail_navigation == 1)
+				{
+				// Load previous thumbnail
+				//prevThumb = loadSlide;
+				loadSlide == 0 ? prevThumb = base.options.slides.length - 1 : prevThumb = loadSlide - 1;
+				if (base.options.slides[prevThumb].seed.indexOf('empty.png') != -1)
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed));
+				else
+					$(vars.prev_thumb).html($("<img/>").attr("src", base.options.slides[prevThumb].seed + 's150-c/'));
+
+				// Load next thumbnail
+				vars.current_slide == base.options.slides.length - 1 ? nextThumb = 0 : nextThumb = vars.current_slide + 1;
+				if (base.options.slides[nextThumb].seed.indexOf('empty.png') != -1)
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed));
+				else
+					$(vars.next_thumb).html($("<img/>").attr("src", base.options.slides[nextThumb].seed + 's150-c/'));
+			}
+
+			/*-----End Load Image-----*/
+
+
+			// Call theme function for before slide transition
+			if ( typeof theme != 'undefined' && typeof theme.beforeAnimation == "function" )
+				{
+				theme.beforeAnimation('prev');
+			}
+
+			//Update slide markers
+			if (base.options.slide_links){
+				$('.current-slide').removeClass('current-slide');
+				$(vars.slide_list +'> li' ).eq(vars.current_slide).addClass('current-slide');
+			}
+
+			nextslide.css('visibility','hidden').addClass('activeslide');	// Update active slide
+
+			
+			// Carousel Right (reverse)
+			nextslide.animate({left : -base.$el.width()}, 0 ).css('visibility','visible').animate({ left:0, avoidTransforms : false }, base.options.transition_speed, function(){ base.afterAnimation(); });
+			liveslide.animate({left : 0}, 0 ).animate({ left: base.$el.width(), avoidTransforms : false}, base.options.transition_speed );
+			/*
+			// Carousel Left (reverse)
+			nextslide.animate({left : base.$el.width()}, 0 ).css('visibility','visible').animate({ left:0, avoidTransforms : false }, base.options.transition_speed, function(){ base.afterAnimation(); });
+			liveslide.animate({left : 0}, 0 ).animate({ left: -base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
+			*/
+			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+			// Cambio url per deeplink
+			//window.location.href = '#' + loadSlide;
+			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			// DP *F*
+			return false;
+		};
+		// end Kreatif
 
 
 		base.loadpage = function ()
