@@ -49,6 +49,10 @@ class OzioGalleryView00Fuerte extends JViewLegacy
 
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
+					
+		// Kreatif - evento mobile - tablet touch
+		$this->document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery.touchwipe.1.1.1.js");
+		
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
