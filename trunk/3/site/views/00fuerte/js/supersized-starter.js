@@ -41,7 +41,7 @@ jQuery(document).ready(function ($)
 		var s = [];
 		for (var i = 0; i < result.feed.entry.length; ++i)
 		{
-
+			//if (i==0){alert(JSON.stringify(result.feed.entry[i]));}
 			// Todo: di default prende il /d nell'URL che serve per il download
 			// Removes the file.ext part of the URL
 			var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
@@ -61,6 +61,7 @@ jQuery(document).ready(function ($)
 					'summary': result.feed.entry[i].summary.$t,
 					
 					'updated':'',
+					'published':'',
 					'title':'',
 					'size':'',
 					'exif_model':'',
@@ -70,10 +71,16 @@ jQuery(document).ready(function ($)
 					'exif_make':'',
 					'exif_flash':'',
 					'exif_fstop':'',
+					'gphoto_timestamp':'',
+					'lat':'',
+					'long':''
 			};
 			
 			if (typeof result.feed.entry[i].updated !== "undefined" && typeof result.feed.entry[i].updated.$t !== "undefined"){
 				photo_data['updated']=result.feed.entry[i].updated.$t;
+			}
+			if (typeof result.feed.entry[i].published !== "undefined" && typeof result.feed.entry[i].published.$t !== "undefined"){
+				photo_data['published']=result.feed.entry[i].published.$t;
 			}
 			if (typeof result.feed.entry[i].title !== "undefined" && typeof result.feed.entry[i].title.$t !== "undefined"){
 				photo_data['title']=result.feed.entry[i].title.$t;
@@ -105,7 +112,30 @@ jQuery(document).ready(function ($)
 				if (typeof result.feed.entry[i].exif$tags.exif$fstop !== "undefined" && typeof result.feed.entry[i].exif$tags.exif$fstop.$t !== "undefined"){
 					photo_data['exif_fstop']=result.feed.entry[i].exif$tags.exif$fstop.$t;
 				}
+				//timestamp
 			}
+						
+			if (typeof result.feed.entry[i].gphoto$timestamp !== "undefined" && typeof result.feed.entry[i].gphoto$timestamp.$t !== "undefined"){
+				photo_data['gphoto_timestamp']=result.feed.entry[i].gphoto$timestamp.$t;
+			}
+			
+			/*
+"georss$where": {
+        "gml$Point": {
+            "gml$pos": {
+                "$t": "45.5787247 10.730963"
+            }
+        }
+    }
+			 */
+			if (typeof result.feed.entry[i].georss$where !== "undefined" && typeof result.feed.entry[i].georss$where.gml$Point !== "undefined" &&
+				typeof result.feed.entry[i].georss$where.gml$Point.gml$pos !== "undefined" && typeof result.feed.entry[i].georss$where.gml$Point.gml$pos.$t !== "undefined"){
+
+				var latlong=result.feed.entry[i].georss$where.gml$Point.gml$pos.$t.split(" ");
+				photo_data['lat']=latlong[0];
+				photo_data['long']=latlong[1];
+			}
+			
 			
 			s.push(photo_data);
 		}
