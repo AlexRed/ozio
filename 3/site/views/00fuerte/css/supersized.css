@@ -249,9 +249,9 @@ a#nextslide:focus
 
 #photo_info_box
 {
-	background: #69bfff;
-	color: #fff;
-	text-shadow: 1px 1px #5493cf;
+	background: #fff;
+	color: #000;
+	/*text-shadow: 1px 1px #5493cf;*/
 	border-right: 1px solid #000;
 	border-bottom: 1px solid #000;
 	padding: 0;
@@ -262,7 +262,7 @@ a#nextslide:focus
 #photo_info_box .tcontent
 {
 	padding: 10px 14px 11px;
-	border: 1px solid #b8daff;
+	border: 1px solid #fff;
 	-moz-border-radius: 5px;
 	border-radius: 5px
 }
@@ -297,4 +297,22 @@ dd {
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 4px;
+}
+
+
+
+#photo_info_box .map-container, #photo_info_box .details-container
+{
+	display:inline-block;
+	vertical-align: top;
+}
+
+
+#photo_info_box .map-container
+{
+	width:300px;
+	height:400px;
+}
+#photo_info_box #ozio_gmap{
+	float:left;
 }

@@ -92,6 +92,7 @@
 
 <!-- Details -->
 <div id="photo-info" style="display:none;">
+<div class="details-container">
 	<p></p>
 	<p>
 		<dl class="dl-horizontal">
@@ -127,4 +128,7 @@
 	 <iframe class="pi-googlemap" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
 	
 	<p></p>
+</div>
+<div class="map-container">
+</div>	
 </div>

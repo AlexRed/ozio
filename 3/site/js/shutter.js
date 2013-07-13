@@ -287,12 +287,23 @@
 			var na='- na -';
 			$('#photo-info .pi-album').text(api.getField('album'));
 			$('#photo-info .pi-photo').text(api.getField('summary')==''?na:api.getField('summary'));
-			
-			if (api.getField('updated')==''){
+			/*
+			if (api.getField('published')==''){
 				$('#photo-info .pi-data').text(na);
 			}else{
-				var photo_date=new Date(api.getField('updated'));
+				var photo_date=new Date(api.getField('published'));
 				$('#photo-info .pi-data').text(photo_date.toLocaleDateString());
+			}
+			*/
+			if (api.getField('gphoto_timestamp')==''){
+				$('#photo-info .pi-data').text(na);
+			}else{
+				var timestamp=api.getField('gphoto_timestamp');
+				var photo_date=new Date();
+				photo_date.setTime(timestamp);
+				var pd_formatted=photo_date.getDate()+'/'+(photo_date.getUTCMonth()+1)+'/'+photo_date.getUTCFullYear()+' '+photo_date.getUTCHours()+':'+photo_date.getUTCMinutes();
+				$('#photo-info .pi-data').text(pd_formatted);
+				//$('#photo-info .pi-data').text(photo_date.toLocaleString());
 			}
 			$('#photo-info .pi-width_height').text(api.getField('width')+' x '+api.getField('height'));
 			
@@ -314,14 +325,14 @@
 			if (photo_exposure==''){
 				$('#photo-info .pi-exposure').text(na);
 			}else{
-				photo_exposure_d=1/photo_exposure;
+				photo_exposure_d=Math.round(1/photo_exposure);
 				$('#photo-info .pi-exposure').text('1/'+photo_exposure_d+" sec");
 			}
 			
 			$('#photo-info .pi-focallength').text(api.getField('exif_focallength')==''?na:api.getField('exif_focallength')+" mm");
 			$('#photo-info .pi-iso').text(api.getField('exif_iso')==''?na:api.getField('exif_iso'));
 			$('#photo-info .pi-make').text(api.getField('exif_make')==''?na:api.getField('exif_make'));
-			$('#photo-info .pi-flash').text(api.getField('exif_flash')==''?na:(api.getField('exif_flash')?'Yes':'No'));
+			$('#photo-info .pi-flash').text(api.getField('exif_flash')==''?na:(api.getField('exif_flash')==true?'Yes':'No'));
 			$('#photo-info .pi-fstop').text(api.getField('exif_fstop')==''?na:api.getField('exif_fstop'));
 
 			var link = api.getField('seed');
@@ -330,20 +341,44 @@
 			
 			$('#photo-info .pi-dowload').attr('href',dowload_url);
 			$('#photo-info .pi-image').attr('src',img_url);
-			/*
-			var lat=0;
-			var long=0;
 			
-			var googlemap_url='https://maps.google.com/?q='+lat+','+long+'&amp;ie=UTF8&amp;t=m&amp;z=14&amp;ll='+lat+','+long+'&amp;output=embed';
-			$('#photo-info .pi-googlemap').attr('src',googlemap_url);
-			*/
-			//https://maps.google.com/?q=-37.866963,144.980615&amp;ie=UTF8&amp;t=m&amp;z=14&amp;ll=-37.866963,144.980615&amp;output=embed
-			
+			var lat=api.getField('lat');
+			var long=api.getField('long');
+			if (lat=='' || long==''){
+				$('#photo-info .map-container').hide();
+			}else{
+				$('#photo-info .map-container').show();
+				
+			}
 		},
 		
 		showPhotoInfo: function ()
 		{
-				TINY.box.show({html:$('#photo-info').html(),animate:false,close:true,boxid:'photo_info_box'});
+				TINY.box.show({html:$('#photo-info').html(),animate:false,close:true,boxid:'photo_info_box',openjs:function(){
+					var lat=api.getField('lat');
+					var long=api.getField('long');
+					
+					if (lat=='' || long==''){
+						//non metto nulla
+						$('#photo_info_box .map-container').html('');
+					}else{
+						$('#photo_info_box .map-container').html('<span id="ozio_gmap" style="width:300px; height:400px;"></span>');
+						var latLng = new google.maps.LatLng(lat,long);
+	
+					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
+					        zoom: 14,
+					        center: latLng,
+							mapTypeId: google.maps.MapTypeId.MAP,
+							scrollwheel: false
+					     });	
+					     var marker = new google.maps.Marker({
+					    	    position: latLng,
+					    	});
+	
+	  			    	 marker.setMap(map);				     
+					}				
+				} 
+				});
 		},
 		/* Go To Slide
 		 ----------------------------*/
