@@ -94,7 +94,7 @@
 <div id="photo-info" style="display:none;">
 <div class="details-container">
 	<p></p>
-	<p>
+
 		<dl class="dl-horizontal">
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
@@ -112,13 +112,13 @@
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
-	</p>
+
 	<p>
 		<a href="" class="btn pi-dowload">
 			<i class="icon-download"></i>
 			Download
 		</a>
-		<img class="img-polaroid  pi-image" src="" />
+		<img class="img-polaroid  pi-image" src="" alt="preview" />
 	</p>
 	<!-- 
 	<p>Commenti</p> -->
