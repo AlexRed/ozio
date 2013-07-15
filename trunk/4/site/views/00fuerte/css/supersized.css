@@ -280,3 +280,9 @@ a#nextslide:focus
 #photo_info_box #ozio_gmap{
 	float:left;
 }
+
+
+#photo_info_box #ozio_gmap img { 
+	max-width: none; 
+	height: auto; 
+}
