@@ -456,7 +456,7 @@ window.antiloop = 1;
 			$(window).resize(function ()
 			{
 				base.resizeNow();
-			});
+			}).resize();
 
 		};
 
