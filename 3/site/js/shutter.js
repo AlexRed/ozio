@@ -260,11 +260,11 @@
 
 				if (api.options.big == 0)
 				{
-					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
 				else
 				{
-					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
 
 				
@@ -513,11 +513,11 @@
 
 				if (api.options.big == 0)
 				{
-					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's0/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
 				else
 				{
-					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
+					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
 
 				}
