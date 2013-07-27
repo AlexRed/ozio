@@ -35,7 +35,7 @@ class plgButtonOziogallery extends JPlugin
 		$js = "
 		function oziofunction(menu_id) {
 			var tag = '{oziogallery ' + menu_id + '}';
-			jInsertEditorText(tag, '$name');
+			jInsertEditorText(tag, '" . $name . "');
 			SqueezeBox.close();
 		}";
 
@@ -54,6 +54,7 @@ class plgButtonOziogallery extends JPlugin
 
 		$button = new JObject();
 		$button->set('modal', true);
+		$button->class = 'btn';
 		$button->set('link', 'index.php?option=com_oziogallery3&amp;view=galleries&amp;layout=modal&amp;tmpl=component&amp;function=oziofunction');
 		$button->set('text', JText::_('BTN_OZIOGALLERY_BUTTON_LABEL') . $postfix);
 		$button->set('name', 'oziogallery');
