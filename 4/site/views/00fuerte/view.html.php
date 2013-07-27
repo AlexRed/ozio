@@ -22,7 +22,7 @@
 defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
-class OzioGalleryView00Fuerte extends JViewLegacy
+class OzioGalleryView00fuerte extends JViewLegacy
 {
 	protected $Params;
 
