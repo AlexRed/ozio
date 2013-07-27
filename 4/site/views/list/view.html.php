@@ -21,7 +21,7 @@
 
 jimport('joomla.application.component.view');
 
-class OzioGalleryViewList extends JViewLegacy
+class OzioGalleryViewlist extends JViewLegacy
 {
 	protected $Params;
 

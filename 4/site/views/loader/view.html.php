@@ -22,7 +22,7 @@
 jimport('joomla.application.component.view');
 require_once(JPATH_COMPONENT_SITE . "/lib/loader.php");
 
-class OzioGalleryViewLoader extends JViewLegacy
+class OzioGalleryViewloader extends JViewLegacy
 {
 	function display($tpl = null)
 	{
