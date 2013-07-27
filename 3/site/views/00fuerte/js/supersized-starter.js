@@ -73,7 +73,8 @@ jQuery(document).ready(function ($)
 					'exif_fstop':'',
 					'gphoto_timestamp':'',
 					'lat':'',
-					'long':''
+					'long':'',
+					'google_url':''
 			};
 			
 			if (typeof result.feed.entry[i].updated !== "undefined" && typeof result.feed.entry[i].updated.$t !== "undefined"){
@@ -136,6 +137,14 @@ jQuery(document).ready(function ($)
 				photo_data['long']=latlong[1];
 			}
 			
+			if (typeof result.feed.entry[i].link !== "undefined"){
+				for (var j=0;j<result.feed.entry[i].link.length;j++){
+					if (result.feed.entry[i].link[j].rel=='alternate' && result.feed.entry[i].link[j].type=='text/html'){
+						photo_data['google_url']=result.feed.entry[i].link[j].href;
+						break;
+					}
+				}
+			}
 			
 			s.push(photo_data);
 		}

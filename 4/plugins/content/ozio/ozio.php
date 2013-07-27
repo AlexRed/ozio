@@ -67,13 +67,8 @@ class plgContentOzio extends JPlugin
 		}
 		else
 		{
-			// Generate and return the iframe code
-			return $item ?
-			'<div class="clr"></div>
-			<iframe src="' . JUri::root() . $item["link"] .'&Itemid=' . $galleriaozio . '&amp;tmpl=component" width="100%" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight">
-			</iframe>
-			<div class="clr"></div>' :
-			'';
+			$cparams = new JRegistry($item["params"]);
+			return $this->display_list($cparams, $galleriaozio);
 		}
 	}
 
@@ -104,7 +99,9 @@ class plgContentOzio extends JPlugin
 
 		// per la compatibilità con Internet Explorer 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
-
+		
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false");
+		
 		$this->gallerywidth = $cparams->get("gallerywidth", array("text" => "100", "select" => "%"));
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
 		$this->play_button_style = $cparams->get("play_button", "0") ? '' : 'style="display:none;"';
@@ -116,5 +113,33 @@ class plgContentOzio extends JPlugin
 		ob_end_clean();
 		return $result;
 	}
+	
+	function display_list(&$cparams, $galleriaozio)
+	{
+		$this->Params = $cparams;
+		$document = JFactory::getDocument();
+		
+		$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
+		$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+
+		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
+
+		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
+		$menu = JFactory::getApplication()->getMenu();
+		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
+		$document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+		$document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+
+		// per la compatibilità con Internet Explorer
+        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+
+		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+
+		ob_start();
+		require JPATH_SITE . "/components/com_oziogallery3/views/list/tmpl/default.php";
+		$result = JPATH_COMPONENT("com_oziogallery3/views/list/tmpl/default.php") . ob_get_contents();
+		ob_end_clean();
+		return $result;
+	}	
 
 }
