@@ -343,6 +343,9 @@
 			var img_url=link + 's200/';
 			
 			$('#photo-info .pi-dowload').attr('href',dowload_url);
+
+			$('#photo-info .pi-google').attr('href',api.getField('google_url')==''?'#':api.getField('google_url'));
+			
 			$('#photo-info .pi-image').attr('src',img_url);
 			
 			var lat=api.getField('lat');

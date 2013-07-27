@@ -321,3 +321,9 @@ dd {
 	max-width: none; 
 	height: auto; 
 }
+
+#photo_info_box .photo-buttons{
+	width:100px;
+	display:inline-block;
+	vertical-align:top;
+}

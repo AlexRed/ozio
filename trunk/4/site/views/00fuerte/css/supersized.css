@@ -286,3 +286,11 @@ a#nextslide:focus
 	max-width: none; 
 	height: auto; 
 }
+
+
+#photo_info_box .photo-buttons{
+	width:120px;
+	display:inline-block;
+	vertical-align:top;
+}
+
