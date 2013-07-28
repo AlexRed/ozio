@@ -116,9 +116,9 @@
 	<p>
 		<span class="photo-buttons">
 		<a href="#" class="btn pi-google" target="_blank">
-			<!-- <i class="icon-picassa"></i> -->
-			G+
-		</a><br/>
+			<i class="icon-out-2"></i>
+			Google+
+		</a><br/><br/>
 		<a href="" class="btn pi-dowload">
 			<i class="icon-download"></i>
 			Download
