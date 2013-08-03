@@ -109,11 +109,14 @@
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ISO_LBL');?></dt><dd class="pi-iso"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERAMAKE_LBL');?></dt><dd class="pi-make"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FLASH_LBL');?></dt><dd class="pi-flash"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_VIEWS_LBL');?></dt><dd class="pi-views"></dd>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_COMMENTS_LBL');?></dt><dd class="pi-comments"></dd>
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
 
 	<p>
+	<?php if ($this->Params->get("albumvisibility", 'public')=='public') { ?>
 		<span class="photo-buttons">
 		<a href="#" class="btn pi-google" target="_blank">
 			<i class="icon-picassa"></i>
@@ -124,6 +127,7 @@
 			⬇ Download
 		</a>
 		</span>
+	<?php }?>
 		<img class="img-polaroid  pi-image" src="" alt="preview" />
 	</p>
 	<!-- 
