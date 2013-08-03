@@ -6,7 +6,7 @@
 jQuery(document).ready(function ($)
 {
 	var ss = jQuery("#supersized");
-
+	var userid='<?php echo $this->Params->get("userid", ""); ?>';
 	// Deep-link
 	/*
 	 var start_slide = $.param.fragment() ? $.param.fragment() : 1;
@@ -74,8 +74,19 @@ jQuery(document).ready(function ($)
 					'gphoto_timestamp':'',
 					'lat':'',
 					'long':'',
-					'google_url':''
+					'google_url':'',
+					
+					'photo_id':'',
+					'album_id':'',
+					'userid':userid,
+					'json_details':''
 			};
+			if (typeof result.feed.entry[i].gphoto$id !== "undefined" && typeof result.feed.entry[i].gphoto$id.$t !== "undefined"){
+				photo_data['photo_id']=result.feed.entry[i].gphoto$id.$t;
+			}
+			if (typeof result.feed.entry[i].gphoto$albumid !== "undefined" && typeof result.feed.entry[i].gphoto$albumid.$t !== "undefined"){
+				photo_data['album_id']=result.feed.entry[i].gphoto$albumid.$t;
+			}
 			
 			if (typeof result.feed.entry[i].updated !== "undefined" && typeof result.feed.entry[i].updated.$t !== "undefined"){
 				photo_data['updated']=result.feed.entry[i].updated.$t;
@@ -141,6 +152,12 @@ jQuery(document).ready(function ($)
 				for (var j=0;j<result.feed.entry[i].link.length;j++){
 					if (result.feed.entry[i].link[j].rel=='alternate' && result.feed.entry[i].link[j].type=='text/html'){
 						photo_data['google_url']=result.feed.entry[i].link[j].href;
+						break;
+					}
+				}
+				for (var j=0;j<result.feed.entry[i].link.length;j++){
+					if (result.feed.entry[i].link[j].rel=='self' && result.feed.entry[i].link[j].type=='application/atom+xml'){
+						photo_data['json_details']=result.feed.entry[i].link[j].href;
 						break;
 					}
 				}

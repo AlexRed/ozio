@@ -341,10 +341,16 @@
 			var link = api.getField('seed');
 			var dowload_url=link + 's0-d/';
 			var img_url=link + 's200/';
-			
-			$('#photo-info .pi-dowload').attr('href',dowload_url);
+			if ($('#photo-info .pi-dowload').length>0){
+				$('#photo-info .pi-dowload').attr('href',dowload_url);
+			}
 
-			$('#photo-info .pi-google').attr('href',api.getField('google_url')==''?'#':api.getField('google_url'));
+			//$('#photo-info .pi-google').attr('href',api.getField('google_url')==''?'#':api.getField('google_url'));
+			
+			var google_url="https://plus.google.com/photos/"+api.getField('userid')+"/albums/"+api.getField('album_id')+"/"+api.getField('photo_id');
+			if ($('#photo-info .pi-google').length>0){
+				$('#photo-info .pi-google').attr('href',google_url);
+			}
 			
 			$('#photo-info .pi-image').attr('src',img_url);
 			
@@ -382,10 +388,55 @@
 					    	});
 	
 	  			    	 marker.setMap(map);				     
-					}				
+					}	
+					
+					var na='- na -';
+					var json_details_url=api.getField('json_details');
+					if (json_details_url!=''){
+						$('#photo_info_box .pi-views').text('...');
+						$('#photo_info_box .pi-comments').text('...');
+						$.ajax({
+							'url':json_details_url,
+							'dataType': 'json',
+							'success': theme.OnLoadViewsAndCommentsSuccess,
+							'error': theme.OnLoadViewsAndCommentsError
+						});
+					}else{
+						$('#photo_info_box .pi-views').text(na);
+						$('#photo_info_box .pi-comments').text(na);
+					}
+					
+					
 				} 
 				});
 		},
+		
+		
+		OnLoadViewsAndCommentsSuccess: function (result, textStatus, jqXHR)
+		{
+			var na='- na -';
+			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$commentCount !== "undefined" && typeof result.entry.gphoto$commentCount.$t !== "undefined"){
+				$('#photo_info_box .pi-comments').text(result.entry.gphoto$commentCount.$t);
+			}else{
+				$('#photo_info_box .pi-comments').text(na);
+			}
+
+			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
+				$('#photo_info_box .pi-views').text(result.entry.gphoto$viewCount.$t);
+			}else{
+				$('#photo_info_box .pi-views').text(na);
+			}
+		},
+		OnLoadViewsAndCommentsError: function (jqXHR, textStatus, error)
+		{
+			var na='- na -';
+			$('#photo_info_box .pi-views').text(na);
+			$('#photo_info_box .pi-comments').text(na);
+			console.log( jqXHR.message, textStatus, error);
+		},
+		
+		
+		
 		/* Go To Slide
 		 ----------------------------*/
 		goTo: function ()
