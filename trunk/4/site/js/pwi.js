@@ -83,7 +83,7 @@ jQuery(document).ready(function ($)
 				thumbCrop:true,
 
 				/*<?php if ($item->params->get("gallery_date", "")) { ?>*/
-				manual_date: '<?php echo $item->params->get("gallery_date", ""); ?>',
+				manual_date: <?php echo json_encode($item->params->get("gallery_date", "")); ?>,
 				/*<?php } ?>*/
 
 				labels:{
