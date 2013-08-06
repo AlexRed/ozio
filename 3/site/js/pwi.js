@@ -57,7 +57,7 @@ jQuery(document).ready(function ($)
 			{
 				// Destinazione del link
 				album_local_url:'<?php echo JRoute::_($link); ?>',
-				album_local_title:'<?php echo $item->title; ?>',
+				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_id:'<?php echo $item->id; ?>',
 
 				mode:'album_cover',
