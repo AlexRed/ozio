@@ -57,7 +57,7 @@ class plgButtonOziogallery extends JPlugin
 		$button->class = 'btn';
 		$button->set('link', 'index.php?option=com_oziogallery3&amp;view=galleries&amp;layout=modal&amp;tmpl=component&amp;function=oziofunction');
 		$button->set('text', JText::_('BTN_OZIOGALLERY_BUTTON_LABEL') . $postfix);
-		$button->set('name', 'oziogallery');
+		$button->set('name', 'camera');
 		$button->set('options', "{handler: 'iframe', size: {x: 770, y: 400}}");
 
 		return $button;
