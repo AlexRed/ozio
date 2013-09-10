@@ -70,7 +70,7 @@
 				window.location.href = '#' + url;
 				hash_slide=url;
 				vars.thumb_page = -(parseInt(hash_slide) - 1) * 150;
-				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo'/*, complete: base.loadpage*/});
+				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: base.loadpage});
 			}
 			//vars.thumb_page = -(parseInt(url) - 1) * 150;
 			//$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
@@ -133,16 +133,16 @@
 				// Slide Thumbnail Links
 				if (base.options.thumbnail_show && base.options.thumb_links && ($(window).width() >= 768))
 				{
-					if (thisSlide < start_slide - 1 || thisSlide >= start_slide - 1 + base.options.slides.length)
-					{
+					//if (thisSlide < start_slide - 1 || thisSlide >= start_slide - 1 + base.options.slides.length)
+					//{
 						// Sta lavorando su elementi in overflow del vettore slides[].
 						// Se ne conosce l'esistenza, ma non sono ancora stati caricati, quindi la relativa slides[thisSlide] non esiste
 						thumbImage = '../components/com_oziogallery3/views/00fuerte/img/progress.gif';
-					}
-					else
-					{
-						thumbImage = base.options.slides[thisSlide + 1 - start_slide].seed + 's150-c/';
-					}
+					//}
+					//else
+					//{
+					//	thumbImage = base.options.slides[thisSlide + 1 - start_slide].seed + 's150-c/';
+					//}
 
 					thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + current_thumb + '"><img src="' + thumbImage + '"/></li>';
 				}
@@ -180,7 +180,7 @@
 				
 			}
 			base._start(); // Get things started
-
+			base.loadpage();
 		};
 
 
@@ -1378,15 +1378,31 @@ window.antiloop = 1;
 
 		base.loadpage = function ()
 		{
+			if (base.options.thumbnail_show && base.options.thumb_links && ($(window).width() >= 768))
+			{
+			}else{
+				return;
+			}
 			var ss = jQuery("#supersized");
 
 			//var thumblist = jQuery(this); // ul#thumb-list
 			var thumblist = jQuery("ul#thumb-list"); // ul#thumb-list
 			// Start va incrementato di 1 perche' le thumb sono indicizzate a partire da 0 mentre la paginazione di google parte dalla pagina 1
 			// Sfogliando verso destra si potrebbe incrementare ulteriormente di 1 perche' la prima miniatura sulla sinistra e' gia' stata caricata, ma questo non e' piu' valido se si sfoglia verso sinistra.
-			var start = Math.ceil(Math.abs(thumblist.position().left / 150) + 1);
-			var length = Math.ceil(ss.width() / 150) * 2;
+			var start = Math.ceil(Math.abs(thumblist.position().left / 150) + 1)-1;
+			var length = Math.ceil(ss.width() / 150) * 2+1;
 
+			for (var i = 0; i < length; ++i)
+			{
+
+				var thumbindex = parseInt(start - 1 + i);
+				var currentthumb = jQuery(".thumb" + thumbindex + " > img");
+				if (currentthumb.length>0){
+					currentthumb[0].src = base.options.slides[thumbindex].seed + "s150-c/";
+				}
+			}
+			return;
+			
 			// Set our parameters and trig the loading
 			ss.pwi(
 				{
