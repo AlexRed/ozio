@@ -5,6 +5,7 @@
  */
 jQuery(document).ready(function ($)
 {
+	var slides = [];
 	var ss = jQuery("#supersized");
 	var userid='<?php echo $this->Params->get("userid", ""); ?>';
 
@@ -15,22 +16,25 @@ jQuery(document).ready(function ($)
 	var start_slide = 1;
 	var length = Math.ceil(ss.width() / 150) * 2;
 	// Set our parameters and trig the loading
-	ss.pwi(
-		{
-			mode: 'album_data',
-			username: '<?php echo $this->Params->get("userid", ""); ?>',
-			album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
-			authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
-			StartIndex: start_slide,
-			//MaxResults: length,
-			beforeSend: OnBeforeSend,
-			success: OnLoadSuccess,
-			error: OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
-			complete: OnLoadComplete,
-
-			// Tell the library to ignore parameters through GET ?par=...
-			useQueryParameters: false
-		});
+	load_google_json(start_slide);
+	function load_google_json(start_slide){
+		ss.pwi(
+			{
+				mode: 'album_data',
+				username: '<?php echo $this->Params->get("userid", ""); ?>',
+				album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+				authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
+				StartIndex: start_slide,
+				//MaxResults: length,
+				beforeSend: OnBeforeSend,
+				success: OnLoadSuccess,
+				error: OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+				complete: OnLoadComplete,
+	
+				// Tell the library to ignore parameters through GET ?par=...
+				useQueryParameters: false
+			});
+	}
 
 	function OnBeforeSend(jqXHR, settings)
 	{
@@ -39,7 +43,6 @@ jQuery(document).ready(function ($)
 
 	function OnLoadSuccess(result, textStatus, jqXHR)
 	{
-		var s = [];
 		for (var i = 0; i < result.feed.entry.length; ++i)
 		{
 			//if (i==0){alert(JSON.stringify(result.feed.entry[i]));}
@@ -164,7 +167,7 @@ jQuery(document).ready(function ($)
 			}
 			
 			
-			s.push(photo_data);
+			slides.push(photo_data);
 		}
 		/*
 		// Caricamento pagina precedente
@@ -214,55 +217,59 @@ jQuery(document).ready(function ($)
 			useQueryParameters: false
 		});
 */
-
-		jQuery(function ($)
-		{
-			$.supersized({
-				// Functionality
-				slideshow: 1, // Slideshow on/off
-				autoplay: parseInt('<?php echo $this->Params->get("autoplay", 0); ?>'), // Slideshow starts playing automatically
-				start_slide: 1,			// Start slide (0 is random)
-				stop_loop: parseInt('<?php echo $this->Params->get("stop_loop", 0); ?>'), // Pauses slideshow on last slide
-				random: 0,			// Randomize slide order (Ignores start slide)
-				slide_interval: parseInt('<?php echo $this->Params->get("slide_interval", 3000); ?>'), // Length between transitions
-				transition: '<?php echo $this->Params->get("transition", "fade"); ?>', // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-				transition_speed: parseInt('<?php echo $this->Params->get("transition_speed", 1000); ?>'), // Speed of transition
-				new_window: 1,			// Image links open in new window/tab
-				pause_hover: parseInt('<?php echo $this->Params->get("pause_hover", 0); ?>'), // Pause slideshow on hover
-				keyboard_nav: 1,			// Keyboard navigation on/off
-				performance: 1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-				image_protect: parseInt('<?php echo $this->Params->get("image_protect", 0); ?>'),			// Disables image dragging and right click with Javascript
-
-				// Size & Position
-				min_width: 0,			// Min width allowed (in pixels)
-				min_height: 0,			// Min height allowed (in pixels)
-				vertical_center: 0,			// Vertically center background
-				horizontal_center: 0,			// Horizontally center background
-				fit_always: 1,			// Image will never exceed browser width or height (Ignores min. dimensions)
-				fit_portrait: 0,			// Portrait images will not exceed browser height
-				fit_landscape: 0,			// Landscape images will not exceed browser width
-
-				// Components
-				slide_links: 'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
-				thumb_links: 1,			// Individual thumb links for each slide
-				thumbnail_navigation: 0,			// Thumbnail navigation
-				thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>'),
-
-				slides: s,
-				slide_total: result.feed.openSearch$totalResults.$t,
-
-				// Theme Options
-				progress_bar: parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
-				mouse_scrub: 0,
-
-				username: '<?php echo $this->Params->get("userid", ""); ?>',
-				album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
-				authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
-				square: '<?php echo $this->Params->get("square", ""); ?>',
-				big: '<?php echo $this->Params->get("big", ""); ?>'
-
+		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
+	
+			jQuery(function ($)
+			{
+				$.supersized({
+					// Functionality
+					slideshow: 1, // Slideshow on/off
+					autoplay: parseInt('<?php echo $this->Params->get("autoplay", 0); ?>'), // Slideshow starts playing automatically
+					start_slide: 1,			// Start slide (0 is random)
+					stop_loop: parseInt('<?php echo $this->Params->get("stop_loop", 0); ?>'), // Pauses slideshow on last slide
+					random: 0,			// Randomize slide order (Ignores start slide)
+					slide_interval: parseInt('<?php echo $this->Params->get("slide_interval", 3000); ?>'), // Length between transitions
+					transition: '<?php echo $this->Params->get("transition", "fade"); ?>', // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+					transition_speed: parseInt('<?php echo $this->Params->get("transition_speed", 1000); ?>'), // Speed of transition
+					new_window: 1,			// Image links open in new window/tab
+					pause_hover: parseInt('<?php echo $this->Params->get("pause_hover", 0); ?>'), // Pause slideshow on hover
+					keyboard_nav: 1,			// Keyboard navigation on/off
+					performance: 1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
+					image_protect: parseInt('<?php echo $this->Params->get("image_protect", 0); ?>'),			// Disables image dragging and right click with Javascript
+	
+					// Size & Position
+					min_width: 0,			// Min width allowed (in pixels)
+					min_height: 0,			// Min height allowed (in pixels)
+					vertical_center: 0,			// Vertically center background
+					horizontal_center: 0,			// Horizontally center background
+					fit_always: 1,			// Image will never exceed browser width or height (Ignores min. dimensions)
+					fit_portrait: 0,			// Portrait images will not exceed browser height
+					fit_landscape: 0,			// Landscape images will not exceed browser width
+	
+					// Components
+					slide_links: 'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
+					thumb_links: 1,			// Individual thumb links for each slide
+					thumbnail_navigation: 0,			// Thumbnail navigation
+					thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>'),
+	
+					slides: slides,
+					slide_total: result.feed.openSearch$totalResults.$t,
+	
+					// Theme Options
+					progress_bar: parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
+					mouse_scrub: 0,
+	
+					username: '<?php echo $this->Params->get("userid", ""); ?>',
+					album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+					authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
+					square: '<?php echo $this->Params->get("square", ""); ?>',
+					big: '<?php echo $this->Params->get("big", ""); ?>',
+					base_jurl: '<?php echo JURI::root(true); ?>'
+				});
 			});
-		});
+		}else{
+			load_google_json(result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+		}
 
 	}
 

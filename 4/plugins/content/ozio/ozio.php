@@ -37,6 +37,11 @@ class plgContentOzio extends JPlugin
 		// If at least one is found, load related javascript only once
 		empty($matches) or JFactory::getDocument()->addScript(JUri::root(true) . '/components/com_oziogallery3/assets/js/autoHeight.js');
 
+		if (!empty($matches)){
+			$lang = JFactory::getLanguage();
+			$lang->load('com_oziogallery3',JPATH_BASE.'/components/com_oziogallery3',null,true);
+		}
+				
 		// translate {oziogallery xxx} calls into iframe code
 		foreach ($matches as $match)
 		{

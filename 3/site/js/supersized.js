@@ -125,7 +125,7 @@
 					//{
 						// Sta lavorando su elementi in overflow del vettore slides[].
 						// Se ne conosce l'esistenza, ma non sono ancora stati caricati, quindi la relativa slides[thisSlide] non esiste
-						thumbImage = '../components/com_oziogallery3/views/00fuerte/img/progress.gif';
+						thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progress.gif';
 					//}
 					//else
 					//{
