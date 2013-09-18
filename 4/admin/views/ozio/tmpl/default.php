@@ -67,6 +67,55 @@
 				</tr>
 			</table>
 			<fieldset class="adminform">
+				<legend><?php echo JText::_( 'COM_OZIOGALLERY3_STATISTICHE' ); ?></legend>
+				<?php 
+				
+				$k = 0;
+				$n = count($this->pubblicate);
+				$g_parameters=array();
+				
+				for ($i=0, $n; $i < $n; $i++) {
+					$row = $this->pubblicate[$i];
+					if ( $row->link == 'index.php?option=com_oziogallery3&view=00fuerte'){
+						$row->params=json_decode($row->params,true);
+						$g_parameters[]=$row;
+					}
+				}
+				echo '<script type="text/javascript">var g_parameters='.json_encode($g_parameters).';</script>';
+				
+				?>
+				<div id="remainingphotos"></div>
+				<table id="first10albums" class="table">
+
+					<p><?php echo JText::_('COM_OZIOGALLERY3_FIRST_10_ALBUMS');	?></p>
+					<thead>
+						<tr>
+							<th width="80%" class="title" align="center">Title</th>
+							<th width="20%" class="title" align="center">Views</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<table id="first10photos" class="table">
+
+					<p><?php echo JText::_('COM_OZIOGALLERY3_FIRST_10_PHOTOS');	?></p>
+					<thead>
+						<tr>
+							<th class="title" align="center">Thumb</th>
+							<th class="title" align="center">Title</th>
+							<th width="40%" class="title" align="center">Summary</th>
+							<th width="15%" class="title" align="center">Album</th>
+							<th width="5%" class="title" align="center">Views</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+								
+			</fieldset>			
+			
+			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'COM_OZIOGALLERY3_SYSTEM_INFORMATION' ); ?></legend>
 				<table class="table">
 
