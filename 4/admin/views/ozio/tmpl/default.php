@@ -84,7 +84,7 @@
 				echo '<script type="text/javascript">var g_parameters='.json_encode($g_parameters).';</script>';
 				
 				?>
-				<div id="remainingphotos"></div>
+				<div id="remainingphotos"></div><br />
 				<table id="first10albums" class="table">
 
 					<p><?php echo JText::_('COM_OZIOGALLERY3_FIRST_10_ALBUMS');	?></p>
