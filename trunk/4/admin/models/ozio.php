@@ -33,7 +33,7 @@ class OzioModelOzio extends JModelLegacy
 
 	function getPubblicate()
 	{
-		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid'
+		$query = 'SELECT i.id, i.component_id, i.title, i.link, i.menutype, men.title AS nomemenu, men.id AS menuid, i.params'
 		. ' FROM #__menu AS i'
 		. ' LEFT JOIN #__menu_types AS men ON men.menutype = i.menutype'
 		. " WHERE i.link LIKE '%com_oziogallery3&view=%'"

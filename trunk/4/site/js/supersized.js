@@ -67,7 +67,8 @@
 			if (url)
 			{
 				base.goTo(url);
-				window.location.href = '#' + url;
+				//window.location.href = '#' + url;
+				window.location.hash =  url;
 				hash_slide=url;
 				vars.thumb_page = -(parseInt(hash_slide) - 1) * 150;
 				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: base.loadpage});
@@ -978,7 +979,8 @@ window.antiloop = 1;
 
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deep-link
-			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			//window.location.href = '#' + parseInt(vars.current_slide + 1);
+			window.location.hash = parseInt(vars.current_slide + 1);
 			// DP *F*
 
 			return false;
@@ -1091,7 +1093,8 @@ window.antiloop = 1;
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deeplink
 			//window.location.href = '#' + loadSlide;
-			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			//window.location.href = '#' + parseInt(vars.current_slide + 1);
+			window.location.hash = parseInt(vars.current_slide + 1);
 			// DP *F*
 
 			return false;
@@ -1267,7 +1270,8 @@ window.antiloop = 1;
 			}
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deep-link
-			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			//window.location.href = '#' + parseInt(vars.current_slide + 1);
+			window.location.hash = parseInt(vars.current_slide + 1);
 			// DP *F*
 			return false;
 		};
@@ -1369,7 +1373,8 @@ window.antiloop = 1;
 			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
 			// Cambio url per deeplink
 			//window.location.href = '#' + loadSlide;
-			window.location.href = '#' + parseInt(vars.current_slide + 1);
+			//window.location.href = '#' + parseInt(vars.current_slide + 1);
+			window.location.hash = parseInt(vars.current_slide + 1);
 			// DP *F*
 			return false;
 		};
@@ -1518,7 +1523,8 @@ window.antiloop = 1;
 
 			// DP *I* Si applica a ogni funzione che utilizza api.goTo()
 			// Cambio url per deep-link
-			window.location.href = '#' + targetSlide;
+			//window.location.href = '#' + targetSlide;
+			window.location.hash = targetSlide;
 			// DP *F*
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating

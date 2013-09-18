@@ -45,6 +45,13 @@ class OzioViewOzio extends JViewLegacy
 		$this->assignRef('cestinate'			, $cestinate);
 
 		$this->addToolbar();
+		$document = JFactory::getDocument();
+		$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
+		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
+		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziostatistics.js");
+		
 		parent::display($tpl);
 	}
 
