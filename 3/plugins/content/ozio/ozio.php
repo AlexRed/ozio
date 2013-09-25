@@ -122,8 +122,8 @@ class plgContentOzio extends JPlugin
 	{
 		$this->Params = $cparams;
 		$document = JFactory::getDocument();
-		
-		$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+		if ($cparams->get("jquery", 1))
+			$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
 		// the ordering of MooTools and jQuery does not matter if you make sure jQuery.noConflict() is called immediately after jQuery is loaded (http://www.designvsdevelop.com/jquery-in-joomla-i-was-wrong/)
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
 		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
