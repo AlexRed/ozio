@@ -591,7 +591,15 @@
 			var h = browserwidth * ratio;
 			var container = document.getElementById('fuertecontainer');
 			//$(container).effect("size", { to: {width: container.offsetWidth, height: h} }, 1000);
-			container.style.height = h + 'px';
+			if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+				var siblings_height=0;
+				$(container).nextAll(':visible').each(function (){
+					siblings_height+=$(this).outerHeight(true);
+				});
+				container.style.height = ($(window).height()-siblings_height)+'px';
+			}else{
+				container.style.height = h + 'px';
+			}
 			// DP *F*
 		},
 

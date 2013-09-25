@@ -84,8 +84,9 @@ class plgContentOzio extends JPlugin
 		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
 
-		$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
-		$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
+		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		JHtml::_('jquery.framework');
 
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
@@ -124,8 +125,9 @@ class plgContentOzio extends JPlugin
 		$this->Params = $cparams;
 		$document = JFactory::getDocument();
 		
-		$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
-		$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
+		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		JHtml::_('jquery.framework');
 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
