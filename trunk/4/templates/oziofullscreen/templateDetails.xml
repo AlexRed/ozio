@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="template"  client="site" method="upgrade">
+		<name>oziofullscreen</name>
+		<creationDate>2013</creationDate>
+		<author>Garda Informatica</author>
+		<authorEmail>info@gardainformatica.it</authorEmail>
+		<authorUrl>http://www.gardainformatica.it</authorUrl>
+		<copyright>(C) 2013 - Garda Informatica</copyright>
+		<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
+		<version>1.0.0</version>
+		<description>Ozio Fullscreen Template for Joomla! 3</description>
+        <files>
+                <filename>index.php</filename>
+                <filename>templateDetails.xml</filename>
+                <folder>images</folder>
+                <folder>css</folder>
+        </files>
+		<!--
+        <positions>
+                <position>breadcrumb</position>
+                <position>left</position>
+                <position>right</position>
+                <position>top</position>
+                <position>user1</position>
+                <position>user2</position>
+                <position>user3</position>
+                <position>user4</position>
+                <position>footer</position>
+        </positions>-->
+</extension>
