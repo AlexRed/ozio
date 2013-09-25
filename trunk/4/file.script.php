@@ -42,6 +42,14 @@ class Com_OzioGallery3InstallerScript
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
 			$installer->install($plg);
 		}
+		foreach($manifest->templates->template as $template)
+		{
+			$installer 	= new JInstaller();
+
+			$attributes = $template->attributes();
+			$tmplt = $source . "/" . $attributes['folder'] . "/" . $attributes['template'];
+			$installer->install($tmplt);
+		}
 		$db = JFactory::getDbo();
 		$tableExtensions = $db->quoteName("#__extensions");
 		$columnEnabled   = $db->quoteName("enabled");
@@ -78,7 +86,15 @@ class Com_OzioGallery3InstallerScript
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
 			$installer->install($plg);
 		}
+		foreach($manifest->templates->template as $template)
+		{
+			$installer 	= new JInstaller();
 
+			$attributes = $template->attributes();
+			$tmplt = $source . "/" . $attributes['folder'] . "/" . $attributes['template'];
+			$installer->install($tmplt);
+		}
+		
 		$db = JFactory::getDBO();
 
 		// Fixes a Joomla bug, wich adds a second repository rather than overwrite the first one if they are different

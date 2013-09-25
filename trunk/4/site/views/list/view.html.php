@@ -40,8 +40,9 @@ class OzioGalleryViewlist extends JViewLegacy
         if ($robots = $this->Params->get('robots'))
             $this->document->setMetadata('robots', $robots);
 
-		$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
-		$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
+		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
+		JHtml::_('jquery.framework');
 
 		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
