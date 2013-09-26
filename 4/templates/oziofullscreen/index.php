@@ -11,7 +11,7 @@ var ozio_fullscreen=1;
 </head>
 <body>
 <a class="close_fullscreen" href="<?php echo $this->baseurl ?>">
-<img src="<?php echo $this->baseurl; ?>/templates/oziofullscreen/images/close.gif">
+<img src="<?php echo $this->baseurl; ?>/templates/oziofullscreen/images/chiudi.png">
 </a>
 <jdoc:include type="component" />
 </body>
