@@ -52,6 +52,10 @@
 	<!-- Bottom Bar -->
 	<div id="oziobottombar" class="load-item oziobar">
 		<div id="controls">
+			<!--Thumb Tray button-->
+			<?php if (!$this->Params->get("hide_thumbnails", 0)) { ?>
+			 <a id="tray-button"><img id="tray-arrow" src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/button-tray-up.png"/></a> 
+			 <?php } ?>
 
 			<a id="play-button" class="oziobutton" <?php echo $this->play_button_style; ?>><img id="pauseplay" src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/pause.png" alt="stop" /></a>
 			<?php if ($this->Params->get("fullsize_button", true)) { ?>
@@ -70,8 +74,6 @@
 				<div id="slidecaption" class="oziotitle"></div>
 				<?php } ?>
 
-			<!--Thumb Tray button-->
-			<!-- <a id="tray-button"><img id="tray-arrow" src="img/button-tray-up.png"/></a> -->
 
 			<!--Navigation-->
 			<ul id="slide-list"></ul>

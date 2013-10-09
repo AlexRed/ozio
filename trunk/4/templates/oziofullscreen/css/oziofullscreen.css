@@ -4,3 +4,17 @@ a.close_fullscreen{
 	top:15px;
 	z-index:800;
 }
+
+#thumb-tray{
+	position:absolute;
+}
+
+ #fuertecontainer{
+	overflow:hidden;
+}
+
+body{
+	padding:0;
+	margin:0;
+	border:0;
+}
