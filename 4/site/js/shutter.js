@@ -35,44 +35,45 @@
 				if (api.options.progress_bar) $(vars.progress_bar).stop().animate({width: '0%'}, 0);	//  Place progress bar
 // DP *F*
 			}
-
-
 			/* Thumbnail Tray
 			 ----------------------------*/
-			// Hide tray off screen
-			// DP *I*
-			// Si applica a inizializzazione documento
-			// Rimosso codice per nascondere le miniature
-			// Tasto apri/chiudi miniature cambiato stato iniziale in "chiudi"
-			// Invertito il codice in toggle per fare collassare (al posto di espandere)la barra al primo click
-			// $(vars.thumb_tray).animate({bottom : -$(vars.thumb_tray).height()}, 0 );
-			$(vars.thumb_tray).stop().animate({bottom: 0, avoidTransforms: true}, 300);
-			if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
-			/*
-			 // Thumbnail Tray Toggle
-			 $(vars.tray_button).toggle(function(){
-			 $(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
-			 if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
-			 return false;
-			 }, function() {
-			 $(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
-			 if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
-			 return false;
-			 });
-			 */
-			// Thumbnail Tray Toggle
-			$(vars.tray_button).toggle(function ()
-			{
-				$(vars.thumb_tray).stop().animate({bottom: -$(vars.thumb_tray).height(), avoidTransforms: true}, 300);
+
+			if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+				$(vars.thumb_tray).appendTo('#fuertecontainer');
+				
+				$(vars.thumb_tray).animate({bottom : -$(vars.thumb_tray).height()}, 0 );
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
-				return false;
-			}, function ()
-			{
+				
+				 $(vars.tray_button).toggle(function(){
+				 $(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
+				 if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
+				 return false;
+				 }, function() {
+				 $(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
+				 if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
+				 return false;
+				 });
+				
+			}else{
+				$(vars.tray_button).remove();
 				$(vars.thumb_tray).stop().animate({bottom: 0, avoidTransforms: true}, 300);
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
-				return false;
-			});
-			// DP *F*
+				
+				// Thumbnail Tray Toggle
+				$(vars.tray_button).toggle(function ()
+				{
+					$(vars.thumb_tray).stop().animate({bottom: -$(vars.thumb_tray).height(), avoidTransforms: true}, 300);
+					if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
+					return false;
+				}, function ()
+				{
+					$(vars.thumb_tray).stop().animate({bottom: 0, avoidTransforms: true}, 300);
+					if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
+					return false;
+				});
+			}
+
+
 
 			// Make thumb tray proper size
 			$(vars.thumb_list).width($('> li', vars.thumb_list).length * $('> li', vars.thumb_list).outerWidth(true));	//Adjust to true width of thumb markers
@@ -596,6 +597,7 @@
 				$(container).nextAll(':visible').each(function (){
 					siblings_height+=$(this).outerHeight(true);
 				});
+				
 				container.style.height = ($(window).height()-siblings_height)+'px';
 			}else{
 				container.style.height = h + 'px';

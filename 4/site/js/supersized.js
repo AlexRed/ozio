@@ -723,6 +723,13 @@ window.antiloop = 1;
 					var h = browserwidth * ratio;
 					thisSlide.width(browserwidth);
 					thisSlide.height(h);
+					if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+						if (h<browserheight){
+							thisSlide.width(browserheight/ratio);
+							thisSlide.height(browserheight);
+						}
+					}
+					
 
 					// classList is html5 so we can't use it.
 					/*
@@ -744,6 +751,7 @@ window.antiloop = 1;
 								siblings_height+=$(this).outerHeight(true);
 							});
 							container.style.height = ($(window).height()-siblings_height)+'px';
+														
 						}else{
 							container.style.height = h + 'px';
 						}
