@@ -221,7 +221,8 @@
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					//var actual_width = "s0/";
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
 				}
 
 			var address;
@@ -817,7 +818,8 @@ window.antiloop = 1;
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					//var actual_width = "s0/";
 				}
 
 				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
@@ -889,7 +891,8 @@ window.antiloop = 1;
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
+					//var actual_width = "s0/";
 				}
 
 				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
@@ -1184,7 +1187,8 @@ window.antiloop = 1;
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					//var actual_width = "s0/";
 				}
 
 				if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
@@ -1664,7 +1668,8 @@ if (loadSlide > base.options.slides.length) return;
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					//var actual_width = "s0/";
 				}
 
 					if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
@@ -1706,7 +1711,8 @@ if (loadSlide > base.options.slides.length) return;
 					var actual_width = "s" + document.getElementById('fuertecontainer').offsetWidth + "-c/";
 				}
 				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-					var actual_width = "s0/";
+					var actual_width = "w" + document.getElementById('fuertecontainer').offsetWidth + "/";
+					//var actual_width = "s0/";
 				}
 
 					if (base.options.slides[loadSlide].seed.indexOf('empty.png') != -1) actual_width = '';
