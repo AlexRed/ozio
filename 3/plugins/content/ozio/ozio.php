@@ -71,9 +71,20 @@ class plgContentOzio extends JPlugin
 			return $this->display($cparams, $galleriaozio);
 		}
 		else
+		if (strpos($item["link"], "list"))
 		{
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_list($cparams, $galleriaozio);
+		}
+		else
+		{
+			// Generate and return the iframe code
+			return $item ?
+			'<div class="clr"></div>
+			<iframe src="' . JURI::root() . $item["link"] .'&Itemid=' . $galleriaozio . '&amp;tmpl=component" width="100%" marginwidth="0px" allowtransparency="true" frameborder="0" scrolling="no" class="autoHeight">
+			</iframe>
+			<div class="clr"></div>' :
+			'';
 		}
 	}
 
