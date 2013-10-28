@@ -70,8 +70,7 @@ class plgContentOzio extends JPlugin
 			$cparams = new JRegistry($item["params"]);
 			return $this->display($cparams, $galleriaozio);
 		}
-		else
-		if (strpos($item["link"], "list"))
+		elseif (strpos($item["link"], "list"))
 		{
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_list($cparams, $galleriaozio);
