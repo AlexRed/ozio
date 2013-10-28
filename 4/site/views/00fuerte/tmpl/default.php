@@ -100,7 +100,11 @@
 		<dl class="dl-horizontal">
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
+
+			<?php if ($this->Params->get("hide_infobox_date", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DATE_LBL');?></dt><dd class="pi-data"></dd>
+			<?php }?>
+
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DIMENSIONS_LBL');?></dt><dd class="pi-width_height"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILENAME_LBL');?></dt><dd class="pi-file_name"></dd>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILESIZE_LBL');?></dt><dd class="pi-file_size"></dd>
