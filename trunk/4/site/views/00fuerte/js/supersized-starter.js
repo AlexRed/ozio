@@ -8,6 +8,10 @@ jQuery(document).ready(function ($)
 	var slides = [];
 	var ss = jQuery("#supersized");
 	var userid='<?php echo $this->Params->get("userid", ""); ?>';
+	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		jQuery('a.close_fullscreen').attr('href',closelink);
+	}
 
 	// Deep-link
 	/*

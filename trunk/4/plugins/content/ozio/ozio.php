@@ -124,6 +124,7 @@ class plgContentOzio extends JPlugin
 	{
 		$this->Params = $cparams;
 		$document = JFactory::getDocument();
+		$style=$this->Params->get('list_style');
 		
 		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
 		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
@@ -134,13 +135,25 @@ class plgContentOzio extends JPlugin
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-		$document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+		if ($style=='hovereffect'){
+			//he
+			$document->addScript($prefix . "&amp;filename=pwi_hovereffect&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+        	$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
+        	$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+		}else {
+			$document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+		}
+		
 		$document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
 
 		// per la compatibilità con Internet Explorer
         $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
-		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+		if ($style=='hovereffect'){
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list_hovereffect.css");
+		}else{
+        	$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+		}
 
 		ob_start();
 		require JPATH_SITE . "/components/com_oziogallery3/views/list/tmpl/default.php";

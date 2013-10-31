@@ -27,9 +27,11 @@ class OzioGalleryViewlist extends JViewLegacy
 
 	function display($tpl = null)
 	{
+		
 		$application = JFactory::getApplication("site");
 		$this->Params = $application->getParams("com_oziogallery3");
-
+		$style=$this->Params->get('list_style');
+		
         // Set Meta Description
         if ($description = $this->Params->get('menu-meta_description'))
             $this->document->setDescription($description);
@@ -49,13 +51,24 @@ class OzioGalleryViewlist extends JViewLegacy
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-		$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
+		if ($style=='hovereffect'){
+			//he
+			$this->document->addScript($prefix . "&amp;filename=pwi_hovereffect&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
+        	$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
+        	$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+		}else {
+			$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
+		}
 		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 
 		// per la compatibilità con Internet Explorer
         $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
-		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+		if ($style=='hovereffect'){
+			$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list_hovereffect.css");
+		}else{
+        	$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+		}
 
 		parent::display($tpl);
 	}
