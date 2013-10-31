@@ -30,7 +30,6 @@ class plgButtonOziogallery extends JPlugin
 
 	function onDisplay($name)
 	{
-		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
 
 		$js = "
 		function oziofunction(menu_id) {
@@ -39,6 +38,8 @@ class plgButtonOziogallery extends JPlugin
 			SqueezeBox.close();
 		}";
 
+		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
+		
 		$style = "";
 		$postfix = "";
 		if (!$GLOBALS["oziogallery3"]["registered"])
