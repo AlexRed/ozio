@@ -31,7 +31,7 @@
 		<language tag="en-GB">en-GB/en-GB.tpl_oziofullscreen.ini</language>
 		<language tag="it-IT">it-IT/it-IT.tpl_oziofullscreen.ini</language>
 	</languages>
-        
+<!--         
     <config>
 		<fields name="params">
 			<fieldset name="GALLERY_BASICS" label="TPL_OZIOFULLSCREEN_BASIC_SETTINGS">
@@ -42,5 +42,6 @@
 					 />
   		    </fieldset>
 		</fields>
-	</config>        
+	</config>
+ -->	        
 </extension>

@@ -1,10 +1,10 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
-
+/*
 $closelink = trim( $this->params->get('closelink') );
 if (empty($closelink)){
 	$closelink=$this->baseurl;
 }
-
+*/
 ?><!DOCTYPE html>
 <html xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>
@@ -16,7 +16,7 @@ var ozio_fullscreen=1;
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/oziofullscreen/css/oziofullscreen.css" type="text/css" />
 </head>
 <body>
-<a class="close_fullscreen" href="<?php echo $closelink; ?>">
+<a class="close_fullscreen" href="<?php echo '#';//$closelink; ?>">
 <img src="<?php echo $this->baseurl; ?>/templates/oziofullscreen/images/chiudi.png">
 </a>
 <jdoc:include type="component" />
