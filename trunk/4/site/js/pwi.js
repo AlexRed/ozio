@@ -8,25 +8,46 @@ jQuery(document).ready(function ($)
 	$menuitems_filter_type = $this->Params->get('menuitems_filter_type', 0);  // Can be "IN", "NOT IN" or "0"
 	$selected_ids = $this->Params->get("menuitems_filter_items", array());
 	$all_items = $menu->getItems("component", "com_oziogallery3");
+
+	$order_by = $this->Params->get("list_orderby", "menu");
+	$order_dir = $this->Params->get("list_orderdir", "asc");
+	function listsort_title($a, $b){
+        return strcmp($a->title,$b->title);
+	}
+	function listsort_id($a, $b)
+	{
+	    if ($a->id == $b->id) {
+	        return 0;
+	    }
+	    return ($a->id < $b->id) ? -1 : 1;
+	}
+	if ($order_by=='id'){
+		usort($all_items, "listsort_id");
+	}else if ($order_by=='title'){
+		usort($all_items, "listsort_title");
+	}
+	if ($order_dir=='desc'){
+		$all_items=array_reverse($all_items);
+	}
+	
 	$all_ids = array();
 	foreach($all_items as $item )
 	{
-		$all_ids[] = $item->id;
+		if ($menuitems_filter_type == 'IN')
+		{
+			if (in_array($item->id,$selected_ids)){$all_ids[] = $item->id;}
+		}
+		else if ($menuitems_filter_type == 'NOT IN')
+		{
+			if (!in_array($item->id,$selected_ids)){$all_ids[] = $item->id;}
+		}
+		else
+		{
+			$all_ids[] = $item->id;
+		}		
 	}
-
-	if ($menuitems_filter_type == 'IN')
-	{
-		$ids = $selected_ids;
-	}
-	else if ($menuitems_filter_type == 'NOT IN')
-	{
-		$ids = array_diff($all_ids, $selected_ids);
-	}
-	else
-	{
-		$ids = $all_ids;
-	}
-
+	$ids=$all_ids;
+	
 	foreach($ids as &$i)
 	{
 		$item = $menu->getItem($i);

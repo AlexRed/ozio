@@ -98,7 +98,7 @@ ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
 /* Thumbnail Navigation
 ----------------------------*/
-#nextthumb,#prevthumb { z-index:2; display:none; position:fixed; bottom:61px; height:75px; width:100px; overflow:hidden; background:#ddd; border:1px solid #fff; -webkit-box-shadow:0 0 5px #000; }
+#nextthumb,#prevthumb { z-index:2; display:none; position:absolute; bottom:54px; height:75px; width:100px; overflow:hidden; background:#ddd; border:1px solid #fff; -webkit-box-shadow:0 0 5px #000; }
 #nextthumb { right:12px; }
 #prevthumb { left:12px; }
 #nextthumb img, #prevthumb img { width:150px; height:auto;  }
