@@ -38,6 +38,15 @@
 				component="com_oziogallery3">
 			</field>
 
+			<field name="list_orderby" type="list" default="menu" label="COM_OZIOGALLERY3_LIST_ORDERBY_LBL" description="COM_OZIOGALLERY3_LIST_ORDERBY_DSC">
+				<option value="menu">COM_OZIOGALLERY3_LIST_ORDERBY_MENU</option>
+				<option value="title">COM_OZIOGALLERY3_LIST_ORDERBY_TITLE</option>
+				<option value="id">COM_OZIOGALLERY3_LIST_ORDERBY_ID</option>
+			</field>
+			<field name="list_orderdir" type="list" default="asc" label="COM_OZIOGALLERY3_LIST_ORDERDIR_LBL" description="COM_OZIOGALLERY3_LIST_ORDERDIR_DSC">
+				<option value="asc">COM_OZIOGALLERY3_LIST_ORDERDIR_ASC</option>
+				<option value="desc">COM_OZIOGALLERY3_LIST_ORDERDIR_DESC</option>
+			</field>
 
 		</fieldset>
 
