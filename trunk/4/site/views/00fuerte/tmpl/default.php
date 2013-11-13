@@ -98,25 +98,51 @@
 	<p></p>
 
 		<dl class="dl-horizontal">
+			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_photo", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
-
+			<?php }?>
 			<?php if ($this->Params->get("hide_infobox_date", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DATE_LBL');?></dt><dd class="pi-data"></dd>
 			<?php }?>
-
+			<?php if ($this->Params->get("hide_infobox_width_height", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_DIMENSIONS_LBL');?></dt><dd class="pi-width_height"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_file_name", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILENAME_LBL');?></dt><dd class="pi-file_name"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_file_size", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILESIZE_LBL');?></dt><dd class="pi-file_size"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_model", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERA_LBL');?></dt><dd class="pi-model"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_focallength", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FOCALLENGTH_LBL');?></dt><dd class="pi-focallength"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_exposure", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_EXPOSURE_LBL');?></dt><dd class="pi-exposure"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_fstop", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FSTOP_LBL');?></dt><dd class="pi-fstop"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_iso", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ISO_LBL');?></dt><dd class="pi-iso"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_make", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERAMAKE_LBL');?></dt><dd class="pi-make"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_flash", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_FLASH_LBL');?></dt><dd class="pi-flash"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_views", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_VIEWS_LBL');?></dt><dd class="pi-views"></dd>
+			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_comments", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_COMMENTS_LBL');?></dt><dd class="pi-comments"></dd>
+			<?php }?>
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
