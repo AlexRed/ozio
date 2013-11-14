@@ -143,36 +143,19 @@
 			<?php if ($this->Params->get("hide_infobox_comments", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_COMMENTS_LBL');?></dt><dd class="pi-comments"></dd>
 			<?php }?>
+			<?php if ($this->Params->get("hide_infobox_link", false)==false) { ?>
+			<dt>Google Plus</dt><dd><span class="photo-buttons"><a href="#" class="btn pi-google" target="_blank"><i class="icon-out-2"></i> Google+</a></span></dd>
+			<?php }?>
+			<dt> </dt><dd><img class="img-polaroid  pi-image" src="" alt="preview" /></dd>
+			<?php if ($this->Params->get("hide_infobox_download", false)==false) { ?>
+			<dt> </dt><dd><span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span></dd>
+			<?php }?>
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
 
-	<p>
-	<?php if ($this->Params->get("albumvisibility", 'public')=='public') { ?>
-		<span class="photo-buttons">
-		<a href="#" class="btn pi-google" target="_blank">
-			<i class="icon-out-2"></i>
-			Google+
-		</a><br/><br/>
-		<a href="" class="btn pi-dowload">
-			<i class="icon-download"></i>
-			Download
-		</a>
-		</span>
-	<?php }?>
-		<img class="img-polaroid  pi-image" src="" alt="preview" />
-	</p>
-	
-	
-	<!-- 
-	<p>Commenti</p> -->
-	<!--
-	<p>Mappa</p>
-	
-	 <iframe class="pi-googlemap" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
-	
-	<p></p>
+<p></p><p></p>
 </div>
 <div class="map-container">
-</div>	
+</div>
 </div>
