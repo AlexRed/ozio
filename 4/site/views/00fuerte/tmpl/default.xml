@@ -158,6 +158,14 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field type="list" name="hide_infobox_link" label="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_download" label="COM_OZIOGALLERY3_HIDE_INFOBOX_DOWNLOAD_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_DOWNLOAD_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_FULLSCREEN_SETTINGS" icon="information.png"/>
 				<field name="closelink"  type="text" default=""
