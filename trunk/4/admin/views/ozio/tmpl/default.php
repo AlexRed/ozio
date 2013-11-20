@@ -154,10 +154,22 @@
 
 							<br />Skin Fuerte is based on <a href="http://www.buildinternet.com/project/supersized/" target='blank'>Supersized</a> Design/Development by <a href="http://buildinternet.com/" target='blank'> Build Internet project by Sam Dunn of One Mighty Roar</a>.
 							<br />
-							<br /><br />
+							<br />
 							Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 							Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
 							<h3 align="right">June 02nd, 2010. Component developed by AlexRed & Ste & Vamba - <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html">opensourcesolutions.es</a></h3><br />
+							<h3 class="module-title">Lingue, Idiomas, Idiomes, Linguagem, Languages...</h3>
+							<div><blockquote>
+							<ul>
+							<li><strong>Italiano </strong>: <em>- AlexRed - </em> <a  href="http://www.alexred.com">www.alexred.com</a></li>
+							<li><strong>English </strong>: <em> - Ste - </em> <a  href="http://www.stellainformatica.com">www.stellainformatica.com</a></li>
+							<li><strong>Español </strong>: <em> - Ivan Sola (isolabig) - </em></li>
+							<li><strong>Français </strong>: <em> - Franck LÉCUVIER - </em></li>
+							<li><strong>Deutsch </strong>: <em> - Alexander Seppi | kreatif multimedia - </em> <a  href="http://www.kreatif-multimedia.com">www.kreatif-multimedia.com</a></li>
+							<li><strong>Português </strong>: <em> - Paulo Ferreira - </em></li>
+							<li><strong>Russian </strong>: <em> - Vika Marchetti - </em> <a  href="http://www.svadbaitalia.ru">www.svadbaitalia.ru</a></li>
+							</ul></blockquote>
+							</div>
 						</td>
 					</tr>
 				</table>
