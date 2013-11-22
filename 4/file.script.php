@@ -138,7 +138,7 @@ class Com_OzioGallery3InstallerScript
 			<img src="' . JUri::base(true) . '/components/com_oziogallery3/assets/images/buy_now.jpg" border="0" alt="Buy now">
 			</a>
 			</div>
-			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature [Powered by Ozio Gallery] below each gallery, by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
+			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature [Ozio Gallery by joomla.it] below each gallery, by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
 			' . "</p>";
 		}
 	}
