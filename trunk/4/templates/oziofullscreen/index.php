@@ -5,6 +5,7 @@ if (empty($closelink)){
 	$closelink=$this->baseurl;
 }
 */
+JHtml::_('bootstrap.framework');
 ?><!DOCTYPE html>
 <html xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>

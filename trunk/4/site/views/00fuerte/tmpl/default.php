@@ -103,7 +103,7 @@
 	<div class="modal-body">
 	
 
-		<dl class="dl-horizontal">
+		<dl class="odl-horizontal">
 			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
 			<?php }?>
@@ -152,7 +152,7 @@
 			<?php if ($this->Params->get("hide_infobox_link", false)==false) { ?>
 			<dt>Google Plus</dt><dd><span class="photo-buttons"><a href="#" class="btn pi-google" target="_blank"><i class="icon-out-2"></i> Google+</a></span></dd>
 			<?php }?>
-			<dt> </dt><dd><img class="img-polaroid  pi-image" src="" alt="preview" /></dd>
+			<dt> </dt><dd><img class="oimg-polaroid  pi-image" src="" alt="preview" /></dd>
 			<?php if ($this->Params->get("hide_infobox_download", false)==false) { ?>
 			<dt> </dt><dd><span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span></dd>
 			<?php }?>
