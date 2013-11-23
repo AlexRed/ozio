@@ -272,3 +272,36 @@ a#nextslide:focus
 	vertical-align:top;
 }
 
+
+
+#photo-info dl {
+    margin-bottom: 18px;
+}
+#photo-info dt, #photo-info dd {
+    line-height: 18px;
+}
+#photo-info dt {
+    font-weight: bold;
+}
+#photo-info dd {
+    margin-left: 9px;
+}
+#photo-info .odl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+#photo-info .odl-horizontal dd {
+    margin-left: 130px;
+}
+
+#photo-info .oimg-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}

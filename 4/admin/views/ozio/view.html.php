@@ -50,7 +50,8 @@ class OzioViewOzio extends JViewLegacy
 		//$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
 		//$document->addScript(JURI::base(true) . "/media/jui/js/jquery.min.js");
 		//$document->addScript(JURI::base(true) . "/media/jui/js/jquery-noconflict.js");
-		JHtml::_('jquery.framework');
+		//JHtml::_('jquery.framework');
+		JHtml::_('bootstrap.framework');
 
 		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 		$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");

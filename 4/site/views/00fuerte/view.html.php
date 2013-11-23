@@ -46,7 +46,8 @@ class OzioGalleryView00fuerte extends JViewLegacy
 
 		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
 		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
-		JHtml::_('jquery.framework');
+		//JHtml::_('jquery.framework');
+		JHtml::_('bootstrap.framework');
 
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
