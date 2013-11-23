@@ -257,6 +257,7 @@ a#nextslide:focus
 	padding: 0;
 	text-align:left;
 	font-size:13px;
+	overflow:auto;
 }
 
 #photo_info_box .tcontent

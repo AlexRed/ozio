@@ -364,7 +364,7 @@
 		
 		showPhotoInfo: function ()
 		{
-				TINY.box.show({html:$('#photo-info').html(),animate:false,close:true,boxid:'photo_info_box',openjs:function(){
+				TINY.box.show({html:$('#photo-info').html(),animate:false,close:true,boxid:'photo_info_box',maxwidth:800,maxheight:2000,openjs:function(){
 					var lat=api.getField('lat');
 					var long=api.getField('long');
 					
@@ -372,7 +372,7 @@
 						//non metto nulla
 						$('#photo_info_box .map-container').html('');
 					}else{
-						$('#photo_info_box .map-container').html('<span id="ozio_gmap" style="width:300px; height:400px;"></span>');
+						$('#photo_info_box .map-container').html('<span id="ozio_gmap" style="width:100%; height:400px;"></span>');
 						var latLng = new google.maps.LatLng(lat,long);
 	
 					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
