@@ -246,49 +246,27 @@ a#nextslide:focus
 	max-width: none;
 }
 
-#photo_info_box
-{
-	background: #fff;
-	color: #000;
-	/*text-shadow: 1px 1px #5493cf;*/
-	border-right: 1px solid #000;
-	border-bottom: 1px solid #000;
-	padding: 0
-}
 
-#photo_info_box .tcontent
-{
-	padding: 10px 14px 11px;
-	border: 1px solid #fff;
-	-moz-border-radius: 5px;
-	border-radius: 5px
-}
-
-
-#photo_info_box .map-container, #photo_info_box .details-container
+#photo-info .map-container
 {
 	display:inline-block;
 	vertical-align: top;
 }
-
-
-#photo_info_box .map-container
+#photo-info .map-container
 {
-	width:300px;
-	height:520px;
+	width:100%;
 }
-#photo_info_box #ozio_gmap{
+#photo-info #ozio_gmap{
 	float:left;
 }
 
 
-#photo_info_box #ozio_gmap img { 
+#photo-info #ozio_gmap img { 
 	max-width: none; 
 	height: auto; 
 }
 
-
-#photo_info_box .photo-buttons{
+#photo-info .photo-buttons{
 	width:120px;
 	display:inline-block;
 	vertical-align:top;
