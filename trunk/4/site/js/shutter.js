@@ -281,6 +281,49 @@
 					theme.updatePhotoInfo();
 					theme.showPhotoInfo();
 				});
+			    $('#photo-info').on('shown', function () {
+
+					var lat=api.getField('lat');
+					var long=api.getField('long');
+					
+					if (lat=='' || long==''){
+						//non metto nulla
+						$('#photo-info .map-container').html('');
+					}else{
+						$('#photo-info .map-container').html('<span id="ozio_gmap" style="width:100%; height:400px;"></span>');
+						var latLng = new google.maps.LatLng(lat,long);
+
+					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
+					        zoom: 14,
+					        center: latLng,
+							mapTypeId: google.maps.MapTypeId.MAP,
+							scrollwheel: false
+					     });	
+					     var marker = new google.maps.Marker({
+					    	    position: latLng,
+					    	});
+
+					     marker.setMap(map);				     
+					}	
+					
+					var na='- na -';
+					var json_details_url=api.getField('json_details');
+					if (json_details_url!=''){
+						$('#photo-info .pi-views').text('...');
+						$('#photo-info .pi-comments').text('...');
+						$.ajax({
+							'url':json_details_url,
+							'dataType': 'json',
+							'success': theme.OnLoadViewsAndCommentsSuccess,
+							'error': theme.OnLoadViewsAndCommentsError
+						});
+					}else{
+						$('#photo-info .pi-views').text(na);
+						$('#photo-info .pi-comments').text(na);
+					}			
+					
+					
+			    });
 			}
 			
 			
@@ -363,53 +406,13 @@
 				$('#photo-info .map-container').show();
 				
 			}
+			
 		},
 		
 		showPhotoInfo: function ()
 		{
-				TINY.box.show({html:$('#photo-info').html(),animate:false,close:true,boxid:'photo_info_box',openjs:function(){
-					var lat=api.getField('lat');
-					var long=api.getField('long');
-					
-					if (lat=='' || long==''){
-						//non metto nulla
-						$('#photo_info_box .map-container').html('');
-					}else{
-						$('#photo_info_box .map-container').html('<span id="ozio_gmap" style="width:300px; height:400px;"></span>');
-						var latLng = new google.maps.LatLng(lat,long);
-	
-					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
-					        zoom: 14,
-					        center: latLng,
-							mapTypeId: google.maps.MapTypeId.MAP,
-							scrollwheel: false
-					     });	
-					     var marker = new google.maps.Marker({
-					    	    position: latLng,
-					    	});
-	
-	  			    	 marker.setMap(map);				     
-					}	
-					
-					var na='- na -';
-					var json_details_url=api.getField('json_details');
-					if (json_details_url!=''){
-						$('#photo_info_box .pi-views').text('...');
-						$('#photo_info_box .pi-comments').text('...');
-						$.ajax({
-							'url':json_details_url,
-							'dataType': 'json',
-							'success': theme.OnLoadViewsAndCommentsSuccess,
-							'error': theme.OnLoadViewsAndCommentsError
-						});
-					}else{
-						$('#photo_info_box .pi-views').text(na);
-						$('#photo_info_box .pi-comments').text(na);
-					}
-					
-					
-				} 
-				});
+			$('#photo-info').modal('show');
+
 		},
 		
 		
@@ -417,22 +420,22 @@
 		{
 			var na='- na -';
 			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$commentCount !== "undefined" && typeof result.entry.gphoto$commentCount.$t !== "undefined"){
-				$('#photo_info_box .pi-comments').text(result.entry.gphoto$commentCount.$t);
+				$('#photo-info .pi-comments').text(result.entry.gphoto$commentCount.$t);
 			}else{
-				$('#photo_info_box .pi-comments').text(na);
+				$('#photo-info .pi-comments').text(na);
 			}
 
 			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
-				$('#photo_info_box .pi-views').text(result.entry.gphoto$viewCount.$t);
+				$('#photo-info .pi-views').text(result.entry.gphoto$viewCount.$t);
 			}else{
-				$('#photo_info_box .pi-views').text(na);
+				$('#photo-info .pi-views').text(na);
 			}
 		},
 		OnLoadViewsAndCommentsError: function (jqXHR, textStatus, error)
 		{
 			var na='- na -';
-			$('#photo_info_box .pi-views').text(na);
-			$('#photo_info_box .pi-comments').text(na);
+			$('#photo-info .pi-views').text(na);
+			$('#photo-info .pi-comments').text(na);
 			console.log( jqXHR.message, textStatus, error);
 		},
 		

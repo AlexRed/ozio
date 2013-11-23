@@ -18,6 +18,9 @@
 .grid .figure {
 	margin: 0;
 	position: relative;
+	display:block;
+	border:0;
+	outline:0;
 }
 
 .grid .figure img {

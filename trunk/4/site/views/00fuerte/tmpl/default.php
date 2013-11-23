@@ -92,10 +92,16 @@
 	<div id="thumb-forward"></div>
 </div>
 
-<!-- Details -->
-<div id="photo-info" style="display:none;">
-<div class="details-container">
-	<p></p>
+<div id="photo-info" class="modal hide fade">
+	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
+			<h3 class="pi-album"></h3>
+			<?php }else{?>
+			<h3>Info</h3>
+			<?php }?>
+	</div>
+	<div class="modal-body">
+	
 
 		<dl class="dl-horizontal">
 			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
@@ -153,9 +159,10 @@
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
-
-<p></p><p></p>
-</div>
-<div class="map-container">
-</div>
+	
+	<div class="map-container">
+	</div>
+	
+	</div>
+	<div class="modal-footer"><button class="btn" data-dismiss="modal"><?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></button></div>
 </div>

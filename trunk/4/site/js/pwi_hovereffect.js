@@ -137,7 +137,7 @@ jQuery(document).ready(function ($)
 		{
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
 			
-			var figure = jQuery("<div class='figure'/>");
+			var figure = jQuery("<a class='figure'/>").attr("href",this.album_local_url);
 			var img=jQuery("<img src='" + $thumbnail0.url +
 			"' alt='" + result.feed.title.$t +
 			"'/>");
