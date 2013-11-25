@@ -102,11 +102,8 @@
 	</div>
 	<div class="modal-body">
 	
-
+		<img class="oimg-polaroid  pi-image" src="" alt="preview" style="float:right;"/>
 		<dl class="odl-horizontal">
-			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
-			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
-			<?php }?>
 			<?php if ($this->Params->get("hide_infobox_photo", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
 			<?php }?>
@@ -149,13 +146,6 @@
 			<?php if ($this->Params->get("hide_infobox_comments", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_COMMENTS_LBL');?></dt><dd class="pi-comments"></dd>
 			<?php }?>
-			<?php if ($this->Params->get("hide_infobox_link", false)==false) { ?>
-			<dt>Google Plus</dt><dd><span class="photo-buttons"><a href="#" class="btn pi-google" target="_blank"><i class="icon-out-2"></i> Google+</a></span></dd>
-			<?php }?>
-			<dt> </dt><dd><img class="oimg-polaroid  pi-image" src="" alt="preview" /></dd>
-			<?php if ($this->Params->get("hide_infobox_download", false)==false) { ?>
-			<dt> </dt><dd><span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span></dd>
-			<?php }?>
 			<!-- <dt>Visualizzazioni</dt><dd></dd>
 			<dt>+1</dt><dd></dd> -->
 		</dl>
@@ -164,5 +154,9 @@
 	</div>
 	
 	</div>
-	<div class="modal-footer"><button class="btn" data-dismiss="modal"><?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></button></div>
+	<div class="modal-footer">
+		<span class="photo-buttons"><a href="#" class="btn pi-google btn-info" target="_blank"><i class="icon-out-2"></i> Google+</a></span>
+		<span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span>
+		<span class="btn" data-dismiss="modal"><i class="icon-cancel"></i> <?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></span>
+        </div>
 </div>
