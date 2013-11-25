@@ -155,8 +155,12 @@
 	
 	</div>
 	<div class="modal-footer">
+		<?php if ($this->Params->get("hide_infobox_link", false)==false) { ?>
 		<span class="photo-buttons"><a href="#" class="btn pi-google btn-info" target="_blank"><i class="icon-out-2"></i> Google+</a></span>
+		<?php }?>
+		<?php if ($this->Params->get("hide_infobox_download", false)==false) { ?>
 		<span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span>
+		<?php }?>
 		<span class="btn" data-dismiss="modal"><i class="icon-cancel"></i> <?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></span>
         </div>
 </div>
