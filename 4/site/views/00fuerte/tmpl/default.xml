@@ -71,7 +71,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="0">
+			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
@@ -142,7 +142,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_DSC" default="0">
+			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
