@@ -4,14 +4,13 @@
     border-width: 1px;
     box-shadow: 0 2px 5px rgba(64, 64, 64, 0.1);
     padding: 6px;
-    width: 600px;
-    padding-bottom: 28px;
+    /*width: 600px;*/
 }
 
-#oziomap {
+/*#oziomap {
     height: 400px;
     width: 600px;
-}
+}*/
 
 #oziomap-container #oziomap img {
     height: auto;
@@ -20,6 +19,7 @@
 
 #oziomap-container .progress{
 	margin-top: 5px;
+	margin-bottom: 0;
 }
 
 .oziomap-checkcontainer > span {
