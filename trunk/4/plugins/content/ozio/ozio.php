@@ -70,8 +70,10 @@ class plgContentOzio extends JPlugin
 			$cparams = new JRegistry($item["params"]);
 			return $this->display($cparams, $galleriaozio);
 		}
-		else
-		{
+		else if (strpos($item["link"], "map")){
+			$cparams = new JRegistry($item["params"]);
+			return $this->display_map($cparams, $galleriaozio);
+		}else{
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_list($cparams, $galleriaozio);
 		}
@@ -88,6 +90,9 @@ class plgContentOzio extends JPlugin
 		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
 		//JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.framework');
+		if ($cparams->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
 
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
@@ -131,6 +136,9 @@ class plgContentOzio extends JPlugin
 		//$document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
 		//JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.framework');
+		if ($cparams->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
@@ -163,5 +171,50 @@ class plgContentOzio extends JPlugin
 		ob_end_clean();
 		return $result;
 	}	
+	function display_map(&$cparams, $galleriaozio)
+	{
+		$this->Params = $cparams;
+		$document = JFactory::getDocument();
+		
+		JHtml::_('bootstrap.framework');
+		if ($cparams->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
 
+
+		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
+		$menu = JFactory::getApplication()->getMenu();
+		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
+		$document->addScript($prefix . "&amp;filename=map&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
+
+		// per la compatibilità con Internet Explorer
+        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+
+       	$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/map/css/map.css");
+
+
+		// Api key parameter for Google map
+		$api_key = $this->Params->get('api_key', NULL);
+		$api_key = $api_key ? "&amp;key=" . $api_key : "";
+
+		// Language parameter for Google map
+		// See Google maps Language coverage at https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
+		// Use JFactory::getLanguage(), because we can't rely on $lang variable
+		$language = JFactory::getLanguage()->get("tag", NULL);
+		$language = $language ? "&amp;language=" . $language : "";
+
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
+
+		if ($this->Params->get("cluster", "1"))
+		{
+			$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/markerclusterer_compiled.js");
+		}
+		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/oms.min.js");
+				
+		ob_start();
+		require JPATH_SITE . "/components/com_oziogallery3/views/map/tmpl/default.php";
+		$result = JPATH_COMPONENT("com_oziogallery3/views/map/tmpl/default.php") . ob_get_contents();
+		ob_end_clean();
+		return $result;
+	}	
 }

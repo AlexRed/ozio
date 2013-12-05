@@ -25,6 +25,11 @@
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
 			
+			<field type="list" name="fixedheight" label="COM_OZIOGALLERY3_FIXEDHEIGHT_LBL" description="COM_OZIOGALLERY3_FIXEDHEIGHT_DSC" default="0" onchange="OnFixedHeightChange()">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="text" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="6" default="250"/>
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 <!--
@@ -71,7 +76,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="1">
+			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
@@ -142,7 +147,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_DSC" default="1">
+			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
@@ -179,5 +184,12 @@
 			</field>
 			
 		</fieldset>
+		<fieldset name="advanced">
+			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+		
 	</fields>
 </metadata>

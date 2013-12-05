@@ -39,15 +39,41 @@ jQuery(document).ready(function ($)
 	echo "\n".'var g_map_width='.json_encode($this->Params->get("map_width", "100").$this->Params->get("map_width_unit", "%")).';';
 	echo "\n".'var g_map_height='.json_encode($this->Params->get("map_height", "400").'px').';';
 // ?>
-	jQuery("#container").append('<div id="remainingphotos"></div>');
-	jQuery("#container").append('<div id="map-container"><div id="map"></div></div>');
-
-	jQuery("#map-container").css('width',g_map_width);
-	jQuery("#map-container").css('height',g_map_height);
-	jQuery("#map").css('width',g_map_width);
-	jQuery("#map").css('height',g_map_height);
 	
- 	var photos=[];
+	jQuery("#container").append('<div id="oziomap-container"><div id="oziomap"></div></div>');
+	jQuery("#oziomap-container").append('<div class="progress progress-striped"><div id="remainingphotos" class="bar" style="width: 0;"></div></div>');
+
+	jQuery("#oziomap-container").css('width',g_map_width);
+	jQuery("#oziomap-container").css('height',g_map_height);
+	jQuery("#oziomap").css('width',g_map_width);
+	jQuery("#oziomap").css('height',g_map_height);
+	
+	function addAlbumMarker(albumid){
+		g_parameters[albumid].checked=true;
+		var checkbox=$('<input type="checkbox" class="checkbox" checked="checked"/>');
+		checkbox.change(function() {
+			g_parameters[albumid].checked=$(this).is(":checked");
+        	for (var i=0;i<googlemarkers.length;i++){
+        		if (googlemarkers[i].oziodata.albumid==albumid){
+        			googlemarkers[i].setVisible(g_parameters[albumid].checked);
+<?php 				if ($this->Params->get("cluster", "1")) { ?>
+						if ($(this).is(":checked")){
+							markerCluster.addMarker(googlemarkers[i]);
+						}else{
+							markerCluster.removeMarker(googlemarkers[i]);
+						}
+<?php 				} ?>
+        		}
+        	}
+		});
+		var div=$('<span class="oziomap-checkcontainer"></span>');
+		var title=$('<span></span>').text(g_parameters[albumid].title);
+		div.append(checkbox);
+		div.append(title);
+		jQuery("#container").append(div);
+		
+	}
+ 	var googlemarkers=[];
  	var photos_per_album=1000;
  	var remainingphotos=0;
  	var max_remainingphotos=1;
@@ -55,10 +81,29 @@ jQuery(document).ready(function ($)
  			picasaUrl:"http://picasaweb.google.com/data/feed/api/user/"
  		}; 	
 	var markerCluster;
+	var oms;
 	var googlemap;
 	var bounds;
 	var autocenter=true;
 	var infowindow;
+
+	function linkify(inputText) {
+	    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+	    //URLs starting with http://, https://, or ftp://
+	    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+	    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+	    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+	    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+	    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+	    //Change email addresses to mailto:: links.
+	    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+	    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+	    return replacedText;
+	}
 	
 	function initialize() {
 
@@ -78,7 +123,7 @@ jQuery(document).ready(function ($)
 		bounds = new google.maps.LatLngBounds();
 	
 
-        googlemap = new google.maps.Map(document.getElementById('map'), {
+        googlemap = new google.maps.Map(document.getElementById('oziomap'), {
           zoom: <?php echo $this->Params->get("zoom", 0); ?>,
           center: center,
           mapTypeId: google.maps.MapTypeId.<?php echo $this->Params->get("map_type", "ROADMAP"); ?>,
@@ -88,10 +133,81 @@ jQuery(document).ready(function ($)
 		infowindow = new google.maps.InfoWindow({maxWidth: <?php echo $this->Params->get("infowindow_width", "200"); ?>});
 
 <?php if ($this->Params->get("cluster", "1")) { ?>
-        markerCluster = new MarkerClusterer(googlemap);
-<?php } ?>		
+        markerCluster = new MarkerClusterer(googlemap,[],{maxZoom: 15});
+<?php } ?>
+		oms = new OverlappingMarkerSpiderfier(googlemap);
+		oms.addListener('<?php echo $this->Params->get("infowindow_event", "click"); ?>', function(marker, event) {
+<?php 		if ($this->Params->get("markers_action","infowindow") == "infowindow") { ?>
+			// InfoWindow handling event
+			var html=$('<div></div>');
+			
+<?php
+		if ($this->Params->get('show_title', 0))
+		{
+			if ($this->Params->get('link_titles', 0))
+			{
+?>				
+				var html_h3=$('<h3></h3>');
+				var html_a=$('<a></a>').text(marker.oziodata.title);
+				html_a.attr('target',<?php echo json_encode($this->Params->get("link_target", "_self")); ?>);
+				html_a.attr('href', marker.oziodata.link);
+				html_h3.append(html_a);
+				html.append(html_h3);
+<?php			
+			}else{
+?>
+				var html_h3=$('<h3></h3>').text(marker.oziodata.title);
+				html.append(html_h3);
+<?php			
+			}
+		}
+		if ($this->Params->get('show_image', 0))
+		{
+?>
+			var html_img=$('<img  class="thumb_img">').attr('src',marker.oziodata.thumb);
+			html.append(html_img);
+<?php			
+		}
+		if ($this->Params->get('show_created', 0))
+		{
+?>
+			var html_date=$('<div class="published_date"></div>').text(marker.oziodata.published);
+			html.append(html_date);
+<?php			
+		}
+		if ($this->Params->get('show_intro', 0))
+		{
+			echo 'var intro_max_size='.json_encode($this->Params->get('introtext_size', 0)).';';
+?>				
+			if (intro_max_size>0 && marker.oziodata.summary.length>intro_max_size){
+				marker.oziodata.summary=marker.oziodata.summary.substr(0,intro_max_size)+'...';
+			}
+			var html_summary=$('<div class="summary"></div>').html(linkify(marker.oziodata.summary));
+			html.append(html_summary);
+<?php			
+		}
+		if($this->Params->get('showDirectionsMarker', 0))
+		{
+?>			
+			var html_direction=$('<div  class="directions"></div>');
+			var html_direction_a=$('<a target="_blank"></a>').text(<?php echo json_encode(JText::_('COM_OZIOGALLERY3_MAP_GET_DIRECTIONS'));?>);
+			html_direction_a.attr('href','http://maps.google.com/maps?saddr=&daddr='+marker.oziodata.lat+','+marker.oziodata.long);
+			html_direction.append(html_direction_a);
+			html.append(html_direction);
+<?php			
+		}
+?>				
+			infowindow.setContent(html.html());
+			infowindow.open(googlemap, marker);
+<?php 		} else { ?>
+			// Redirect handling event
+			location.href = marker.oziodata.link;
+<?php 		} ?>
+		});
+
 		for (var i=0;i<g_parameters.length;i++){
 			g_parameters[i].views=0;
+			g_parameters[i].checked=true;
 			load_album_data(i,1);
 		}
       }
@@ -131,7 +247,7 @@ jQuery(document).ready(function ($)
 			max_remainingphotos=remainingphotos;
 		}
 		var perc=100-100*remainingphotos/max_remainingphotos;
-		$('#remainingphotos').text(perc.toFixed(2)+" %");
+		$('#remainingphotos').css('width',perc.toFixed(2)+"%");
 	}
 	
 
@@ -231,14 +347,18 @@ jQuery(document).ready(function ($)
 				  latlong[1]);
 				  
 			var oziodata={
+				'albumid':this.album_index,
 				'views':parseInt(result.entry.gphoto$viewCount.$t),
 				'summary':result.entry.summary.$t,
 				'title':result.entry.title.$t,
 				'link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id+'#'+(this.photo_index+1),
-				'thumb':seed+'h50/',
+				'thumb':seed+'h100/',
 				'published':result.entry.published.$t,
 				'album_title':g_parameters[this.album_index].title,
+				'lat':latlong[0],
+				'long':latlong[1],
 				'album_link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
+				
 			};
 			// Marker creation
 			var marker = new google.maps.Marker(
@@ -248,77 +368,6 @@ jQuery(document).ready(function ($)
 				title: result.entry.title.$t,
 				oziodata: oziodata
 			});
-				  
-			google.maps.event.addListener(marker, '<?php echo $this->Params->get("infowindow_event", "click"); ?>',
-			function()
-			{
-<?php 		if ($this->Params->get("markers_action","infowindow") == "infowindow") { ?>
-				// InfoWindow handling event
-				var html=$('<div></div>');
-				
-<?php
-			if ($this->Params->get('show_title', 0))
-			{
-				if ($this->Params->get('link_titles', 0))
-				{
-?>				
-					var html_h3=$('<h3></h3>');
-					var html_a=$('<a></a>').text(this.oziodata.title);
-					html_a.attr('target',<?php echo json_encode($this->Params->get("link_target", "_self")); ?>);
-					html_a.attr('href', this.oziodata.link);
-					html_h3.append(html_a);
-					html.append(html_h3);
-<?php			
-				}else{
-?>
-					var html_h3=$('<h3></h3>').text(this.oziodata.title);
-					html.append(html_h3);
-<?php			
-				}
-			}
-			if ($this->Params->get('show_image', 0))
-			{
-?>
-				var html_img=$('<img  class="thumb_img">').attr('src',this.oziodata.thumb);
-				html.append(html_img);
-<?php			
-			}
-			if ($this->Params->get('show_created', 0))
-			{
-?>
-				var html_date=$('<div class="published_date"></div>').text(this.oziodata.published);
-				html.append(html_date);
-<?php			
-			}
-			if ($this->Params->get('show_intro', 0))
-			{
-				echo 'var intro_max_size='.json_encode($this->Params->get('introtext_size', 0)).';';
-?>				
-				if (intro_max_size>0 && this.oziodata.summary.length>intro_max_size){
-					this.oziodata.summary=this.oziodata.summary.substr(0,intro_max_size)+'...';
-				}
-				var html_summary=$('<div class="summary"></div>').text(this.oziodata.summary);
-				html.append(html_summary);
-<?php			
-			}
-			if($this->Params->get('showDirectionsMarker', 0))
-			{
-?>			
-				var html_direction=$('<div  class="directions"></div>');
-				var html_direction_a=$('<a target="_blank"></a>').text(<?php echo json_encode(JText::_('COM_OZIOGALLERY3_MAP_GET_DIRECTIONS'));?>);
-				html_direction_a.attr('href','http://maps.google.com/maps?saddr=&daddr='+latlong[0]+','+latlong[1]);
-				html_direction.append(html_direction_a);
-				html.append(html_direction);
-<?php			
-			}
-?>				
-				infowindow.setContent(html.html());
-				infowindow.open(googlemap, this);
-<?php 		} else { ?>
-				// Redirect handling event
-				location.href = this.oziodata.link;
-<?php 		} ?>
-			});
 
 			if (autocenter){
 				bounds.extend(latLng);
@@ -326,9 +375,13 @@ jQuery(document).ready(function ($)
 			}
 			
 <?php if ($this->Params->get("cluster", "1")) { ?>
-			markerCluster.addMarker(marker);
+			if (g_parameters[this.album_index].checked){
+				markerCluster.addMarker(marker);
+			}
 <?php } ?>
-			
+			oms.addMarker(marker);
+			marker.setVisible(g_parameters[this.album_index].checked);
+			googlemarkers.push(marker);
 			
 		}
 		
@@ -342,6 +395,7 @@ jQuery(document).ready(function ($)
 	function OnLoadSuccess(result, textStatus, jqXHR)
 	{
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
+			addAlbumMarker(this.album_index);
 		}else{
 			//altra chiamata per il rimanente
 			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);

@@ -317,6 +317,21 @@ function OnAlbumVisibilityChange()
 	}
 }
 
+function OnFixedHeightChange()
+{
+	var select = $('jform_params_fixedheight');
+	var value = select.options[select.selectedIndex].value;
+	if (value == '0')
+	{
+		$('jform_params_galleryheight-lbl').style.display = 'none';
+		$('jform_params_galleryheight').style.display = 'none';
+	}
+	else
+	{
+		$('jform_params_galleryheight-lbl').style.display = 'inline';
+		$('jform_params_galleryheight').style.display = 'inline';
+	}
+}
 
 // Inizializzazione
 window.addEvent('domready', function ()
@@ -334,4 +349,5 @@ window.addEvent('domready', function ()
 // Possibile caricamento necessario
 window.addEvent('domready', OnUseridChange);
 window.addEvent('domready', OnAlbumVisibilityChange);
+window.addEvent('domready', OnFixedHeightChange);
 

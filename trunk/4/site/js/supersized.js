@@ -668,7 +668,7 @@ window.antiloop = 1;
 					}
 
 					// Vertically Center
-					if (base.options.vertical_center)
+					if (base.options.vertical_center || base.options.fixedheight)
 					{
 						$(this).css('top', (browserheight - $(this).height()) / 2);
 					}
@@ -754,7 +754,11 @@ window.antiloop = 1;
 							container.style.height = ($(window).height()-siblings_height)+'px';
 														
 						}else{
-							container.style.height = h + 'px';
+							if (base.options.fixedheight){
+								container.style.height = base.options.galleryheight + 'px';
+							}else{
+								container.style.height = h + 'px';
+							}
 						}
 					}
 
@@ -773,7 +777,7 @@ window.antiloop = 1;
 					}
 
 					// Vertically Center
-					if (base.options.vertical_center)
+					if (base.options.vertical_center || base.options.fixedheight)
 					{
 						$(this).css('top', (browserheight - $(this).height()) / 2);
 					}

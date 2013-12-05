@@ -1,18 +1,29 @@
-#map-container {
+#oziomap-container {
     border-color: #CCCCCC #CCCCCC #999999;
     border-style: solid;
     border-width: 1px;
     box-shadow: 0 2px 5px rgba(64, 64, 64, 0.1);
     padding: 6px;
     width: 600px;
+    padding-bottom: 28px;
 }
 
-#map {
+#oziomap {
     height: 400px;
     width: 600px;
 }
 
-#map-container #map img {
+#oziomap-container #oziomap img {
     height: auto;
     max-width: none;
+}
+
+#oziomap-container .progress{
+	margin-top: 5px;
+}
+
+.oziomap-checkcontainer > span {
+    margin-left: 4px;
+    margin-right: 10px;
+    vertical-align: bottom;
 }

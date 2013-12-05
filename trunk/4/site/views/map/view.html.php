@@ -42,6 +42,9 @@ class OzioGalleryViewmap extends JViewLegacy
             $this->document->setMetadata('robots', $robots);
 
 		JHtml::_('bootstrap.framework');
+		if ($this->Params->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
 
 		
 		//$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
@@ -73,6 +76,7 @@ class OzioGalleryViewmap extends JViewLegacy
 		{
 			$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/markerclusterer_compiled.js");
 		}
+		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/oms.min.js");
 		
 		parent::display($tpl);
 	}
