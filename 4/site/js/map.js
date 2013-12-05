@@ -40,11 +40,11 @@ jQuery(document).ready(function ($)
 	echo "\n".'var g_map_height='.json_encode($this->Params->get("map_height", "400").'px').';';
 // ?>
 	
-	jQuery("#container").append('<div id="oziomap-container"><div id="oziomap"></div></div>');
+	jQuery("#container").append('<div id="oziomap-container"><div><div id="oziomap"></div><div></div>');
 	jQuery("#oziomap-container").append('<div class="progress progress-striped"><div id="remainingphotos" class="bar" style="width: 0;"></div></div>');
 
-	jQuery("#oziomap-container").css('width',g_map_width);
-	jQuery("#oziomap-container").css('height',g_map_height);
+	//jQuery("#oziomap-container").css('width',g_map_width);
+	//jQuery("#oziomap-container").css('height',g_map_height);
 	jQuery("#oziomap").css('width',g_map_width);
 	jQuery("#oziomap").css('height',g_map_height);
 	
@@ -351,13 +351,13 @@ jQuery(document).ready(function ($)
 				'views':parseInt(result.entry.gphoto$viewCount.$t),
 				'summary':result.entry.summary.$t,
 				'title':result.entry.title.$t,
-				'link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id+'#'+(this.photo_index+1),
+				'link':g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id+'#'+(this.photo_index+1),
 				'thumb':seed+'h100/',
 				'published':result.entry.published.$t,
 				'album_title':g_parameters[this.album_index].title,
 				'lat':latlong[0],
 				'long':latlong[1],
-				'album_link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
+				'album_link':g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
 				
 			};
 			// Marker creation
