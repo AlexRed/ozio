@@ -603,7 +603,11 @@
 				
 				container.style.height = ($(window).height()-siblings_height)+'px';
 			}else{
-				container.style.height = h + 'px';
+				if (api.options.fixedheight){
+					container.style.height = api.options.galleryheight + 'px';
+				}else{
+					container.style.height = h + 'px';
+				}
 			}
 			// DP *F*
 		},

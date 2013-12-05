@@ -268,7 +268,9 @@ jQuery(document).ready(function ($)
 					authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 					square: '<?php echo $this->Params->get("square", ""); ?>',
 					big: '<?php echo $this->Params->get("big", ""); ?>',
-					base_jurl: '<?php echo JURI::root(true); ?>'
+					base_jurl: '<?php echo JURI::root(true); ?>',
+					fixedheight: parseInt('<?php echo $this->Params->get("fixedheight", 0); ?>'),
+					galleryheight: parseInt('<?php echo $this->Params->get("galleryheight", 250); ?>')
 				});
 			});
 		}else{
