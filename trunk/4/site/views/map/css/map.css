@@ -1,0 +1,18 @@
+#map-container {
+    border-color: #CCCCCC #CCCCCC #999999;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 2px 5px rgba(64, 64, 64, 0.1);
+    padding: 6px;
+    width: 600px;
+}
+
+#map {
+    height: 400px;
+    width: 600px;
+}
+
+#map-container #map img {
+    height: auto;
+    max-width: none;
+}
