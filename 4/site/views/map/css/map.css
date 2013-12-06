@@ -1,29 +1,56 @@
 #oziomap-container {
+    /*padding: 6px;*/
+    /*width: 600px;*/
+    position:relative;
+}
+
+#oziomap-container > .oziomap_border {
     border-color: #CCCCCC #CCCCCC #999999;
     border-style: solid;
     border-width: 1px;
     box-shadow: 0 2px 5px rgba(64, 64, 64, 0.1);
-    padding: 6px;
-    /*width: 600px;*/
+    position:relative;
+}
+#oziomap-container .progress{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	margin: 6px;
 }
 
-/*#oziomap {
-    height: 400px;
-    width: 600px;
-}*/
+.oziomap_map_container{
+	position:absolute;
+	bottom:24px;
+	top:0px;
+	left:0;
+	right:0;
+	margin: 6px;
+}
+
+#oziomap {
+	height:100%;
+}
 
 #oziomap-container #oziomap img {
     height: auto;
     max-width: none;
 }
 
-#oziomap-container .progress{
-	margin-top: 5px;
-	margin-bottom: 0;
+.oziomap-checkcontainer{
+	margin-right:30px;
+}
+.oziomap-checkcontainer > span {
+    vertical-align: middle;
+}
+.oziomap-checkcontainer > img {
+    margin-left:5px;
+    margin-right:3px;
+}
+.oziomap-checkcontainer > .checkbox{
+	margin:0;
 }
 
-.oziomap-checkcontainer > span {
-    margin-left: 4px;
-    margin-right: 10px;
-    vertical-align: bottom;
+#oziomap-container-album, #oziomap-container-maker{
+	margin-top:5px;
 }

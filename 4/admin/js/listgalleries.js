@@ -333,6 +333,16 @@ function OnFixedHeightChange()
 	}
 }
 
+function OnMarkersIconChange()
+{
+	var select = $('jform_params_markers_icon');
+	var value = select.options[select.selectedIndex].value;
+	if (value==''){
+		value='default.png';
+	}
+	document.getElementById("ozio_markerpreview").src='../components/com_oziogallery3/views/map/img/markers/icons/'+value;
+}
+
 // Inizializzazione
 window.addEvent('domready', function ()
 	{
@@ -350,4 +360,5 @@ window.addEvent('domready', function ()
 window.addEvent('domready', OnUseridChange);
 window.addEvent('domready', OnAlbumVisibilityChange);
 window.addEvent('domready', OnFixedHeightChange);
+window.addEvent('domready', OnMarkersIconChange);
 
