@@ -183,6 +183,10 @@
 				<option value="1">JYES</option>
 			</field>
 			
+			<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
+			<field name="markers_icon" type="filelist" label="COM_OZIOGALLERY3_MAP_MARKERS_ICON_LBL" description="COM_OZIOGALLERY3_MAP_MARKERS_ICON_DSC" default="" hide_none="true" directory="components/com_oziogallery3/views/map/img/markers/icons" filter="\.png$" exclude="" stripext=""  onchange="OnMarkersIconChange()"/>
+	        <field name="markers_preview" type="markerpreview" label="COM_OZIOGALLERY3_MAP_MARKERS_PREVIEW"/>
+			
 		</fieldset>
 		<fieldset name="advanced">
 			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_DSC" default="0">
