@@ -418,8 +418,8 @@ jQuery(document).ready(function ($)
 					oziodata['published']=na;
 				}
 				
-				if (typeof entry.exif$tags.exif$make !== "undefined" && typeof entry.exif$tags.exif$make.$t !== "undefined"){
-					oziodata['exif_make']=entry.exif$tags.exif$make.$t;
+				if (typeof entry.exif$tags.exif$model !== "undefined" && typeof entry.exif$tags.exif$model.$t !== "undefined"){
+					oziodata['exif_make']=entry.exif$tags.exif$model.$t;
 				}else{
 					oziodata['exif_make']=na;
 				}
