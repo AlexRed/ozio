@@ -70,7 +70,7 @@ jQuery(document).ready(function ($)
 
 		// Crea un nuovo sottocontenitore e lo appende al principale
 		jQuery("#container").append(
-			author = jQuery("<div/>", {'id':'author<?php echo $item->id; ?>', 'class':'author'})
+			author = jQuery("<div/>", {'id':'ozio-author<?php echo $item->id; ?>', 'class':'ozio-author'})
 		);
 
 		// Imposta i parametri e innesca il caricamento
@@ -153,7 +153,7 @@ jQuery(document).ready(function ($)
 						"' height='" + $thumbnail0.height +
 						"' width='" + $thumbnail0.width +
 						"' alt='" + result.feed.title.$t +
-						"' class='coverpage" +
+						"' class='ozio-coverpage" +
 						"'/>" +
 						'</a>'
 				);
@@ -161,7 +161,7 @@ jQuery(document).ready(function ($)
 
 			/*<?php if (false) { ?>*/
 			// Never show Google Plus Album title
-			var googletitle = $("<div class='pwi_album_title'/>");
+			var googletitle = $("<div class='ozio-pwi_album_title'/>");
 			var length = 64;
 			googletitle.append(((result.feed.title.$t.length > length) ? result.feed.title.$t.substring(0, length) : result.feed.title.$t));
 			scAlbum.append(googletitle);
@@ -169,35 +169,35 @@ jQuery(document).ready(function ($)
 
 			/*<?php if ($this->Params->get("show_title", 1)) { ?>*/
 			// Always show our custom local album title
-			var localtitle = $("<div class='pwi_album_title'/>");
+			var localtitle = $("<div class='ozio-pwi_album_title'/>");
 			localtitle.append(this.album_local_title);
 			scAlbum.append(localtitle);
 			/*<?php } ?>*/
 
 			/*<?php if ($this->Params->get("show_date", 0)) { ?>*/
-			var date = $("<div class='pwi_album_title'/>");
+			var date = $("<div class='ozio-pwi_album_title'/>");
 			if (this.hasOwnProperty("manual_date"))
 			{
-				date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + this.manual_date + '</span>');
+				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + this.manual_date + '</span>');
 			}
 			else
 			{
-				date.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
+				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(result.feed.gphoto$timestamp.$t))._format("d mmm yyyy") + '</span>');
 			}
 
 			scAlbum.append(date);
 			/*<?php } ?>*/
 
 			/*<?php if ($this->Params->get("show_counter", 0)) { ?>*/
-			var counter = $("<div class='pwi_album_title'/>");
-			counter.append('<span class="indicator og-camera" ' + 'title="<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>">' + result.feed.gphoto$numphotos.$t + '</span> ');
+			var counter = $("<div class='ozio-pwi_album_title'/>");
+			counter.append('<span class="ozio-indicator ozio-og-camera" ' + 'title="<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>">' + result.feed.gphoto$numphotos.$t + '</span> ');
 			scAlbum.append(counter);
 			/*<?php } ?>*/
 
 			var scAlbums = $("<div class='scAlbums'/>");
 			scAlbums.append(scAlbum);
 			// show();
-			jQuery('#author' + this.album_id).append(scAlbums);
+			jQuery('#ozio-author' + this.album_id).append(scAlbums);
 			alignPictures('div.pwi_album');
 		}
 

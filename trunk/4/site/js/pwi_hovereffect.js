@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($)
 {
 	var author;
-    jQuery("#container").append(jQuery("<ul/>", {'class':'grid cs-style-5'}));
+    jQuery("#container").append(jQuery("<ul/>", {'class':'ozio-he-grid ozio-he-cs-style-5'}));
 
 //<?php
 	$application = JFactory::getApplication("site");
@@ -70,7 +70,7 @@ jQuery(document).ready(function ($)
 //?>
 		// Crea un nuovo sottocontenitore e lo appende al principale
 		jQuery("#container > ul").append(
-			author = jQuery("<li/>", {'id':'author<?php echo $item->id; ?>', 'class':'author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
+			author = jQuery("<li/>", {'id':'ozio-he-author<?php echo $item->id; ?>', 'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
 		);
 
 		// Imposta i parametri e innesca il caricamento
@@ -137,11 +137,11 @@ jQuery(document).ready(function ($)
 		{
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
 			
-			var figure = jQuery("<a class='figure'/>").attr("href",this.album_local_url);
+			var figure = jQuery("<a class='ozio-he-figure'/>").attr("href",this.album_local_url);
 			var img=jQuery("<img src='" + $thumbnail0.url +
 			"' alt='" + result.feed.title.$t +
 			"'/>");
-			var figcaption=jQuery("<div class=\"figcaption\"></div>");
+			var figcaption=jQuery("<div class=\"ozio-he-figcaption\"></div>");
 
 			/*<?php if ($this->Params->get("show_title", 1)) { ?>*/
 			// Always show our custom local album title
@@ -176,8 +176,8 @@ jQuery(document).ready(function ($)
 			figure.append(img);
 			figure.append(figcaption);
 			
-			jQuery('#author' + this.album_id).html('');
-			jQuery('#author' + this.album_id).append(figure);
+			jQuery('#ozio-he-author' + this.album_id).html('');
+			jQuery('#ozio-he-author' + this.album_id).append(figure);
 		}
 
 		function OnLoadError(jqXHR, textStatus, error)
