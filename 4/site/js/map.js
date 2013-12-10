@@ -53,7 +53,9 @@ jQuery(document).ready(function ($)
 	
 	jQuery("#container").append('<div id="oziomap-container"><div class="oziomap_border"><div class="oziomap_map_container"><div id="oziomap"></div></div></div></div>');
 	jQuery("#oziomap-container").append('<div id="oziomap-container-album"></div>');
+<?php if ($this->Params->get("camera_filter", "0")) { ?>
 	jQuery("#oziomap-container").append('<div id="oziomap-container-maker"></div>');
+<?php } ?>	
 	jQuery("#oziomap-container > .oziomap_border").append('<div class="progress progress-striped"><div id="remainingphotos" class="bar" style="width: 0;"></div></div>');
 
 	jQuery("#oziomap-container").css('width',g_map_width);
@@ -89,8 +91,18 @@ jQuery(document).ready(function ($)
 		div.append(title);
 		div.append(albumnumphotos);
 		jQuery("#oziomap-container-album").append(div);
+		jQuery("#oziomap-container-album").append(' ');
 		
 	}
+	function incDecAlbumPhotos(albumid,increment){
+		if (increment){
+			g_parameters[albumid].num_photos+=1;
+		}else{
+			g_parameters[albumid].num_photos-=1;
+		}
+		$('#ozio_album_num_photos_'+albumid).text(' ('+g_parameters[albumid].num_photos+')');
+	}
+	
 	var g_make=[];
 	var g_next_maker_id=1;
 	function addMakeMarker(name){
@@ -100,12 +112,14 @@ jQuery(document).ready(function ($)
 			g_make[name].num=0;
 			g_make[name].id=g_next_maker_id;
 			g_next_maker_id+=1;
+<?php if ($this->Params->get("camera_filter", "0")) { ?>
 			
 			var checkbox=$('<input type="checkbox" class="checkbox" checked="checked"/>');
 			checkbox.change(function() {
 				g_make[name].checked=$(this).is(":checked");
 	        	for (var i=0;i<googlemarkers.length;i++){
 	        		if (googlemarkers[i].oziodata.exif_make==name){
+	    				incDecAlbumPhotos(googlemarkers[i].oziodata.albumid,g_make[name].checked);
 	        			var markervisible=g_make[name].checked && g_parameters[googlemarkers[i].oziodata.albumid].checked;
 	        			googlemarkers[i].setVisible(markervisible);
 	<?php 				if ($this->Params->get("cluster", "1")) { ?>
@@ -121,16 +135,21 @@ jQuery(document).ready(function ($)
 			var div=$('<span class="oziomap-checkcontainer"></span>');
 			var makername=$('<span></span>').text(name);
 			var makernumphotos=$('<span> (0)</span>').attr('id','ozio_maker_num_photos_'+g_make[name].id);
-			var makerimg=$('<img>').attr('src',g_uri_base+'/components/com_oziogallery3/views/map/img/camera.png');
+			//var makerimg=$('<img>').attr('src',g_uri_base+'/components/com_oziogallery3/views/map/img/camera.png');
+			var makerimg=$('<span aria-hidden="false" class="icon-camera icon-large"></span>');
 			div.append(checkbox);
 			div.append(makerimg);
 			div.append(makername);
 			div.append(makernumphotos);
 			jQuery("#oziomap-container-maker").append(div);
+			jQuery("#oziomap-container-maker").append(' ');
+<?php } ?>
 			
 		}
 		g_make[name].num+=1;
+<?php if ($this->Params->get("camera_filter", "0")) { ?>
 		$('#ozio_maker_num_photos_'+g_make[name].id).text(' ('+g_make[name].num+')');
+<?php } ?>
 	}
 	
  	var googlemarkers=[];
@@ -146,6 +165,7 @@ jQuery(document).ready(function ($)
 	var bounds;
 	var autocenter=true;
 	var infowindow;
+	var images_preload=[];
 
 	function linkify(inputText) {
 	    var replacedText, replacePattern1, replacePattern2, replacePattern3;
@@ -223,10 +243,26 @@ jQuery(document).ready(function ($)
 		}
 		if ($this->Params->get('show_image', 0))
 		{
+			if ($this->Params->get('link_titles', 0))
+			{
 ?>
-			var html_img=$('<img  class="thumb_img">').attr('src',marker.oziodata.thumb);
-			html.append(html_img);
+				var html_img_span=$('<div style="height:100px"></div>');
+				var html_img_a=$('<a style="height:100px;display:block;"></a>');
+				html_img_a.attr('target',<?php echo json_encode($this->Params->get("link_target", "_self")); ?>);
+				html_img_a.attr('href', marker.oziodata.link);
+				var html_img=$('<img   style="height:100px;display:block;" class="thumb_img">').attr('src',marker.oziodata.thumb);
+				html_img_a.append(html_img);
+				html_img_span.append(html_img_a);
+				html.append(html_img_span);
 <?php			
+			}else{
+?>
+				var html_img_span=$('<div style="height:100px"></div>');
+				var html_img=$('<img   style="height:100px;display:block;" class="thumb_img" height="100">').attr('src',marker.oziodata.thumb);
+				html_img_span.append(html_img);
+				html.append(html_img_span);
+<?php
+			}
 		}
 		if ($this->Params->get('show_created', 0))
 		{
@@ -386,7 +422,12 @@ jQuery(document).ready(function ($)
 				//var seed = entry.content.src.substring(0, entry.content.src.lastIndexOf("/"))+ "/";
 				var seed = entry.content.src.substring(0, entry.content.src.lastIndexOf("/"));
 				seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
-				
+				var thumb=seed+'h100/';
+
+				//preload
+				imageObj = new Image();
+				imageObj.src =thumb;
+				images_preload.push(imageObj);
 				
 				var latlong=entry.georss$where.gml$Point.gml$pos.$t.split(" ");
 				  var latLng = new google.maps.LatLng(latlong[0],
@@ -397,7 +438,7 @@ jQuery(document).ready(function ($)
 					'summary':entry.summary.$t,
 					'title':entry.title.$t,
 					'link':g_parameters[obj.album_index].link+'#'+(obj.photo_index+1),
-					'thumb':seed+'h100/',
+					'thumb':thumb,
 					'album_title':g_parameters[obj.album_index].title,
 					'lat':latlong[0],
 					'long':latlong[1],
@@ -453,8 +494,9 @@ jQuery(document).ready(function ($)
 				oms.addMarker(marker);
 				marker.setVisible(markervisible);
 				googlemarkers.push(marker);
-				g_parameters[obj.album_index].num_photos+=1;
-				$('#ozio_album_num_photos_'+obj.album_index).text(' ('+g_parameters[obj.album_index].num_photos+')');
+				if (g_make[oziodata['exif_make']].checked){
+    				incDecAlbumPhotos(obj.album_index,true);
+				}
 			}
 					
 	}

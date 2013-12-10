@@ -1,4 +1,4 @@
-.author
+.ozio-author
 {
 	display: inline-table;
 	margin: 16px;
@@ -9,7 +9,7 @@
 	text-align: center;
 }
 
-.coverpage
+.ozio-coverpage
 {
 	border: 7px solid #303030;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -18,7 +18,7 @@
 	margin-bottom: 8px;
 }
 
-.pwi_album_title
+.ozio-pwi_album_title
 {
 	background-color: #303030;
 	border-radius: 7px;
@@ -33,15 +33,15 @@
 	padding: 8px;
 }
 
-.indicator {
+.ozio-indicator {
 	padding-left: 20px;
 }
 
-.og-calendar {
+.ozio-og-calendar {
     padding-left: 0 !important;
 /*background: url("../img/dark/16/calendar.png") no-repeat scroll left 50% transparent;*/
 }
 
-.og-camera{
+.ozio-og-camera{
 	background: url("../img/dark/16/camera.png") no-repeat scroll left 50% transparent;
 }
