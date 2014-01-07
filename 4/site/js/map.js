@@ -83,7 +83,11 @@ jQuery(document).ready(function ($)
         	}
 		});
 		var div=$('<span class="oziomap-checkcontainer"></span>');
-		var title=$('<span></span>').text(g_parameters[albumid].title);
+		var title=$('<span></span>');
+		var a_title=$('<a></a>').text(g_parameters[albumid].title);
+		a_title.attr("href",g_parameters[albumid].link);
+		
+		title.append(a_title);
 		var imgmarker=$('<img>').attr('src',g_parameters[albumid].legend_icon);
 		var albumnumphotos=$('<span> (0)</span>').attr('id','ozio_album_num_photos_'+albumid);
 		div.append(checkbox);
@@ -209,6 +213,16 @@ jQuery(document).ready(function ($)
           mapTypeId: google.maps.MapTypeId.<?php echo $this->Params->get("map_type", "ROADMAP"); ?>,
 		  scrollwheel: false
         });
+        
+<?php echo 'var kml_url='.json_encode(trim($this->Params->get("kml_url"))).';'; ?>
+    	if (kml_url!=''){
+    		var ctaLayer = new google.maps.KmlLayer({
+    	    	url: kml_url
+    	  	});
+    	  	ctaLayer.setMap(googlemap);	
+    	}
+        
+        
 		// InfoWindow creation
 		infowindow = new google.maps.InfoWindow({maxWidth: <?php echo $this->Params->get("infowindow_width", "200"); ?>});
 
@@ -526,7 +540,7 @@ jQuery(document).ready(function ($)
 		{
 			var obj={
 					'album_index':this.album_index,
-					'photo_index':i
+					'photo_index':i-1+result.feed.openSearch$startIndex.$t
 			};
 			remainingphotos-=1;
 			update_remainingphotos();

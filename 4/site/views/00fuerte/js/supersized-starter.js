@@ -270,7 +270,11 @@ jQuery(document).ready(function ($)
 					big: '<?php echo $this->Params->get("big", ""); ?>',
 					base_jurl: '<?php echo JURI::root(true); ?>',
 					fixedheight: parseInt('<?php echo $this->Params->get("fixedheight", 0); ?>'),
-					galleryheight: parseInt('<?php echo $this->Params->get("galleryheight", 250); ?>')
+					galleryheight: parseInt('<?php echo $this->Params->get("galleryheight", 250); ?>'),
+
+					use_deeplink: !parseInt('<?php echo $this->Params->get("disable_deeplink", 0); ?>')
+
+
 				});
 			});
 		}else{
