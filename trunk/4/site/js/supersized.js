@@ -53,30 +53,31 @@
 		// Deep-link
 		// Si applica a: cambio dell'hash manuale dalla barra dell'URL
 		// Individuazione parametri per deep-link e caricamento immagine associata se presente
-
-		$(window).bind('hashchange', function (e)
-		{
-			// Get the hash (fragment) as a string, with any leading # removed. Note that
-			// in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-			var url = $.param.fragment();
-			if (url<1){
-				url=1;
-			}else if (url>base.options.slide_total){
-				url=base.options.slide_total;
-			}
-			if (url)
+		if (options.use_deeplink){
+			$(window).bind('hashchange', function (e)
 			{
-				base.goTo(url);
-				//window.location.href = '#' + url;
-				window.location.hash =  url;
-				hash_slide=url;
-				vars.thumb_page = -(parseInt(hash_slide) - 1) * 150;
-				$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: base.loadpage});
-			}
-			//vars.thumb_page = -(parseInt(url) - 1) * 150;
-			//$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
-		});
-		// DP *F*
+				// Get the hash (fragment) as a string, with any leading # removed. Note that
+				// in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+				var url = $.param.fragment();
+				if (url<1){
+					url=1;
+				}else if (url>base.options.slide_total){
+					url=base.options.slide_total;
+				}
+				if (url)
+				{
+					base.goTo(url);
+					//window.location.href = '#' + url;
+					window.location.hash =  url;
+					hash_slide=url;
+					vars.thumb_page = -(parseInt(hash_slide) - 1) * 150;
+					$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: base.loadpage});
+				}
+				//vars.thumb_page = -(parseInt(url) - 1) * 150;
+				//$(vars.thumb_list).stop().animate({'left': vars.thumb_page}, {duration: 500, easing: 'easeOutExpo', complete: api.loadpage});
+			});
+			// DP *F*
+		}
 
 		/* Build Elements
 		 ----------------------------*/
@@ -1012,11 +1013,13 @@ window.antiloop = 1;
 					break;
 			}
 
-			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deep-link
-			//window.location.href = '#' + parseInt(vars.current_slide + 1);
-			window.location.hash = parseInt(vars.current_slide + 1);
-			// DP *F*
+			if (base.options.use_deeplink){
+				// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+				// Cambio url per deep-link
+				//window.location.href = '#' + parseInt(vars.current_slide + 1);
+				window.location.hash = parseInt(vars.current_slide + 1);
+				// DP *F*
+			}
 
 			return false;
 		};
@@ -1124,14 +1127,15 @@ window.antiloop = 1;
 			liveslide.animate({ left: base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
 			*/
 			
+			if (base.options.use_deeplink){
 
-			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deeplink
-			//window.location.href = '#' + loadSlide;
-			//window.location.href = '#' + parseInt(vars.current_slide + 1);
-			window.location.hash = parseInt(vars.current_slide + 1);
-			// DP *F*
-
+				// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+				// Cambio url per deeplink
+				//window.location.href = '#' + loadSlide;
+				//window.location.href = '#' + parseInt(vars.current_slide + 1);
+				window.location.hash = parseInt(vars.current_slide + 1);
+				// DP *F*
+			}
 			return false;
 		};
 		// end Kreatif
@@ -1307,11 +1311,13 @@ window.antiloop = 1;
 					liveslide.animate({left: 0}, 0).animate({ left: -base.$el.width(), avoidTransforms: false }, base.options.transition_speed);
 					break;
 			}
-			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deep-link
-			//window.location.href = '#' + parseInt(vars.current_slide + 1);
-			window.location.hash = parseInt(vars.current_slide + 1);
-			// DP *F*
+			if (base.options.use_deeplink){
+				// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+				// Cambio url per deep-link
+				//window.location.href = '#' + parseInt(vars.current_slide + 1);
+				window.location.hash = parseInt(vars.current_slide + 1);
+				// DP *F*
+			}
 			return false;
 		};
 
@@ -1409,12 +1415,14 @@ window.antiloop = 1;
 			nextslide.animate({left : base.$el.width()}, 0 ).css('visibility','visible').animate({ left:0, avoidTransforms : false }, base.options.transition_speed, function(){ base.afterAnimation(); });
 			liveslide.animate({left : 0}, 0 ).animate({ left: -base.$el.width(), avoidTransforms : false }, base.options.transition_speed );
 			*/
-			// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
-			// Cambio url per deeplink
-			//window.location.href = '#' + loadSlide;
-			//window.location.href = '#' + parseInt(vars.current_slide + 1);
-			window.location.hash = parseInt(vars.current_slide + 1);
-			// DP *F*
+			if (base.options.use_deeplink){
+				// DP *I* Si applica a ogni funzione che utilizza .nextSlide()
+				// Cambio url per deeplink
+				//window.location.href = '#' + loadSlide;
+				//window.location.href = '#' + parseInt(vars.current_slide + 1);
+				window.location.hash = parseInt(vars.current_slide + 1);
+				// DP *F*
+			}
 			return false;
 		};
 		// end Kreatif
@@ -1560,11 +1568,13 @@ window.antiloop = 1;
 		base.goTo = function (targetSlide)
 		{
 
-			// DP *I* Si applica a ogni funzione che utilizza api.goTo()
-			// Cambio url per deep-link
-			//window.location.href = '#' + targetSlide;
-			window.location.hash = targetSlide;
-			// DP *F*
+			if (base.options.use_deeplink){
+				// DP *I* Si applica a ogni funzione che utilizza api.goTo()
+				// Cambio url per deep-link
+				//window.location.href = '#' + targetSlide;
+				window.location.hash = targetSlide;
+				// DP *F*
+			}
 
 			if (vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
 

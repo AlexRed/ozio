@@ -223,7 +223,7 @@ jQuery(document).ready(function ($)
 					if (result.feed.entry[i].link[j].rel=='self' && result.feed.entry[i].link[j].type=='application/atom+xml'){
 						var obj={
 								'album_index':this.album_index,
-								'photo_index':i
+								'photo_index':i-1+result.feed.openSearch$startIndex.$t
 						};
 						$.ajax({
 							'url':result.feed.entry[i].link[j].href,

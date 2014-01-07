@@ -51,6 +51,9 @@
 					<option value="HYBRID">COM_OZIOGALLERY3_MAP_MAPTYPE_HYBRID</option>
 					<option value="TERRAIN">COM_OZIOGALLERY3_MAP_MAPTYPE_TERRAIN</option>
 				</field>
+				
+				<field name="kml_url" type="url" default="" label="COM_OZIOGALLERY3_MAP_KML_URL_LBL" description="COM_OZIOGALLERY3_MAP_KML_URL_DSC" />
+				
 
 				<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
 				<field name="markers_action" type="list" label="COM_OZIOGALLERY3_MAP_MARKERS_ACTION_LBL" description="COM_OZIOGALLERY3_MAP_MARKERS_ACTION_DSC" default="infowindow">
