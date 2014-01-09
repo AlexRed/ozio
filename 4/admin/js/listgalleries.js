@@ -24,16 +24,7 @@ function TrigAllSelextChange()
 function OnUseridExit()
 {
 	var input = $('jform_params_userid');
-	var re = new RegExp('^[0-9]{21}');
-
-	if (!input.value.match(re))
-	{
-		// Clear previous options
-		$('jform_params_gallery_id').options.length = 0;
-
-		alert('<?php echo JText::_("COM_OZIOGALLERY3_ERR_INVALID_USER"); ?>');
-		input.value = input.defaultValue;
-	}
+	LoadAlbums();
 }
 
 
@@ -42,13 +33,7 @@ function OnUseridChange(value)
 	// Dalla DomReady arriva senza il parametro value
 	if (!value) value = $('jform_params_userid').value;
 
-	var re = new RegExp('^[0-9]{21}');
-
-	//if (input.value.match(re))
-	if (value.match(re))
-	{
-		LoadAlbums();
-	}
+	LoadAlbums();
 }
 
 
@@ -190,6 +175,7 @@ function OnLoadSuccess(result, textStatus, jqXHR)
 
 function OnLoadError(jqXHR, textStatus, error)
 {
+	var input = $('jform_params_userid');
 	$('jform_params_gallery_id_warning').show();
 }
 
