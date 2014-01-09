@@ -89,6 +89,7 @@
 				markers = '',
 				markerContent,
 				thumbMarkers = '',
+				photowallMarkers = '',
 				thumbImage;
 
 			// Deep-link
@@ -148,7 +149,14 @@
 
 					thumbMarkers = thumbMarkers + '<li class="thumb' + thisSlide + current_thumb + '"><img src="' + thumbImage + '"/></li>';
 				}
+				
 				thisSlide++;
+			}
+			if (base.options.photowall_show){
+				for (var pw=0;pw<=Math.min(100-1,base.options.slide_total - 1);pw++){
+					thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progress.gif';
+					photowallMarkers = photowallMarkers + '<li class="photo-wall-marker' + pw + '"><div class="ozio-photowall-he-figure"><img src="' + thumbImage + '"/><div class=\"ozio-photowall-he-figcaption\"></div></div></li>';
+				}
 			}
 
 			if (base.options.slide_links) $(vars.slide_list).html(markers);
@@ -156,6 +164,10 @@
 			if (base.options.thumbnail_show && base.options.thumb_links && vars.thumb_tray.length && ($(window).width() >= 768))
 			{
 				$(vars.thumb_tray).append('<ul id="' + vars.thumb_list.replace('#', '') + '">' + thumbMarkers + '</ul>');
+			}
+			
+			if (base.options.photowall_show){
+				$(vars.photo_wall).append('<ul id="' + vars.photo_wall_list.replace('#', '') + '" class="ozio-photowall-he-grid ozio-photowall-he-cs-style-5">' + photowallMarkers + '</ul>');
 			}
 
 			$(base.el).append(slideSet);
@@ -179,9 +191,34 @@
 			}
 			if (!base.options.thumbnail_show){
 				$(vars.thumb_tray).addClass('thumbnail_hide');
-				
+			}
+			if (!base.options.photowall_show){
+				$(vars.photo_wall).addClass('photowall_hide');
 			}
 			base._start(); // Get things started
+			
+			if (base.options.photowall_show){
+				for (var pw=0;pw<=Math.min(100-1,base.options.slide_total - 1);pw++){
+					thumbImage = base.options.slides[pw + 1 - start_slide].seed + 's68-c/';
+					var currentphotowall = jQuery(".photo-wall-marker" + pw + " img");
+					if (currentphotowall.length>0){
+						currentphotowall[0].src = thumbImage;
+					}
+				}
+				$(vars.photo_wall_list + '> li').click(function ()
+				{
+
+					index = $(vars.photo_wall_list + '> li').index(this);
+					targetSlide = index + 1;
+
+					base.goTo(targetSlide);
+					return false;
+
+				});
+			}
+			
+
+			
 			base.loadpage();
 		};
 
@@ -1452,6 +1489,7 @@ window.antiloop = 1;
 				if (currentthumb.length>0){
 					currentthumb[0].src = base.options.slides[thumbindex].seed + "s150-c/";
 				}
+				
 			}
 			return;
 			
@@ -1499,7 +1537,7 @@ window.antiloop = 1;
 					var thumbindex = parseInt(start - 1 + i);
 					var currentthumb = jQuery(".thumb" + thumbindex + " > img");
 					currentthumb[0].src = seed + "s150-c/";
-
+					
 					// index provided by Google is unreliable
 					//var index = parseInt(result.feed.entry[i].gphoto$position.$t);
 					var index = start - 1 + i;

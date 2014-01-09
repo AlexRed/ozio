@@ -254,7 +254,8 @@ jQuery(document).ready(function ($)
 					slide_links: 'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 					thumb_links: 1,			// Individual thumb links for each slide
 					thumbnail_navigation: typeof ozio_fullscreen != 'undefined'?parseInt('<?php echo $this->Params->get("thumbnail_navigation", 0); ?>'):0, // Thumbnail navigation
-					thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>'),
+					thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>') && !parseInt('<?php echo $this->Params->get("show_photowall", 0); ?>'),
+					photowall_show: typeof ozio_fullscreen != 'undefined'?0:parseInt('<?php echo $this->Params->get("show_photowall", 0); ?>'),
 	
 					slides: slides,
 					slide_total: result.feed.openSearch$totalResults.$t,
