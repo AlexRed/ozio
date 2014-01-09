@@ -663,8 +663,10 @@
 		tray_arrow: '#tray-arrow', // Thumbnail tray button arrow
 		tray_button: '#tray-button', // Thumbnail tray button
 
-		progress_bar: '#progress-bar'      // Progress bar
+		progress_bar: '#progress-bar',      // Progress bar
 
+		photo_wall: '#photo-wall',
+		photo_wall_list: '#photo-wall-list',
 	};
 
 	/* Theme Specific Options

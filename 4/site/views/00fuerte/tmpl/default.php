@@ -92,6 +92,9 @@
 	<div id="thumb-forward"></div>
 </div>
 
+<div id="photo-wall" class="load-item" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
+</div>
+
 <div id="photo-info" class="modal hide fade">
 	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
 			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>

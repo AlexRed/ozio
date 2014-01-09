@@ -109,6 +109,11 @@ class plgContentOzio extends JPlugin
 		$document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio);
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
 
+		if ($cparams->get("show_photowall", 0)==1){
+			$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
+	        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+		}
+		
 		// per la compatibilità con Internet Explorer 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 		
