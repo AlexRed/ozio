@@ -33,7 +33,7 @@ jQuery(document).ready(function ($)
 		// Skip album list menu items
 		if (strpos($item->link, "&view=00fuerte") === false) continue;
 
-		$link = JRoute::_( 'index.php?Itemid='.$item->id );
+		$link = JRoute::_( 'index.php?Itemid='.$item->id, false ); //aggiunto il false
 		$icon='';
 		$legend_icon='';
 		$markers_icon=trim($item->params->get('markers_icon',''));
