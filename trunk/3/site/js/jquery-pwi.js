@@ -1290,7 +1290,7 @@
 	};
 	$.fn.pwi.strings = {
 		clearDiv:"<div style='clear: both;height:0px;'/>",
-		picasaUrl:"http://picasaweb.google.com/data/feed/api/user/"
+		picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//picasaweb.google.com/data/feed/api/user/"
 	};
 
 
