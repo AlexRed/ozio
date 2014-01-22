@@ -70,13 +70,17 @@ class OzioGalleryView00fuerte extends JViewLegacy
 
 		if ($this->Params->get("show_photowall", 0)==1){
 			$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
-	        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+	        //$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+	        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery.nanoscroller.min.js");
+	        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery.lazyload.min.js");
+			$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/nanoscroller.css");
 		}
 		
 		// per la compatibilità con Internet Explorer 
 		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
-		$this->document->addScript("http://maps.google.com/maps/api/js?sensor=false");
+		$current_uri =& JFactory::getURI();
+		$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
 		
 		$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
 		$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';

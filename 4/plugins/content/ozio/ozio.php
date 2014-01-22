@@ -111,13 +111,17 @@ class plgContentOzio extends JPlugin
 
 		if ($cparams->get("show_photowall", 0)==1){
 			$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
-	        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+	        //$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+	        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery.nanoscroller.min.js");
+	        $document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery.lazyload.min.js");
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/nanoscroller.css");
 		}
 		
 		// per la compatibilità con Internet Explorer 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 		
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false");
+		$current_uri =& JFactory::getURI();
+		$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
 		
 		$this->gallerywidth = $cparams->get("gallerywidth", array("text" => "100", "select" => "%"));
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
@@ -208,7 +212,8 @@ class plgContentOzio extends JPlugin
 		$language = JFactory::getLanguage()->get("tag", NULL);
 		$language = $language ? "&amp;language=" . $language : "";
 
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
+		$current_uri =& JFactory::getURI();
+		$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
 
 		if ($this->Params->get("cluster", "1"))
 		{

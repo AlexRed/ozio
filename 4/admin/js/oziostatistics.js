@@ -5,7 +5,7 @@ jQuery(document).ready(function ($)
  	var remainingphotos=0;
  	var max_remainingphotos=1;
  	var strings = {
- 			picasaUrl:"http://picasaweb.google.com/data/feed/api/user/"
+ 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//picasaweb.google.com/data/feed/api/user/"
  		}; 	
 	for (var i=0;i<g_parameters.length;i++){
 		g_parameters[i].views=0;

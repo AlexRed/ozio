@@ -137,7 +137,7 @@ ul#thumb-list li:hover{ cursor:pointer; }
 #thumb-tray.thumbnail_hide {
     display: none !important;
 }
-#photo-wall.photowall_hide {
+#ozio-pw-nano.photowall_hide {
     display: none !important;
 }
 
@@ -156,6 +156,7 @@ ul#thumb-list li:hover{ cursor:pointer; }
 .ozio-photowall-he-grid li {
 	display: inline-block;
 	width: 68px;
+	height: 68px;
 	margin: 0;
 	padding: 1px;
 	text-align: left;
@@ -175,6 +176,7 @@ ul#thumb-list li:hover{ cursor:pointer; }
 	max-width: 100%;
 	display: block;
 	position: relative;
+	margin: 0 auto;
 }
 
 .ozio-photowall-he-grid .ozio-photowall-he-figcaption {

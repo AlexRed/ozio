@@ -665,6 +665,7 @@
 
 		progress_bar: '#progress-bar',      // Progress bar
 
+		photo_wall_nano: '#ozio-pw-nano',
 		photo_wall: '#photo-wall',
 		photo_wall_list: '#photo-wall-list',
 	};
