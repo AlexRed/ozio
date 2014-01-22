@@ -65,7 +65,8 @@ class OzioGalleryView00Fuerte extends JView
 		// per la compatibilità con Internet Explorer 
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false");
+		$current_uri =& JFactory::getURI();
+		$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
 		
 		$this->gallerywidth = $this->Params->get("gallerywidth", array("text" => "100", "select" => "%"));
 		$this->play_button_style = $this->Params->get("play_button", "0") ? '' : 'style="display:none;"';
