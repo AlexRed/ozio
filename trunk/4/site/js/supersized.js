@@ -153,9 +153,12 @@
 				thisSlide++;
 			}
 			if (base.options.photowall_show){
-				for (var pw=0;pw<=Math.min(100-1,base.options.slide_total - 1);pw++){
-					thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progress.gif';
-					photowallMarkers = photowallMarkers + '<li class="photo-wall-marker' + pw + '"><div class="ozio-photowall-he-figure"><img src="' + thumbImage + '"/><div class=\"ozio-photowall-he-figcaption\"></div></div></li>';
+				for (var pw=0;pw<=base.options.slide_total - 1;pw++){
+					thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progressWall.gif';
+					
+					thumbImageLoad = base.options.slides[pw + 1 - start_slide].seed + 's68-c/';
+					
+					photowallMarkers = photowallMarkers + '<li class="photo-wall-marker' + pw + '"><div class="ozio-photowall-he-figure"><img src="' + thumbImage + '"  data-original="'+thumbImageLoad+'"  class="ozio-photowall-lazy" /><div class=\"ozio-photowall-he-figcaption\"></div></div></li>';
 				}
 			}
 
@@ -193,18 +196,26 @@
 				$(vars.thumb_tray).addClass('thumbnail_hide');
 			}
 			if (!base.options.photowall_show){
-				$(vars.photo_wall).addClass('photowall_hide');
+				$(vars.photo_wall_nano).addClass('photowall_hide');
 			}
 			base._start(); // Get things started
 			
 			if (base.options.photowall_show){
-				for (var pw=0;pw<=Math.min(100-1,base.options.slide_total - 1);pw++){
+				$(vars.photo_wall_nano).nanoScroller({
+					paneClass: 'ozio-pw-pane',
+					sliderClass: 'ozio-pw-slider',
+					contentClass: 'ozio-pw-content'
+					
+				});
+				/*
+				for (var pw=0;pw<=base.options.slide_total - 1;pw++){
 					thumbImage = base.options.slides[pw + 1 - start_slide].seed + 's68-c/';
 					var currentphotowall = jQuery(".photo-wall-marker" + pw + " img");
 					if (currentphotowall.length>0){
 						currentphotowall[0].src = thumbImage;
 					}
 				}
+				*/
 				$(vars.photo_wall_list + '> li').click(function ()
 				{
 
@@ -215,6 +226,11 @@
 					return false;
 
 				});
+				
+				$("img.ozio-photowall-lazy").lazyload({
+					 container: $(vars.photo_wall_nano+" > .ozio-pw-content:first")
+				});				
+				
 			}
 			
 

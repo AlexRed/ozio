@@ -161,7 +161,7 @@ jQuery(document).ready(function ($)
  	var remainingphotos=0;
  	var max_remainingphotos=1;
  	var strings = {
- 			picasaUrl:"http://picasaweb.google.com/data/feed/api/user/"
+ 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//picasaweb.google.com/data/feed/api/user/"
  		}; 	
 	var markerCluster;
 	var oms;

@@ -37,7 +37,7 @@ class OzioGalleryController extends JControllerLegacy
 
 		$user = $query["user"] ? "user/" . $query["user"] : "";
 		$urlwrapper = new UrlWrapper();
-		$url = "http://picasaweb.google.com/data/feed/api/" . $user;
+		$url = ($uri->isSSL()?'https':'http')."://picasaweb.google.com/data/feed/api/" . $user;
 		$data = $urlwrapper->Get($url);
 		// Needed by Mootools::Request
 		header('content-type: application/atom+xml; charset=UTF-8; type=feed');
