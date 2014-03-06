@@ -73,6 +73,9 @@ class plgContentOzio extends JPlugin
 		else if (strpos($item["link"], "map")){
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_map($cparams, $galleriaozio);
+		}else if (strpos($item["link"], "nano")){
+			$cparams = new JRegistry($item["params"]);
+			return $this->display_nano($cparams, $galleriaozio);
 		}else{
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_list($cparams, $galleriaozio);
@@ -134,6 +137,53 @@ class plgContentOzio extends JPlugin
 		ob_end_clean();
 		return $result;
 	}
+	
+	function display_nano(&$cparams, $galleriaozio)
+	{
+		$this->Params = $cparams;
+		$this->document = JFactory::getDocument();
+		
+		//Inizio Include view.html.php
+		
+		JHtml::_('bootstrap.framework');
+		if ($this->Params->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
+
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/nanogallery.css");
+
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.css?v=2.1.4");
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5");
+
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/transit/jquery.transit.min.js");
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/hammer.js/hammer.min.js");
+		
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/imagesloaded/imagesloaded.pkgd.min.js");
+		
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/jquery-jsonp/jquery.jsonp.js");
+		
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.pack.js?v=2.1.4");
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5");
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-media.js?v=1.0.5");
+
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/jquery.nanogallery.js");//TODO release min
+
+		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
+		$menu = JFactory::getApplication()->getMenu();
+		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
+		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio;
+
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/ozio-nano.css");
+		$this->document->addScript($prefix . "&amp;v=nano&amp;filename=nano-starter&amp;type=js" .$postfix );		
+		
+		//Fine Include view.html.php
+		
+		ob_start();
+		require JPATH_SITE . "/components/com_oziogallery3/views/nano/tmpl/default.php";
+		$result = JPATH_COMPONENT("com_oziogallery3/views/nano/tmpl/default.php") . ob_get_contents();
+		ob_end_clean();
+		return $result;
+	}	
 	
 	function display_list(&$cparams, $galleriaozio)
 	{
