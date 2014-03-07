@@ -25,3 +25,7 @@
 	white-space: normal;
 }
 
+.nano_folder_home:before{
+	content: '\e80c';
+	font-family: "nano_icon_font";
+}

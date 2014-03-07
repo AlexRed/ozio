@@ -6,8 +6,8 @@ jQuery( document ).ready(function( $ ) {
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
-		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","fixed")=="fixed"?intval($this->Params->get("ozio_nano_thumbnailHeight", "154")):"auto" ); ?>,
-		thumbnailWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailWidth", "230"))); ?>,
+		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","fixed")=="fixed"?intval($this->Params->get("ozio_nano_thumbnailHeight", "150")):"auto" ); ?>,
+		thumbnailWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailWidth", "200"))); ?>,
 		maxItemsPerLine: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxItemsPerLine", "0"))); ?>,
 		maxWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxWidth", "0"))); ?>,
 		touchAnimation: <?php echo json_encode(intval($this->Params->get("ozio_nano_touchAnimation", "1"))); ?>,
@@ -17,19 +17,21 @@ jQuery( document ).ready(function( $ ) {
 		paginationMaxLinesPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxLinesPerPage", "0"))); ?>,
 		thumbnailDisplayInterval: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailDisplayInterval", "30"))); ?>,
 		thumbnailDisplayTransition: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailDisplayTransition", "1"))); ?>,
-		thumbnailLazyLoad: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLazyLoad", "0"))); ?>,
+		thumbnailLazyLoad: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLazyLoad", "1"))); ?>,
 		thumbnailLazyLoadTreshold: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLazyLoadTreshold", "100"))); ?>,
 
-		viewer: <?php echo json_encode($this->Params->get("ozio_nano_viewer", "internal")); ?>,
+		viewer: <?php echo json_encode( "internal"/*$this->Params->get("ozio_nano_viewer", "internal")*/); ?>,
 		thumbnailLabel: <?php echo json_encode(
 							array(
 									'position'=>$this->Params->get("ozio_nano_thumbnailLabel_position", "overImageOnBottom"),
 									'display'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'displayDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_displayDescription", "1")),
+									'maxTitle'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "0")),
+									'maxDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxDescription", "0")),
 							)); 
 						?>,
 				
-		thumbnailHoverEffect: <?php echo $this->Params->get("ozio_nano_thumbnailHoverEffect", "none")=='none'?'null':json_encode($this->Params->get("ozio_nano_thumbnailHoverEffect", "none")); ?>,
+		thumbnailHoverEffect: <?php echo $this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")=='none'?'null':json_encode($this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")); ?>,
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "default")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
 		colorSchemeViewer: <?php echo json_encode($this->Params->get("ozio_nano_colorSchemeViewer", "light")); ?>,
@@ -37,7 +39,7 @@ jQuery( document ).ready(function( $ ) {
 		kind: <?php echo json_encode($this->Params->get("ozio_nano_kind", "picasa")); ?>,
 		userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "110359559620842741677")); ?>,
 		displayBreadcrumb: <?php echo json_encode(intval($this->Params->get("ozio_nano_displayBreadcrumb", "1"))); ?>,
-		blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "")); ?>,
+		blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
 		<?php
 		$albumList=$this->Params->get("ozio_nano_albumList", array());

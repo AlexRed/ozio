@@ -21,7 +21,7 @@
 			<field type="listnanoalbums" name="ozio_nano_albumList" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_DSC" multiple="true" default="">
 			</field>
 
-			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" />
+			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|2013-" />
 			<field type="text" name="ozio_nano_whiteList" label="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_DSC" />
 
 			<field type="radio" name="ozio_nano_displayBreadcrumb" default="1"
@@ -37,20 +37,21 @@
 				<option value="auto">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_AUTO</option>
 			</field>
 			
-			<field type="text" name="ozio_nano_thumbnailHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_DSC" size="6" default="154"/>
-			<field type="text" name="ozio_nano_thumbnailWidth" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_DSC" size="6" default="230"/>
+			<field type="text" name="ozio_nano_thumbnailHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_DSC" size="6" default="150"/>
+			<field type="text" name="ozio_nano_thumbnailWidth" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_DSC" size="6" default="200"/>
 			<field type="text" name="ozio_nano_maxItemsPerLine" label="COM_OZIOGALLERY3_OZIO_NANO_MAXITEMSPERLINE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_MAXITEMSPERLINE_DSC" size="6" default="0"/>
 			<field type="text" name="ozio_nano_maxWidth" label="COM_OZIOGALLERY3_OZIO_NANO_MAXWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_MAXWIDTH_DSC" size="6" default="0"/>
-			
+			<!-- 			
 			<field type="list" name="ozio_nano_viewer" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWER_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWER_DSC" default="internal">
 				<option value="internal">COM_OZIOGALLERY3_OZIO_NANO_VIEWER_INTERNAL</option>
 				<option value="fancybox">COM_OZIOGALLERY3_OZIO_NANO_VIEWER_FANCYBOX</option>
 			</field>
-			
+			 -->
 			<field type="list" name="ozio_nano_thumbnailLabel_position" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_DSC" default="overImageOnBottom">
 				<option value="overImageOnBottom">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_OVERIMAGEONBOTTOM</option>
 				<option value="overImageOnTop">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_OVERIMAGEONTOP</option>
 				<option value="onBottom">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_ONBOTTOM</option>
+				<option value="overImageOnMiddle">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_OVERIMAGEONMIDDLE</option>
 			</field>
 			
 			<field type="radio" name="ozio_nano_thumbnailLabel_display" default="1"
@@ -60,6 +61,8 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+			<field type="text" name="ozio_nano_thumbnailLabel_maxTitle" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_DSC" size="6" default="0"/>
+			
 			<field type="radio" name="ozio_nano_thumbnailLabel_displayDescription" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_DISPLAYDESCRIPTION_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_DISPLAYDESCRIPTION_DSC"
@@ -67,8 +70,9 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+			<field type="text" name="ozio_nano_thumbnailLabel_maxDescription" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_DSC" size="6" default="0"/>
 			
-			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="none">
+			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="imageOpacity50">
 				<option value="none">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_NONE</option>
 				<option value="slideUp">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEUP</option>
 				<option value="slideDown">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEDOWN</option>
@@ -107,6 +111,7 @@
 			<field type="list" name="ozio_nano_theme" label="COM_OZIOGALLERY3_OZIO_NANO_THEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THEME_DSC" default="default">
 				<option value="default">COM_OZIOGALLERY3_OZIO_NANO_THEME_DEFAULT</option>
 				<option value="clean">COM_OZIOGALLERY3_OZIO_NANO_THEME_CLEAN</option>
+				<option value="light">COM_OZIOGALLERY3_OZIO_NANO_THEME_LIGHT</option>
 			</field>
 
 			<field type="list" name="ozio_nano_colorScheme" label="COM_OZIOGALLERY3_OZIO_NANO_COLORSCHEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_COLORSCHEME_DSC" default="light">
@@ -157,7 +162,7 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
-			<field type="radio" name="ozio_nano_thumbnailLazyLoad" default="0"
+			<field type="radio" name="ozio_nano_thumbnailLazyLoad" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOAD_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOAD_DSC"
 				class="btn-group btn-group-yesno">
