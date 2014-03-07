@@ -288,7 +288,7 @@
 	-o-box-sizing: content-box;
 }
 
-.nanogallery_theme_default .nanoGalleryContainer .nanoContainer .subcontainer{
+.nanogallery_theme_default .nanoGalleryContainer .nanoContainer .su.nanoContainer{
 }
 
 .nanogallery_theme_default .nanoGalleryContainer .nanoContainer .imgContainer{
@@ -399,7 +399,8 @@
 /**************************************/
 
 .nanogallery_theme_default .nanoGalleryContainerParent .nanoGalleryPagination{
-	margin: 10px auto 5px auto;
+	color:#eee;
+  margin: 10px auto 5px auto;
 	padding: 4px;
 	text-align:center;
 	position: relative;

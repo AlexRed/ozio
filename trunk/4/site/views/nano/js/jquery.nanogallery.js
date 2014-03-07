@@ -1,5 +1,5 @@
 /**!
- * @preserve nanoGALLERY v4.2.0
+ * @preserve nanoGALLERY v4.2.1
  * Plugin for jQuery by Christophe Brisbois
  * Demo: http://nanogallery.brisbois.fr
  * Sources: https://github.com/Kris-B/nanoGALLERY
@@ -11,33 +11,23 @@
  *  - imagesloaded (https://github.com/desandro/imagesloaded) - optional
  *  - fancybox (http://fancyapps.com) - optional
  *  - jQuery-JSONP (https://github.com/jaubourg/jquery-jsonp) - optional
- *  - http://closure-compiler.appspot.com/home - to minimize the code
+ *  - http://closure-compiler.appspot.com/home - used to minimize the code
  */
 
 
 /*
 
-nanoGALLERY v4.2.0 release notes.
+nanoGALLERY v4.2.1 release notes.
 
 ##### New features:
-- display current image number and total count of images
-- close button in upper right corner
-- use responsive image resolution with Flickr/Picasa/Google+ (small images are used on low-res device)
-- back/forward navigation
-- deep linking of images and albums
-- thumbnail height auto: fill the thumbnail with the entire image (no black space)
+- global photo/album title and description
+- new label position `overImageOnMiddle`
+- new theme `light` (optimized for light backgrounds)
 
 
 ##### New options:
-**Name** | **Description**
-------- | -------
-**locationHash** | Enable or disable back/forward navigation and deep linking of images and photo albums.
-    | *boolean; Default: `false`*
-    | Note: only one gallery per page should use this feature.
-**viewerDisplayLogo** | Enable or disable logo display on top of images (defined in CSS file)
-    | *boolean; Default: `false`*
-**thumbnailHeight** | Height in pixels of the thumbnails
-    | *integer|auto*
+- **i18n**: new elements `thumbnailImageTitle` `thumbnailAlbumTitle` `thumbnailImageDescription` `thumbnailAlbumDescription`.
+- **thumbnailLabel**: new possible value `{position:'overImageOnMiddle'}
 
 
 **See readme.md for usage details**
@@ -45,22 +35,16 @@ nanoGALLERY v4.2.0 release notes.
 ##### Deprecated options:
 - none
 
-##### misc
-- UI is no more freezed during thumbnails rendering
-- removed hover delay on thumbnail (animation starts immediately on mouse hiver now)
-- removed tags parameter in Flickr API requests
-- changed default color scheme from 'default' to 'none'
-- optimized image display
-- fixed fancybox-related code (thanks to grief-of-these-days - https://github.com/grief-of-these-days)
-- minor bugfixes
+##### Misc
+- bug **mouse click outside gallery not working** - fixed
 
 */
  
 
  
-// ########################################
-// ##### nanoGALLERY as JQUERY PLUGIN #####
-// ########################################
+// ##########################################
+// ##### nanoGALLERY as a JQUERY PLUGIN #####
+// ##########################################
 
 (function ($) {
   jQuery.fn.nanoGallery = function (options) {
@@ -89,7 +73,7 @@ nanoGALLERY v4.2.0 release notes.
       thumbnailWidth:230,
       thumbnailHeight:154,
       thumbnailHoverEffect:null,
-      thumbnailLabel:{position:'overImageOnBottom',display:true,displayDescription:true},
+      thumbnailLabel:{position:'overImageOnBottom',display:true,displayDescription:true,maxTitle:0,maxDescription:0},
       thumbnailDisplayInterval:30,
       thumbnailDisplayTransition:true,
       thumbnailLazyLoad:false,
@@ -99,9 +83,15 @@ nanoGALLERY v4.2.0 release notes.
       preset:'none',
       locationHash:false,
       slideshowDelay:3000,
+      thumbnailGlobalImageTitle:'',
+      thumbnailGlobalAlbumTitle:'',
       i18n:{
-        'paginationPrevious':'Previous','paginationPrevious_FR':'Pr�c�dent','paginationPrevious_DE':'Zur�ck','paginationPrevious_IT':'Indietro',
-        'paginationNext':'Next','paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti'
+        'paginationPrevious':'Previous','paginationPrevious_FR':'Précédent','paginationPrevious_DE':'Zurück','paginationPrevious_IT':'Indietro',
+        'paginationNext':'Next','paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti',
+        'thumbnailImageTitle':'',
+        'thumbnailAlbumTitle':'',
+        'thumbnailImageDescription':'',
+        'thumbnailAlbumDescription':''
         }
     }, options );
     
@@ -174,13 +164,11 @@ function nanoGALLERY() {
     g_viewerIsFullscreen=false,
     g_supportTransit=false,
     g_i18nLang='';
-    var g_i18nTranslations={'paginationPrevious':'Previous','paginationNext':'Next','breadcrumbHome':'List of Albums'};
+    var g_i18nTranslations={'paginationPrevious':'Previous', 'paginationNext':'Next', 'breadcrumbHome':'<span class="nano_folder_home"></span>', 'thumbnailImageTitle':'', 'thumbnailAlbumTitle':'', 'thumbnailImageDescription':'', 'thumbnailAlbumDescription':'' };
     var lastImageChange=0,
     g_paginationLinesMaxItemsPossiblePerLine=1,
     g_paginationMaxItemsPerPage=0,
     g_paginationMaxLinesPerPage=0,
-    g_oldBorderColor=0,
-    g_oldLabelOpacity=1,
     g_thumbnailHoverEffect=[],
     g_baseControlID=null,
     g_lastOpenAlbumID=-1,
@@ -188,6 +176,7 @@ function nanoGALLERY() {
     g_viewerImageIsChanged=false,
     g_viewerResizeTimerID=-1,
     g_albumIdxToOpenOnViewerClose=-1,
+    g_custGlobals={},
     g_touched=false,
     g_previous_touched;
     
@@ -219,6 +208,10 @@ function nanoGALLERY() {
   var g_colorScheme_light = {
     navigationbar : { background:'#ddd', border:'1px dotted #999', color:'#eee', colorHover:'#000' },
     thumbnail : { background:'#fff', border:'1px solid #fff', labelBackground:'rgba(170, 170, 170, 0.75)', titleColor:'#fff', descriptionColor:'#eee'}
+  };
+  var g_colorScheme_lightBackground = {
+    navigationbar : { background:'none', border:'', color:'#000', colorHover:'#444' },
+    thumbnail : { background:'#000', border:'1px solid #fff', labelBackground:'rgba(170, 170, 170, 0.85)', titleColor:'#fff', descriptionColor:'#eee'}
   };
 
 
@@ -424,7 +417,7 @@ function nanoGALLERY() {
     if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled || document.mozFullScreenEnabled) {
       g_supportFullscreenAPI=true;
     } else {
-      nanoConsoleLog('Your browser doesn�t support the fullscreen API. Fullscreen button will not be displayed.')
+      nanoConsoleLog('Your browser doesn’t support the fullscreen API. Fullscreen button will not be displayed.')
     }
     
     
@@ -617,13 +610,15 @@ function nanoGALLERY() {
     });
 
     // play the hover out animation on thumbnail --> touchscreen
-    if( g_options.touchAnimation ) {
-      jQuery(document.body).click(function(e){
-        //e.preventDefault();//FIXED
-        ThumbnailHoverOutAll();
-        return;
-      });
-    }
+    // WARNING: this is incorrect and should not be used in this form!!!
+    // TODO
+    //if( g_options.touchAnimation ) {
+    //  jQuery(document.body).click(function(e){
+    //    event.preventDefault();
+    //    ThumbnailHoverOutAll();
+    //    return;
+    //  });
+    //}
 
 //    jQuery("html").on({
 //      mousemove:function(e){
@@ -892,6 +887,37 @@ function nanoGALLERY() {
             break;
           case 'breadcrumbHome':
             g_i18nTranslations.breadcrumbHome=g_options.i18n[key];
+            break;
+          //thumbnailImageTitle
+          case 'thumbnailImageTitle_'+g_i18nLang:
+            g_i18nTranslations.thumbnailImageTitle=g_options.i18n[key];
+            break;
+          case 'thumbnailImageTitle':
+            g_i18nTranslations.thumbnailImageTitle=g_options.i18n[key];
+            break;
+        
+          //thumbnailAlbumTitle
+          case 'thumbnailAlbumTitle_'+g_i18nLang:
+            g_i18nTranslations.thumbnailAlbumTitle=g_options.i18n[key];
+            break;
+          case 'thumbnailAlbumTitle':
+            g_i18nTranslations.thumbnailAlbumTitle=g_options.i18n[key];
+            break;
+        
+          //thumbnailImageDescription
+          case 'thumbnailImageDescription_'+g_i18nLang:
+            g_i18nTranslations.thumbnailImageDescription=g_options.i18n[key];
+            break;
+          case 'thumbnailImageDescription':
+            g_i18nTranslations.thumbnailImageDescription=g_options.i18n[key];
+            break;
+        
+          //thumbnailAlbumDescription
+          case 'thumbnailAlbumDescription_'+g_i18nLang:
+            g_i18nTranslations.thumbnailAlbumDescription=g_options.i18n[key];
+            break;
+          case 'thumbnailAlbumDescription':
+            g_i18nTranslations.thumbnailAlbumDescription=g_options.i18n[key];
             break;
         }
       });
@@ -1577,6 +1603,11 @@ function nanoGALLERY() {
         var src='';
         if( kind == 'album' ) {
           src=itemID;
+          var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
+          s=s.substring(0, s.lastIndexOf('/')) + '/';
+          if( g_options.thumbnailHeight == 'auto' ) {
+			itemThumbURL=s+'w'+g_options.thumbnailWidth+'/';
+		  }
         }
         else {
           src=imgUrl;
@@ -1589,6 +1620,11 @@ function nanoGALLERY() {
           else {
             src=s+'h'+window.screen.height+'/'+filename;
           }
+		  
+          if( g_options.thumbnailHeight == 'auto' ) {
+  		     itemThumbURL=s+'w'+g_options.thumbnailWidth+'/'+filename;
+		  }
+		  
         }
         var newItem= NGAddItem(itemTitle, itemThumbURL, src, itemDescription, '', kind, tags, itemID, albumID,'picasa', picasaSpecificData );
         newItem.imageNumber=nb;
@@ -2266,23 +2302,61 @@ function nanoGALLERY() {
 
 
             if( item.kind == 'album' ) {
-              // album
+              // ALBUM
               if( g_options.thumbnailLabel.display == true ) {
-                //$newDivTemp1.append('<div class="iconInfo"></div>');
+                var sTitle=item.title;
+                if( g_i18nTranslations.thumbnailAlbumTitle != '' ) {
+                  sTitle=g_i18nTranslations.thumbnailAlbumTitle;
+                }
                 var sDesc='';
-                if( g_options.thumbnailLabel.displayDescription == true ) { sDesc = item.description; }
-                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelFolderTitle">'+item.title+'</div><div class="labelDescription">'+sDesc+'</div></div>';
+                if( g_options.thumbnailLabel.displayDescription == true ) { 
+                  if( g_i18nTranslations.thumbnailAlbumDescription != '' ) {
+                    sDesc=g_i18nTranslations.thumbnailAlbumDescription;
               }
+                  else {
+                    sDesc=item.description;
+                  }
+                }
+				
+				if (g_options.thumbnailLabel.maxTitle>3 && sTitle.length>g_options.thumbnailLabel.maxTitle){
+					sTitle=sTitle.substring(0,g_options.thumbnailLabel.maxTitle-3)+'...';
+				}
+				if (g_options.thumbnailLabel.maxDescription>3 && sDesc.length>g_options.thumbnailLabel.maxDescription){
+					sDesc=sDesc.substring(0,g_options.thumbnailLabel.maxDescription-3)+'...';
+				}
+				
+				
+                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelFolderTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
+            }
             }
             else {
-              // image
-              var s=item.title;
+              // IMAGE
+              var sTitle=item.title;
+              var sDesc='';
               if( g_options.thumbnailLabel.display == true ) {
-                if( s === undefined || s.length == 0 ) { s='&nbsp;'; }
-                var sDesc='';
-                if( g_options.thumbnailLabel.displayDescription == true ) { sDesc = item.description; }
+                if( sTitle === undefined || sTitle.length == 0 ) { sTitle='&nbsp;'; }
+                if( g_i18nTranslations.thumbnailImageTitle != '' ) {
+                  sTitle=g_i18nTranslations.thumbnailImageTitle;
+                }
+                
+                if( g_options.thumbnailLabel.displayDescription == true ) { 
+                  if( g_i18nTranslations.thumbnailImageDescription !='' ) {
+                    sDesc=g_i18nTranslations.thumbnailImageDescription;
+                  }
+                  else {
+                    sDesc=item.description;
+                  }
+                }
+				
+				if (g_options.thumbnailLabel.maxTitle>3 && sTitle.length>g_options.thumbnailLabel.maxTitle){
+					sTitle=sTitle.substring(0,g_options.thumbnailLabel.maxTitle-3)+'...';
+				}
+				if (g_options.thumbnailLabel.maxDescription>3 && sDesc.length>g_options.thumbnailLabel.maxDescription){
+					sDesc=sDesc.substring(0,g_options.thumbnailLabel.maxDescription-3)+'...';
+				}
+				
                 if( foundDesc && sDesc.length == 0 && g_options.thumbnailLabel.position == 'onBottom' ) { sDesc='&nbsp;'; }
-                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelImageTitle">'+s+'</div><div class="labelDescription">'+sDesc+'</div></div>';
+                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelImageTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
               }
             }
             newElt[newEltIdx++]='</div></div>';
@@ -2310,7 +2384,7 @@ function nanoGALLERY() {
                   item.thumbWidth=instance.images[0].img.naturalWidth;
                   var ratio=instance.images[0].img.naturalWidth/instance.images[0].img.naturalHeight;
                   var w=g_options.thumbnailHeight*ratio;
-                  item.$elt.find('.imgContainer').weight(w);
+                  item.$elt.find('.imgContainer').width(w);
                   item.thumbRealWidth=w+g_containerOuterWidth;
                   item.$elt.width(item.thumbRealWidth);
                   b=true;
@@ -2336,11 +2410,17 @@ function nanoGALLERY() {
               case 'onBottom':
                 $newDiv.find('.labelImage').css({'top':'0', 'position':'relative'});
                 $newDiv.find('.labelImageTitle').css('white-space','nowrap');
-                $newDiv.find('.labelImageFolder').css('white-space','nowrap');
+                $newDiv.find('.labelFolderTitle').css('white-space','nowrap');
                 $newDiv.find('.labelDescription').css('white-space','nowrap');
                 break;
               case 'overImageOnTop':
                 $newDiv.find('.labelImage').css('top','0');
+                break;
+              case 'overImageOnMiddle':
+                $newDiv.find('.labelImage').css({'top':'0', 'height':'100%'});
+                $newDiv.find('.labelFolderTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
+                $newDiv.find('.labelImageTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
+                $newDiv.find('.labelDescription').css({'width':'100%','position':'absolute','top':'50%'});
                 break;
               case 'overImageOnBottom':
               default :
@@ -2456,17 +2536,21 @@ function nanoGALLERY() {
               }
             }
             
-            // CSS init depending on choosen hover effect
-            ThumbnailInit($newDiv);
             
             // backup values used in animations/transitions
             if( firstPass ) {
-              g_oldBorderColor=$newDiv.css('border-color');
-              if( g_oldBorderColor == '' || g_oldBorderColor == null || g_oldBorderColor == undefined ) { g_oldBorderColor='#000'; }
-              g_oldLabelOpacity=$newDiv.find('.labelImage').css('opacity');
+              g_custGlobals.oldBorderColor=$newDiv.css('border-color');
+              if( g_custGlobals.oldBorderColor == '' || g_custGlobals.oldBorderColor == null || g_custGlobals.oldBorderColor == undefined ) { g_custGlobals.oldBorderColor='#000'; }
+              g_custGlobals.oldLabelOpacity=$newDiv.find('.labelImage').css('opacity');
 //              SetGalleryWidth(0);
+              var c=jQuery.Color($newDiv.find('.labelImage'),'backgroundColor');
+              g_custGlobals.oldLabelRed=c.red();
+              g_custGlobals.oldLabelGreen=c.green();
+              g_custGlobals.oldLabelBlue=c.blue();
               firstPass=false;
             }
+            // CSS init depending on choosen hover effect
+            ThumbnailInit($newDiv);
             
             /*jQuery(newDiv).nanoHoverIntent({
               over: function() {
@@ -2592,38 +2676,41 @@ function nanoGALLERY() {
   }
   
   function ThumbnailInit( elt ) {
-    var useTransitPlugin = false;
     var n=jQuery(elt).data("index");
     if( n == undefined ) { return; }    // required because can be fired on ghost elements
     var item=g_ngItems[n];
 
     for( j=0; j<g_thumbnailHoverEffect.length; j++) {
+      var useTransitPlugin = false;
       switch(g_thumbnailHoverEffect[j].name ) {
         case 'scaleLabelOverImage':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             //jQuery(elt).css('overflow','hidden');
             setElementOnTop('', jQuery(elt).find('.imgContainer'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:0.5});
             jQuery(elt).find('.imgContainer').css({ 'scale':'1'});
+            useTransitPlugin=true;
           }
           break;
         case 'overScale':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             setElementOnTop('', jQuery(elt).find('.labelImage'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:1.5});
             jQuery(elt).find('.imgContainer').css({ 'opacity': '1', 'scale':'1'});
+            useTransitPlugin=true;
           }
           break;
         case 'overScaleOutside':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             setElementOnTop('', jQuery(elt).find('.labelImage'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:1.5});
             jQuery(elt).find('.imgContainer').css({ 'opacity': '1', 'scale':'1'});
+            useTransitPlugin=true;
           }
           break;
         case 'rotateCornerBL':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
               jQuery(elt).css('overflow','hidden');
               jQuery(elt).find('.labelImage').css('opacity','1').css({ rotate: '-90deg', 'transform-origin': '100% 100%' });
@@ -2633,7 +2720,7 @@ function nanoGALLERY() {
           }
           break;
         case 'rotateCornerBR':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
               jQuery(elt).css('overflow','hidden');
               jQuery(elt).find('.labelImage').css('opacity','1').css({ rotate: '90deg', 'transform-origin': '0% 100%' });
@@ -2643,7 +2730,7 @@ function nanoGALLERY() {
           }
           break;
         case 'imageRotateCornerBL':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
               setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
               jQuery(elt).css('overflow','hidden');
@@ -2654,7 +2741,7 @@ function nanoGALLERY() {
           }
           break;
         case 'imageRotateCornerBR':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
               setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
               jQuery(elt).css('overflow','hidden');
@@ -2665,66 +2752,80 @@ function nanoGALLERY() {
           }
           break;
         case 'slideUp':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1').css('top',item.thumbRealHeight);
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
+            useTransitPlugin=true;
           }
           break;
         case 'slideDown':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1').css('top',-item.thumbRealHeight);
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
+            useTransitPlugin=true;
           }
           break;
         case 'slideRight':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1').css('left',-item.thumbRealWidth);
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
+            useTransitPlugin=true;
           }
           break;
         case 'slideLeft':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1').css('left',item.thumbRealWidth);
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
+            useTransitPlugin=true;
           }
           break;
         case 'imageSlideUp':
         case 'imageSlideDown':
         case 'imageSlideRight':
         case 'imageSlideLeft':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1');
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
+            useTransitPlugin=true;
           }
           break;
         case 'labelAppear':
         case 'labelAppear75':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-            jQuery(elt).find('.labelImage').css('opacity','0');
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            //jQuery(elt).find('.labelImage').css('opacity','0');
+            var c='rgb('+g_custGlobals.oldLabelRed+','+g_custGlobals.oldLabelGreen+','+g_custGlobals.oldLabelBlue+',0)';
+            jQuery(elt).find('.labelImage').css('backgroundColor',c);
+            jQuery(elt).find('.labelImageTitle').css('opacity','0');
+            jQuery(elt).find('.labelFolderTitle').css('opacity','0');
+            jQuery(elt).find('.labelDescription').css('opacity','0');
+            useTransitPlugin=false;
           }
           break;
         case 'labelSlideUpTop':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css({'top':item.thumbRealHeight, 'bottom':'none'});
+            useTransitPlugin=true;
           }
           break;
         case 'labelSlideUp':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css({'bottom':-item.thumbRealHeight,'top':'none'});
+            useTransitPlugin=true;
           }
           break;
         case 'labelSlideDown':
-          if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css({'top':-item.thumbRealHeight, 'bottom':'none'});
+            useTransitPlugin=true;
           }
           break;
         case 'descriptionSlideUp':
@@ -2732,6 +2833,7 @@ function nanoGALLERY() {
             jQuery(elt).css('overflow','hidden');
             var p=item.thumbRealHeight - (jQuery(elt).find('.labelImage').outerHeight(true)-jQuery(elt).find('.labelImage').height())/2 - g_oneThumbnailLabelTitleHeight +'px';
             jQuery(elt).find('.labelImage').css({'top':p, 'bottom':null});
+            useTransitPlugin=true;
           }
           break;
 
@@ -2773,17 +2875,23 @@ function nanoGALLERY() {
           break;
         case 'borderLighter':
         case 'borderDarker':
-          //useTransitPlugin=true;
+          useTransitPlugin=false;
           break;
         case 'imageScale150':
           jQuery(elt).css('overflow','hidden');
+        case 'imageScale150Outside':
+          useTransitPlugin=true;
           break;
 
       }
       if( !g_supportTransit ) { useTransitPlugin=false; }
-      if( useTransitPlugin || g_supportTransit ) {
+      if( useTransitPlugin ) { //|| g_supportTransit ) {
         if( g_thumbnailHoverEffect[j].easing == 'swing' ) { g_thumbnailHoverEffect[j].easing = 'ease'; }
         if( g_thumbnailHoverEffect[j].easingBack == 'swing' ) { g_thumbnailHoverEffect[j].easingBack = 'ease'; }
+        g_thumbnailHoverEffect[j].method='transit';
+      }
+      else {
+        g_thumbnailHoverEffect[j].method='jquery';
       }
     }
 
@@ -2801,8 +2909,8 @@ function nanoGALLERY() {
       for( j=0; j<g_thumbnailHoverEffect.length; j++) {
         switch(g_thumbnailHoverEffect[j].name ) {
           case 'scaleLabelOverImage':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'opacity': '1', 'scale':'1'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ 'scale':'0.5'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2814,8 +2922,8 @@ function nanoGALLERY() {
             break;
           case 'overScale':
           case 'overScaleOutside':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'opacity': '1', 'scale':'1'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ 'opacity': '0', 'scale':'0.5'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2826,7 +2934,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageInvisible':
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('.imgContainer').transition({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -2834,39 +2942,39 @@ function nanoGALLERY() {
             }
             break;
           case 'rotateCornerBL':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.labelImage').transition({ rotate: '0deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ rotate: '90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
             }
             break;
           case 'rotateCornerBR':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.labelImage').transition({ rotate: '0deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ rotate: '-90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
             }
             break;
           case 'imageRotateCornerBL':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.imgContainer').transition({ rotate: '90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
             }
             break;
           case 'imageRotateCornerBR':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.imgContainer').transition({ rotate: '-90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
             }
             break;
           case 'slideUp':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-' + item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2877,9 +2985,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideDown':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2890,9 +2998,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideRight':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'left': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2903,9 +3011,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideLeft':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-'+ item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'left': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -2916,9 +3024,9 @@ function nanoGALLERY() {
             }
             break;
           case 'imageSlideUp':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-' + item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -2927,9 +3035,9 @@ function nanoGALLERY() {
             }
             break;
           case 'imageSlideDown':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -2938,9 +3046,9 @@ function nanoGALLERY() {
             }
             break;
           case 'imageSlideLeft':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-' + item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -2949,9 +3057,9 @@ function nanoGALLERY() {
             }
             break;
           case 'imageSlideRight':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -2960,28 +3068,28 @@ function nanoGALLERY() {
             }
             break;
           case 'labelAppear':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
-                jQuery(elt).find('.labelImage').transition({ 'opacity': '1'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              }
-              else {
-                jQuery(elt).find('.labelImage').animate({ 'opacity': '1'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              }
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              var c='rgba('+g_custGlobals.oldLabelRed+','+g_custGlobals.oldLabelGreen+','+g_custGlobals.oldLabelBlue+',1)';
+              jQuery(elt).find('.labelImage').animate({ 'backgroundColor': c}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelImageTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelFolderTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelDescription').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              //jQuery(elt).find('.labelImage').animate({ 'opacity': '1'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             break;
           case 'labelAppear75':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
-                jQuery(elt).find('.labelImage').transition({ 'opacity': '0.75'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              //jQuery(elt).find('.labelImage').animate({ 'opacity': '0.75'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              var c='rgba('+g_custGlobals.oldLabelRed+','+g_custGlobals.oldLabelGreen+','+g_custGlobals.oldLabelBlue+',0.75)';
+              jQuery(elt).find('.labelImage').animate({ 'backgroundColor': c}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelImageTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelFolderTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelDescription').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
-              else {
-                jQuery(elt).find('.labelImage').animate({ 'opacity': '0.75'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              }
-            }
             break;
           case 'labelSlideDown':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -2990,8 +3098,8 @@ function nanoGALLERY() {
             }
             break;
           case 'labelSlideUpTop':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -3000,8 +3108,8 @@ function nanoGALLERY() {
             }
             break;
           case 'labelSlideUp':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'bottom': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -3011,7 +3119,7 @@ function nanoGALLERY() {
             break;
           case 'descriptionSlideUp':
             if( g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -3020,7 +3128,7 @@ function nanoGALLERY() {
             }
             break;
           case 'labelOpacity50':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('.labelImage').transition({ 'opacity': 0.5 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3028,7 +3136,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageOpacity50':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('.imgContainer').transition({ 'opacity': 0.5 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3036,25 +3144,25 @@ function nanoGALLERY() {
             }
             break;
           case 'borderLighter':
-            if( g_supportTransit ) {
-              jQuery(elt).transition({ 'borderColor': lighterColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              jQuery(elt).transition({ 'borderColor': lighterColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
-              //jQuery(elt).animate({ 'borderColor': lighterColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              jQuery(elt).animate({ 'borderTopColor': lighterColor(g_oldBorderColor,0.5), 'borderRightColor': lighterColor(g_oldBorderColor,0.5), 'borderBottomColor': lighterColor(g_oldBorderColor,0.5), 'borderLeftColor': lighterColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              //jQuery(elt).animate({ 'borderColor': lighterColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).animate({ 'borderTopColor': lighterColor(g_custGlobals.oldBorderColor,0.5), 'borderRightColor': lighterColor(g_custGlobals.oldBorderColor,0.5), 'borderBottomColor': lighterColor(g_custGlobals.oldBorderColor,0.5), 'borderLeftColor': lighterColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             break;
           case 'borderDarker':
-            if( g_supportTransit ) {
-              jQuery(elt).transition({ 'borderColor': darkerColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              jQuery(elt).transition({ 'borderColor': darkerColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
-              //jQuery(elt).animate({ 'borderColor': darkerColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              jQuery(elt).animate({ 'borderTopColor': darkerColor(g_oldBorderColor,0.5), 'borderRightColor': darkerColor(g_oldBorderColor,0.5), 'borderBottomColor': darkerColor(g_oldBorderColor,0.5), 'borderLeftColor': darkerColor(g_oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              //jQuery(elt).animate({ 'borderColor': darkerColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).animate({ 'borderTopColor': darkerColor(g_custGlobals.oldBorderColor,0.5), 'borderRightColor': darkerColor(g_custGlobals.oldBorderColor,0.5), 'borderBottomColor': darkerColor(g_custGlobals.oldBorderColor,0.5), 'borderLeftColor': darkerColor(g_custGlobals.oldBorderColor,0.5) },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             break;
           case 'imageScale150':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('img').transition({ scale: 1.5 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3063,7 +3171,7 @@ function nanoGALLERY() {
             break;
           case 'imageScale150Outside':
             setElementOnTop('', elt);
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('img').transition({ scale: 1.5 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3072,7 +3180,7 @@ function nanoGALLERY() {
             break;
           case 'scale120':
             setElementOnTop('', elt);
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).transition({ scale: 1.2 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3080,7 +3188,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageFlipHorizontal':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               setElementOnTop('', elt);
               var n= Math.round(item.thumbRealHeight*1.2) + 'px';
               //jQuery(elt).find('.subcontainer').transition({ rotateX: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
@@ -3089,7 +3197,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageFlipVertical':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               setElementOnTop('', elt);
               var n= Math.round(item.thumbRealWidth*1.2) + 'px';
               jQuery(elt).find('.imgContainer').transition({ perspective: n, rotateY: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
@@ -3098,14 +3206,14 @@ function nanoGALLERY() {
             }
             break;
           case 'flipHorizontal':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               setElementOnTop('', elt);
               var n= Math.round(item.thumbRealHeight*1.2) + 'px';
               jQuery(elt).transition({ perspective: n, rotateX: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             break;
           case 'flipVertical':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               setElementOnTop('', elt);
               var n= Math.round(item.thumbRealWidth*1.2) + 'px';
               jQuery(elt).transition({ perspective: n, rotateY: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
@@ -3136,8 +3244,8 @@ function nanoGALLERY() {
       for( j=0; j<g_thumbnailHoverEffect.length; j++) {
         switch(g_thumbnailHoverEffect[j].name ) {
           case 'scaleLabelOverImage':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'opacity': '0', 'scale':'0.5'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
                 jQuery(elt).find('.imgContainer').transition({ 'scale':'1'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               }
@@ -3149,8 +3257,8 @@ function nanoGALLERY() {
             break;
           case 'overScale':
           case 'overScaleOutside':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-            if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'opacity': '0', 'scale':'1.5'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
                 jQuery(elt).find('.imgContainer').transition({ 'opacity': '1', 'scale':'1'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               }
@@ -3161,7 +3269,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageInvisible':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('.imgContainer').transition({ 'opacity': '1'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             else {
@@ -3169,16 +3277,16 @@ function nanoGALLERY() {
             }
             break;
           case 'rotateCornerBL':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.labelImage').transition({ rotate: '-90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ rotate: '0deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
             }
             break;
           case 'rotateCornerBR':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.labelImage').transition({ rotate: '90deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.imgContainer').transition({ rotate: '0deg'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -3186,16 +3294,16 @@ function nanoGALLERY() {
             break;
           case 'imageRotateCornerBL':
           case 'imageRotateCornerBR':
-            if( g_supportTransit ) {
-              if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              if( g_options.thumbnailLabel.position != 'onBottom' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'rotate': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack );
               }
             }
             break;
           case 'slideUp':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -3206,9 +3314,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideDown':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-'+item.thumbRealHeight + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -3219,9 +3327,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideRight':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= '-'+item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -3232,9 +3340,9 @@ function nanoGALLERY() {
             }
             break;
           case 'slideLeft':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
               var n= item.thumbRealWidth + 'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'left': 0},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
                 jQuery(elt).find('.labelImage').transition({ 'left': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
@@ -3248,8 +3356,8 @@ function nanoGALLERY() {
           case 'imageSlideDown':
           case 'imageSlideLeft':
           case 'imageSlideRight':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.imgContainer').transition({ 'top': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
                 jQuery(elt).find('.imgContainer').transition({ 'left': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               }
@@ -3261,18 +3369,18 @@ function nanoGALLERY() {
             break;
           case 'labelAppear':
           case 'labelAppear75':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
-                jQuery(elt).find('.labelImage').transition({ 'opacity': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              //jQuery(elt).find('.labelImage').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              var c='rgb('+g_custGlobals.oldLabelRed+','+g_custGlobals.oldLabelGreen+','+g_custGlobals.oldLabelBlue+',0)';
+              jQuery(elt).find('.labelImage').animate({ 'backgroundColor': c},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelImageTitle').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelFolderTitle').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              jQuery(elt).find('.labelDescription').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
-              else {
-                jQuery(elt).find('.labelImage').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
-              }
-            }
             break;
           case 'labelSlideDown':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': '-99%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               }
               else {
@@ -3283,7 +3391,7 @@ function nanoGALLERY() {
           case 'labelSlideUpTop':
             var n= item.thumbRealHeight + 'px';
             if( g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': n},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -3293,8 +3401,8 @@ function nanoGALLERY() {
             break;
 
           case 'labelSlideUp':
-            if( g_options.thumbnailLabel.position == 'overImageOnTop' || g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
-              if( g_supportTransit ) {
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'bottom': '-99%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               }
               else {
@@ -3305,7 +3413,7 @@ function nanoGALLERY() {
           case 'descriptionSlideUp':
             if( g_options.thumbnailLabel.position == 'overImageOnBottom' ) {
               var p=item.thumbRealHeight - (jQuery(elt).find('.labelImage').outerHeight(true)-jQuery(elt).find('.labelImage').height())/2 - g_oneThumbnailLabelTitleHeight +'px';
-              if( g_supportTransit ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
                 jQuery(elt).find('.labelImage').transition({ 'top': p},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               }
               else {
@@ -3314,15 +3422,15 @@ function nanoGALLERY() {
             }
             break;
           case 'labelOpacity50':
-            if( g_supportTransit ) {
-              jQuery(elt).find('.labelImage').transition({ 'opacity': g_oldLabelOpacity },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              jQuery(elt).find('.labelImage').transition({ 'opacity': g_custGlobals.oldLabelOpacity },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             else {
-              jQuery(elt).find('.labelImage').animate({ 'opacity': g_oldLabelOpacity },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              jQuery(elt).find('.labelImage').animate({ 'opacity': g_custGlobals.oldLabelOpacity },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             break;
           case 'imageOpacity50':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('.imgContainer').transition({ 'opacity': 1 },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             else {
@@ -3331,17 +3439,17 @@ function nanoGALLERY() {
             break;
           case 'borderLighter':
           case 'borderDarker':
-            if( g_supportTransit ) {
-              jQuery(elt).transition({ 'borderColor': g_oldBorderColor },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+              jQuery(elt).transition({ 'borderColor': g_custGlobals.oldBorderColor },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             else {
-              //jQuery(elt).animate({ 'borderColor': g_oldBorderColor },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
-              jQuery(elt).animate({ 'borderTopColor': g_oldBorderColor, 'borderRightColor': g_oldBorderColor, 'borderBottomColor': g_oldBorderColor, 'borderLeftColor': g_oldBorderColor },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              //jQuery(elt).animate({ 'borderColor': g_custGlobals.oldBorderColor },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              jQuery(elt).animate({ 'borderTopColor': g_custGlobals.oldBorderColor, 'borderRightColor': g_custGlobals.oldBorderColor, 'borderBottomColor': g_custGlobals.oldBorderColor, 'borderLeftColor': g_custGlobals.oldBorderColor },g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
             }
             break;
           case 'imageScale150':
           case 'imageScale150Outside':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('img').transition({ scale: 1 },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             else {
@@ -3349,7 +3457,7 @@ function nanoGALLERY() {
             }
             break;
           case 'scale120':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).transition({ scale: 1 },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             else {
@@ -3357,7 +3465,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageFlipHorizontal':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(item.thumbRealHeight*1.2) + 'px';
               //jQuery(elt).find('.subcontainer').transition({rotateX: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               jQuery(elt).find('.imgContainer').transition({ perspective: n, rotateX: '0deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
@@ -3365,7 +3473,7 @@ function nanoGALLERY() {
             }
             break;
           case 'imageFlipVertical':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(item.thumbRealWidth*1.2) + 'px';
               //jQuery(elt).find('.subcontainer').transition({ rotateY: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               jQuery(elt).find('.imgContainer').transition({ perspective: n, rotateY: '0deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
@@ -3373,13 +3481,13 @@ function nanoGALLERY() {
             }
             break;
           case 'flipHorizontal':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(g_oneThumbnailHeight*1.2) + 'px';
               jQuery(elt).transition({ perspective:n, rotateX: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
             break;
           case 'flipVertical':
-            if( g_supportTransit ) {
+            if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(item.thumbRealWidth*1.2) + 'px';
               jQuery(elt).transition({ perspective:n, rotateY: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
@@ -3949,6 +4057,10 @@ function nanoGALLERY() {
           case 'light':
             cs=g_colorScheme_light;
             g_colorSchemeLabel='nanogallery_colorscheme_light';
+            break;
+          case 'lightBackground':
+            cs=g_colorScheme_lightBackground;
+            g_colorSchemeLabel='nanogallery_colorscheme_lightBackground';
             break;
           case 'darkRed':
             cs=g_colorScheme_darkRed;
