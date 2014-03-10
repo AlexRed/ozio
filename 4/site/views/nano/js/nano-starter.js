@@ -6,7 +6,7 @@ jQuery( document ).ready(function( $ ) {
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
-		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","fixed")=="fixed"?intval($this->Params->get("ozio_nano_thumbnailHeight", "150")):"auto" ); ?>,
+		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")=="fixed"?intval($this->Params->get("ozio_nano_thumbnailHeight", "150")):"auto" ); ?>,
 		thumbnailWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailWidth", "200"))); ?>,
 		maxItemsPerLine: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxItemsPerLine", "0"))); ?>,
 		maxWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxWidth", "0"))); ?>,
@@ -26,13 +26,13 @@ jQuery( document ).ready(function( $ ) {
 									'position'=>$this->Params->get("ozio_nano_thumbnailLabel_position", "overImageOnBottom"),
 									'display'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'displayDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_displayDescription", "1")),
-									'maxTitle'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "0")),
+									'maxTitle'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
 									'maxDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxDescription", "0")),
 							)); 
 						?>,
 				
 		thumbnailHoverEffect: <?php echo $this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")=='none'?'null':json_encode($this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")); ?>,
-		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "default")); ?>,
+		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
 		colorSchemeViewer: <?php echo json_encode($this->Params->get("ozio_nano_colorSchemeViewer", "light")); ?>,
 
