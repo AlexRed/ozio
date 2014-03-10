@@ -29,3 +29,11 @@
 	content: '\e80c';
 	font-family: "nano_icon_font";
 }
+
+.nanogallery_colorscheme_light .nanoGalleryNavigationbarContainer .nanoGalleryNavigationbar .folder:hover {
+    color: #ffffff;
+}
+
+.nanogallery_colorscheme_light .nanoGalleryNavigationbarContainer .nanoGalleryNavigationbar .separator:hover {
+    color: #ffffff;
+}

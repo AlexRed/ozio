@@ -32,7 +32,7 @@
 				<option value="0">JNO</option>
 			</field>
 			
-			<field type="list" name="ozio_nano_thumbnailHeight_kind" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_DSC" default="fixed">
+			<field type="list" name="ozio_nano_thumbnailHeight_kind" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_DSC" default="auto">
 				<option value="fixed">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_FIXED</option>
 				<option value="auto">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_AUTO</option>
 			</field>
@@ -61,7 +61,7 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
-			<field type="text" name="ozio_nano_thumbnailLabel_maxTitle" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_DSC" size="6" default="0"/>
+			<field type="text" name="ozio_nano_thumbnailLabel_maxTitle" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_DSC" size="6" default="25"/>
 			
 			<field type="radio" name="ozio_nano_thumbnailLabel_displayDescription" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_DISPLAYDESCRIPTION_LBL"
@@ -108,7 +108,7 @@
 				<option value="imageRotateCornerBL">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGEROTATECORNERBL</option>
 			</field>
 			
-			<field type="list" name="ozio_nano_theme" label="COM_OZIOGALLERY3_OZIO_NANO_THEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THEME_DSC" default="default">
+			<field type="list" name="ozio_nano_theme" label="COM_OZIOGALLERY3_OZIO_NANO_THEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THEME_DSC" default="clean">
 				<option value="default">COM_OZIOGALLERY3_OZIO_NANO_THEME_DEFAULT</option>
 				<option value="clean">COM_OZIOGALLERY3_OZIO_NANO_THEME_CLEAN</option>
 				<option value="light">COM_OZIOGALLERY3_OZIO_NANO_THEME_LIGHT</option>
