@@ -1,6 +1,7 @@
 jQuery(document).ready(function ($)
 {
-
+	g_flickrThumbSizeStr='sq';
+	g_list_nano_options=[];
 //<?php
 	$application = JFactory::getApplication("site");
 	$menu = $application->getMenu();
@@ -26,12 +27,13 @@ jQuery(document).ready(function ($)
 	}
 	$ids=$all_ids;
 	$g_parameters=array();
+	$g_nano_users=array();
 	
 	foreach($ids as &$i)
 	{
 		$item = $menu->getItem($i);
 		// Skip album list menu items
-		if (strpos($item->link, "&view=00fuerte") === false) continue;
+		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=nano") === false) continue;
 
 		$link = JRoute::_( 'index.php?Itemid='.$item->id, false ); //aggiunto il false
 		$icon='';
@@ -43,7 +45,47 @@ jQuery(document).ready(function ($)
 		}else{
 			$legend_icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . 'default.png';
 		}
-		$g_parameters[]=array('params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+		if (strpos($item->link, "&view=00fuerte") !== false){
+			$g_parameters[]=array('skin'=>'00fuerte','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+		}else{
+			?>
+			//nano
+			g_list_nano_options[g_list_nano_options.length]={
+					thumbSize:64,
+					album_local_url:'<?php echo $link; ?>',
+					icon:<?php echo json_encode($icon); ?>,
+					legend_icon:<?php echo json_encode($legend_icon); ?>,
+					g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
+					locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
+					kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
+					userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+					blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
+					whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
+					<?php
+					$non_printable_separator="\x16";
+					$albumList=$item->params->get("ozio_nano_albumList", array());
+					if (!empty($albumList) && is_array($albumList) ){
+						if (count($albumList)==1){
+							list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+							$kind=$item->params->get("ozio_nano_kind", "picasa");
+							if ($kind=='picasa'){
+								echo 'album:'.json_encode($albumid).",\n";
+							}else{
+								echo 'photoset:'.json_encode($albumid).",\n";
+							}
+						}else{
+							$albumTitles=array();
+							foreach ($albumList as $a){
+								list($albumid,$title)=explode($non_printable_separator,$a);
+								$albumTitles[]=$title;
+							}
+							echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
+						}
+					}		
+					?>
+				};
+			<?php
+		}
 	}
 	echo "\n".'var g_parameters='.json_encode($g_parameters).';';
 	echo "\n".'var g_uri_base='.json_encode(JURI::base(true)).';';
@@ -321,6 +363,26 @@ jQuery(document).ready(function ($)
 			g_parameters[i].num_photos=0;
 			load_album_data(i,1);
 		}
+		
+		for (var i=0;i<g_list_nano_options.length;i++){
+			var url='';
+			if (g_list_nano_options[i].kind=='picasa'){
+				url = 'http://picasaweb.google.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
+			}else{
+				url="http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
+			}
+			jQuery.ajax({
+				'url':url,
+				'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
+				'beforeSend':OnNanoBeforeSend,
+				'success':OnNanoSuccess,
+				'error':OnNanoError,
+				'complete':OnNanoComplete,
+				'context':g_list_nano_options[i]
+			});
+		}
+		
+		
       }
       google.maps.event.addDomListener(window, 'load', initialize);	
 	
@@ -352,6 +414,7 @@ jQuery(document).ready(function ($)
 			});
 		
 	}
+
 	
 	function update_remainingphotos(){
 		if (remainingphotos>max_remainingphotos){
@@ -447,16 +510,23 @@ jQuery(document).ready(function ($)
 				  var latLng = new google.maps.LatLng(latlong[0],
 					  latlong[1]);
 					  
+				var photolink='';
+				if (g_parameters[obj.album_index].skin=='00fuerte'){
+					photolink=g_parameters[obj.album_index].link+'#'+(obj.photo_index+1);
+				}else{
+					photolink=g_parameters[obj.album_index].link+'/'+entry.gphoto$id.$t;
+				}
+				
 				var oziodata={
 					'albumid':obj.album_index,
 					'summary':entry.summary.$t,
 					'title':entry.title.$t,
-					'link':g_parameters[obj.album_index].link+'#'+(obj.photo_index+1),
+					'link':photolink,
 					'thumb':thumb,
 					'album_title':g_parameters[obj.album_index].title,
 					'lat':latlong[0],
 					'long':latlong[1],
-					'album_link':g_parameters[obj.album_index].link+'&Itemid='+g_parameters[obj.album_index].id//+'&tmpl=component'
+					//'album_link':g_parameters[obj.album_index].link+'&Itemid='+g_parameters[obj.album_index].id//+'&tmpl=component'
 					
 				};
 				if (typeof entry !== "undefined" && typeof entry.gphoto$viewCount !== "undefined" && typeof entry.gphoto$viewCount.$t !== "undefined"){
@@ -582,4 +652,295 @@ jQuery(document).ready(function ($)
 		
 	}
 
+	
+	/*
+	 * Nano
+	 */
+	function OnNanoBeforeSend(jqXHR, settings)
+	{
+		document.body.style.cursor = "wait";
+	}
+
+	function OnNanoSuccess(data, textStatus, jqXHR)
+	{
+		var context=this;
+		if (context.kind=='picasa'){
+			//picasa
+		    jQuery.each(data.feed.entry, function(i,data){
+		        var filename='';
+		        
+		        //Get the title 
+		        var itemTitle = data.media$group.media$title.$t;
+
+		        //Get the URL of the thumbnail
+		        var itemThumbURL = data.media$group.media$thumbnail[0].url;
+
+		        //Get the ID 
+		        var itemID = data.gphoto$id.$t;
+		        
+		        //Get the description
+		        var imgUrl=data.media$group.media$content[0].url;
+		        var ok=false;
+		        if( context.album !== undefined && context.album.length>0){
+		        	ok= (context.album==itemID);
+		        }else{
+		        	ok=CheckAlbumName(itemTitle,context);
+		        }
+
+		        if( ok ) {
+		        		var deeplink='';
+		        		if (context.locationHash){
+		        			deeplink='#nanogallery/nanoGallery/'+itemID;
+		        		}
+						
+						//$g_parameters[]=array('params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+						var nextI=g_parameters.length;
+						g_parameters[nextI]={};
+						jQuery.extend(g_parameters[nextI],context);
+						g_parameters[nextI].skin='nano';
+						g_parameters[nextI].views=0;
+						g_parameters[nextI].checked=true;
+						g_parameters[nextI].num_photos=0;
+						g_parameters[nextI].link=context.album_local_url+deeplink;
+						g_parameters[nextI].title=itemTitle;
+						g_parameters[nextI].params={
+							'userid':context.userID,
+							'albumvisibility':'public',
+							'gallery_id':itemID
+						};
+						load_album_data(nextI,1);
+		        }
+		        
+		      });				
+		}else{
+			//flickr
+			if( data.stat !== undefined ) {
+			      if( data.stat === 'fail' ) {
+			        alert("Could not retrieve Flickr photoset list: " + data.message + " (code: "+data.code+").");
+			        return;
+			      }
+			}
+		    jQuery.each(data.photosets.photoset, function(i,item){
+		          //Get the title 
+		          itemTitle = item.title._content;
+		          itemID=item.id;
+		          //Get the description
+		          itemDescription='';
+		          if (item.description._content != undefined) {
+		            itemDescription=item.description._content;
+		          }
+
+		          //itemThumbURL = "http://farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.primary + "_" + item.secret + "_"+g_flickrThumbSize+".jpg";
+		          itemThumbURL=item.primary_photo_extras['url_'+g_flickrThumbSizeStr];
+		          var ok=false;
+		          if( context.photoset !== undefined && context.photoset.length>0){
+		        	ok= (context.photoset==itemID);
+		          }else{
+		        	ok=CheckAlbumName(itemTitle,context);
+		          }
+
+		          if( ok ) {
+		        	 //aggiungi l'album
+		        		var deeplink='';
+		        		if (context.locationHash){
+		        			deeplink='#nanogallery/nanoGallery/'+itemID;
+		        		}
+						var nextI=g_parameters.length;
+						g_parameters[nextI]={};
+						jQuery.extend(g_parameters[nextI],context);
+						g_parameters[nextI].skin='nano';
+						g_parameters[nextI].views=0;
+						g_parameters[nextI].checked=true;
+						g_parameters[nextI].num_photos=0;
+						g_parameters[nextI].link=context.album_local_url+deeplink;
+						g_parameters[nextI].title=itemTitle;
+						g_parameters[nextI].photoset_id=itemID;
+						load_album_flickr_data(nextI);
+
+		        	  
+		          }
+             });
+			
+		}
+		
+	}
+
+	function OnNanoError(jqXHR, textStatus, error)
+	{
+	}
+
+	function OnNanoComplete(jqXHR, textStatus)
+	{
+		document.body.style.cursor = "default";
+	}
+	
+	
+	/*
+	 * Nano Flickr
+	 */
+	function load_album_flickr_data(i){
+		var obj={'album_index':i};
+		url = "http://api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=" + g_parameters[i].g_flickrApiKey + "&photoset_id="+g_parameters[i].photoset_id+"&extras=exif,date_taken,tags,machine_tags,geo,description,views,url_o,url_z,url_t&format=json&jsoncallback=?";
+		$.ajax({
+			'url':url,
+			'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
+			'beforeSend':OnNanoFlickrBeforeSend,
+			'success':OnNanoFlickrSuccess,
+			'error':OnNanoFlickrError,
+			'complete':OnNanoFlickrComplete,
+			'context':obj
+		});
+		
+	}	
+	function OnNanoFlickrBeforeSend(jqXHR, settings)
+	{
+		document.body.style.cursor = "wait";
+	}
+
+	function OnNanoFlickrSuccess(data, textStatus, jqXHR)
+	{
+		addAlbumMarker(this.album_index);
+		
+		var obj=this;
+		remainingphotos+=data.photoset.photo.length;
+		update_remainingphotos();
+	   jQuery.each(data.photoset.photo, function(i,item){
+				remainingphotos-=1;
+				update_remainingphotos();
+				//OnLoadedEntry(result.feed.entry[i],obj);
+				
+				if (typeof item.latitude !== "undefined" && typeof item.longitude !== "undefined" &&
+						(item.latitude != 0 || item.longitude != 0)){
+
+						var thumb=item['url_t'];
+
+						//preload
+						imageObj = new Image();
+						imageObj.src =thumb;
+						images_preload.push(imageObj);
+						
+ 					    var latLng = new google.maps.LatLng(item.latitude,
+								  item.longitude);
+							  
+						var photolink='';
+						photolink=g_parameters[obj.album_index].link+'/'+item.id;
+						
+						var oziodata={
+							'albumid':obj.album_index,
+							'summary':item.description._content,
+							'title':item.title,
+							'link':photolink,
+							'thumb':thumb,
+							'album_title':g_parameters[obj.album_index].title,
+							'lat':item.latitude,
+							'long':item.longitude,
+							
+						};
+						if (typeof item.views !== "undefined"){
+							g_parameters[obj.album_index].views+=parseInt(item.views);
+							oziodata.views=parseInt(item.views);
+						}
+						var na='- na -';
+						if (typeof item.datetaken !== "undefined"){
+							var t = item.datetaken.split(/[- :]/);
+							var photo_date = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);							
+							var pd_formatted=photo_date.getDate()+'/'+(photo_date.getUTCMonth()+1)+'/'+photo_date.getUTCFullYear()+' '+photo_date.getUTCHours()+':'+photo_date.getUTCMinutes();
+							oziodata['published']=pd_formatted;
+						}else{
+							oziodata['published']=na;
+						}
+						
+						oziodata['exif_make']=na;
+						addMakeMarker(oziodata['exif_make']);
+						
+						
+						// Marker creation
+						var marker_options={
+								map: googlemap,
+								position: latLng,
+								title: item.title,
+								oziodata: oziodata
+							};
+						if (g_parameters[obj.album_index]['icon']!=''){
+							marker_options['icon']=g_parameters[obj.album_index]['icon'];
+						}
+						var marker = new google.maps.Marker(marker_options);
+
+						if (autocenter){
+							bounds.extend(latLng);
+							googlemap.fitBounds(bounds);
+						}
+						
+						var markervisible=g_parameters[obj.album_index].checked && g_make[oziodata['exif_make']].checked;
+						
+			<?php if ($this->Params->get("cluster", "1")) { ?>
+						if (markervisible){
+							markerCluster.addMarker(marker);
+						}
+			<?php } ?>
+						oms.addMarker(marker);
+						marker.setVisible(markervisible);
+						googlemarkers.push(marker);
+						if (g_make[oziodata['exif_make']].checked){
+		    				incDecAlbumPhotos(obj.album_index,true);
+						}
+					}				
+
+			      
+			    });		
+	}
+
+	function OnNanoFlickrError(jqXHR, textStatus, error)
+	{
+	}
+
+	function OnNanoFlickrComplete(jqXHR, textStatus)
+	{
+		document.body.style.cursor = "default";
+	}	
+	
+	  // check album name - blackList/whiteList
+	  function CheckAlbumName(title,g_options) {
+		var g_blackList=null;
+		var g_whiteList=null;
+		var g_albumList=null;
+	    if( g_options.blackList !='' ) { g_blackList=g_options.blackList.toUpperCase().split('|'); }
+	    if( g_options.whiteList !='' ) { g_whiteList=g_options.whiteList.toUpperCase().split('|'); }
+	    if( g_options.albumList && g_options.albumList !='' ) { g_albumList=g_options.albumList.toUpperCase().split('|'); }
+	  
+	    var s=title.toUpperCase();
+
+	    if( g_albumList !== null ) {
+	      for( var j=0; j<g_albumList.length; j++) {
+	        if( s == g_albumList[j].toUpperCase() ) {
+	          return true;
+	        }
+	      }
+	    }
+	    else {
+	      var found=false;
+	      if( g_whiteList !== null ) {
+	        //whiteList : authorize only album cointaining one of the specified keyword in the title
+	        for( var j=0; j<g_whiteList.length; j++) {
+	          if( s.indexOf(g_whiteList[j]) !== -1 ) {
+	            found=true;
+	          }
+	        }
+	        if( !found ) { return false; }
+	      }
+
+
+	      if( g_blackList !== null ) {
+	        //blackList : ignore album cointaining one of the specified keyword in the title
+	        for( var j=0; j<g_blackList.length; j++) {
+	          if( s.indexOf(g_blackList[j]) !== -1 ) { 
+	            return false;
+	          }
+	        }
+	      }
+	      
+	      return true;
+	    }
+	  }			
+	
 });

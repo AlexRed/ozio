@@ -22,5 +22,9 @@
 /*<div class="fuertecontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>" id="nanoGallery" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
 </div>	*/
 ?>
-<div id="nanoGallery"></div>
+<?php if ($this->Params->get("show_page_heading", 1)) { ?>
+<h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
+<?php } ?>
+
+<div id="nanoGallery" class="ozionanocontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>"></div>
 
