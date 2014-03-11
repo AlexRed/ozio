@@ -199,7 +199,7 @@ jQuery(document).ready(function ($)
 
 		
 		function addAlbum(album,jquery_ozio_author){
-			var figure = jQuery("<a class='ozio-he-figure'/>").attr("href",album.album_local_url);
+			var figure = jQuery('<a class="ozio-he-figure" href="' + album.album_local_url + '"  />');
 			var img=jQuery("<img src='" + album.thumb_url +
 			"' alt='" + album.title +
 			"'/>");
