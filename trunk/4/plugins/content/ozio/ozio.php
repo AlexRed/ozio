@@ -278,4 +278,9 @@ class plgContentOzio extends JPlugin
 		ob_end_clean();
 		return $result;
 	}	
+	public function escape($output)
+	{
+		return htmlspecialchars($output, ENT_COMPAT, 'UTF-8');
+	}
+	
 }
