@@ -3842,10 +3842,12 @@ function nanoGALLERY() {
   function DisplayInternalViewerComplete( imageIdx ) {
     $g_containerViewerContent.find('.imgCurrent').remove();
     var $imgNext= $g_containerViewerContent.find('.imgNext');
+    var $imgPrev= $g_containerViewerContent.find('.imgPrev');
     var $imgCur=jQuery('<img class="image imgCurrent" src="'+g_ngItems[imageIdx].responsiveURL()+'" style="visibility:visible;opacity:1;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertBefore($imgNext);
 
     //$g_containerViewerContent.find('.imgNext').remove();
     $imgNext.remove();
+    $imgPrev.remove();
 
     var nextSrc='//:0';
     var l=g_ngItems.length;
@@ -3859,6 +3861,23 @@ function nanoGALLERY() {
 
     jQuery('<img class="image imgNext" src="'+nextSrc+'" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertBefore($imgCur);
 
+    
+    var prevSrc='//:0';
+    var l=imageIdx-1;
+    if (l==-1){
+    	l=g_ngItems.length-1;
+    }
+    for(var i=l; i>=0; i-- ){
+      if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
+        // set also the url of the prev image for pre-loading
+    	prevSrc=g_ngItems[i].responsiveURL();
+        break;
+      }
+    }
+
+    jQuery('<img class="image imgPrev" src="'+prevSrc+'" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertAfter($imgCur);
+    
+    
     //$g_containerViewerContent.find('img').on("click",function(e){
     $imgCur.on("click",function(e){
       e.stopPropagation();
