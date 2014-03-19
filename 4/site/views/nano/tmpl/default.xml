@@ -72,7 +72,7 @@
 			</field>
 			<field type="text" name="ozio_nano_thumbnailLabel_maxDescription" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_DSC" size="6" default="0"/>
 			
-			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="imageOpacity50">
+			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="imageOpacity50"  multiple="true" >
 				<option value="none">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_NONE</option>
 				<option value="slideUp">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEUP</option>
 				<option value="slideDown">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEDOWN</option>

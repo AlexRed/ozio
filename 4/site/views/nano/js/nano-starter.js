@@ -30,8 +30,7 @@ jQuery( document ).ready(function( $ ) {
 									'maxDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxDescription", "0")),
 							)); 
 						?>,
-				
-		thumbnailHoverEffect: <?php echo $this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")=='none'?'null':json_encode($this->Params->get("ozio_nano_thumbnailHoverEffect", "imageOpacity50")); ?>,
+		thumbnailHoverEffect: <?php echo json_encode(implode(',',$this->Params->get("ozio_nano_thumbnailHoverEffect", array("imageOpacity50")))); ?>,
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
 		colorSchemeViewer: <?php echo json_encode($this->Params->get("ozio_nano_colorSchemeViewer", "light")); ?>,

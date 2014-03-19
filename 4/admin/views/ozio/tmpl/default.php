@@ -78,10 +78,65 @@
 					$row = $this->pubblicate[$i];
 					if ( $row->link == 'index.php?option=com_oziogallery3&view=00fuerte'){
 						$row->params=json_decode($row->params,true);
+						$row->skin='00fuerte';
+						$row->link='index.php?option=com_oziogallery3&view=00fuerte&Itemid='.$row->id;
 						$g_parameters[]=$row;
 					}
 				}
 				echo '<script type="text/javascript">var g_parameters='.json_encode($g_parameters).';</script>';
+				
+				echo '<script type="text/javascript">g_flickrThumbSizeStr="sq";g_list_nano_options=[];</script>';
+				
+				echo '<script type="text/javascript">';
+				for ($i=0, $n; $i < $n; $i++) {
+					$row = $this->pubblicate[$i];
+					if ( $row->link == 'index.php?option=com_oziogallery3&view=nano'){
+						$item = $row;
+						$result = new JRegistry;
+						$result->loadString($item->params);
+						$item->params = $result;
+						
+						$link = 'index.php?option=com_oziogallery3&view=nano&Itemid='.$item->id;
+						?>
+									//nano
+									g_list_nano_options[g_list_nano_options.length]={
+											thumbSize:64,
+											album_local_url:<?php echo json_encode($link); ?>,
+											g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
+											locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
+											kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
+											userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+											blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
+											whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
+											<?php
+											$non_printable_separator="\x16";
+											$albumList=$item->params->get("ozio_nano_albumList", array());
+											if (!empty($albumList) && is_array($albumList) ){
+												if (count($albumList)==1){
+													list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+													$kind=$item->params->get("ozio_nano_kind", "picasa");
+													if ($kind=='picasa'){
+														echo 'album:'.json_encode($albumid).",\n";
+													}else{
+														echo 'photoset:'.json_encode($albumid).",\n";
+													}
+												}else{
+													$albumTitles=array();
+													foreach ($albumList as $a){
+														list($albumid,$title)=explode($non_printable_separator,$a);
+														$albumTitles[]=$title;
+													}
+													echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
+												}
+											}		
+											?>
+										};
+									<?php						
+						
+						
+					}
+				}
+				echo '</script>';
 				
 				?>
 				<div id="remainingphotos"></div><br />
@@ -177,3 +232,17 @@
 		</td>
 	</tr>
 	</table>
+
+	
+	
+<div id="album-info" class="modal hide fade">
+	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+		<h3>Info</h3>
+	</div>
+	<div class="modal-body" style="overflow:hidden;">
+	</div>
+	<div class="modal-footer">
+		<span class="btn" data-dismiss="modal"><i class="icon-cancel"></i> <?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></span>
+    </div>
+</div>
+	
