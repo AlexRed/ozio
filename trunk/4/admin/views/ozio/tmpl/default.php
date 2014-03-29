@@ -82,6 +82,32 @@
 						$row->link='index.php?option=com_oziogallery3&view=00fuerte&Itemid='.$row->id;
 						$g_parameters[]=$row;
 					}
+					if ( $row->link == 'index.php?option=com_oziogallery3&view=nano'){
+						$result = new JRegistry;
+						$result->loadString($row->params);
+						$kind=$result->get("ozio_nano_kind", "picasa");
+						$albumvisibility=$result->get("albumvisibility", "public");
+						if ($kind=='picasa' && $albumvisibility=='limited'){
+							//lo aggiungo come gli altri g_parameters
+							
+							$row->params=array(
+								'userid'=>$result->get("ozio_nano_userID", "110359559620842741677"),
+								'albumvisibility'=>'limited',
+								'limitedalbum'=>$result->get("limitedalbum", ""),
+								'limitedpassword'=>$result->get("limitedpassword", "")
+							);
+							$row->skin='nano';
+							$deeplink='';
+							if (intval($result->get("ozio_nano_locationHash", "1"))==1){
+								$deeplink='#nanogallery/nanoGallery/'.$result->get("limitedalbum", "");
+							}
+								
+							$row->link='index.php?option=com_oziogallery3&view=nano&Itemid='.$row->id.$deeplink;
+
+							$g_parameters[]=$row;
+						}
+						
+					}
 				}
 				echo '<script type="text/javascript">var g_parameters='.json_encode($g_parameters).';</script>';
 				
@@ -94,10 +120,18 @@
 						$item = $row;
 						$result = new JRegistry;
 						$result->loadString($item->params);
-						$item->params = $result;
 						
-						$link = 'index.php?option=com_oziogallery3&view=nano&Itemid='.$item->id;
-						?>
+						$kind=$result->get("ozio_nano_kind", "picasa");
+						$albumvisibility=$result->get("albumvisibility", "public");
+						if ($kind=='picasa' && $albumvisibility=='limited'){
+							//già aggiunto sopra
+						}else{
+						
+						
+							$item->params = $result;
+						
+							$link = 'index.php?option=com_oziogallery3&view=nano&Itemid='.$item->id;
+							?>
 									//nano
 									g_list_nano_options[g_list_nano_options.length]={
 											thumbSize:64,
@@ -133,7 +167,7 @@
 										};
 									<?php						
 						
-						
+						}
 					}
 				}
 				echo '</script>';

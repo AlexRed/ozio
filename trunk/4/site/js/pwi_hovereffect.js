@@ -13,7 +13,7 @@ jQuery(document).ready(function ($)
 		}
 	}
 	
-    jQuery("#container").append(jQuery("<ul/>", {'class':'ozio-he-grid ozio-he-cs-style-5'}));
+    jQuery("#container_pwi_list").append(jQuery("<ul/>", {'class':'ozio-he-grid ozio-he-cs-style-5'}));
 
 //<?php
 	$application = JFactory::getApplication("site");
@@ -82,7 +82,7 @@ jQuery(document).ready(function ($)
 		if (strpos($item->link, "&view=00fuerte") !== false){
 //?>
 		// Crea un nuovo sottocontenitore e lo appende al principale
-		jQuery("#container > ul").append(
+		jQuery("#container_pwi_list > ul").append(
 			author = jQuery("<li/>", {'id':'ozio-he-author<?php echo $item->id; ?>', 'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
 		);
 
@@ -140,54 +140,124 @@ jQuery(document).ready(function ($)
 			});
 //<?php }else{ /* nano */ ?>
 
-		var album_nano_options={
-			album_local_url:'<?php echo JRoute::_($link); ?>',
-			thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
-			g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
-			locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
-			kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
-			userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
-			blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
-			whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
-			<?php
-			$non_printable_separator="\x16";
-			$albumList=$item->params->get("ozio_nano_albumList", array());
-			if (!empty($albumList) && is_array($albumList) ){
-				if (count($albumList)==1){
-					list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
-					$kind=$item->params->get("ozio_nano_kind", "picasa");
-					if ($kind=='picasa'){
-						echo 'album:'.json_encode($albumid).",\n";
-					}else{
-						echo 'photoset:'.json_encode($albumid).",\n";
-					}
-				}else{
-					$albumTitles=array();
-					foreach ($albumList as $a){
-						list($albumid,$title)=explode($non_printable_separator,$a);
-						$albumTitles[]=$title;
-					}
-					echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
-				}
-			}		
-			?>
-		};
-		var url='';
-		if (album_nano_options.kind=='picasa'){
-			url = 'http://picasaweb.google.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+album_nano_options.thumbSize;
+		var kind = <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>;
+		var albumvisibility = <?php echo json_encode($item->params->get("albumvisibility", "public")); ?>;
+		if (kind=='picasa' && albumvisibility=='limited'){
+			
+			// Crea un nuovo sottocontenitore e lo appende al principale
+			jQuery("#container_pwi_list > ul").append(
+				author = jQuery("<li/>", {'id':'ozio-he-author<?php echo $item->id; ?>', 'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
+			);
+
+			// Imposta i parametri e innesca il caricamento
+			author.pwi(
+				{
+					// Destinazione del link
+					album_local_url:'<?php echo JRoute::_($link); ?>',
+					album_local_title:<?php echo json_encode($item->title); ?>,
+					album_id:'<?php echo $item->id; ?>',
+
+					mode:'album_cover',
+					username:'<?php echo $item->params->get("ozio_nano_userID", "110359559620842741677"); ?>',
+					album:'<?php echo $item->params->get("limitedalbum"); ?>',
+					authKey:"<?php echo $item->params->get("limitedpassword"); ?>",
+					StartIndex: 1,
+					MaxResults: 1,
+					beforeSend:OnBeforeSend,
+					success:OnLoadSuccess,
+					error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
+					complete:OnLoadComplete,
+
+					showAlbumThumbs:true,
+					thumbAlign:true,
+					showAlbumdate:'<?php echo $this->Params->get("show_date", 1); ?>',
+					showAlbumPhotoCount:'<?php echo $this->Params->get("show_counter", 1); ?>',
+					showAlbumTitle:false,
+					showCustomTitle:true,
+					albumThumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+					thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+					albumCrop:true,
+					thumbCrop:true,
+
+					/*<?php if ($item->params->get("gallery_date", "")) { ?>*/
+					manual_date: <?php echo json_encode($item->params->get("gallery_date", "")); ?>,
+					/*<?php } ?>*/
+
+					labels:{
+						numphotos:"<?php echo JText::_("COM_OZIOGALLERY3_NUMPHOTOS"); ?>",
+						date:"<?php echo JText::_("JDATE"); ?>",
+						downloadphotos:"Download photos",
+						albums:"Back to albums",
+						unknown:"<?php echo JText::_("JLIB_UNKNOWN"); ?>",
+						ajax_error:"<?php echo JText::_("JLIB_UTIL_ERROR_LOADING_FEED_DATA"); ?>",
+						page:"Page",
+						prev:"<?php echo JText::_("JPREVIOUS"); ?>",
+						next:"<?php echo JText::_("JNEXT"); ?>",
+						showPermaLink:"Show PermaLink",
+						showMap:"Show Map",
+						videoNotSupported:"Video not supported"
+					},
+
+					// Ignora i comandi tramite parametri GET ?par=...
+					useQueryParameters:false
+				});		
 		}else{
-			url="http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + album_nano_options.g_flickrApiKey + "&user_id="+album_nano_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
-		}
-		jQuery.ajax({
-			'url':url,
-			'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
-			'beforeSend':OnNanoBeforeSend,
-			'success':OnNanoSuccess,
-			'error':OnNanoError,
-			'complete':OnNanoComplete,
-			'context':album_nano_options
-		});
+			
+			
+			
+			var album_nano_options={
+				album_local_url:'<?php echo JRoute::_($link); ?>',
+				thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+				g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
+				locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
+				kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
+				userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+				blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
+				whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
+				<?php
+				$non_printable_separator="\x16";
+				$albumList=$item->params->get("ozio_nano_albumList", array());
+				if (!empty($albumList) && is_array($albumList) ){
+					if (count($albumList)==1){
+						list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+						$kind=$item->params->get("ozio_nano_kind", "picasa");
+						if ($kind=='picasa'){
+							echo 'album:'.json_encode($albumid).",\n";
+						}else{
+							echo 'photoset:'.json_encode($albumid).",\n";
+						}
+					}else{
+						$albumTitles=array();
+						foreach ($albumList as $a){
+							list($albumid,$title)=explode($non_printable_separator,$a);
+							$albumTitles[]=$title;
+						}
+						echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
+					}
+				}		
+				?>
+			};
+			var url='';
+			if (album_nano_options.kind=='picasa'){
+				url = 'http://picasaweb.google.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+album_nano_options.thumbSize;
+			}else{
+				url="http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + album_nano_options.g_flickrApiKey + "&user_id="+album_nano_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
+			}
+			jQuery.ajax({
+				'url':url,
+				'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
+				'beforeSend':OnNanoBeforeSend,
+				'success':OnNanoSuccess,
+				'error':OnNanoError,
+				'complete':OnNanoComplete,
+				'context':album_nano_options
+			});
+						
+			
+			
 		
+		}
+
 		
 //<?php } /*chiusura if*/ ?>
 //<?php } ?>
@@ -327,7 +397,7 @@ jQuery(document).ready(function ($)
 									'album_local_title':itemTitle
 								};
 				  			
-								jQuery("#container > ul").append(
+								jQuery("#container_pwi_list > ul").append(
 									author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
 								);
 								
@@ -380,7 +450,7 @@ jQuery(document).ready(function ($)
 									'album_local_title':itemTitle
 								};
 				  			
-								jQuery("#container > ul").append(
+								jQuery("#container_pwi_list > ul").append(
 									author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
 								);
 								

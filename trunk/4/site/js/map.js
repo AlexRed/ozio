@@ -48,6 +48,25 @@ jQuery(document).ready(function ($)
 		if (strpos($item->link, "&view=00fuerte") !== false){
 			$g_parameters[]=array('skin'=>'00fuerte','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
 		}else{
+			$kind=$item->params->get("ozio_nano_kind", "picasa");
+			$albumvisibility=$item->params->get("albumvisibility", "public");
+			if ($kind=='picasa' && $albumvisibility=='limited'){
+				$p=array(
+					'userid'=>$item->params->get("ozio_nano_userID", "110359559620842741677"),
+					'albumvisibility'=>'limited',
+					'limitedalbum'=>$item->params->get("limitedalbum", ""),
+					'limitedpassword'=>$item->params->get("limitedpassword", ""),
+				);
+				$deeplink='';
+				if (intval($item->params->get("ozio_nano_locationHash", "1"))==1){
+					$deeplink='#nanogallery/nanoGallery/'.$item->params->get("limitedalbum", "");
+				}
+				
+				$g_parameters[]=array('skin'=>'nano','params'=>$p,'link'=>$link.$deeplink,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+				
+			}else{
+			
+			
 			?>
 			//nano
 			g_list_nano_options[g_list_nano_options.length]={
@@ -85,6 +104,7 @@ jQuery(document).ready(function ($)
 					?>
 				};
 			<?php
+			}
 		}
 	}
 	echo "\n".'var g_parameters='.json_encode($g_parameters).';';
@@ -93,7 +113,7 @@ jQuery(document).ready(function ($)
 	echo "\n".'var g_map_height='.json_encode($this->Params->get("map_height", "400").'px').';';
 // ?>
 	
-	jQuery("#container").append('<div id="oziomap-container"><div class="oziomap_border"><div class="oziomap_map_container"><div id="oziomap"></div></div></div></div>');
+	jQuery("#container_ozio_map").append('<div id="oziomap-container"><div class="oziomap_border"><div class="oziomap_map_container"><div id="oziomap"></div></div></div></div>');
 	jQuery("#oziomap-container").append('<div id="oziomap-container-album"></div>');
 <?php if ($this->Params->get("camera_filter", "0")) { ?>
 	jQuery("#oziomap-container").append('<div id="oziomap-container-maker"></div>');
@@ -492,7 +512,7 @@ jQuery(document).ready(function ($)
 		//update_remainingphotos();
 	}
 	function OnLoadedEntry(entry,obj){
-		
+		//entry.georss$where={'gml$Point':{'gml$pos':{'$t':'10 10'}}};//debug
 		if (typeof entry !== "undefined" && typeof entry.georss$where !== "undefined" && typeof entry.georss$where.gml$Point !== "undefined" &&
 				typeof entry.georss$where.gml$Point.gml$pos !== "undefined" && typeof entry.georss$where.gml$Point.gml$pos.$t !== "undefined"){
 

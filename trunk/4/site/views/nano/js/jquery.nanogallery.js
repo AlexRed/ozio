@@ -14,7 +14,6 @@
  *  - http://closure-compiler.appspot.com/home - used to minimize the code
  */
 
-
 /*
 
 nanoGALLERY v4.2.1 release notes.
@@ -514,7 +513,11 @@ function nanoGALLERY() {
           }
         }
         if( g_options.album.length > 0 ) {
-          NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', g_options.album, '-1' );
+            var album_added=NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', g_options.album, '-1' );
+            album_added.authkey='';//GI
+	      	if ( typeof g_options.authkey !== "undefined"){//GI
+	      		album_added.authkey=g_options.authkey;//GI
+	    	}//GI
         }
         else {
           NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', '0', '-1' );
@@ -1381,6 +1384,15 @@ function nanoGALLERY() {
   }
 
   function FlickrParsePhotos( albumIdx, data ) {
+	{//GI
+		if ( typeof g_options.photoSorting !== "undefined"){//GI
+			if (g_options.photoSorting=='random'){
+				data.photoset.photo=shuffle(data.photoset.photo);
+			}else if (g_options.photoSorting=='inverse'){
+				data.photoset.photo=data.photoset.photo.reverse();
+			}
+		}
+	}
 
     var albumID=g_ngItems[albumIdx].GetID();
     var nb=0;
@@ -1464,6 +1476,9 @@ function nanoGALLERY() {
     else {
       // photos
       url = 'http://picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo&thumbsize='+g_picasaThumbSize+'&imgmax=d';
+      if (g_ngItems[albumIdx].authkey.length>0){
+    	  url +="&authkey=Gv1sRg" +g_ngItems[albumIdx].authkey;   
+      }
       kind='image';
     }
     url = url + "&callback=?";
@@ -1553,10 +1568,25 @@ function nanoGALLERY() {
     }
   };  
   
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
   
   function PicasaParseData( albumIdx, data, kind ) {
     var nb=0;
     var albumID=g_ngItems[albumIdx].GetID();
+	if (kind =='image'){//GI
+		if ( typeof g_options.photoSorting !== "undefined"){//GI
+			if (g_options.photoSorting=='random'){
+				data.feed.entry=shuffle(data.feed.entry);
+			}else if (g_options.photoSorting=='inverse'){
+				data.feed.entry=data.feed.entry.reverse();
+			}
+		}
+	}
     jQuery.each(data.feed.entry, function(i,data){
       
       var filename='';

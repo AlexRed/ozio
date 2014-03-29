@@ -6,6 +6,9 @@ jQuery( document ).ready(function( $ ) {
 	$('#jform_params_ozio_nano_kind').change(function() {
 		gi_update_listnanoalbums();
 	});
+	$('#jform_params_albumvisibility').change(function() {
+		gi_update_listnanoalbums();
+	});
 	$('#jform_params_ozio_nano_userID').change(function() {
 		gi_update_listnanoalbums();
 	});
@@ -15,23 +18,51 @@ jQuery( document ).ready(function( $ ) {
 	
 	var ozio_nano_albumList_orig_values=[];
 	function gi_update_listnanoalbums(){
-		gi_update_albumList_msg('...');
-		ozio_nano_albumList_orig_values=[];
-		$('#jform_params_ozio_nano_albumList').find('option:selected').each(function (){
-			ozio_nano_albumList_orig_values.push($(this).attr('value').split(non_printable_separator)[0]);
-		});
-		
 		var kind=$('#jform_params_ozio_nano_kind').val();
-		var userID=$('#jform_params_ozio_nano_userID').val();
-		//alert('kind '+kind+' userID '+userID);
-		
-		if (kind=='flickr'){
-			//flickr
-			FlickrRetrieveItems(userID);
+		albumvisibility='public';
+		if (kind=='picasa'){
+			$('#jform_params_albumvisibility').closest('.control-group').show();
+			albumvisibility=$('#jform_params_albumvisibility').val();
 		}else{
-			//picasa
-			PicasaRetrieveItems( userID );
+			$('#jform_params_albumvisibility').closest('.control-group').hide();
+			
 		}
+		if (albumvisibility=='public'){
+			$('#jform_params_limitedalbum').closest('.control-group').hide();
+			$('#jform_params_limitedpassword').closest('.control-group').hide();
+			
+			$('#jform_params_ozio_nano_albumList').closest('.control-group').show();
+			$('#jform_params_ozio_nano_blackList').closest('.control-group').show();
+			$('#jform_params_ozio_nano_whiteList').closest('.control-group').show();
+			
+			
+			gi_update_albumList_msg('...');
+			ozio_nano_albumList_orig_values=[];
+			$('#jform_params_ozio_nano_albumList').find('option:selected').each(function (){
+				ozio_nano_albumList_orig_values.push($(this).attr('value').split(non_printable_separator)[0]);
+			});
+			
+			var userID=$('#jform_params_ozio_nano_userID').val();
+			//alert('kind '+kind+' userID '+userID);
+			
+			if (kind=='flickr'){
+				//flickr
+				FlickrRetrieveItems(userID);
+			}else{
+				//picasa
+				PicasaRetrieveItems( userID );
+			}
+			
+			
+		}else{
+			$('#jform_params_limitedalbum').closest('.control-group').show();
+			$('#jform_params_limitedpassword').closest('.control-group').show();
+			
+			$('#jform_params_ozio_nano_albumList').closest('.control-group').hide();
+			$('#jform_params_ozio_nano_blackList').closest('.control-group').hide();
+			$('#jform_params_ozio_nano_whiteList').closest('.control-group').hide();
+		}
+		
 	}
 	function gi_update_listnanoalbums_callback(albums){
 		var endappend=$('#jform_params_ozio_nano_albumList').find('option').remove().end();

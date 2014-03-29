@@ -222,6 +222,12 @@ jQuery(document).ready(function ($)
 		});
 */
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
+			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
+			if (photoSorting=='random'){
+				slides=shuffle(slides);
+			}else if (photoSorting=='inverse'){
+				slides=slides.reverse();
+			}
 	
 			jQuery(function ($)
 			{
@@ -293,6 +299,13 @@ jQuery(document).ready(function ($)
 	{
 		document.body.style.cursor = "default";
 	}
+  
+	//+ Jonas Raoni Soares Silva
+	//@ http://jsfromhell.com/array/shuffle [v1.0]
+	function shuffle(o){ //v1.0
+		for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+		return o;
+	};
 
 });
 
