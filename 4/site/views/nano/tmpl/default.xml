@@ -4,6 +4,7 @@
 		<message>COM_OZIOGALLERY3_NANO_VIEW_DEFAULT_DESC</message>
 	</layout>
 
+	
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 		<fieldset name="basic">
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
@@ -17,12 +18,28 @@
 			</field>
 
 			<field type="text" name="ozio_nano_userID" label="COM_OZIOGALLERY3_OZIO_NANO_USERID_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
+
+			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public">
+				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
+				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
+			</field>
  
 			<field type="listnanoalbums" name="ozio_nano_albumList" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_DSC" multiple="true" default="">
 			</field>
+			
+			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
+			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
+			
 
 			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|2013-" />
 			<field type="text" name="ozio_nano_whiteList" label="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_DSC" />
+
+			<field type="list" name="ozio_nano_photoSorting" label="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_DSC" default="normal">
+				<option value="normal">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_RANDOM</option>
+				<option value="inverse">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
+			</field>
+
 
 			<field type="radio" name="ozio_nano_displayBreadcrumb" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_DISPLAYBREADCRUMB_LBL"

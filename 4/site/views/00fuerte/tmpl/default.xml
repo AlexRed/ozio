@@ -31,6 +31,12 @@
 			</field>
 			<field type="text" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="6" default="250"/>
 			
+			<field type="list" name="photoSorting" label="COM_OZIOGALLERY3_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_PHOTOSORTING_DSC" default="normal">
+				<option value="normal">COM_OZIOGALLERY3_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY3_PHOTOSORTING_RANDOM</option>
+				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
+			</field>
+			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 <!--
 			<field type="list" name="viewmode" label="COM_OZIOGALLERY3_VIEWMODE_LBL" description="COM_OZIOGALLERY3_VIEWMODE_DSC">

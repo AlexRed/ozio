@@ -40,26 +40,37 @@ jQuery( document ).ready(function( $ ) {
 		displayBreadcrumb: <?php echo json_encode(intval($this->Params->get("ozio_nano_displayBreadcrumb", "1"))); ?>,
 		blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
+		photoSorting: <?php echo json_encode($this->Params->get("ozio_nano_photoSorting", "normal")); ?>,
 		<?php
-		$albumList=$this->Params->get("ozio_nano_albumList", array());
-		if (!empty($albumList) && is_array($albumList) ){
-			if (count($albumList)==1){
-				list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
-				$kind=$this->Params->get("ozio_nano_kind", "picasa");
-				if ($kind=='picasa'){
-					echo 'album:'.json_encode($albumid).",\n";
+		$kind=$this->Params->get("ozio_nano_kind", "picasa");
+		$albumvisibility=$this->Params->get("albumvisibility", "public");
+		if ($kind=='picasa' && $albumvisibility=='limited'){
+			echo 'album:'.json_encode($this->Params->get("limitedalbum", "")).",\n";
+			echo 'authkey:'.json_encode($this->Params->get("limitedpassword", "")).",\n";
+			
+		}else{
+					
+			$albumList=$this->Params->get("ozio_nano_albumList", array());
+			if (!empty($albumList) && is_array($albumList) ){
+				if (count($albumList)==1){
+					list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+					$kind=$this->Params->get("ozio_nano_kind", "picasa");
+					if ($kind=='picasa'){
+						echo 'album:'.json_encode($albumid).",\n";
+					}else{
+						echo 'photoset:'.json_encode($albumid).",\n";
+					}
 				}else{
-					echo 'photoset:'.json_encode($albumid).",\n";
+					$albumTitles=array();
+					foreach ($albumList as $a){
+						list($albumid,$title)=explode($non_printable_separator,$a);
+						$albumTitles[]=$title;
+					}
+					echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
 				}
-			}else{
-				$albumTitles=array();
-				foreach ($albumList as $a){
-					list($albumid,$title)=explode($non_printable_separator,$a);
-					$albumTitles[]=$title;
-				}
-				echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
 			}
-		}		
+			
+		}
 		?>
 				
 

@@ -26,7 +26,7 @@
 	<h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
 	<?php } ?>
 
-	<div id="container"></div>
+	<div id="container_pwi_list"></div>
 </div>
 
 
