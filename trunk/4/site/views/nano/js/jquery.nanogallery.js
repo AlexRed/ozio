@@ -14,6 +14,7 @@
  *  - http://closure-compiler.appspot.com/home - used to minimize the code
  */
 
+
 /*
 
 nanoGALLERY v4.2.1 release notes.
@@ -1476,7 +1477,7 @@ function nanoGALLERY() {
     else {
       // photos
       url = 'http://picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo&thumbsize='+g_picasaThumbSize+'&imgmax=d';
-      if (g_ngItems[albumIdx].authkey.length>0){
+      if (typeof g_ngItems[albumIdx].authkey !== "undefined" && g_ngItems[albumIdx].authkey.length>0){
     	  url +="&authkey=Gv1sRg" +g_ngItems[albumIdx].authkey;   
       }
       kind='image';
