@@ -23,6 +23,7 @@
 
 .nanoGalleryViewer .toolbar .label{
 	white-space: normal;
+	background-color:transparent;
 }
 /*
 .nano_folder_home:before{
@@ -45,4 +46,16 @@
 
 #nanoGallery.nanogallery_theme_clean .nanoGalleryBreadcrumb .folderHome:hover {
     color: #bbbbbb;
+}
+
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryContainerParent .nanoGalleryPagination {
+    color: #777777;
+}
+
+.nanogallery_theme_clean .nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
 }
