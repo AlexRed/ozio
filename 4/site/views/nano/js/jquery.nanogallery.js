@@ -1,5 +1,5 @@
 /**!
- * @preserve nanoGALLERY v4.2.1
+ * @preserve nanoGALLERY v4.3.0
  * Plugin for jQuery by Christophe Brisbois
  * Demo: http://nanogallery.brisbois.fr
  * Sources: https://github.com/Kris-B/nanoGALLERY
@@ -10,33 +10,53 @@
  *  - Transit (http://ricostacruz.com/jquery.transit) - optional
  *  - imagesloaded (https://github.com/desandro/imagesloaded) - optional
  *  - fancybox (http://fancyapps.com) - optional
- *  - jQuery-JSONP (https://github.com/jaubourg/jquery-jsonp) - optional
  *  - http://closure-compiler.appspot.com/home - used to minimize the code
  */
 
 
 /*
 
-nanoGALLERY v4.2.1 release notes.
+nanoGALLERY v4.3.0 release notes.
 
 ##### New features:
-- global photo/album title and description
-- new label position `overImageOnMiddle`
-- new theme `light` (optimized for light backgrounds)
-
+- new image display possibilities giving a larger area to the images (customizable position of navigation buttons and labels)
+- set the maximum length of title and description to avoid too long content
+- display or hide the icons of the thumbnails label and/or navigation breadcrumb
+- breadcrumb: new icon for home folder
+- sorting of photos and of albums
+- preload also previous image
+- added Text-Shadow attribute to color schemes
+- refinement of the 'light' theme
+- new thumbnail hover effects
+- added support of Picasa/Google+ albums that are limited to people who have a link with an authkey
 
 ##### New options:
-- **i18n**: new elements `thumbnailImageTitle` `thumbnailAlbumTitle` `thumbnailImageDescription` `thumbnailAlbumDescription`.
-- **thumbnailLabel**: new possible value `{position:'overImageOnMiddle'}
-
-
-**See readme.md for usage details**
+- **viewerToolbar**: Display options for toolbar of the viewer (navigation buttons and captions)
+	*object; Default: `{position:'bottom', style:'innerImage'}`*
+	**position** : Position of the viewer toolbar (possible values: `top`, `bottom`)
+	*string; Default: `bottom`*
+	**style** : style of the toolbar (possible values: `innerImage`, `stuckImage`, `fullWidth`)
+	*string; Default: `innerImage`*
+- **thumbnailLabel**: new parameters `titleMaxLength`, `descriptionMaxLength`, `hideIcons` and 'align'
+- **galleryToolbarHideIcons**: display or not the icons in the navigation breadcrumb
+- **photoSorting**: sort photo albums (possible values: `standard`, `reversed`, `random`) (Flickr/Picasa/Google+)
+	*string; Default: `standard`*
+- **albumSorting**: sort photos in albums (possible values: `standard`, `reversed`, `random`) (Flickr/Picasa/Google+)
+	*string; Default: `standard`*
+- **thumbnailHoverEffect**:	new possible values: `labelSplitVert`, `labelSplit4`, `labelAppearSplitVert`, `labelAppearSplit4`, `imageSplitVert`, `imageSplit4`
+  
+**Visit nanoGALLERY homepage for usage details: [http://nanogallery.brisbois.fr](http://www.nanogallery.brisbois.fr/)**
 
 ##### Deprecated options:
 - none
 
 ##### Misc
-- bug **mouse click outside gallery not working** - fixed
+- CSS: renamed 'container' to 'nanoGalleryContainerParent'
+- remove support of jQuery-JSONP
+- bufix incorrect label display under the thumbnail
+- minor bugfixes
+
+**Contributors: Giovanni Chiodi and AlexRed --> many thanks!**
 
 */
  
@@ -58,6 +78,7 @@ nanoGALLERY v4.2.1 release notes.
       whiteList:'',
       albumList:'',
       galleryToolbarWidthAligned:true,
+      galleryToolbarHideIcons:false,
       displayBreadcrumb:false,
       theme:'default',
       colorScheme:'none',         //'default',
@@ -70,10 +91,11 @@ nanoGALLERY v4.2.1 release notes.
       maxWidth:0,
       viewer:'internal',
       viewerDisplayLogo:false,
+      viewerToolbar:{position:'bottom', style:'innerImage'},
       thumbnailWidth:230,
       thumbnailHeight:154,
       thumbnailHoverEffect:null,
-      thumbnailLabel:{position:'overImageOnBottom',display:true,displayDescription:true,maxTitle:0,maxDescription:0},
+      thumbnailLabel:{position:'overImageOnBottom',display:true,displayDescription:true, titleMaxLength:0, descriptionMaxLength:0, hideIcons:false},
       thumbnailDisplayInterval:30,
       thumbnailDisplayTransition:true,
       thumbnailLazyLoad:false,
@@ -85,8 +107,10 @@ nanoGALLERY v4.2.1 release notes.
       slideshowDelay:3000,
       thumbnailGlobalImageTitle:'',
       thumbnailGlobalAlbumTitle:'',
+      photoSorting:'',
+      albumSorting:'',
       i18n:{
-        'paginationPrevious':'Previous','paginationPrevious_FR':'PrÃ©cÃ©dent','paginationPrevious_DE':'ZurÃ¼ck','paginationPrevious_IT':'Indietro',
+        'paginationPrevious':'Previous','paginationPrevious_FR':'Précédent','paginationPrevious_DE':'Zurück','paginationPrevious_IT':'Indietro',
         'paginationNext':'Next','paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti',
         'thumbnailImageTitle':'',
         'thumbnailAlbumTitle':'',
@@ -108,20 +132,24 @@ nanoGALLERY v4.2.1 release notes.
 // ##############################
 
 function nanoGALLERY() {
-   var g_options=null,
+    var g_options=null,
     g_baseControl=null,
-    g_containerThumbnailsParent=null,
+    g_baseControlID=null,
+    $g_containerThumbnailsParent=null,
     g_containerDemo=null,
     $g_containerThumbnails=null,
     $g_containerThumbnailsHidden=null,
-    g_containerPagination=null,
-    g_containerBreadcrumb=null,
+    $g_containerPagination=null,
+    $g_containerBreadcrumb=null,
     g_containerTags=null,
-    g_containerNavigationbar=null,
-    g_containerNavigationbarCont=null,
+    $g_containerNavigationbar=null,
+    $g_containerNavigationbarCont=null,
     g_containerNavigationbarContDisplayed=false,
     $g_containerViewerContainer=null,
     $g_containerViewer=null,
+    $g_ViewerImagePrevious=null,
+    $g_ViewerImageNext=null,
+    $g_ViewerImageCurrent=null,
     g_containerViewerDisplayed=false,
     g_containerThumbnailsDisplayed=false,
     $g_containerViewerCloseFloating=null,
@@ -130,6 +158,8 @@ function nanoGALLERY() {
     $g_containerViewerLogo=null,
     g_path2timthumb="",
     g_ngItems=[],
+    g_containerOuterWidth=0,
+    g_containerOuterHeight=0,
     g_oneThumbnailWidth=0,
     g_oneThumbnailWidthContainer=0,
     g_oneThumbnailHeight=0,
@@ -143,18 +173,18 @@ function nanoGALLERY() {
     // details: https://developers.google.com/picasa-web/docs/2.0/reference
     g_picasaThumbSize=64,
     g_picasaThumbAvailableSizes=new Array(32, 48, 64, 72, 94, 104, 110, 128, 144, 150, 160, 200, 220, 288, 320, 400, 512, 576, 640, 720, 800, 912, 1024, 1152, 1280, 1440, 1600),
+    g_picasaThumbAvailableSizesCropped=' 32 48 64 72 104 144 150 160 ',
+    g_picasaThumbSizeHack=true,
     // ### Flickr
     // Details: http://www.flickr.com/services/api/misc.urls.html
     g_flickrThumbSize='sq',
     g_flickrThumbAvailableSizes=new Array(75,100,150,240,500,640),        //,1024),
     g_flickrThumbAvailableSizesStr=new Array('sq','t','q','s','m','z'),    //,'b'), --> b is not available for photos before 05.25.2010
     g_flickrPhotoSize='sq',
-    g_flickrPhotoAvailableSizes=new Array(75,100,150,240,500,640,10000),
+    g_flickrPhotoAvailableSizes=new Array(75,100,150,240,500,640,100000),
     g_flickrPhotoAvailableSizesStr=new Array('sq','t','q','s','m','z','o'),
     g_flickrApiKey="2f0e634b471fdb47446abcb9c5afebdc",
     g_galleryItemsCount=0,
-    g_viewerCurrentItemIdx=-1,
-    g_windowsHash=new Array(),
     g_playSlideshow=false,
     g_playSlideshowTimerID=0,
     g_slideshowDelay=3000,
@@ -164,79 +194,81 @@ function nanoGALLERY() {
     g_viewerIsFullscreen=false,
     g_supportTransit=false,
     g_i18nLang='';
-    var g_i18nTranslations={'paginationPrevious':'Previous', 'paginationNext':'Next', 'breadcrumbHome':'<span class="nano_folder_home"></span>', 'thumbnailImageTitle':'', 'thumbnailAlbumTitle':'', 'thumbnailImageDescription':'', 'thumbnailAlbumDescription':'' };
+    var g_i18nTranslations={'paginationPrevious':'Previous', 'paginationNext':'Next', 'breadcrumbHome':'', 'thumbnailImageTitle':'', 'thumbnailAlbumTitle':'', 'thumbnailImageDescription':'', 'thumbnailAlbumDescription':'' };
     var lastImageChange=0,
     g_paginationLinesMaxItemsPossiblePerLine=1,
     g_paginationMaxItemsPerPage=0,
     g_paginationMaxLinesPerPage=0,
     g_thumbnailHoverEffect=[],
-    g_baseControlID=null,
     g_lastOpenAlbumID=-1,
     g_lastLocationHash='',
     g_viewerImageIsChanged=false,
     g_viewerResizeTimerID=-1,
+    g_viewerCurrentItemIdx=-1,
     g_albumIdxToOpenOnViewerClose=-1,
     g_custGlobals={},
     g_touched=false,
     g_previous_touched;
+ 
+ 
     
   // Color schemes - Gallery
   var g_colorScheme_default = {
     navigationbar : { background:'none', borderTop:'1px solid #555', borderBottom:'1px solid #555', borderRight:'', borderLeft:'', color:'#ccc', colorHover:'#fff' },
-    thumbnail : { background:'#000', border:'1px solid #000', labelBackground:'rgba(34, 34, 34, 0.75)', titleColor:'#eee', descriptionColor:'#ccc'}
+    thumbnail : { background:'#000', border:'1px solid #000', labelBackground:'rgba(34, 34, 34, 0.75)', titleColor:'#eee', titleShadow:'', descriptionColor:'#ccc', descriptionShadow:''}
   };
   var g_colorScheme_darkRed = {
     // #ffa3a3 #ff7373 #ff4040 #ff0000 #a60000
     navigationbar : { background:'#a60000', border:'1px dotted #ff0000', color:'#ccc', colorHover:'#fff' },
-    thumbnail : { background:'#a60000', border:'1px solid #ff0000', labelBackground:'rgba(134, 0, 0, 0.75)', titleColor:'#eee', descriptionColor:'#ccc'}
+    thumbnail : { background:'#a60000', border:'1px solid #ff0000', labelBackground:'rgba(134, 0, 0, 0.75)', titleColor:'#eee', titleShadow:'', descriptionColor:'#ccc', descriptionShadow:''}
   };
   var g_colorScheme_darkGreen = {
     // #97e697 #67e667 #39e639 #00cc00 #008500
     navigationbar : { background:'#008500', border:'1px dotted #00cc00', color:'#ccc', colorHover:'#fff' },
-    thumbnail : { background:'#008500', border:'1px solid #00cc00', labelBackground:'rgba(0, 105, 0, 0.75)', titleColor:'#eee', descriptionColor:'#ccc'}
+    thumbnail : { background:'#008500', border:'1px solid #00cc00', labelBackground:'rgba(0, 105, 0, 0.75)', titleColor:'#eee', titleShadow:'', descriptionColor:'#ccc', descriptionShadow:''}
   };
   var g_colorScheme_darkBlue = {
     // #a0b0d7 #7080d7 #4a60d7 #162ea2 #071871
     navigationbar : { background:'#071871', border:'1px dotted #162ea2', color:'#ccc', colorHover:'#fff' },
-    thumbnail : { background:'#071871', border:'1px solid #162ea2', labelBackground:'rgba(7, 8, 81, 0.75)', titleColor:'#eee', descriptionColor:'#ccc'}
+    thumbnail : { background:'#071871', border:'1px solid #162ea2', labelBackground:'rgba(7, 8, 81, 0.75)', titleColor:'#eee', titleShadow:'', descriptionColor:'#ccc', descriptionShadow:''}
   };
   var g_colorScheme_darkOrange = {
     // #ffd7b7 #ffd773 #ffc840 #ffb600 #a67600
     navigationbar : { background:'#a67600', border:'1px dotted #ffb600', color:'#ccc', colorHover:'#fff' },
-    thumbnail : { background:'#a67600', border:'1px solid #ffb600', labelBackground:'rgba(134, 86, 0, 0.75)', titleColor:'#eee', descriptionColor:'#ccc'}
+    thumbnail : { background:'#a67600', border:'1px solid #ffb600', labelBackground:'rgba(134, 86, 0, 0.75)', titleColor:'#eee', titleShadow:'', descriptionColor:'#ccc', descriptionShadow:''}
   };
   var g_colorScheme_light = {
-    navigationbar : { background:'#ddd', border:'1px dotted #999', color:'#eee', colorHover:'#000' },
-    thumbnail : { background:'#fff', border:'1px solid #fff', labelBackground:'rgba(170, 170, 170, 0.75)', titleColor:'#fff', descriptionColor:'#eee'}
-  };
+    navigationbar : { background:'none', borderTop:'1px solid #ddd', borderBottom:'1px solid #ddd', borderRight:'', borderLeft:'', color:'#777', colorHover:'#eee' },
+    thumbnail : { background:'#fff', border:'1px solid #fff', labelBackground:'rgba(60, 60, 60, 0.75)', titleColor:'#fff', titleShadow:'none', descriptionColor:'#eee', descriptionShadow:'none'}  };
   var g_colorScheme_lightBackground = {
     navigationbar : { background:'none', border:'', color:'#000', colorHover:'#444' },
-    thumbnail : { background:'#000', border:'1px solid #fff', labelBackground:'rgba(170, 170, 170, 0.85)', titleColor:'#fff', descriptionColor:'#eee'}
+    thumbnail : { background:'#000', border:'1px solid #fff', labelBackground:'rgba(170, 170, 170, 0.85)', titleColor:'#fff', titleShadow:'', descriptionColor:'#eee', descriptionShadow:''}
   };
 
 
   // Color schemes - lightbox
   var g_colorSchemeViewer_default = {
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #f8f8f8', imageBoxShadow:'#888 0px 0px 20px', barBackground:'#222', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'#000', imageBorder:'4px solid #000', imageBoxShadow:'#888 0px 0px 0px', barBackground:'rgba(4, 4, 4, 0.7)', barBorder:'0px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    //background:'rgba(1, 1, 1, 0.75)', imageBorder:'4px solid #f8f8f8', imageBoxShadow:'#888 0px 0px 20px', barBackground:'rgba(4, 4, 4, 0.7)', barBorder:'0px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   var g_colorSchemeViewer_darkRed = {
     // #ffa3a3 #ff7373 #ff4040 #ff0000 #a60000
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #ffa3a3', imageBoxShadow:'#ff0000 0px 0px 20px', barBackground:'#a60000', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'rgba(1, 1, 1, 0.75)', imageBorder:'4px solid #ffa3a3', imageBoxShadow:'#ff0000 0px 0px 20px', barBackground:'#a60000', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   var g_colorSchemeViewer_darkGreen = {
     // #97e697 #67e667 #39e639 #00cc00 #008500
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #97e697', imageBoxShadow:'#00cc00 0px 0px 20px', barBackground:'#008500', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'rgba(1, 1, 1, 0.75)', imageBorder:'4px solid #97e697', imageBoxShadow:'#00cc00 0px 0px 20px', barBackground:'#008500', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   var g_colorSchemeViewer_darkBlue = {
     // #a0b0d7 #7080d7 #4a60d7 #162ea2 #071871
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #a0b0d7', imageBoxShadow:'#162ea2 0px 0px 20px', barBackground:'#071871', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'rgba(1, 1, 1, 0.75)', imageBorder:'4px solid #a0b0d7', imageBoxShadow:'#162ea2 0px 0px 20px', barBackground:'#071871', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   var g_colorSchemeViewer_darkOrange = {
     // #ffd7b7 #ffd773 #ffc840 #ffb600 #a67600
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #ffd7b7', imageBoxShadow:'#ffb600 0px 0px 20px', barBackground:'#a67600', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'rgba(1, 1, 1, 0.75)', imageBorder:'4px solid #ffd7b7', imageBoxShadow:'#ffb600 0px 0px 20px', barBackground:'#a67600', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   var g_colorSchemeViewer_light = {
-    background:'rgba(1, 1, 1, 0.75)', imageBorder:'6px solid #f8f8f8', imageBoxShadow:'#888 0px 0px 20px', barBackground:'#222', barBorder:'2px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
+    background:'rgba(187, 187, 187, 0.75)', imageBorder:'none', imageBoxShadow:'#888 0px 0px 0px', barBackground:'rgba(4, 4, 4, 0.7)', barBorder:'0px solid #111', barColor:'#eee', barDescriptionColor:'#aaa'
   };
   
   
@@ -281,13 +313,14 @@ function nanoGALLERY() {
       //  this.tags=tags.split(' ');
       //}
       this.albumID=0;
+      this.customVars={};
     }
   
     // public static
     NGItems.get_nextId = function () {
       return nextId;
     };
-    
+
     // public (shared across instances)
     NGItems.prototype = {
       // for future use...
@@ -368,13 +401,13 @@ function nanoGALLERY() {
   // ##########################
   
   this.Initiate=function( element, params ) {
-  "use strict";
+    "use strict";
     g_options=params;
     g_baseControl=element;
     g_baseControlID=jQuery(element).attr('id');
 
     
-//     deep linking support only once per document
+//     deep linking support only once per page
 //    if( g_options.locationHash ) {
 //      alert(location.hash);
 //      if( location.hash.length > 0 && location.hash.indexOf('#nanogallery/'+g_baseControlID) == 0 ) {
@@ -389,23 +422,61 @@ function nanoGALLERY() {
     jQuery(element).addClass('nanogallery_theme_'+g_options.theme);
     SetColorScheme(element);
 
+    // Hide icons (thumbnails and breadcrumb)
+    if( g_options.thumbnailLabel.hideIcons ) {
+      var s1='.nanogallery_thumbnails_icons_off ';
+      var s=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImageTitle:before { display:none; }'+'\n';
+      s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelFolderTitle:before { display:none; }'+'\n';
+      jQuery('head').append('<style>'+s+'</style>');
+      jQuery(element).addClass('nanogallery_thumbnails_icons_off');
+    }
+    if( g_options.galleryToolbarHideIcons ) {
+      var s1='.nanogallery_breadcrumb_icons_off ';
+      var s=s1+'.nanoGalleryNavigationbar .folderHome:before { display:none; }'+'\n';
+      s+=s1+'.nanoGalleryNavigationbar .folder:before { display:none; }'+'\n';
+      jQuery('head').append('<style>'+s+'</style>');
+      jQuery(element).addClass('nanogallery_breadcrumb_icons_off');
+    }
+
+
+    if( g_options.thumbnailLabel.align == 'right' ) {
+      var s1='.nanogallery_thumbnails_label_align_right ';
+      var s=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImage { text-align : right; }'+'\n';
+      jQuery('head').append('<style>'+s+'</style>');
+      jQuery(element).addClass('nanogallery_thumbnails_label_align_right');
+    }
+
+    if( g_options.thumbnailLabel.align == 'center' ) {
+      var s1='.nanogallery_thumbnails_label_align_center ';
+      var s=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImage { text-align : center; }'+'\n';
+      jQuery('head').append('<style>'+s+'</style>');
+      jQuery(element).addClass('nanogallery_thumbnails_label_align_center');
+    }
+      
+    if( g_options.thumbnailLabel.align == 'left' ) {
+      var s1='.nanogallery_thumbnails_label_align_left ';
+      var s=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImage { text-align : left; }'+'\n';
+      jQuery('head').append('<style>'+s+'</style>');
+      jQuery(element).addClass('nanogallery_thumbnails_label_align_left');
+    }
+    
     // check parameters
     checkPluginParameters();
 
     // add the containers
-    g_containerNavigationbarCont=jQuery('<div class="nanoGalleryNavigationbarContainer"></div>').appendTo(element);
-    jQuery(g_containerNavigationbarCont).hide();//css('visibility','hidden');
-    g_containerNavigationbar=jQuery('<div class="nanoGalleryNavigationbar"></div>').appendTo(g_containerNavigationbarCont);
-    g_containerBreadcrumb=jQuery('<div class="nanoGalleryBreadcrumb"></div>').appendTo(g_containerNavigationbar);
-    g_containerThumbnailsParent=jQuery('<div class="nanoGalleryContainerParent"></div>').appendTo(element);
-    $g_containerThumbnails=jQuery('<div class="nanoGalleryContainer"></div>').appendTo(g_containerThumbnailsParent);
+    $g_containerNavigationbarCont=jQuery('<div class="nanoGalleryNavigationbarContainer"></div>').appendTo(element);
+    $g_containerNavigationbarCont.hide();//css('visibility','hidden');
+    $g_containerNavigationbar=jQuery('<div class="nanoGalleryNavigationbar"></div>').appendTo($g_containerNavigationbarCont);
+    $g_containerBreadcrumb=jQuery('<div class="nanoGalleryBreadcrumb"></div>').appendTo($g_containerNavigationbar);
+    $g_containerThumbnailsParent=jQuery('<div class="nanoGalleryContainerParent"></div>').appendTo(element);
+    $g_containerThumbnails=jQuery('<div class="nanoGalleryContainer"></div>').appendTo($g_containerThumbnailsParent);
 
     var t1=jQuery('<div class="nanogalleryHideElement '+jQuery(element).attr('class')+'"></div>').appendTo('body');
     var t2=jQuery('<div class="nanoGalleryContainerParent"></div>').appendTo(t1);
     $g_containerThumbnailsHidden=jQuery('<div class="nanoGalleryContainer"></div>').appendTo(t2);
 
     if( g_paginationMaxItemsPerPage > 0 || g_paginationMaxLinesPerPage > 0 ) {
-      g_containerPagination=jQuery('<div class="nanoGalleryPagination"></div>').appendTo(g_containerThumbnailsParent);
+      $g_containerPagination=jQuery('<div class="nanoGalleryPagination"></div>').appendTo($g_containerThumbnailsParent);
       gestureGallery()
     }
     
@@ -414,14 +485,15 @@ function nanoGALLERY() {
     i18n();
 
     // fullscreen API support
-    if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled || document.mozFullScreenEnabled) {
+    if( document.fullscreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled || document.mozFullScreenEnabled) {
       g_supportFullscreenAPI=true;
     } else {
-      nanoConsoleLog('Your browser doesnâ€™t support the fullscreen API. Fullscreen button will not be displayed.')
+      nanoConsoleLog('Your browser doesn’t support the fullscreen API. Fullscreen button will not be displayed.')
     }
     
     
-    g_ngItems=[];
+    retrieveThumbnailSizes();
+    
     var sizeImageMax=Math.max(window.screen.width, window.screen.height);
     var si=0;
     if( g_options.thumbnailHeight == 'auto' ) {
@@ -510,15 +582,28 @@ function nanoGALLERY() {
         for(var i=0; i<g_picasaThumbAvailableSizes.length; i++) {
           g_picasaThumbSize=g_picasaThumbAvailableSizes[i];
           if( si < g_picasaThumbAvailableSizes[i] ) {
+            if( g_picasaThumbAvailableSizesCropped.indexOf(' '+g_picasaThumbAvailableSizes[i]+'') >= 0 ) {
+              g_picasaThumbSizeHack=false;
+            }
             break;
           }
         }
         if( g_options.album.length > 0 ) {
-            var album_added=NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', g_options.album, '-1' );
-            album_added.authkey='';//GI
-	      	if ( typeof g_options.authkey !== "undefined"){//GI
-	      		album_added.authkey=g_options.authkey;//GI
-	    	}//GI
+          var p=g_options.album.indexOf('&authkey=');
+          if( p >= 0 ) {
+            var albumId=g_options.album.substring(0,p);
+            var opt=g_options.album.substring(p);
+            if( opt.indexOf('Gv1sRg') == -1 ) {
+              opt='&authkey=Gv1sRg'+opt.substring(9);
+            }
+            var newItem=NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', albumId, '-1' );
+            newItem.customVars.authkey=opt;
+          }
+          else {
+            NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', g_options.album, '-1' );
+          }
+          
+          
         }
         else {
           NGAddItem(g_i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', '0', '-1' );
@@ -535,7 +620,7 @@ function nanoGALLERY() {
     jQuery(window).resize(function() { 
       if(g_resizeTimeOut) clearTimeout(g_resizeTimeOut);
       if( g_containerViewerDisplayed ) {
-          ResizeInternalViewer('.imgCurrent');
+          ResizeInternalViewer($g_ViewerImageCurrent);
       }
       else {
         g_resizeTimeOut = setTimeout(function () {
@@ -592,6 +677,7 @@ function nanoGALLERY() {
 
     // browser back-button to close the image currently displayed
     jQuery(window).bind( 'hashchange', function( event ) {
+
       if( g_options.locationHash ) {
         ProcessLocationHash(true);
       }
@@ -602,15 +688,6 @@ function nanoGALLERY() {
       }
       return;
       
-      //if( g_windowsHash.length > 0 ) {
-      //  //alert(window.location.hash + '-' + itm);
-      //  var itm=g_windowsHash[g_windowsHash.length-1]
-      //  if( itm != window.location.hash ) {
-      //    g_windowsHash.pop();
-      //    //if( #ng_'+jQuery(g_baseControl).attr('id')+'_v'
-      //    CloseInternalViewer();
-      //  }
-      //}
     });
 
     // play the hover out animation on thumbnail --> touchscreen
@@ -624,12 +701,13 @@ function nanoGALLERY() {
     //  });
     //}
 
-//    jQuery("html").on({
-//      mousemove:function(e){
-//        g_touched=false;
-//      },
-//      click:updatePreviousTouched
-//    });
+    //jQuery("html").on({
+    //  mousemove:function(e){
+    //    g_touched=false;
+    //  },
+    //  click:updatePreviousTouched
+    //});
+   
     
   };
 
@@ -645,7 +723,7 @@ function nanoGALLERY() {
     // GESTURE --> requires HAMMER.JS
     // drag gallery left/right to display previous/next page
     if( typeof(Hammer) !== 'undefined' ) {
-      var hammertimeGallery = Hammer(jQuery(g_containerThumbnailsParent)[0], {
+      var hammertimeGallery = Hammer($g_containerThumbnailsParent[0], {
         drag:true,
         transform_always_block:true,
         drag_block_horizontal: true,
@@ -667,16 +745,16 @@ function nanoGALLERY() {
             galleryPosX = ev.gesture.deltaX;
             galleryPosY = ev.gesture.deltaY;
             if( Math.abs(galleryPosX)  < 25 ) {
-              jQuery(g_containerThumbnailsParent).css({ 'left': 0 });  
+              $g_containerThumbnailsParent.css({ 'left': 0 });  
             }
             else {
-              jQuery(g_containerThumbnailsParent).css({ 'left': galleryPosX });
+              $g_containerThumbnailsParent.css({ 'left': galleryPosX });
             }
             break;
           case 'release':
             ev.stopPropagation();
             if( Math.abs(galleryPosX)  < 25 ) {
-              jQuery(g_containerThumbnailsParent).css({ 'left': 0 });  
+              $g_containerThumbnailsParent.css({ 'left': 0 });  
             }
             if( galleryPosX < -25 ) {
               paginationNextPage();
@@ -762,8 +840,6 @@ function nanoGALLERY() {
       g_paginationMaxItemsPerPage=0;
     }
     
-    //g_options.thumbnailHeight=g_options.thumbnailHeight.toLowerCase();
-    //g_options.thumbnailWidth=g_options.thumbnailWidth.toLowerCase();
     if( g_options.thumbnailHeight == 'auto' || g_options.thumbnailWidth == 'auto' ) {
       if( g_options.paginationMaxItemsPerPage >0 ) {
         nanoConsoleLog('Parameters "paginationMaxItemsPerPage" and "thumbnailWidth/thumbnailHeight" on "auto" are not compatible.');
@@ -835,6 +911,12 @@ function nanoGALLERY() {
         case 'imageInvisible':
         case 'imageOpacity50':
         case 'descriptionSlideUp':
+        case 'labelSplitVert':
+        case 'labelSplit4':
+        case 'labelAppearSplitVert':
+        case 'labelAppearSplit4':
+        case 'imageSplitVert':
+        case 'imageSplit4':
           break;
 
         case 'imageScale150':
@@ -878,6 +960,7 @@ function nanoGALLERY() {
           case 'paginationPrevious':
             g_i18nTranslations.paginationPrevious=g_options.i18n[key];
             break;
+
           //paginationNext
           case 'paginationNext_'+g_i18nLang:
             g_i18nTranslations.paginationNext=g_options.i18n[key];
@@ -885,6 +968,7 @@ function nanoGALLERY() {
           case 'paginationNext':
             g_i18nTranslations.paginationNext=g_options.i18n[key];
             break;
+
           //breadcrumbHome
           case 'breadcrumbHome_'+g_i18nLang:
             g_i18nTranslations.breadcrumbHome=g_options.i18n[key];
@@ -892,6 +976,7 @@ function nanoGALLERY() {
           case 'breadcrumbHome':
             g_i18nTranslations.breadcrumbHome=g_options.i18n[key];
             break;
+
           //thumbnailImageTitle
           case 'thumbnailImageTitle_'+g_i18nLang:
             g_i18nTranslations.thumbnailImageTitle=g_options.i18n[key];
@@ -923,12 +1008,14 @@ function nanoGALLERY() {
           case 'thumbnailAlbumDescription':
             g_i18nTranslations.thumbnailAlbumDescription=g_options.i18n[key];
             break;
+        
         }
       });
     }
   }
   
   function ProcessLocationHash(eventLocationHash) {
+
     if( !g_options.locationHash ) { return false; }
 
     var albumID=null;
@@ -1042,6 +1129,58 @@ function nanoGALLERY() {
     }
   
     //return {albumID:albID, imageID:imgID};
+  }
+
+  // build a dummy thumbnail to get different sizes
+  function retrieveThumbnailSizes() {
+    g_ngItems=[];
+
+
+    var item=NGAddItem('dummy', '//:0', '//:0', '', '', 'image', '', '1', '0' );
+    var $newDiv=thumbnailBuild(item, 0, 0, false);
+
+    g_containerOuterWidth=$newDiv.find('.imgContainer').outerWidth(true)-$newDiv.find('.imgContainer').width();     //+$newDiv.outerWidth(true)-$newDiv.width();
+    g_containerOuterHeight=$newDiv.find('.imgContainer').outerHeight(true)-$newDiv.find('.imgContainer').height();  //+$newDiv.outerHeight(true)-$newDiv.height();
+
+    if( g_options.thumbnailWidth != 'auto' ) {
+      g_oneThumbnailWidth=$newDiv.find('.imgContainer').outerWidth(true);
+    }
+    if( g_options.thumbnailHeight != 'auto' ) {
+      g_oneThumbnailHeight=$newDiv.find('.imgContainer').outerHeight(true);
+    }
+           
+    g_oneThumbnailWidthContainer=$newDiv.outerWidth(true);
+    g_oneThumbnailHeightContainer=$newDiv.outerHeight(true);
+
+    if( item.kind == 'album' ) {
+      g_oneThumbnailLabelTitleHeight=$newDiv.find('.labelFolderTitle').outerHeight(true);
+    }
+    else {
+      g_oneThumbnailLabelTitleHeight=$newDiv.find('.labelImageTitle').outerHeight(true);
+    }
+    
+    // pagination - max lines per page mode
+    if( g_paginationMaxLinesPerPage > 0 ) {
+      var areaWidth=$g_containerThumbnailsParent.width();
+      g_paginationLinesMaxItemsPossiblePerLine=parseInt(areaWidth/g_oneThumbnailWidthContainer);
+      if( g_paginationLinesMaxItemsPossiblePerLine < 1 ) {
+        g_paginationLinesMaxItemsPossiblePerLine=1;
+      }
+      if(  g_options.maxItemsPerLine >0 && g_paginationLinesMaxItemsPossiblePerLine >  g_options.maxItemsPerLine ) {
+        g_paginationLinesMaxItemsPossiblePerLine=g_options.maxItemsPerLine;
+      }
+    }
+
+    // backup values used in animations/transitions
+    g_custGlobals.oldBorderColor=$newDiv.css('border-color');
+    if( g_custGlobals.oldBorderColor == '' || g_custGlobals.oldBorderColor == null || g_custGlobals.oldBorderColor == undefined ) { g_custGlobals.oldBorderColor='#000'; }
+    g_custGlobals.oldLabelOpacity=$newDiv.find('.labelImage').css('opacity');
+    var c=jQuery.Color($newDiv.find('.labelImage'),'backgroundColor');
+    g_custGlobals.oldLabelRed=c.red();
+    g_custGlobals.oldLabelGreen=c.green();
+    g_custGlobals.oldLabelBlue=c.blue();
+
+    g_ngItems=[];
   }
 
   
@@ -1253,89 +1392,46 @@ function nanoGALLERY() {
       kind='image';
     }
 
-    if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().addClass('loading'); }
+    if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().addClass('loading'); }
 
     jQuery.ajaxSetup({ cache: false });
     jQuery.support.cors = true;
 
-    if( jQuery.jsonp !== undefined ) {
-      // use jQuery-JSONP plugin
-      jQuery.jsonp({
-        "url": url,
-        "success": function(data) {
-          if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-          if( kind == 'album' ) {
-            FlickrParsePhotoSets(albumIdx, data);
-          }
-          else {
-            FlickrParsePhotos(albumIdx, data);
-          }
-          if( processLocationHash ) {
-            if( !ProcessLocationHash(false) ) {
-              DisplayAlbum(albumIdx,setLocationHash);
-            }
-          }
-          else {
-            if( imageID != -1 ) {
-              var imageIdx=-1;
-              var l=g_ngItems.length;
-              for(var i=0; i<l; i++ ) {
-                if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
-                  imageIdx=i;
-                  break;
-                }
-              }
-              DisplayImage(imageIdx,true);
-            }
-            else {
-              DisplayAlbum(albumIdx,setLocationHash);
-            }
-          }
-        },
-        "error": function(xOptions,textStatus) {
-          if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-          nanoAlert("Could not retrieve Flickr photoset list: "+textStatus);
+    jQuery.getJSON(url, function(data) {
+      if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().removeClass('loading'); }
+      if( kind == 'album' ) {
+        FlickrParsePhotoSets(albumIdx, data);
+      }
+      else {
+        FlickrParsePhotos(albumIdx, data);
+      }
+      if( processLocationHash ) {
+        if( !ProcessLocationHash(false) ) {
+          DisplayAlbum(albumIdx,setLocationHash);
         }
-      });
-    }
-    else {
-      // use jQuery
-      jQuery.getJSON(url, function(data) {
-        if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-        if( kind == 'album' ) {
-          FlickrParsePhotoSets(albumIdx, data);
+      }
+      else {
+        if( imageID != -1 ) {
+          var imageIdx=-1;
+          var l=g_ngItems.length;
+          for(var i=0; i<l; i++ ) {
+            if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
+              imageIdx=i;
+              break;
+            }
+          }
+          DisplayImage(imageIdx,true);
         }
         else {
-          FlickrParsePhotos(albumIdx, data);
+          DisplayAlbum(albumIdx,setLocationHash);
         }
-        if( processLocationHash ) {
-          if( !ProcessLocationHash(false) ) {
-            DisplayAlbum(albumIdx,setLocationHash);
-          }
-        }
-        else {
-          if( imageID != -1 ) {
-            var imageIdx=-1;
-            var l=g_ngItems.length;
-            for(var i=0; i<l; i++ ) {
-              if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
-                imageIdx=i;
-                break;
-              }
-            }
-            DisplayImage(imageIdx,true);
-          }
-          else {
-            DisplayAlbum(albumIdx,setLocationHash);
-          }
-        }
-      })
-      .fail( function(jqxhr, textStatus, error) {
-        if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-        var err = textStatus + ', ' + error;
-        nanoAlert("Could not retrieve Flickr photoset list (jQuery): " + err);
-      });
-    }
+      }
+    })
+    .fail( function(jqxhr, textStatus, error) {
+      if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().removeClass('loading'); }
+      var err = textStatus + ', ' + error;
+      nanoAlert("Could not retrieve Flickr photoset list (jQuery): " + err);
+    });
   
   }
 
@@ -1352,6 +1448,15 @@ function nanoGALLERY() {
   
     if( ok ) {
       var nb=0;
+      
+      if( typeof g_options.albumSorting !== 'undefined' ) { //GI
+        if( g_options.albumSorting == 'random' ) {
+          data.photoset.photo=shuffle(data.photosets.photoset);
+        }else if( g_options.albumSorting == 'reversed' ) {
+          data.photoset.photo=data.photosets.photoset.reverse();
+        }
+      }
+
       jQuery.each(data.photosets.photoset, function(i,item){
         //Get the title 
         itemTitle = item.title._content;
@@ -1385,15 +1490,13 @@ function nanoGALLERY() {
   }
 
   function FlickrParsePhotos( albumIdx, data ) {
-	{//GI
-		if ( typeof g_options.photoSorting !== "undefined"){//GI
-			if (g_options.photoSorting=='random'){
+		if( typeof g_options.photoSorting !== 'undefined' ) { //GI
+			if( g_options.photoSorting == 'random' ) {
 				data.photoset.photo=shuffle(data.photoset.photo);
-			}else if (g_options.photoSorting=='inverse'){
+			}else if( g_options.photoSorting == 'reversed' ) {
 				data.photoset.photo=data.photoset.photo.reverse();
 			}
 		}
-	}
 
     var albumID=g_ngItems[albumIdx].GetID();
     var nb=0;
@@ -1420,6 +1523,7 @@ function nanoGALLERY() {
       else {
         imgUrl=item['url_'+g_flickrPhotoSize];
       }
+      
 	  var flickrSpecificData={
 				'seed':"http://farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.id + "_" + item.secret + "_",
 				'img_orig_width':0,	
@@ -1476,14 +1580,13 @@ function nanoGALLERY() {
     }
     else {
       // photos
-      url = 'http://picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo&thumbsize='+g_picasaThumbSize+'&imgmax=d';
-      if (typeof g_ngItems[albumIdx].authkey !== "undefined" && g_ngItems[albumIdx].authkey.length>0){
-    	  url +="&authkey=Gv1sRg" +g_ngItems[albumIdx].authkey;   
-      }
+      var opt='';
+      if( typeof g_ngItems[albumIdx].customVars.authkey !== 'undefined' ) { opt=g_ngItems[albumIdx].customVars.authkey; }
+      url = 'http://picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+g_picasaThumbSize+'&imgmax=d';
       kind='image';
     }
     url = url + "&callback=?";
-    if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().addClass('loading'); }
+    if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().addClass('loading'); }
 
 
     // get the content and display it
@@ -1497,97 +1600,69 @@ function nanoGALLERY() {
     //  alert("Error with Picasa: " + err);
     //});
 
-    if( jQuery.jsonp !== undefined ) {
-      // use jQuery-JSONP plugin
-      jQuery.jsonp({
-        "url": url,  //+"?callback=?",
-        "success": function(data) {
-          if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-          PicasaParseData(albumIdx,data,kind);
-          //renderGallery(albumIdx,0);
-          if( processLocationHash ) {
-            if( !ProcessLocationHash(false) ) {
-              DisplayAlbum(albumIdx,setLocationHash);
-            }
-          }
-          else {
-            if( imageID != -1 ) {
-              var imageIdx=-1;
-              var l=g_ngItems.length;
-              for(var i=0; i<l; i++ ) {
-                if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
-                  imageIdx=i;
-                  break;
-                }
-              }
-              DisplayImage(imageIdx,true);
-            }
-            else {
-              DisplayAlbum(albumIdx,setLocationHash);
-            }
-          }
-        },
-        "error": function(xOptions,textStatus) {
-          if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-          nanoAlert("Could not retrieve Picasa/Google+ data: "+textStatus);
+    // use jQuery
+    jQuery.getJSON(url, function(data) {
+      if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().removeClass('loading'); }
+      PicasaParseData(albumIdx,data,kind);
+      //renderGallery(albumIdx,0);
+      if( processLocationHash ) {
+        if( !ProcessLocationHash(false) ) {
+          DisplayAlbum(albumIdx,setLocationHash);
         }
-      });
-    }
-    else {
-      // use jQuery
-      jQuery.getJSON(url, function(data) {
-        if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-        PicasaParseData(albumIdx,data,kind);
-        //renderGallery(albumIdx,0);
-        if( processLocationHash ) {
-          if( !ProcessLocationHash(false) ) {
-            DisplayAlbum(albumIdx,setLocationHash);
+      }
+      else {
+      if( imageID != -1 ) {
+          var imageIdx=-1;
+          var l=g_ngItems.length;
+          for(var i=0; i<l; i++ ) {
+            if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
+              imageIdx=i;
+              break;
+            }
           }
+          DisplayImage(imageIdx,true);
         }
         else {
-        if( imageID != -1 ) {
-            var imageIdx=-1;
-            var l=g_ngItems.length;
-            for(var i=0; i<l; i++ ) {
-              if( g_ngItems[i].kind == 'image' && g_ngItems[i].GetID() == imageID ) {
-                imageIdx=i;
-                break;
-              }
-            }
-            DisplayImage(imageIdx,true);
-          }
-          else {
-            DisplayAlbum(albumIdx,setLocationHash);
-          }
+          DisplayAlbum(albumIdx,setLocationHash);
         }
-      })
-      .fail( function(jqxhr, textStatus, error) {
-        if( g_options.displayBreadcrumb == true ) { jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading'); }
-        var err = textStatus + ', ' + error;
-        nanoAlert("Could not retrieve Picasa/Google+ data (jQuery): " + err);
-      });
-    }
+      }
+    })
+    .fail( function(jqxhr, textStatus, error) {
+      if( g_options.displayBreadcrumb == true ) { $g_containerBreadcrumb.find('.folder').last().removeClass('loading'); }
+      var err = textStatus + ', ' + error;
+      nanoAlert("Could not retrieve Picasa/Google+ data (jQuery): " + err);
+    });
   };  
   
-//+ Jonas Raoni Soares Silva
-//@ http://jsfromhell.com/array/shuffle [v1.0]
-function shuffle(o){ //v1.0
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
-};
+  //+ Jonas Raoni Soares Silva
+  //@ http://jsfromhell.com/array/shuffle [v1.0]
+  function shuffle(o){ //v1.0
+      for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+      return o;
+  };
   
   function PicasaParseData( albumIdx, data, kind ) {
     var nb=0;
     var albumID=g_ngItems[albumIdx].GetID();
-	if (kind =='image'){//GI
-		if ( typeof g_options.photoSorting !== "undefined"){//GI
-			if (g_options.photoSorting=='random'){
-				data.feed.entry=shuffle(data.feed.entry);
-			}else if (g_options.photoSorting=='inverse'){
-				data.feed.entry=data.feed.entry.reverse();
-			}
-		}
-	}
+    if (kind =='image'){//GI
+      if( typeof g_options.photoSorting !== 'undefined' ){//GI
+        if( g_options.photoSorting == 'random' ){
+          data.feed.entry=shuffle(data.feed.entry);
+        }else if( g_options.photoSorting == 'reversed' ){
+          data.feed.entry=data.feed.entry.reverse();
+        }
+      }
+    }
+    else {
+      if ( typeof g_options.albumSorting !== 'undefined' ){//GI
+        if( g_options.albumSorting == 'random' ){
+          data.feed.entry=shuffle(data.feed.entry);
+        }else if( g_options.albumSorting == 'reversed' ){
+          data.feed.entry=data.feed.entry.reverse();
+        }
+      }
+    }
+    
     jQuery.each(data.feed.entry, function(i,data){
       
       var filename='';
@@ -1610,13 +1685,12 @@ function shuffle(o){ //v1.0
       }
       
       var imgUrl=data.media$group.media$content[0].url;
-
 	  var picasaSpecificData={
 				'seed':'',
 				'img_orig_width':0,
 				'img_orig_height':0,
 			  };
-      
+
       var ok=true;
       if( kind == 'album' ) {
         if( !CheckAlbumName(itemTitle) ) { ok=false; }
@@ -1627,18 +1701,22 @@ function shuffle(o){ //v1.0
 		picasaSpecificData.img_orig_height=data.gphoto$height.$t;
 		picasaSpecificData.seed=seed;
       }
-      
+     
       var tags='';
       
       if( ok ) {
+
+        if( g_options.thumbnailHeight == 'auto' ) {
+          if( g_picasaThumbSizeHack ) {
+            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
+            s=s.substring(0, s.lastIndexOf('/')) + '/';
+            itemThumbURL=s+'w'+g_options.thumbnailWidth+'/';
+          }
+        }
+
         var src='';
         if( kind == 'album' ) {
           src=itemID;
-          var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
-          s=s.substring(0, s.lastIndexOf('/')) + '/';
-          if( g_options.thumbnailHeight == 'auto' ) {
-			itemThumbURL=s+'w'+g_options.thumbnailWidth+'/';
-		  }
         }
         else {
           src=imgUrl;
@@ -1651,11 +1729,6 @@ function shuffle(o){ //v1.0
           else {
             src=s+'h'+window.screen.height+'/'+filename;
           }
-		  
-          if( g_options.thumbnailHeight == 'auto' ) {
-  		     itemThumbURL=s+'w'+g_options.thumbnailWidth+'/'+filename;
-		  }
-		  
         }
         var newItem= NGAddItem(itemTitle, itemThumbURL, src, itemDescription, '', kind, tags, itemID, albumID,'picasa', picasaSpecificData );
         newItem.imageNumber=nb;
@@ -1699,7 +1772,6 @@ function shuffle(o){ //v1.0
     newObj.albumID=albumID;
     newObj.albumSource=albumSource;
     newObj.imgSpecificData=imgSpecificData;
-    
     if( tags.length == 0 ) {
       newObj.tags=null;
     }
@@ -1751,7 +1823,12 @@ function shuffle(o){ //v1.0
   
   // add album to breadcrumb
   function breadcrumbAdd( albumIdx ) {
-    var newDiv =jQuery('<div class="folder">'+g_ngItems[albumIdx].title+'</div>').appendTo(g_containerBreadcrumb);
+    
+    var cl="folder";
+    if(albumIdx == 0 ) {
+      cl="folderHome";
+    }
+    var newDiv =jQuery('<div class="'+cl+'">'+g_ngItems[albumIdx].title+'</div>').appendTo($g_containerBreadcrumb);
     jQuery(newDiv).data('albumIdx',albumIdx);
     newDiv.click(function() {
       var cAlbumIdx=jQuery(this).data('albumIdx');
@@ -1774,7 +1851,7 @@ function shuffle(o){ //v1.0
 
   // add separator to breadcrumb
   function breadcrumbAddSeparator( lastAlbumID ) {
-    var newSep=jQuery('<div class="separator"></div>').appendTo(g_containerBreadcrumb);
+    var newSep=jQuery('<div class="separator"></div>').appendTo($g_containerBreadcrumb);
     jQuery(newSep).data('albumIdx',lastAlbumID);
     newSep.click(function() {
       var sepAlbumIdx=jQuery(this).data('albumIdx');
@@ -1803,13 +1880,13 @@ function shuffle(o){ //v1.0
     // Breadcrumb
     if( g_options.displayBreadcrumb == true ) {
       displayToolbar=true;
-      var bcItems=jQuery(g_containerBreadcrumb).children();
+      var bcItems=$g_containerBreadcrumb.children();
       var l1=bcItems.length;
       if( l1 == 0 ) {
         breadcrumbAdd(0);
       }
       else {
-        jQuery(g_containerBreadcrumb).children().not(':first').remove();
+        $g_containerBreadcrumb.children().not(':first').remove();
       }
       if( albumIdx != 0 ) {
         var l=g_ngItems.length;
@@ -1839,14 +1916,14 @@ function shuffle(o){ //v1.0
     //if( g_options.displayBreadcrumb == true ) {
     if( true == false ) {
       displayToolbar=true;
-      var bcItems=jQuery(g_containerBreadcrumb).children();
+      var bcItems=$g_containerBreadcrumb.children();
       var l1=bcItems.length;
       var found=false;
       var lastAlbumID=-1;
       for( var i=0; i < l1; i++ ) {
         lastAlbumIdx=jQuery(bcItems[i]).data('albumIdx');
         if( lastAlbumIdx == albumIdx ) {
-          jQuery(g_containerBreadcrumb).children().slice(i-1);
+          $g_containerBreadcrumb.children().slice(i-1);
           found=true;
           break;
         }
@@ -1855,7 +1932,7 @@ function shuffle(o){ //v1.0
       if( !found ) {
         if( albumIdx != 0 ) {
           // add separator
-          var newSep=jQuery('<div class="separator"></div>').appendTo(g_containerBreadcrumb);
+          var newSep=jQuery('<div class="separator"></div>').appendTo($g_containerBreadcrumb);
           jQuery(newSep).data('albumIdx',lastAlbumID);
           newSep.click(function() {
             var sepAlbumIdx=jQuery(this).data('albumIdx');
@@ -1877,7 +1954,7 @@ function shuffle(o){ //v1.0
           });;
         }
         // add album to breadcrumb
-        var newDiv =jQuery('<div class="folder">'+g_ngItems[albumIdx].title+'</div>').appendTo(g_containerBreadcrumb);
+        var newDiv =jQuery('<div class="folder">'+g_ngItems[albumIdx].title+'</div>').appendTo($g_containerBreadcrumb);
         jQuery(newDiv).data('albumIdx',albumIdx);
         newDiv.click(function() {
           var cAlbumIdx=jQuery(this).data('albumIdx');
@@ -1900,17 +1977,16 @@ function shuffle(o){ //v1.0
     }
     
     // Tag-bar
-    //g_containerNavigationbar
     if( g_options.useTags ) {
       displayToolbar=true;
       if( g_containerTags == null ) {
-        g_containerTags =jQuery('<div class="nanoGalleryTags"></div>').appendTo(g_containerNavigationbar);
+        g_containerTags =jQuery('<div class="nanoGalleryTags"></div>').appendTo($g_containerNavigationbar);
       }
     }
     
     if( !g_containerNavigationbarContDisplayed && displayToolbar ) {
       g_containerNavigationbarContDisplayed=true;
-      jQuery(g_containerNavigationbarCont).show();
+      $g_containerNavigationbarCont.show();
     }
     
   }
@@ -1923,7 +1999,7 @@ function shuffle(o){ //v1.0
     if( g_options.thumbnailHeight == 'auto' ) {
       SetGalleryWidth(0);
       SetGalleryToolbarWidth(0);
-      var areaW=jQuery(g_containerThumbnailsParent).outerWidth(true);
+      var areaW=$g_containerThumbnailsParent.outerWidth(true);
       var n=0;
       var t=0;
       var col=0;
@@ -1936,7 +2012,7 @@ function shuffle(o){ //v1.0
       }
 
       var colHeight=[];
-      $g_containerThumbnails.find('.nanoContainer').each(function() {
+      $g_containerThumbnails.find('.nanoGalleryThumbnailContainer').each(function() {
         jQuery(this).css('position', 'absolute')
         t=0;
         if( row == 0 ) {
@@ -1975,11 +2051,11 @@ function shuffle(o){ //v1.0
       // pagination - max lines per page mode
       if( g_paginationMaxLinesPerPage > 0 ) {
         if( g_oneThumbnailWidthContainer > 0 ) {
-          var areaW=jQuery(g_containerThumbnailsParent).outerWidth(true);
+          var areaW=$g_containerThumbnailsParent.outerWidth(true);
           var n=parseInt(areaW/g_oneThumbnailWidthContainer);
           if( n < 1 ) { n=1; }
           if( n != g_paginationLinesMaxItemsPossiblePerLine ) {
-            var aIdx=jQuery(g_containerPagination).data('galleryIdx');
+            var aIdx=$g_containerPagination.data('galleryIdx');
             renderGallery(aIdx,0);
           }
         }
@@ -1997,7 +2073,7 @@ function shuffle(o){ //v1.0
       }
       
       
-      var availableWidth=jQuery(g_containerThumbnailsParent).outerWidth(true);    // available width (parent container)
+      var availableWidth=$g_containerThumbnailsParent.outerWidth(true);    // available width (parent container)
       if( g_options.thumbnailWidth != 'auto' ) {
       var setDone=false;
         if( g_options.maxItemsPerLine > 0 ) {
@@ -2017,15 +2093,15 @@ function shuffle(o){ //v1.0
 
   function SetGalleryToolbarWidth(pageNumber) {
     if( g_options.galleryToolbarWidthAligned ) {
-      if( g_containerNavigationbarCont !== undefined ) {
+      if( $g_containerNavigationbarCont !== undefined ) {
         var w=$g_containerThumbnails.outerWidth(true);
 //        if( pageNumber > 0 ) {
-          if( jQuery(g_containerNavigationbarCont).width() < w ) {
-            jQuery(g_containerNavigationbarCont).width(w);
+          if( $g_containerNavigationbarCont.width() < w ) {
+            $g_containerNavigationbarCont.width(w);
           }
 //        }
         else {
-          jQuery(g_containerNavigationbarCont).width(w);
+          $g_containerNavigationbarCont.width(w);
         }
       }
     }
@@ -2035,7 +2111,7 @@ function shuffle(o){ //v1.0
   function thumbnailsLazySetSrc() {
 //    if( g_containerThumbnailsDisplayed ) {
       //var wp=getViewport();
-      var $eltInViewport=$g_containerThumbnails.find('.nanoContainer').filter(function() {
+      var $eltInViewport=$g_containerThumbnails.find('.nanoGalleryThumbnailContainer').filter(function() {
          return inViewport(this, g_thumbnailLazyLoadTreshold);
       });
 
@@ -2094,15 +2170,16 @@ function shuffle(o){ //v1.0
   
   // Display pagination
   function managePagination( albumIdx, pageNumber ) {
-    jQuery(g_containerPagination).children().remove();
+    if( $g_containerPagination == undefined ) return;
+    $g_containerPagination.children().remove();
 
-    jQuery(g_containerPagination).data('galleryIdx',albumIdx);
-    jQuery(g_containerPagination).data('currentPageNumber',pageNumber);
+    $g_containerPagination.data('galleryIdx',albumIdx);
+    $g_containerPagination.data('currentPageNumber',pageNumber);
     var n2=0;
 
     var w=0;
     if( pageNumber > 0 ) {
-      var eltPrev=jQuery('<div class="paginationPrev">'+g_i18nTranslations.paginationPrevious+'</div>').appendTo(g_containerPagination);
+      var eltPrev=jQuery('<div class="paginationPrev">'+g_i18nTranslations.paginationPrevious+'</div>').appendTo($g_containerPagination);
       w+=jQuery(eltPrev).outerWidth(true);
       eltPrev.click(function(e) {
         paginationPreviousPage();
@@ -2132,19 +2209,17 @@ function shuffle(o){ //v1.0
       }
     }
     
-    if( n2==1 ) {
-      // only one page -> do not display anything
-      return;
-    }
+    // only one page -> do not display anything
+    if( n2==1 ) { return; }
     
     for(var i=firstPage; i < n2; i++ ) {
       var c='';
       if( i == pageNumber ) { c=' currentPage'; }
-      var elt=jQuery('<div class="paginationItem'+c+'">'+(i+1)+'</div>').appendTo(g_containerPagination);
+      var elt=jQuery('<div class="paginationItem'+c+'">'+(i+1)+'</div>').appendTo($g_containerPagination);
       jQuery(elt).data('pageNumber',i);
       w+=jQuery(elt).outerWidth(true);
       elt.click(function(e) {
-        var aIdx=jQuery(g_containerPagination).data('galleryIdx');
+        var aIdx=$g_containerPagination.data('galleryIdx');
         var pn=jQuery(this).data('pageNumber');
         renderGallery(aIdx,pn);
       });
@@ -2152,19 +2227,19 @@ function shuffle(o){ //v1.0
     }
 
     if( (pageNumber+1) < n2 ) {
-      var eltNext=jQuery('<div class="paginationNext">'+g_i18nTranslations.paginationNext+'</div>').appendTo(g_containerPagination);
+      var eltNext=jQuery('<div class="paginationNext">'+g_i18nTranslations.paginationNext+'</div>').appendTo($g_containerPagination);
       w+=jQuery(eltNext).outerWidth(true);
       eltNext.click(function(e) {
         paginationNextPage();
       });
     }
 
-    jQuery(g_containerPagination).width(w);
+    $g_containerPagination.width(w);
 
   }
 
   function paginationNextPage() {
-    var aIdx=jQuery(g_containerPagination).data('galleryIdx');
+    var aIdx=$g_containerPagination.data('galleryIdx');
 
     var n1=0;
     // pagination - max items per page mode
@@ -2177,7 +2252,7 @@ function shuffle(o){ //v1.0
     }
     n2=Math.ceil(n1);
     
-    var pn=jQuery(g_containerPagination).data('currentPageNumber');
+    var pn=$g_containerPagination.data('currentPageNumber');
     if( pn < (n2-1) ) {
       pn++;
     }
@@ -2188,7 +2263,7 @@ function shuffle(o){ //v1.0
   }
   
   function paginationPreviousPage() {
-    var aIdx=jQuery(g_containerPagination).data('galleryIdx');
+    var aIdx=$g_containerPagination.data('galleryIdx');
 
     var n1=0;
     // pagination - max items per page mode
@@ -2201,7 +2276,7 @@ function shuffle(o){ //v1.0
     }
     n2=Math.ceil(n1);
     
-    var pn=jQuery(g_containerPagination).data('currentPageNumber');
+    var pn=$g_containerPagination.data('currentPageNumber');
     if( pn > 0 ) {
       pn--;
     }
@@ -2213,32 +2288,25 @@ function shuffle(o){ //v1.0
 
   function renderGallery( albumIdx, pageNumber ) {
     var $elt=$g_containerThumbnails.parent();
-    //jQuery($g_containerThumbnails).animate({'max-height': '0'}, 200);
     $elt.animate({opacity: 0}, 100).promise().done(function(){
 
       // remove gallery elements
       g_containerThumbnailsDisplayed=false;
-      $g_containerThumbnails.off().empty();   //.children().remove();
+      $g_containerThumbnails.off().empty();
       var l=g_ngItems.length;
       for( var i=0; i < l ; i++ ) {
         g_ngItems[i].hovered=false;
       }
-      jQuery(g_containerThumbnailsParent).css({ 'left': 0, 'opacity':'1' });  
+
+      $g_containerThumbnailsParent.css({ 'left': 0, 'opacity':'1' });
+      
       renderGallery2(albumIdx, pageNumber, renderGallery2Complete);
     });
-    // remove pagination elements
-//    if( g_paginationMaxItemsPerPage > 0 || g_paginationMaxLinesPerPage > 0 ) {
-//      jQuery(g_containerPagination).children().remove();
-//    }
   };
 
 
   function renderGallery2( albumIdx, pageNumber, onComplete ) {
-    //g_oneThumbnailWidth=0;
-    //g_oneThumbnailWidthContainer=0;
-    //g_oneThumbnailHeight=0;
-    //g_oneThumbnailHeightContainer=0;
-    g_oneThumbnailLabelTitleHeight=0;
+    //g_oneThumbnailLabelTitleHeight=0;
 
     var l=g_ngItems.length;
     // if one description is defined then put a value to those without
@@ -2248,11 +2316,11 @@ function shuffle(o){ //v1.0
         if( g_ngItems[i].albumID == g_ngItems[albumIdx].albumID && g_ngItems[i].description.length > 0 ) { foundDesc=true; }
       }
     }*/
-    g_galleryItemsCount=0;
-    var currentCounter=0;
-
-    var firstCounter=0;
-    var lastCounter=0;
+    var g_galleryItemsCount=0,
+    currentCounter=0,
+    firstCounter=0,
+    lastCounter=0;
+    
     if( g_paginationMaxItemsPerPage > 0 ) {
       firstCounter=pageNumber*g_paginationMaxItemsPerPage;
       lastCounter=firstCounter+g_paginationMaxItemsPerPage;
@@ -2263,7 +2331,7 @@ function shuffle(o){ //v1.0
     }
 
     if( g_options.displayBreadcrumb == true ) {
-      jQuery(g_containerBreadcrumb).find('.folder').last().removeClass('loading');
+      $g_containerBreadcrumb.find('.folder').last().removeClass('loading');
     }
 
     var eltOpacity='1';
@@ -2271,11 +2339,9 @@ function shuffle(o){ //v1.0
       eltOpacity='0';
     }
     
-    var firstPass=true;
-    var endInViewportTest=false;
-    var startInViewportTest=false;
-    
-    var idx=0;
+    var endInViewportTest=false,
+    startInViewportTest=false,
+    idx=0;
     
     (function(){
 
@@ -2285,9 +2351,9 @@ function shuffle(o){ //v1.0
           return;
         }
 
-
         var item=g_ngItems[idx];
         if( item.albumID == g_ngItems[albumIdx].GetID() ) {
+
           currentCounter++;
           // pagination - max items per page mode
           if( g_paginationMaxItemsPerPage > 0 && currentCounter > lastCounter ) {
@@ -2306,226 +2372,14 @@ function shuffle(o){ //v1.0
           if( currentCounter > firstCounter ) {
             g_galleryItemsCount++;
             
-            var newElt=[];
-            var newEltIdx=0;
-            newElt[newEltIdx++]='<div class="nanoContainer nanogalleryHideElement" style="display:inline-block,opacity:'+eltOpacity+'"><div class="subcontainer" style="display: inline-block">';
+            var $newDiv=thumbnailBuild(item, idx, eltOpacity, foundDesc);
+
+            thumbnailPositionContent($newDiv);
+
+            setThumbnailSize($newDiv, item);
             
-            var src='';
-            if( g_options.thumbnailLazyLoad ) {
-              src="//:0";
-            }
-             else {
-              src=item.thumbsrc;
-            }
-            
-            var checkImageSize=false;
-            if( g_options.thumbnailHeight == 'auto' ) {
-              newElt[newEltIdx++]='<div class="imgContainer" style="width:'+g_options.thumbnailWidth+'px;"><img class="image" src='+src+' style="width:'+g_options.thumbnailWidth+'px;"></div>';
-              if( g_ngItems[idx].thumbHeight == 0 ) { checkImageSize=true; }
-            }
-            else if( g_options.thumbnailWidth == 'auto' ) {
-                newElt[newEltIdx++]='<div class="imgContainer" style="height:'+g_options.thumbnailHeight+'px;"><img class="image" src='+src+' style="height:'+g_options.thumbnailHeight+'px;"></div>';
-                if( g_ngItems[idx].thumbWidth == 0 ) { checkImageSize=true; }
-              }
-              else {
-                newElt[newEltIdx++]='<div class="imgContainer" style="width:'+g_options.thumbnailWidth+'px;height:'+g_options.thumbnailHeight+'px;"><img class="image" src='+src+' style="max-width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"></div>';
-              }
-
-
-            if( item.kind == 'album' ) {
-              // ALBUM
-              if( g_options.thumbnailLabel.display == true ) {
-                var sTitle=item.title;
-                if( g_i18nTranslations.thumbnailAlbumTitle != '' ) {
-                  sTitle=g_i18nTranslations.thumbnailAlbumTitle;
-                }
-                var sDesc='';
-                if( g_options.thumbnailLabel.displayDescription == true ) { 
-                  if( g_i18nTranslations.thumbnailAlbumDescription != '' ) {
-                    sDesc=g_i18nTranslations.thumbnailAlbumDescription;
-              }
-                  else {
-                    sDesc=item.description;
-                  }
-                }
-				
-				if (g_options.thumbnailLabel.maxTitle>3 && sTitle.length>g_options.thumbnailLabel.maxTitle){
-					sTitle=sTitle.substring(0,g_options.thumbnailLabel.maxTitle-3)+'...';
-				}
-				if (g_options.thumbnailLabel.maxDescription>3 && sDesc.length>g_options.thumbnailLabel.maxDescription){
-					sDesc=sDesc.substring(0,g_options.thumbnailLabel.maxDescription-3)+'...';
-				}
-				
-				
-                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelFolderTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
-            }
-            }
-            else {
-              // IMAGE
-              var sTitle=item.title;
-              var sDesc='';
-              if( g_options.thumbnailLabel.display == true ) {
-                if( sTitle === undefined || sTitle.length == 0 ) { sTitle='&nbsp;'; }
-                if( g_i18nTranslations.thumbnailImageTitle != '' ) {
-                  sTitle=g_i18nTranslations.thumbnailImageTitle;
-                }
-                
-                if( g_options.thumbnailLabel.displayDescription == true ) { 
-                  if( g_i18nTranslations.thumbnailImageDescription !='' ) {
-                    sDesc=g_i18nTranslations.thumbnailImageDescription;
-                  }
-                  else {
-                    sDesc=item.description;
-                  }
-                }
-				
-				if (g_options.thumbnailLabel.maxTitle>3 && sTitle.length>g_options.thumbnailLabel.maxTitle){
-					sTitle=sTitle.substring(0,g_options.thumbnailLabel.maxTitle-3)+'...';
-				}
-				if (g_options.thumbnailLabel.maxDescription>3 && sDesc.length>g_options.thumbnailLabel.maxDescription){
-					sDesc=sDesc.substring(0,g_options.thumbnailLabel.maxDescription-3)+'...';
-				}
-				
-                if( foundDesc && sDesc.length == 0 && g_options.thumbnailLabel.position == 'onBottom' ) { sDesc='&nbsp;'; }
-                newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelImageTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
-              }
-            }
-            newElt[newEltIdx++]='</div></div>';
-            
-            var $newDiv =jQuery(newElt.join('')).appendTo($g_containerThumbnailsHidden); //.animate({ opacity: 1},1000, 'swing');  //.show('slow'); //.fadeIn('slow').slideDown('slow');
-            g_ngItems[idx].$elt=$newDiv;
-            $newDiv.find('img').data('index',idx);
-
-            if( checkImageSize ) {
-              $newDiv.imagesLoaded().always( function( instance ) {
-                var itemIdx=jQuery(instance.images[0].img).data('index');
-                var item=g_ngItems[itemIdx];
-                var b=false;
-
-                if( item.thumbHeight != instance.images[0].img.naturalHeight ) {
-                  item.thumbHeight=instance.images[0].img.naturalHeight;
-                  var ratio=instance.images[0].img.naturalHeight/instance.images[0].img.naturalWidth;
-                  var h=g_options.thumbnailWidth*ratio;
-                  item.$elt.find('.imgContainer').height(h);
-                  item.thumbRealHeight=h+g_containerOuterHeight;
-                  item.$elt.height(item.thumbRealHeight);
-                  b=true;
-                }
-                if( item.thumbWidth != instance.images[0].img.naturalWidth ) {
-                  item.thumbWidth=instance.images[0].img.naturalWidth;
-                  var ratio=instance.images[0].img.naturalWidth/instance.images[0].img.naturalHeight;
-                  var w=g_options.thumbnailHeight*ratio;
-                  item.$elt.find('.imgContainer').width(w);
-                  item.thumbRealWidth=w+g_containerOuterWidth;
-                  item.$elt.width(item.thumbRealWidth);
-                  b=true;
-                }
-                if( b ) {
-                  ResizeGallery();
-                  if( g_options.thumbnailDisplayTransition ) {
-                    if( g_thumbnailDisplayInterval > 0 ) {
-                      item.$elt.delay(g_galleryItemsCount*g_thumbnailDisplayInterval).fadeTo(150, 1);
-                    }
-                    else {
-                      item.$elt.fadeTo(150, 1);
-                    }
-                  }
-                  else {
-                    item.$elt.css('opacity',1);
-                  }
-                }
-              });
-            }
-            
-            switch( g_options.thumbnailLabel.position ){
-              case 'onBottom':
-                $newDiv.find('.labelImage').css({'top':'0', 'position':'relative'});
-                $newDiv.find('.labelImageTitle').css('white-space','nowrap');
-                $newDiv.find('.labelFolderTitle').css('white-space','nowrap');
-                $newDiv.find('.labelDescription').css('white-space','nowrap');
-                break;
-              case 'overImageOnTop':
-                $newDiv.find('.labelImage').css('top','0');
-                break;
-              case 'overImageOnMiddle':
-                $newDiv.find('.labelImage').css({'top':'0', 'height':'100%'});
-                $newDiv.find('.labelFolderTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
-                $newDiv.find('.labelImageTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
-                $newDiv.find('.labelDescription').css({'width':'100%','position':'absolute','top':'50%'});
-                break;
-              case 'overImageOnBottom':
-              default :
-                g_options.thumbnailLabel.position='overImageOnBottom';
-                $newDiv.find('.labelImage').css('bottom','0');
-                break;
-            }
-
-            var g_containerOuterWidth=$newDiv.find('.imgContainer').outerWidth(true)-$newDiv.find('.imgContainer').width();     //+$newDiv.outerWidth(true)-$newDiv.width();
-            var g_containerOuterHeight=$newDiv.find('.imgContainer').outerHeight(true)-$newDiv.find('.imgContainer').height();  //+$newDiv.outerHeight(true)-$newDiv.height();
-            //g_options.thumbnailHeight
-
-            
-            if( firstPass ) {
-              if( g_options.thumbnailWidth != 'auto' ) {
-                g_oneThumbnailWidth=$newDiv.find('.imgContainer').outerWidth(true);
-              }
-              if( g_options.thumbnailHeight != 'auto' ) {
-                g_oneThumbnailHeight=$newDiv.find('.imgContainer').outerHeight(true);
-              }
-            }
-
-            if( g_options.thumbnailHeight == 'auto' ) {
-              if( item.thumbHeight > 0 ) {
-                var ratio=item.thumbHeight/item.thumbWidth;
-                $newDiv.find('.imgContainer').height(g_options.thumbnailWidth*ratio);
-                item.thumbRealHeight=g_options.thumbnailWidth*ratio+g_containerOuterHeight;
-                $newDiv.height(item.thumbRealHeight);
-              }
-              item.thumbRealWidth=g_oneThumbnailWidth;
-            }
-            else if( g_options.thumbnailHeight == 'auto' ) {
-                if( item.thumbWidth > 0 ) {
-                  var ratio=item.thumbHeight/item.thumbWidth;
-                  $newDiv.find('.imgContainer').width(g_options.thumbnailHeight*ratio);
-                  item.thumbRealWidth=g_options.thumbnailHeight*ratio+g_containerOuterWidth;
-                  $newDiv.width(item.thumbRealWidth);
-                }
-                item.thumbRealHeight=g_oneThumbnailHeight;
-              }
-              else {
-                $newDiv.width(g_oneThumbnailWidth).height(g_oneThumbnailHeight);     // for correct image centering
-                item.thumbRealHeight=g_oneThumbnailHeight;
-                item.thumbRealWidth=g_oneThumbnailWidth;
-              }
-            
-//            $newDiv.width(g_oneThumbnailWidth).height(g_oneThumbnailHeight);     // for correct image centering
-//            $newDiv.height(g_containerOuterHeight+g_options.thumbnailHeight);     // for correct image centering
-            if( firstPass ) {
-              g_oneThumbnailWidthContainer=$newDiv.outerWidth(true);
-              g_oneThumbnailHeightContainer=$newDiv.outerHeight(true);
-              if( item.kind == 'album' ) {
-                g_oneThumbnailLabelTitleHeight=$newDiv.find('.labelFolderTitle').outerWidth(true);
-              }
-              else {
-                g_oneThumbnailLabelTitleHeight=$newDiv.find('.labelImageTitle').outerHeight(true);
-              }
-              
-              // pagination - max lines per page mode
-              if( g_paginationMaxLinesPerPage > 0 ) {
-                var areaWidth=jQuery(g_containerThumbnailsParent).width();
-                g_paginationLinesMaxItemsPossiblePerLine=parseInt(areaWidth/g_oneThumbnailWidthContainer);
-                if( g_paginationLinesMaxItemsPossiblePerLine < 1 ) {
-                  g_paginationLinesMaxItemsPossiblePerLine=1;
-                }
-                if(  g_options.maxItemsPerLine >0 && g_paginationLinesMaxItemsPossiblePerLine >  g_options.maxItemsPerLine ) {
-                  g_paginationLinesMaxItemsPossiblePerLine=g_options.maxItemsPerLine;
-                }
-              }
-            }
-
-            $newDiv.data('index',idx);
-
-            var $p=$newDiv.detach();
+            var checkImageSize=(g_options.thumbnailHeight == 'auto' && g_ngItems[idx].thumbHeight == 0) || ( g_options.thumbnailWidth == 'auto' && g_ngItems[idx].thumbWidth == 0 ),
+            $p=$newDiv.detach();
             if( checkImageSize ) {
               $p.css('opacity',0);
             }
@@ -2534,15 +2388,13 @@ function shuffle(o){ //v1.0
             }
             $p.appendTo($g_containerThumbnails);
 
-            if( g_options.thumbnailHeight == 'auto' && item.thumbHeight > 0 ) {
-              ResizeGallery();
-            }
-            if( g_options.thumbnailHeight == 'auto' && item.thumbWidth > 0 ) {
+            if( (g_options.thumbnailHeight == 'auto' && item.thumbHeight > 0) || (g_options.thumbnailHeight == 'auto' && item.thumbWidth > 0) ) {
               ResizeGallery();
             }
 
             $p.removeClass('nanogalleryHideElement');
 
+            // display animation (fadeIn)
             if( !checkImageSize ) {
               if( g_options.thumbnailDisplayTransition ) {
                 if( g_thumbnailDisplayInterval > 0 ) {
@@ -2554,7 +2406,7 @@ function shuffle(o){ //v1.0
               }
             }
 
-            
+            // image lazy load
             if( g_options.thumbnailLazyLoad ) {
               if( !endInViewportTest ) {
                 if( inViewport($newDiv, g_thumbnailLazyLoadTreshold) ) {
@@ -2567,19 +2419,7 @@ function shuffle(o){ //v1.0
               }
             }
             
-            
-            // backup values used in animations/transitions
-            if( firstPass ) {
-              g_custGlobals.oldBorderColor=$newDiv.css('border-color');
-              if( g_custGlobals.oldBorderColor == '' || g_custGlobals.oldBorderColor == null || g_custGlobals.oldBorderColor == undefined ) { g_custGlobals.oldBorderColor='#000'; }
-              g_custGlobals.oldLabelOpacity=$newDiv.find('.labelImage').css('opacity');
-//              SetGalleryWidth(0);
-              var c=jQuery.Color($newDiv.find('.labelImage'),'backgroundColor');
-              g_custGlobals.oldLabelRed=c.red();
-              g_custGlobals.oldLabelGreen=c.green();
-              g_custGlobals.oldLabelBlue=c.blue();
-              firstPass=false;
-            }
+
             // CSS init depending on choosen hover effect
             ThumbnailInit($newDiv);
             
@@ -2614,18 +2454,17 @@ function shuffle(o){ //v1.0
     
   }
   
-  
   function renderGallery2Complete( albumIdx, pageNumber ) {
-    $g_containerThumbnails.on('mouseenter','.nanoContainer', function(){
+    $g_containerThumbnails.on('mouseenter','.nanoGalleryThumbnailContainer', function(){
         ThumbnailHover(this);
-      }).on('mouseleave','.nanoContainer', function(){
+      }).on('mouseleave','.nanoGalleryThumbnailContainer', function(){
 		ThumbnailHoverOut(this);
-      }).on('touchstart','.nanoContainer', function(){
+      }).on('touchstart','.nanoGalleryThumbnailContainer', function(event){
         event.preventDefault();	// --> no click event
         ThumbnailClick(this);
         //ThumbnailHover(this);
         //g_touched=true;
-      }).on('click','.nanoContainer', function(e){
+      }).on('click','.nanoGalleryThumbnailContainer', function(event){
 
         var $this = jQuery(this);
 
@@ -2661,7 +2500,202 @@ function shuffle(o){ //v1.0
     
   }
 
-  function ThumbnailClick(elt) {
+  function thumbnailBuild( item, idx, eltOpacity, foundDesc ) {
+    var newElt=[];
+    var newEltIdx=0;
+    newElt[newEltIdx++]='<div class="nanoGalleryThumbnailContainer nanogalleryHideElement" style="display:inline-block,opacity:'+eltOpacity+'"><div class="subcontainer" style="display: inline-block">';
+    
+    var src='';
+    if( g_options.thumbnailLazyLoad ) {
+      src="//:0";
+    }
+     else {
+      src=item.thumbsrc;
+    }
+    
+    var checkImageSize=false;
+    if( g_options.thumbnailHeight == 'auto' ) {
+      newElt[newEltIdx++]='<div class="imgContainer" style="width:'+g_options.thumbnailWidth+'px;"><img class="image" src='+src+' style="width:'+g_options.thumbnailWidth+'px;"></div>';
+      if( g_ngItems[idx].thumbHeight == 0 ) { checkImageSize=true; }
+    }
+    else if( g_options.thumbnailWidth == 'auto' ) {
+        newElt[newEltIdx++]='<div class="imgContainer" style="height:'+g_options.thumbnailHeight+'px;"><img class="image" src='+src+' style="height:'+g_options.thumbnailHeight+'px;"></div>';
+        if( g_ngItems[idx].thumbWidth == 0 ) { checkImageSize=true; }
+      }
+      else {
+        newElt[newEltIdx++]='<div class="imgContainer" style="width:'+g_options.thumbnailWidth+'px;height:'+g_options.thumbnailHeight+'px;"><img class="image" src='+src+' style="max-width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"></div>';
+      }
+
+    var sTitle=getThumbnailTitle(item);
+    var sDesc=getTumbnailDescription(item);
+    if( item.kind == 'album' ) {
+      // ALBUM
+      if( g_options.thumbnailLabel.display == true ) {
+        newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelFolderTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
+      }
+    }
+    else {
+      // IMAGE
+      if( g_options.thumbnailLabel.display == true ) {
+        if( foundDesc && sDesc.length == 0 && g_options.thumbnailLabel.position == 'onBottom' ) { sDesc='&nbsp;'; }
+        newElt[newEltIdx++]='<div class="labelImage" style="width:'+g_options.thumbnailWidth+'px;max-height:'+g_options.thumbnailHeight+'px;"><div class="labelImageTitle">'+sTitle+'</div><div class="labelDescription">'+sDesc+'</div></div>';
+      }
+    }
+    newElt[newEltIdx++]='</div></div>';
+    
+    var $newDiv =jQuery(newElt.join('')).appendTo($g_containerThumbnailsHidden); //.animate({ opacity: 1},1000, 'swing');  //.show('slow'); //.fadeIn('slow').slideDown('slow');
+    item.$elt=$newDiv;
+    $newDiv.data('index',idx);
+    $newDiv.find('img').data('index',idx);
+
+    if( checkImageSize ) {
+      $newDiv.imagesLoaded().always( function( instance ) {
+        var item=g_ngItems[jQuery(instance.images[0].img).data('index')];
+        var b=false;
+
+        if( item.thumbHeight != instance.images[0].img.naturalHeight ) {
+          item.thumbHeight=instance.images[0].img.naturalHeight;
+          var ratio=instance.images[0].img.naturalHeight/instance.images[0].img.naturalWidth;
+          var h=g_options.thumbnailWidth*ratio;
+          item.$elt.find('.imgContainer').height(h);
+          item.thumbRealHeight=h+g_containerOuterHeight;
+          item.$elt.height(item.thumbRealHeight);
+          b=true;
+        }
+        if( item.thumbWidth != instance.images[0].img.naturalWidth ) {
+          item.thumbWidth=instance.images[0].img.naturalWidth;
+          var ratio=instance.images[0].img.naturalWidth/instance.images[0].img.naturalHeight;
+          var w=g_options.thumbnailHeight*ratio;
+          item.$elt.find('.imgContainer').width(w);
+          item.thumbRealWidth=w+g_containerOuterWidth;
+          item.$elt.width(item.thumbRealWidth);
+          b=true;
+        }
+        if( b ) {
+          ResizeGallery();
+          if( g_options.thumbnailDisplayTransition ) {
+            if( g_thumbnailDisplayInterval > 0 ) {
+              item.$elt.delay(g_galleryItemsCount*g_thumbnailDisplayInterval).fadeTo(150, 1);
+            }
+            else {
+              item.$elt.fadeTo(150, 1);
+            }
+          }
+          else {
+            item.$elt.css('opacity',1);
+          }
+        }
+      });
+    }
+    
+    return $newDiv;
+  }
+  
+  function getThumbnailTitle( item ) {
+    var sTitle=item.title;
+    if( g_options.thumbnailLabel.display == true ) {
+      if( sTitle === undefined || sTitle.length == 0 ) { sTitle='&nbsp;'; }
+
+      if( g_i18nTranslations.thumbnailImageTitle != '' ) {
+        sTitle=g_i18nTranslations.thumbnailImageTitle;
+      }
+      if( g_options.thumbnailLabel.titleMaxLength > 3 && sTitle.length > g_options.thumbnailLabel.titleMaxLength ){
+        sTitle=sTitle.substring(0,g_options.thumbnailLabel.titleMaxLength)+'...';
+      }
+    }
+    
+    return sTitle;
+  }
+
+  function getTumbnailDescription( item ) {
+    var sDesc='';
+    if( g_options.thumbnailLabel.displayDescription == true ) { 
+      if( item.kind == 'album' ) {
+        if( g_i18nTranslations.thumbnailImageDescription !='' ) {
+          sDesc=g_i18nTranslations.thumbnailAlbumDescription;
+        }
+        else {
+          sDesc=item.description;
+        }
+      }
+      else {
+        if( g_i18nTranslations.thumbnailImageDescription !='' ) {
+          sDesc=g_i18nTranslations.thumbnailImageDescription;
+        }
+        else {
+          sDesc=item.description;
+        }
+      }
+      if( g_options.thumbnailLabel.descriptionMaxLength > 3 && sDesc.length > g_options.thumbnailLabel.descriptionMaxLength ){
+        sDesc=sDesc.substring(0,g_options.thumbnailLabel.descriptionMaxLength)+'...';
+      }
+    }
+    
+    return sDesc;
+  }
+  
+  function setThumbnailSize( $elt, item ) {
+    if( g_options.thumbnailHeight == 'auto' ) {
+      if( item.thumbHeight > 0 ) {
+        var ratio=item.thumbHeight/item.thumbWidth;
+        $elt.find('.imgContainer').height(g_options.thumbnailWidth*ratio);
+        item.thumbRealHeight=g_options.thumbnailWidth*ratio+g_containerOuterHeight;
+        if( g_options.thumbnailLabel.position == 'onBottom' ) {
+          $elt.height(item.thumbRealHeight+$elt.find('.labelImage').outerHeight(true));     // for correct image centering
+        }
+        else {
+          $elt.height(item.thumbRealHeight);
+        }
+      }
+      item.thumbRealWidth=g_oneThumbnailWidth;
+    }
+    else if( g_options.thumbnailWidth == 'auto' ) {
+        if( item.thumbWidth > 0 ) {
+          var ratio=item.thumbHeight/item.thumbWidth;
+          $elt.find('.imgContainer').width(g_options.thumbnailHeight*ratio);
+          item.thumbRealWidth=g_options.thumbnailHeight*ratio+g_containerOuterWidth;
+          $elt.width(item.thumbRealWidth);
+        }
+        item.thumbRealHeight=g_oneThumbnailHeight;
+      }
+      else {
+        if( g_options.thumbnailLabel.position == 'onBottom' ) {
+          $elt.width(g_oneThumbnailWidth).height(g_oneThumbnailHeight+$elt.find('.labelImage').outerHeight(true));     // for correct image centering
+        }
+        else {
+          $elt.width(g_oneThumbnailWidth).height(g_oneThumbnailHeight);     // for correct image centering
+        }
+        item.thumbRealHeight=g_oneThumbnailHeight;
+        item.thumbRealWidth=g_oneThumbnailWidth;
+      }
+  }
+  
+  function thumbnailPositionContent( $elt ) {
+    switch( g_options.thumbnailLabel.position ){
+      case 'onBottom':
+        $elt.find('.labelImage').css({'top':'0', 'position':'relative'});
+        $elt.find('.labelImageTitle').css('white-space','nowrap');
+        $elt.find('.labelFolderTitle').css('white-space','nowrap');
+        $elt.find('.labelDescription').css('white-space','nowrap');
+        break;
+      case 'overImageOnTop':
+        $elt.find('.labelImage').css('top','0');
+        break;
+      case 'overImageOnMiddle':
+        $elt.find('.labelImage').css({'top':'0', 'height':'100%'});
+        $elt.find('.labelFolderTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
+        $elt.find('.labelImageTitle').css({'width':'100%','position':'absolute','bottom':'50%'});
+        $elt.find('.labelDescription').css({'width':'100%','position':'absolute','top':'50%'});
+        break;
+      case 'overImageOnBottom':
+      default :
+        g_options.thumbnailLabel.position='overImageOnBottom';
+        $elt.find('.labelImage').css('bottom','0');
+        break;
+    }
+  }
+  
+  function ThumbnailClick( elt ) {
     var n=jQuery(elt).data('index');
     if( g_options.touchAnimation == false || g_ngItems[n].hovered === true ) {
       // open URL
@@ -2714,6 +2748,100 @@ function shuffle(o){ //v1.0
     for( j=0; j<g_thumbnailHoverEffect.length; j++) {
       var useTransitPlugin = false;
       switch(g_thumbnailHoverEffect[j].name ) {
+
+        case 'imageSplit4':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative','width':'100%','height':'100%'});
+            elt.find('.subcontainer').prepend(elt.find('.imgContainer').clone());
+            elt.find('.subcontainer').prepend(elt.find('.imgContainer').clone());
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+            var s='rect(0px, '+w/2+'px, '+h/2+'px, 0px)'
+            elt.find('.imgContainer').eq(0).css({'right':'0%', 'top':'0%', 'clip':s, 'position':'absolute'});
+            s='rect(0px, '+w+'px, '+h/2+'px, '+w/2+'px)'
+            elt.find('.imgContainer').eq(1).css({'left':'0%', 'top':'0%', 'clip':s, 'position':'absolute'});
+            s='rect('+h/2+'px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.imgContainer').eq(2).css({'left':'0%', 'bottom':'0%', 'clip':s, 'position':'absolute'});
+            s='rect('+h/2+'px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.imgContainer').eq(3).css({'right':'0%', 'bottom':'0%', 'clip':s, 'position':'absolute'});
+            setElementOnTop('', jQuery(elt).find('.imgContainer'));
+          }
+          break;
+        case 'imageSplitVert':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative','width':'100%','height':'100%'});
+            elt.find('.subcontainer').prepend(elt.find('.imgContainer').clone());
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+            var s='rect(0px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.imgContainer').eq(0).css({'right':'0%', 'clip':s, 'position':'absolute'});
+            s='rect(0px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.imgContainer').eq(1).css({'left':'0%', 'clip':s, 'position':'absolute'});
+            setElementOnTop('', jQuery(elt).find('.imgContainer'));
+          }
+          break;
+          
+        case 'labelSplit4':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative'});
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+
+            var s='rect(0px, '+w/2+'px, '+h/2+'px, 0px)'
+            elt.find('.labelImage').eq(0).css({'right':'0%', 'top':'0%', 'clip':s });
+            s='rect(0px, '+w+'px, '+h/2+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(1).css({'left':'0%', 'top':'0%', 'clip':s });
+            s='rect('+h/2+'px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(2).css({'left':'0%', 'top':'0%', 'clip':s });
+            s='rect('+h/2+'px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.labelImage').eq(3).css({'right':'0%', 'top':'0%', 'clip':s });
+          }
+          break;
+        case 'labelSplitVert':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative'});
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+            var s='rect(0px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.labelImage').eq(0).css({'right':'0%', 'clip':s});
+            s='rect(0px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(1).css({'left':'0%', 'clip':s});
+          }
+          break;
+
+        case 'labelAppearSplit4':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative'});
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+            var s='rect(0px, '+w/2+'px, '+h/2+'px, 0px)'
+            elt.find('.labelImage').eq(0).css({'right':'50%', 'top':'-50%', 'clip':s });
+            s='rect(0px, '+w+'px, '+h/2+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(1).css({'left':'50%', 'top':'-50%', 'clip':s });
+            s='rect('+h/2+'px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(2).css({'left':'50%', 'top':'50%', 'clip':s });
+            s='rect('+h/2+'px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.labelImage').eq(3).css({'right':'50%', 'top':'50%', 'clip':s });
+          }
+          break;
+        case 'labelAppearSplitVert':
+          if( g_options.thumbnailLabel.position != 'onBottom' ) {
+            elt.find('.subcontainer').css({'overflow':'hidden','position':'relative'});
+            elt.find('.labelImage').clone().appendTo(elt.find('.subcontainer'));
+            var w=elt.find('.subcontainer').width();
+            var h=elt.find('.subcontainer').height();
+            var s='rect(0px, '+w/2+'px, '+h+'px, 0px)'
+            elt.find('.labelImage').eq(0).css({'right':'50%', 'clip':s});
+            s='rect(0px, '+w+'px, '+h+'px, '+w/2+'px)'
+            elt.find('.labelImage').eq(1).css({'left':'50%', 'clip':s});
+          }
+          break;
+        
         case 'scaleLabelOverImage':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
             //jQuery(elt).css('overflow','hidden');
@@ -2921,9 +3049,14 @@ function shuffle(o){ //v1.0
         if( g_thumbnailHoverEffect[j].easingBack == 'swing' ) { g_thumbnailHoverEffect[j].easingBack = 'ease'; }
         g_thumbnailHoverEffect[j].method='transit';
       }
-      else {
-        g_thumbnailHoverEffect[j].method='jquery';
-      }
+      else if( g_thumbnailHoverEffect[j].easing != 'swing' || g_thumbnailHoverEffect[j].easingBack != 'swing') { 
+          g_thumbnailHoverEffect[j].method='transit';
+          if( g_thumbnailHoverEffect[j].easing == 'swing' ) { g_thumbnailHoverEffect[j].easing = 'ease'; }
+          if( g_thumbnailHoverEffect[j].easingBack == 'swing' ) { g_thumbnailHoverEffect[j].easingBack = 'ease'; }
+        }
+        else {
+          g_thumbnailHoverEffect[j].method='jquery';
+        }
     }
 
   };
@@ -2939,6 +3072,90 @@ function shuffle(o){ //v1.0
     try {
       for( j=0; j<g_thumbnailHoverEffect.length; j++) {
         switch(g_thumbnailHoverEffect[j].name ) {
+          case 'imageSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.imgContainer').eq(0).transition({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(1).transition({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(2).transition({'left':'50%', 'bottom':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(3).transition({'right':'50%', 'bottom':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.imgContainer').eq(0).animate({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(1).animate({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(2).animate({'left':'50%', 'bottom':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(3).animate({'right':'50%', 'bottom':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'imageSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.imgContainer').eq(0).transition({'right':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(1).transition({'left':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.imgContainer').eq(0).animate({'right':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.imgContainer').eq(1).animate({'left':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).transition({'left':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).transition({'right':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).animate({'left':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).animate({'right':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else {
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelAppearSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).transition({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).transition({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).animate({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).animate({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelAppearSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else {
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
           case 'scaleLabelOverImage':
             if( g_options.thumbnailLabel.position != 'onBottom' ) {
               if( g_thumbnailHoverEffect[j].method == 'transit' ) {
@@ -3116,7 +3333,7 @@ function shuffle(o){ //v1.0
               jQuery(elt).find('.labelImageTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelFolderTitle').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelDescription').animate({ 'opacity': '1'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              }
+            }
             break;
           case 'labelSlideDown':
             if( g_options.thumbnailLabel.position != 'onBottom' ) {
@@ -3274,6 +3491,89 @@ function shuffle(o){ //v1.0
     try {
       for( j=0; j<g_thumbnailHoverEffect.length; j++) {
         switch(g_thumbnailHoverEffect[j].name ) {
+          case 'imageSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.imgContainer').eq(0).transition({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(1).transition({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(2).transition({'left':'0%', 'bottom':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(3).transition({'right':'0%', 'bottom':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+              else{
+                jQuery(elt).find('.imgContainer').eq(0).animate({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(1).animate({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(2).animate({'left':'0%', 'bottom':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(3).animate({'right':'0%', 'bottom':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+            }
+          case 'imageSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.imgContainer').eq(0).transition({'right':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(1).transition({'left':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+              else {
+                jQuery(elt).find('.imgContainer').eq(0).animate({'right':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.imgContainer').eq(1).animate({'left':'0%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+            }
+            break;
+          case 'labelSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).transition({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).transition({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).animate({'left':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).animate({'right':'0%', 'top':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else {
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'0%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+            break;
+          case 'labelAppearSplit4':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).transition({'left':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).transition({'right':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+              else{
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'50%', 'top':'-50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(2).animate({'left':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+                jQuery(elt).find('.labelImage').eq(3).animate({'right':'50%', 'top':'50%'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+              }
+            }
+          case 'labelAppearSplitVert':
+            if( g_options.thumbnailLabel.position != 'onBottom' ) {
+              if( g_thumbnailHoverEffect[j].method == 'transit' ) {
+                jQuery(elt).find('.labelImage').eq(0).transition({'right':'50%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.labelImage').eq(1).transition({'left':'50%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+              else {
+                jQuery(elt).find('.labelImage').eq(0).animate({'right':'50%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+                jQuery(elt).find('.labelImage').eq(1).animate({'left':'50%'},g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+              }
+            }
+            break;
+
           case 'scaleLabelOverImage':
             if( g_options.thumbnailLabel.position != 'onBottom' ) {
               if( g_thumbnailHoverEffect[j].method == 'transit' ) {
@@ -3407,7 +3707,7 @@ function shuffle(o){ //v1.0
               jQuery(elt).find('.labelImageTitle').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelFolderTitle').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelDescription').animate({ 'opacity': '0'},g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
-              }
+            }
             break;
           case 'labelSlideDown':
             if( g_options.thumbnailLabel.position != 'onBottom' ) {
@@ -3551,7 +3851,7 @@ function shuffle(o){ //v1.0
         OpenInternalViewer(imageIdx);
       }
       else {
-        DisplayInternalViewer(imageIdx);
+        DisplayInternalViewer(imageIdx, '');
       }
     }
   };
@@ -3571,30 +3871,29 @@ function shuffle(o){ //v1.0
     
     var sImg='';
     var l=g_ngItems.length;
-    //for( var i =0; i <  l ; i++ ) {
-    //  if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
-    //    //sImg+='<img class="image" src="" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
-    //  }
-    //}
 
-    sImg+='<img class="image imgCurrent" src="//:0" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
-    sImg+='<img class="image imgNext" src="//:0" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
+    sImg+='<img class="image" src="//:0" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
+    sImg+='<img class="image" src="//:0" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
+    sImg+='<img class="image" src="//:0" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">';
 
     $g_containerViewerContent=jQuery('<div class="content">'+sImg+'<div class="contentAreaPrevious"></div><div class="contentAreaNext"></div></div>').appendTo($g_containerViewer);
+    $g_ViewerImagePrevious=$g_containerViewer.find('.image').eq(0);
+    $g_ViewerImageCurrent=$g_containerViewer.find('.image').eq(1);
+    $g_ViewerImageNext=$g_containerViewer.find('.image').eq(2);
+
     $g_containerViewerCloseFloating=jQuery('<div class="closeButtonFloating"></div>').appendTo($g_containerViewer);
     //g_containerViewerCloseFloating=jQuery('<div class="closeButtonFloating"></div>').appendTo(jQuery(g_containerViewerContent).find('img'));
     var fs='';
     if( g_supportFullscreenAPI ) {
       fs='<div class="setFullscreenButton fullscreenButton"></div>';
     }
-    $g_containerViewerToolbar=jQuery('<div class="toolbarContainer"><div class="toolbar"><div class="previousButton"></div><div class="pageCounter"></div><div class="nextButton"></div><div class="playButton playPauseButton"></div>'+fs+'<div class="closeButton"></div><div class="label"><div class="title"></div><div class="description"></div></div></div>').appendTo($g_containerViewer);
+    $g_containerViewerToolbar=jQuery('<div class="toolbarContainer" style="visibility:hidden;"><div class="toolbar"><div class="previousButton"></div><div class="pageCounter"></div><div class="nextButton"></div><div class="playButton playPauseButton"></div>'+fs+'<div class="closeButton"></div><div class="label"><div class="title"></div><div class="description"></div></div></div>').appendTo($g_containerViewer);
     if( g_options.viewerDisplayLogo ) {
       $g_containerViewerLogo=jQuery('<div class="nanoLogo"></div>').appendTo($g_containerViewer);
     }
  
     setElementOnTop('',$g_containerViewer);
-    ResizeInternalViewer('.imgCurrent');
-    g_viewerResizeTimerID=window.setInterval(function(){ResizeInternalViewer('.imgCurrent')},100);
+    ResizeInternalViewer($g_ViewerImageCurrent);
 
     
     // GESTURE : drag --> requires HAMMER.JS
@@ -3704,8 +4003,7 @@ function shuffle(o){ //v1.0
       }
     });
     
-    DisplayInternalViewer(imageIdx);
-
+    DisplayInternalViewer(imageIdx, '');
 
   };
   
@@ -3767,23 +4065,9 @@ function shuffle(o){ //v1.0
     if( g_viewerImageIsChanged ) { return; }
     if( (new Date().getTime()) - lastImageChange < 100 ) { return; }
     var l=g_ngItems.length;
-    var newImageIdx=-1;
 
-    for(var i=g_viewerCurrentItemIdx+1; i<l; i++ ){
-      if( g_ngItems[i].albumID == g_ngItems[g_viewerCurrentItemIdx].albumID && g_ngItems[i].kind == 'image' ) {
-        newImageIdx=i;
-        break;
-      }
-    }
-    if( newImageIdx == -1 ) {
-      for(var i=0; i<=g_viewerCurrentItemIdx; i++ ){
-        if( g_ngItems[i].albumID == g_ngItems[g_viewerCurrentItemIdx].albumID && g_ngItems[i].kind == 'image' ) {
-          newImageIdx=i;
-          break;
-        }
-      }
-    }
-    DisplayInternalViewer(newImageIdx, {'scrollRight':true});
+    var newImageIdx=GetNextImageIdx(g_viewerCurrentItemIdx);
+    DisplayInternalViewer(newImageIdx, 'nextImage');
   };
   
   // Display previous image
@@ -3794,29 +4078,16 @@ function shuffle(o){ //v1.0
       SlideshowToggle();
     }
     
-    var newImageIdx=-1;
-    for(var i=g_viewerCurrentItemIdx-1; i>=0; i-- ){
-      if( g_ngItems[i].albumID == g_ngItems[g_viewerCurrentItemIdx].albumID && g_ngItems[i].kind == 'image' ) {
-        newImageIdx=i;
-        break;
-      }
-    }
-    if( newImageIdx == -1 ) {
-      for(var i=g_ngItems.length-1; i>=g_viewerCurrentItemIdx; i-- ){
-        if( g_ngItems[i].albumID == g_ngItems[g_viewerCurrentItemIdx].albumID && g_ngItems[i].kind == 'image' ) {
-          newImageIdx=i;
-          break;
-        }
-      }
-    }
-    DisplayInternalViewer(newImageIdx, {'scrollLeft':true});
+    var newImageIdx=GetPreviousImageIdx(g_viewerCurrentItemIdx);
+    DisplayInternalViewer(newImageIdx, 'previousImage');
   };
 
-  
-  function DisplayInternalViewer( imageIdx, options ) {
+  // Display image (and run animation)
+  function DisplayInternalViewer( imageIdx, displayType ) {
     lastImageChange=new Date().getTime();
     g_viewerImageIsChanged=true;
-
+    var displayNext=true;
+    
     if( g_options.locationHash ) {
       var s ='nanogallery/'+g_baseControlID+'/'+g_ngItems[imageIdx].albumID+"/"+g_ngItems[imageIdx].GetID();
       if( ('#'+s) != location.hash ) {
@@ -3828,90 +4099,85 @@ function shuffle(o){ //v1.0
       }
     }
     
+    DisplayInternalViewerToolbar(imageIdx);
+    ResizeInternalViewer($g_ViewerImageCurrent);
     
     g_viewerCurrentItemIdx=imageIdx;
 
     var s='-'+(1*jQuery(window).width())+'px';
-    var animImgCurrent = { left : s,'opacity': 0 };
-    if( options !== undefined ) {
-      if( options['scrollLeft'] ) {
-        if (options['scrollLeft'] == true ) {
-          animImgCurrent = { right : s,'opacity': 0 };
-        }
-      }
-    }
-    
-    $g_containerViewerContent.find('*').stop(true,true);
-    $g_containerViewerContent.find('.imgNext').css({'opacity':0, 'right':'0', visibility: 'visible'}).attr('src',g_ngItems[imageIdx].responsiveURL());
-//    jQuery(g_containerViewerContent).find('.imgNext').attr('src',g_ngItems[imageIdx].src);
-//    jQuery(g_containerViewerContent).find('.imgNext').attr('src',g_ngItems[imageIdx].responsiveURL());
-    
-    set2ElementsOnTop( $g_containerViewerContent, $g_containerViewerContent.find('.imgNext'), $g_containerViewerContent.find('.imgCurrent') );
-    if( $g_containerViewerContent.find('.imgCurrent').attr('src') == "//:0" ) {
-      // no image currently displayed --> so hide the element
-      $g_containerViewerContent.find('.imgCurrent').css({'opacity':0});
-      animImgCurrent='';
-    }
-    else {
-      ResizeInternalViewer('.imgNext');
-    }
-    
-    DisplayInternalViewerToolbar(imageIdx);
+    var animImgCurrent='';
+    switch( displayType ) {
+      case 'nextImage':
+        animImgCurrent = { left : s,'opacity': 0 };
+        $g_containerViewerContent.find('*').stop(true,true);
+        $g_ViewerImageNext.css({'opacity':0, 'right':'0', visibility: 'visible'});  //.attr('src',g_ngItems[imageIdx].responsiveURL());
+        
+//        ResizeInternalViewer($g_ViewerImageNext);
+        
+        jQuery.when(
+          $g_ViewerImageCurrent.animate(animImgCurrent, 500), 
+          $g_ViewerImageNext.animate({'opacity': 1 }, 300)
+        ).done(function () {
+          DisplayInternalViewerComplete(imageIdx, displayType);
+        });
+        break;
 
-    jQuery.when(
-        //jQuery(g_containerViewerContent).find('.imgCurrent').transition(animImgCurrent, 300, 'linear'), 
-        //jQuery(g_containerViewerContent).find('.imgNext').transition({'opacity': 1 }, 500)
-        $g_containerViewerContent.find('.imgCurrent').animate(animImgCurrent, 500), 
-        $g_containerViewerContent.find('.imgNext').animate({'opacity': 1 }, 300)
-    ).done(function () {
-      DisplayInternalViewerComplete(imageIdx);
-    });
+      case 'previousImage':
+        animImgCurrent = { right : s,'opacity': 0 };
+        $g_containerViewerContent.find('*').stop(true,true);
+        $g_ViewerImagePrevious.css({'opacity':0, 'right':'0', visibility: 'visible'});  //.attr('src',g_ngItems[imageIdx].responsiveURL());
+        
+//        ResizeInternalViewer($g_ViewerImagePrevious);
+        
+        jQuery.when(
+          $g_ViewerImageCurrent.animate(animImgCurrent, 500), 
+          $g_ViewerImagePrevious.animate({'opacity': 1 }, 300)
+        ).done(function () {
+          DisplayInternalViewerComplete(imageIdx, displayType);
+        });
+        break;
+        
+      default:
+        $g_containerViewerContent.find('*').stop(true,true);
+        $g_ViewerImageCurrent.css({'opacity':0, 'right':'0', visibility: 'visible'}).attr('src',g_ngItems[imageIdx].responsiveURL());
+
+        jQuery.when(
+          $g_ViewerImageCurrent.animate({'opacity': 1 }, 300)
+        ).done(function () {
+          DisplayInternalViewerComplete(imageIdx, displayType);
+        });
+        break;
+    }
+
     g_containerViewerDisplayed=true;
+
   };
 
 
-  function DisplayInternalViewerComplete( imageIdx ) {
-    $g_containerViewerContent.find('.imgCurrent').remove();
-    var $imgNext= $g_containerViewerContent.find('.imgNext');
-    var $imgPrev= $g_containerViewerContent.find('.imgPrev');
-    var $imgCur=jQuery('<img class="image imgCurrent" src="'+g_ngItems[imageIdx].responsiveURL()+'" style="visibility:visible;opacity:1;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertBefore($imgNext);
+  function DisplayInternalViewerComplete( imageIdx, displayType ) {
+    //DisplayInternalViewerToolbar(imageIdx);
 
-    //$g_containerViewerContent.find('.imgNext').remove();
-    $imgNext.remove();
-    $imgPrev.remove();
-
-    var nextSrc='//:0';
-    var l=g_ngItems.length;
-    for(var i=imageIdx+1; i<l; i++ ){
-      if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
-        // set also the url of the next image for pre-loading
-        nextSrc=g_ngItems[i].responsiveURL();
+    $g_ViewerImageCurrent.off("click");
+    $g_ViewerImageCurrent.removeClass('imgCurrent');
+  
+    var $tmp=$g_ViewerImageCurrent;
+    switch( displayType ) {
+      case 'nextImage':
+        $g_ViewerImageCurrent=$g_ViewerImageNext;
+        $g_ViewerImageNext=$tmp;
         break;
-      }
-    }
-
-    jQuery('<img class="image imgNext" src="'+nextSrc+'" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertBefore($imgCur);
-
-    
-    var prevSrc='//:0';
-    var l=imageIdx-1;
-    if (l==-1){
-    	l=g_ngItems.length-1;
-    }
-    for(var i=l; i>=0; i-- ){
-      if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
-        // set also the url of the prev image for pre-loading
-    	prevSrc=g_ngItems[i].responsiveURL();
+      case 'previousImage':
+        $g_ViewerImageCurrent=$g_ViewerImagePrevious;
+        $g_ViewerImagePrevious=$tmp;
         break;
-      }
     }
+    $g_ViewerImageCurrent.addClass('imgCurrent');
+    
+    $g_ViewerImageNext.css({'opacity':0, 'right':'0', 'left':'0', visibility: 'hidden'}).attr('src',g_ngItems[GetNextImageIdx(imageIdx)].responsiveURL());
+    $g_ViewerImagePrevious.css({'opacity':0, 'right':'0', 'left':'0', visibility: 'hidden'}).attr('src',g_ngItems[GetPreviousImageIdx(imageIdx)].responsiveURL());
 
-    jQuery('<img class="image imgPrev" src="'+prevSrc+'" style="visibility:visible;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;zoom:1;">').insertAfter($imgCur);
-    
-    
-    //$g_containerViewerContent.find('img').on("click",function(e){
-    $imgCur.on("click",function(e){
-      e.stopPropagation();
+    $g_ViewerImageCurrent.on("click",function(e){
+    e.stopPropagation();
       if( e.pageX < (jQuery(window).width()/2) ) {
         DisplayPreviousImage();
       }
@@ -3921,7 +4187,7 @@ function shuffle(o){ //v1.0
     });
 
   
-    ResizeInternalViewer('.imgCurrent');
+    ResizeInternalViewer($g_ViewerImageCurrent);
 
     // TODO: this code does not work
     //jQuery(g_containerViewerContent).find('img').on('resize', function(){ 
@@ -3933,16 +4199,55 @@ function shuffle(o){ //v1.0
     g_viewerImageIsChanged=false;
   }
 
-  
-  function DisplayInternalViewerToolbar( imageIdx ) {
-    setElementOnTop( $g_containerViewer, $g_containerViewerContent.find('.contentAreaPrevious') );
-    setElementOnTop( $g_containerViewer, $g_containerViewerContent.find('.contentAreaPrevious') );
-    setElementOnTop( $g_containerViewer, $g_containerViewerContent.find('.contentAreaNext') );
-    setElementOnTop( $g_containerViewer, $g_containerViewerCloseFloating );
-    if( $g_containerViewerLogo !== null ) {
-      setElementOnTop( $g_containerViewer, $g_containerViewerLogo );
+  function GetNextImageIdx( imageIdx ) {
+    var l=g_ngItems.length;
+    var newImageIdx=-1;
+
+    for(var i=imageIdx+1; i<l; i++ ){
+      if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
+        newImageIdx=i;
+        break;
+      }
+    }
+    if( newImageIdx == -1 ) {
+      for(var i=0; i<=imageIdx; i++ ){
+        if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
+          newImageIdx=i;
+          break;
+        }
+      }
     }
     
+    return newImageIdx;
+  }
+
+  function GetPreviousImageIdx( imageIdx ) {
+    var newImageIdx=-1;
+    for(var i=imageIdx-1; i>=0; i-- ){
+      if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
+        newImageIdx=i;
+        break;
+      }
+    }
+    if( newImageIdx == -1 ) {
+      for(var i=g_ngItems.length-1; i>=imageIdx; i-- ){
+        if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
+          newImageIdx=i;
+          break;
+        }
+      }
+    }
+    
+    return newImageIdx;
+  }
+
+  function HideInternalViewerToolbar() {
+    $g_containerViewerToolbar.css({'visibility':'hidden'});
+  }
+
+  
+  function DisplayInternalViewerToolbar( imageIdx ) {
+//    $g_containerViewerToolbar.css({'visibility':'visible'});
     // set title
     if( g_ngItems[imageIdx].title !== undefined ) {
       $g_containerViewerToolbar.find('.title').html(g_ngItems[imageIdx].title);
@@ -3961,7 +4266,7 @@ function shuffle(o){ //v1.0
     // set page number
     var viewerMaxImages=0;
     var l=g_ngItems.length;
-    for( var i =0; i <  l ; i++ ) {
+    for( var i=0; i <  l ; i++ ) {
       if( g_ngItems[i].albumID == g_ngItems[imageIdx].albumID && g_ngItems[i].kind == 'image' ) {
         viewerMaxImages++;
       }
@@ -4008,10 +4313,10 @@ function shuffle(o){ //v1.0
     }
   };
   
-  function ResizeInternalViewer(imgElt) {
+  function ResizeInternalViewer($imgElt) {
 
     window.clearInterval(g_viewerResizeTimerID);
-    g_viewerResizeTimerID=window.setInterval(function(){ResizeInternalViewer('.imgCurrent')},500);
+    g_viewerResizeTimerID=window.setInterval(function(){ResizeInternalViewer($g_ViewerImageCurrent)},500);
 
   
     var windowsW=jQuery(window).width();
@@ -4025,11 +4330,17 @@ function shuffle(o){ //v1.0
       //"height":jQuery(window).height()
     });
 
-    //    var elt=jQuery(g_containerViewerContent).find('img');
-    var $elt=$g_containerViewerContent.find(imgElt); //.find('img');
+    var $elt=$imgElt
+    
+    if( $g_ViewerImageCurrent.height() <= 40 ) {
+      $g_containerViewerToolbar.css({'visibility':'hidden'});
+    }
+    else {
+      $g_containerViewerToolbar.css({'visibility':'visible'});
+    }
     
     var contentOuterWidthV=Math.abs($g_containerViewerContent.outerHeight(true)-$g_containerViewerContent.height());  // vertical margin+border+padding
-    var contentOuterWidthH=Math.abs($g_containerViewerContent.outerHeight(true)-$g_containerViewerContent.height());  // horizontal margin+border+padding
+    var contentOuterWidthH=Math.abs($g_containerViewerContent.outerWidth(true)-$g_containerViewerContent.width());  // horizontal margin+border+padding
     
     var imgBorderV=$elt.outerHeight(false)-$elt.innerHeight();
     var imgBorderH=Math.abs($elt.outerWidth(false)-$elt.innerWidth());
@@ -4039,23 +4350,51 @@ function shuffle(o){ //v1.0
     
     var tV=imgBorderV+imgPaddingV;  //+tmargin;
     var tH=imgBorderH+imgPaddingH;  //+tmargin;
-    var toolbarH=$g_containerViewerToolbar.outerHeight(true);
+
+    var toolbarH=0;
+    if( g_options.viewerToolbar.style != 'innerImage' ) {
+      toolbarH=$g_containerViewerToolbar.find('.toolbar').outerHeight(true);
+    }
     var h=windowsH-toolbarH-contentOuterWidthV;
     var w=windowsW-contentOuterWidthH;
-    $g_containerViewerContent.css({'height':h, 'width':w  });
         
-    $g_containerViewerContent.children('img').css({'max-width': (w-tV),'max-height':h-tH });
-    
-    if( g_viewerCurrentItemIdx != -1 ) {
-//      var curImgHeight=jQuery(g_containerViewerContent).find('img:eq('+g_ngItems[g_viewerCurrentItemIdx].imageNumber+')').outerHeight(false);
-      var curImgHeight=$elt.outerHeight(false);
-      //jQuery(g_containerViewerToolbar).css({'bottom': (windowsH-toolbarH-curImgHeight-contentOuterWidthV)/2});
-      $g_containerViewerToolbar.css({'bottom': (windowsH-toolbarH-curImgHeight-contentOuterWidthV)/2});
+    switch( g_options.viewerToolbar.position ) {
+      case 'top':
+        $g_containerViewerContent.css({'height':h, 'width':w, 'top':toolbarH  });
+        var posY=0;
+        if( g_options.viewerToolbar.style == 'innerImage' ) {
+          posY= Math.abs($g_ViewerImageCurrent.outerHeight(true)-$g_ViewerImageCurrent.height())/2 +5;
+        }
+        if( g_options.viewerToolbar.style == 'stuckImage' ) {
+          posY= Math.abs($g_ViewerImageCurrent.outerHeight(true)-$g_ViewerImageCurrent.height())/2 -tV;
+        }
+        $g_containerViewerToolbar.css({'top': posY});
+        break;
+
+      case 'bottom':
+      default:
+        $g_containerViewerContent.css({'height':h, 'width':w });
+        var posY=0;
+        if( g_options.viewerToolbar.style == 'innerImage' ) {
+          posY= Math.abs($g_ViewerImageCurrent.outerHeight(true)-$g_ViewerImageCurrent.height())/2 +5;//- $g_containerViewerToolbar.outerHeight(true) ;
+        }
+        if( g_options.viewerToolbar.style == 'stuckImage' ) {
+          posY= Math.abs($g_ViewerImageCurrent.outerHeight(true)-$g_ViewerImageCurrent.height())/2 -tV;
+        }
+        $g_containerViewerToolbar.css({'bottom': posY});
+        break;
     }
-    //var pt=(jQuery(g_containerViewerContent).find('img').outerHeight(true)-jQuery(g_containerViewerContent).find('img').outerHeight())/2;
-    //var pl=(jQuery(g_containerViewerContent).find('img').outerWidth(true)-jQuery(g_containerViewerContent).find('img').outerWidth())/2;
-    //jQuery(g_containerViewerCloseFloating).css('top',pt-11);
-    //jQuery(g_containerViewerCloseFloating).css('left',pl-11); 
+    
+    if( g_options.viewerToolbar.style == 'innerImage' ) {
+      $g_containerViewerToolbar.find('.toolbar').css({'max-width': $g_ViewerImageCurrent.width()});
+    }
+    
+    if( g_options.viewerToolbar.style == 'fullWidth' ) {
+      $g_containerViewerToolbar.find('.toolbar').css({'width': w});
+    }
+
+    $g_containerViewerToolbar.css({'height': $g_containerViewerToolbar.find('.toolbar').outerHeight(true)});
+    $g_containerViewerContent.children('img').css({'max-width':(w-tV), 'max-height':(h-tH) });
   }
   
   
@@ -4159,15 +4498,17 @@ function shuffle(o){ //v1.0
     s+=s1+'.nanoGalleryNavigationbar .separator:hover { color:'+cs.navigationbar.colorHover+'; }'+'\n';
     s+=s1+'.nanoGalleryNavigationbar .nanoGalleryTags:hover { color:'+cs.navigationbar.colorHover+'; }'+'\n';
 
-    s+=s1+'.nanoGalleryContainer .nanoContainer { background:'+cs.thumbnail.background+'; border:'+cs.thumbnail.border+'; }'+'\n';
-    s+=s1+'.nanoGalleryContainer .nanoContainer .imgContainer { background:'+cs.thumbnail.background+'; }'+'\n';
-    //s+=s1+'.nanoGalleryContainer .nanoContainer .imgContainer { background:'+cs.thumbnail.background+'; opacity:'+cs.thumbnail.labelOpacity+'}'+'\n';
-    s+=s1+'.nanoGalleryContainer .nanoContainer .labelImage { background:'+cs.thumbnail.labelBackground+'; }'+'\n';
-    s+=s1+'.nanoGalleryContainer .nanoContainer .labelImageTitle { color:'+cs.thumbnail.titleColor+'; }'+'\n';
-    //s+=s1+'.nanoGalleryContainer .nanoContainer .labelFolderTitle { color:'+cs.thumbnail.folderTitleColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryContainer .nanoContainer .labelDescription { color:'+cs.thumbnail.descriptionColor+'; }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer { background:'+cs.thumbnail.background+'; border:'+cs.thumbnail.border+'; }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .imgContainer { background:'+cs.thumbnail.background+'; }'+'\n';
+    //s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .imgContainer { background:'+cs.thumbnail.background+'; opacity:'+cs.thumbnail.labelOpacity+'}'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImage { background:'+cs.thumbnail.labelBackground+'; }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImageTitle  { color:'+cs.thumbnail.titleColor+'; Text-Shadow:'+cs.thumbnail.titleShadow+' }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImageTitle:before { color:'+cs.thumbnail.titleColor+'; Text-Shadow:'+cs.thumbnail.titleShadow+' }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelFolderTitle { color:'+cs.thumbnail.titleColor+'; Text-Shadow:'+cs.thumbnail.titleShadow+' }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelFolderTitle:before { color:'+cs.thumbnail.titleColor+'; Text-Shadow:'+cs.thumbnail.titleShadow+' }'+'\n';
+    s+=s1+'.nanoGalleryContainer .nanoGalleryThumbnailContainer .labelDescription { color:'+cs.thumbnail.descriptionColor+'; Text-Shadow:'+cs.thumbnail.descriptionShadow+' }'+'\n';
 
-    jQuery("head").append('<style>'+s+'</style>');
+    jQuery('head').append('<style>'+s+'</style>');
     jQuery(element).addClass(g_colorSchemeLabel);
 
   };
@@ -4226,13 +4567,13 @@ function shuffle(o){ //v1.0
     //s+=s1+'.nanoGalleryViewer { background:'+cs.viewer.background+'; color:'+cs.viewer.color+'; }'+'\n';
     s+=s1+'.nanoGalleryViewer .content img { border:'+cs.imageBorder+'; box-shadow:'+cs.imageBoxShadow+'; }'+'\n';
     s+=s1+'.nanoGalleryViewer .toolbar { background:'+cs.barBackground+'; border:'+cs.barBorder+'; color:'+cs.barColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .previousButton:after { background:'+cs.barBackground+'; color:'+cs.barColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .nextButton:after { background:'+cs.barBackground+'; color:'+cs.barColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .closeButton:after { background:'+cs.barBackground+'; color:'+cs.barColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .label { background:'+cs.barBackground+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .label .title { background:'+cs.barBackground+'; color:'+cs.barColor+'; }'+'\n';
-    s+=s1+'.nanoGalleryViewer .toolbar .label .description { background:'+cs.barBackground+'; color:'+cs.barDescriptionColor+'; }'+'\n';
-    jQuery("head").append('<style>'+s+'</style>');
+    s+=s1+'.nanoGalleryViewer .toolbar .previousButton:after { color:'+cs.barColor+'; }'+'\n';
+    s+=s1+'.nanoGalleryViewer .toolbar .nextButton:after { color:'+cs.barColor+'; }'+'\n';
+    s+=s1+'.nanoGalleryViewer .toolbar .closeButton:after { color:'+cs.barColor+'; }'+'\n';
+    //s+=s1+'.nanoGalleryViewer .toolbar .label { background:'+cs.barBackground+'; }'+'\n';
+    s+=s1+'.nanoGalleryViewer .toolbar .label .title { color:'+cs.barColor+'; }'+'\n';
+    s+=s1+'.nanoGalleryViewer .toolbar .label .description { color:'+cs.barDescriptionColor+'; }'+'\n';
+    jQuery('head').append('<style>'+s+'</style>');
     jQuery(element).addClass(g_colorSchemeLabel);
   };
 
@@ -4246,10 +4587,10 @@ function shuffle(o){ //v1.0
 // jQuery plugin - nanoGALLERY DEMO PANEL
 (function( $ ) {
   jQuery.fn.nanoGalleryDemo = function(options) {
-    var g_containerDemo=null;
-    var g_containerDemoPanel=null;
-    var g_containerNew=null;
-    var g_save=null;
+    var g_containerDemo=null,
+    g_containerDemoPanel=null,
+    g_containerNew=null,
+    g_save=null;
     
     var settings = $.extend(true, {
       // default settings
@@ -4272,7 +4613,8 @@ function shuffle(o){ //v1.0
       paginationMaxLinesPerPage:0,
       maxWidth:0,
       viewer:'internal',
-      viewerDisplayLogo:false,
+      viewerDisplayLogo:true,
+      viewerToolbar:{position:'bottom', style:'innerImage'},
       thumbnailWidth:230,
       thumbnailHeight:154,
       thumbnailHoverEffect:null,
@@ -4285,7 +4627,9 @@ function shuffle(o){ //v1.0
       useTags:false,
       preset:'none',
       locationHash:false,
-      slideshowDelay:3000
+      slideshowDelay:3000,
+      thumbnailGlobalImageTitle:'',
+      thumbnailGlobalAlbumTitle:''
     }, options );
 
 
@@ -4296,10 +4640,13 @@ function shuffle(o){ //v1.0
       var sHoverEffects='<option style="color:#000">none</option>';
       sHoverEffects+='<option style="color:#000">slideUp</option><option style="color:#000">slideDown</option><option style="color:#000">slideLeft</option><option style="color:#000">slideRight</option>';
       sHoverEffects+='<option style="color:#000">imageSlideUp</option><option style="color:#000">imageSlideDown</option><option style="color:#000">imageSlideLeft</option><option style="color:#000">imageSlideRight</option>';
+      sHoverEffects+='<option style="color:#000">imageSplitVert</option><option style="color:#000">imageSplit4</option>';
       sHoverEffects+='<option style="color:#000">labelAppear</option><option style="color:#000">labelAppear75</option><option style="color:#000">labelSlideDown</option><option style="color:#000">labelSlideUp</option>';
+      sHoverEffects+='<option style="color:#000">labelSplitVert</option><option style="color:#000">labelSplit4</option><option style="color:#000">labelAppearSplitVert</option><option style="color:#000">labelAppearSplit4</option>';
       sHoverEffects+='<option style="color:#000">labelOpacity50</option><option style="color:#000">imageOpacity50</option><option style="color:#000">descriptionSlideUp</option>';
       sHoverEffects+='<option style="color:#000">borderLighter</option><option style="color:#000">borderDarker</option><option style="color:#000">imageInvisible</option>';
 
+      
       sHoverEffects+='<option style="color:#000"></option><option style="color:#000">imageScale150*</option><option style="color:#000">imageScale150Outside*</option><option style="color:#000">scale120*</option>';
       sHoverEffects+='<option style="color:#000">overScale*</option>';
       sHoverEffects+='<option style="color:#000">overScaleOutside*</option><option style="color:#000">scaleLabelOverImage*</option>';
@@ -4308,25 +4655,30 @@ function shuffle(o){ //v1.0
       sHoverEffects+='<option style="color:#000">rotateCornerBR*</option><option style="color:#000">rotateCornerBL*</option><option style="color:#000">imageRotateCornerBR*</option><option style="color:#000">imageRotateCornerBL*</option>';
 
       var sPanel='<div style="line-height:normal;margin:10px auto 30px auto;text-align:center;border:1px solid #555;background:#000;padding:5px;font-size:1.2em;"><span style="color:#d3d3d3;">nano</span><span style="color:#6e6;">GALLERY</span> - demonstration panel</div>';
-      sPanel+='<div style="display:inline-block;">Thumbnail hover effects:&nbsp;<select name="lHoverEffect1" style="color:#000">'+sHoverEffects+'</select>';
+      sPanel+='<div style="display:inline-block;"><b>Thumbnail hover effects:</b>&nbsp;<select name="lHoverEffect1" style="color:#000">'+sHoverEffects+'</select>';
       sPanel+='&nbsp;<select name="lHoverEffect2" style="color:#000">'+sHoverEffects+'</select>';
       sPanel+='&nbsp;<select name="lHoverEffect3" style="color:#000">'+sHoverEffects+'</select></div>';
       sPanel+='<br><div style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*: requires Transit plugin</div>';
-      sPanel+='<br><br><div style="display:inline-block;">Thumbnail size:&nbsp;Width (px):&nbsp;<input type="text" name="thumbWidth" value="120" style="width:50px;color:#000">&nbsp;&nbsp;Height (px):&nbsp;<input type="text" name="thumbHeight" value="120" style="width:50px;color:#000"></div>';
+      sPanel+='<br><br><div style="display:inline-block;"><b>Thumbnail size:</b>&nbsp;Width (px):&nbsp;<input type="text" name="thumbWidth" value="120" style="width:50px;color:#000">&nbsp;&nbsp;Height (px):&nbsp;<input type="text" name="thumbHeight" value="120" style="width:50px;color:#000"></div>';
       //sPanel+='<br><br><div style="display:inline-block;">Maximum number of thumbnails per line:&nbsp;<input type="text" name="thumbMaxItemsPerLine" value="" style="width:50px;color:#000"></div>';
       //sPanel+='<div style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maximum gallery width (px): <input type="text" name="thumbMaxWidth" value="" style="width:50px;color:#000"></div>';
-      sPanel+='<br><div>Thumbnail label: </div>';
-      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Position: <form style="display:inline-block;"><input type="radio" name="thumbnailLabelPosition" value="overImageOnBottom" checked style="margin:0">overImageOnBottom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thumbnailLabelPosition" value="overImageOnTop" style="margin:0">overImageOnTop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thumbnailLabelPosition" value="onBottom" style="margin:0">onBottom</form>';
+      sPanel+='<br><br><div><b>Thumbnail label: </b></div>';
+      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Position: <form style="display:inline-block;"><input type="radio" name="thumbnailLabelPosition" value="overImageOnBottom" checked style="margin:0">overImageOnBottom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thumbnailLabelPosition" value="overImageOnTop" style="margin:0">overImageOnTop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thumbnailLabelPosition" value="onBottom" style="margin:0">onBottom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thumbnailLabelPosition" value="overImageOnMiddle" style="margin:0">overImageOnMiddle</form>';
       sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="thumbnailLabelDisplay" value="true" checked style="margin:0">Display label';
       sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="thumbnailLabelDisplayDescription" value="true" style="margin:0">Display description';
-      sPanel+='<br><div>Color scheme: <br>';
-      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" name="colorScheme" value="none" style="margin:0">none &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="dark" checked style="margin:0">dark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="darkRed" style="margin:0">darkRed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+      sPanel+='<br><br><div><b>Gallery color scheme:</b> <br>';
+      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" checked name="colorScheme" value="none" style="margin:0">none &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="default" style="margin:0">default &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="dark" style="margin:0">dark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="darkRed" style="margin:0">darkRed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
       sPanel+='<input type="radio" name="colorScheme" value="darkGreen" style="margin:0">darkGreen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="darkBlue" style="margin:0">darkBlue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-      sPanel+='<input type="radio" name="colorScheme" value="darkOrange" style="margin:0">darkOrange &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="light" style="margin:0">light';
+      sPanel+='<input type="radio" name="colorScheme" value="darkOrange" style="margin:0">darkOrange &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="light" style="margin:0">light &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="lightBackground" style="margin:0">lightBackground';
       sPanel+='</form></div>';
-      sPanel+='<div>CSS file: <br>';
-      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" name="cssFile" value="default" checked style="margin:0">default &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="cssFile" value="clean" style="margin:0">clean</form></div>';
-      sPanel+='<div>Background color (not a nanoGALLERY parameter): <br>';
+      sPanel+='<br><div><b>Image display color scheme:</b> <br>';
+      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" checked name="colorSchemeViewer" value="none" style="margin:0">none &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorSchemeViewer" value="default" style="margin:0">default &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorSchemeViewer" value="darkRed" style="margin:0">darkRed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorScheme" value="darkRed" style="margin:0">darkRed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+      sPanel+='<input type="radio" name="colorSchemeViewer" value="darkGreen" style="margin:0">darkGreen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorSchemeViewer" value="darkBlue" style="margin:0">darkBlue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+      sPanel+='<input type="radio" name="colorSchemeViewer" value="darkOrange" style="margin:0">darkOrange &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="colorSchemeViewer" value="light" style="margin:0">light';
+      sPanel+='</form></div>';
+      sPanel+='<br><div><b>CSS file:</b> <br>';
+      sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" name="cssFile" value="default" checked style="margin:0">default &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="cssFile" value="clean" style="margin:0">clean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="cssFile" value="light" style="margin:0">light</form></div>';
+      sPanel+='<br><div><b>Background color</b> (not a nanoGALLERY parameter): <br>';
       sPanel+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form style="display:inline-block;"><input type="radio" name="backgroundColor" value="dark" checked style="margin:0">Dark&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="backgroundColor" value="light" style="margin:0">Light</form></div>';
 
 
@@ -4420,6 +4772,7 @@ function shuffle(o){ //v1.0
       settings.thumbnailLabel.display=jQuery(g_containerDemoPanel).find('[name=thumbnailLabelDisplay]').prop('checked');
       settings.thumbnailLabel.displayDescription=jQuery(g_containerDemoPanel).find('[name=thumbnailLabelDisplayDescription]').prop('checked');
       settings.colorScheme=jQuery(g_containerDemoPanel).find('input[name=colorScheme]:checked',g_containerDemoPanel).val();
+      settings.colorSchemeViewer=jQuery(g_containerDemoPanel).find('input[name=colorSchemeViewer]:checked',g_containerDemoPanel).val();
       settings.theme=jQuery(g_containerDemoPanel).find('input[name=cssFile]:checked',g_containerDemoPanel).val();
       
       if( jQuery(g_containerDemoPanel).find('input[name=backgroundColor]:checked',g_containerDemoPanel).val() == 'dark' ) {
@@ -5281,129 +5634,5 @@ colors = jQuery.Color.names = {
 };
 
 })( jQuery );
-
-
-
-
-
-/**!
- * @preserve
- * Includes also hoverIntent r7 // 2013.03.11 // jQuery 1.9.1+
- * http://cherne.net/brian/resources/jquery.hoverIntent.html
- *
- * You may use hoverIntent under the terms of the MIT license. Basically that
- * means you are free to use hoverIntent as long as this header is left intact.
- * Copyright 2007, 2013 Brian Cherne
- */
-
-/* hoverIntent is similar to jQuery's built-in "hover" method except that
- * instead of firing the handlerIn function immediately, hoverIntent checks
- * to see if the user's mouse has slowed down (beneath the sensitivity
- * threshold) before firing the event. The handlerOut function is only
- * called after a matching handlerIn.
- *
- * // basic usage ... just like .hover()
- * .hoverIntent( handlerIn, handlerOut )
- * .hoverIntent( handlerInOut )
- *
- * // basic usage ... with event delegation!
- * .hoverIntent( handlerIn, handlerOut, selector )
- * .hoverIntent( handlerInOut, selector )
- *
- * // using a basic configuration object
- * .hoverIntent( config )
- *
- * @param  handlerIn   function OR configuration object
- * @param  handlerOut  function OR selector for delegation OR undefined
- * @param  selector    selector OR undefined
- * @author Brian Cherne <brian(at)cherne(dot)net>
- */
-
-/* embedded version renamed nanoHoverIntent to avoid conflicts */
-
-(function($) {
-    $.fn.nanoHoverIntent = function(handlerIn,handlerOut,selector) {
-
-        // default configuration values
-        var cfg = {
-            interval: 100,
-            sensitivity: 7,
-            timeout: 0
-        };
-
-        if ( typeof handlerIn === "object" ) {
-            cfg = $.extend(cfg, handlerIn );
-        } else if ($.isFunction(handlerOut)) {
-            cfg = $.extend(cfg, { over: handlerIn, out: handlerOut, selector: selector } );
-        } else {
-            cfg = $.extend(cfg, { over: handlerIn, out: handlerIn, selector: handlerOut } );
-        }
-
-        // instantiate variables
-        // cX, cY = current X and Y position of mouse, updated by mousemove event
-        // pX, pY = previous X and Y position of mouse, set by mouseover and polling interval
-        var cX, cY, pX, pY;
-
-        // A private function for getting mouse position
-        var track = function(ev) {
-            cX = ev.pageX;
-            cY = ev.pageY;
-        };
-
-        // A private function for comparing current and previous mouse position
-        var compare = function(ev,ob) {
-            ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t);
-            // compare mouse positions to see if they've crossed the threshold
-            if ( ( Math.abs(pX-cX) + Math.abs(pY-cY) ) < cfg.sensitivity ) {
-                jQuery(ob).off("mousemove.nanoHoverIntent",track);
-                // set hoverIntent state to true (so mouseOut can be called)
-                ob.hoverIntent_s = 1;
-                return cfg.over.apply(ob,[ev]);
-            } else {
-                // set previous coordinates for next time
-                pX = cX; pY = cY;
-                // use self-calling timeout, guarantees intervals are spaced out properly (avoids JavaScript timer bugs)
-                ob.hoverIntent_t = setTimeout( function(){compare(ev, ob);} , cfg.interval );
-            }
-        };
-
-        // A private function for delaying the mouseOut function
-        var delay = function(ev,ob) {
-            ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t);
-            ob.hoverIntent_s = 0;
-            return cfg.out.apply(ob,[ev]);
-        };
-
-        // A private function for handling mouse 'hovering'
-        var handleHover = function(e) {
-            // copy objects to be passed into t (required for event object to be passed in IE)
-            var ev = jQuery.extend({},e);
-            var ob = this;
-
-            // cancel hoverIntent timer if it exists
-            if (ob.hoverIntent_t) { ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t); }
-
-            // if e.type == "mouseenter"
-            if (e.type == "mouseenter") {
-                // set "previous" X and Y position based on initial entry point
-                pX = ev.pageX; pY = ev.pageY;
-                // update "current" X and Y position based on mousemove
-                jQuery(ob).on("mousemove.nanoHoverIntent",track);
-                // start polling interval (self-calling timeout) to compare mouse coordinates over time
-                if (ob.hoverIntent_s != 1) { ob.hoverIntent_t = setTimeout( function(){compare(ev,ob);} , cfg.interval );}
-
-                // else e.type == "mouseleave"
-            } else {
-                // unbind expensive mousemove event
-                jQuery(ob).off("mousemove.hoverIntent",track);
-                // if hoverIntent state is true, then call the mouseOut function after the specified delay
-                if (ob.hoverIntent_s == 1) { ob.hoverIntent_t = setTimeout( function(){delay(ev,ob);} , cfg.timeout );}
-            }
-        };
-
-        // listen for mouseenter and mouseleave
-        return this.on({'mouseenter.hoverIntent':handleHover,'mouseleave.hoverIntent':handleHover}, cfg.selector);
-    };
-})(jQuery);
 
 

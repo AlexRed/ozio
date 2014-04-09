@@ -26,10 +26,21 @@ jQuery( document ).ready(function( $ ) {
 									'position'=>$this->Params->get("ozio_nano_thumbnailLabel_position", "overImageOnBottom"),
 									'display'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'displayDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_displayDescription", "1")),
-									'maxTitle'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
-									'maxDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxDescription", "0")),
+									'titleMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
+									'descriptionMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxDescription", "0")),
+									'hideIcons'=>intval($this->Params->get("ozio_nano_thumbnailLabel_hideIcons", "0")),
+									'align'=>$this->Params->get("ozio_nano_thumbnailLabel_align", "left"),
 							)); 
 						?>,
+						
+		viewerToolbar: <?php echo json_encode(
+							array(
+									'position'=>$this->Params->get("ozio_nano_viewerToolbar_position", "bottom"),
+									'style'=>$this->Params->get("ozio_nano_viewerToolbar_style", "innerImage"),
+							)); 
+						?>,
+						
+						
 		thumbnailHoverEffect: <?php echo json_encode(implode(',',$this->Params->get("ozio_nano_thumbnailHoverEffect", array("imageOpacity50")))); ?>,
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
@@ -40,13 +51,14 @@ jQuery( document ).ready(function( $ ) {
 		displayBreadcrumb: <?php echo json_encode(intval($this->Params->get("ozio_nano_displayBreadcrumb", "1"))); ?>,
 		blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
-		photoSorting: <?php echo json_encode($this->Params->get("ozio_nano_photoSorting", "normal")); ?>,
+		photoSorting: <?php echo json_encode($this->Params->get("ozio_nano_photoSorting", "standard")); ?>,
+		albumSorting: <?php echo json_encode($this->Params->get("ozio_nano_albumSorting", "standard")); ?>,
 		<?php
 		$kind=$this->Params->get("ozio_nano_kind", "picasa");
 		$albumvisibility=$this->Params->get("albumvisibility", "public");
 		if ($kind=='picasa' && $albumvisibility=='limited'){
-			echo 'album:'.json_encode($this->Params->get("limitedalbum", "")).",\n";
-			echo 'authkey:'.json_encode($this->Params->get("limitedpassword", "")).",\n";
+			echo 'album:'.json_encode($this->Params->get("limitedalbum", "")."&authkey=".$this->Params->get("limitedpassword", "")).",\n";
+			//echo 'authkey:'.json_encode($this->Params->get("limitedpassword", "")).",\n";
 			
 		}else{
 					

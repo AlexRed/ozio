@@ -24,7 +24,7 @@
 .nanoGalleryViewer .toolbar .label{
 	white-space: normal;
 }
-
+/*
 .nano_folder_home:before{
 	content: '\e80c';
 	font-family: "nano_icon_font";
@@ -36,4 +36,13 @@
 
 .nanogallery_colorscheme_light .nanoGalleryNavigationbarContainer .nanoGalleryNavigationbar .separator:hover {
     color: #ffffff;
+}
+*/
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryBreadcrumb {
+    color: #777777;
+}
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryBreadcrumb .folderHome:hover {
+    color: #bbbbbb;
 }
