@@ -4,7 +4,6 @@
 		<message>COM_OZIOGALLERY3_NANO_VIEW_DEFAULT_DESC</message>
 	</layout>
 
-	
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 		<fieldset name="basic">
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
@@ -34,12 +33,17 @@
 			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|2013-" />
 			<field type="text" name="ozio_nano_whiteList" label="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_DSC" />
 
-			<field type="list" name="ozio_nano_photoSorting" label="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_DSC" default="normal">
-				<option value="normal">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
+			<field type="list" name="ozio_nano_photoSorting" label="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_DSC" default="standard">
+				<option value="standard">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
 				<option value="random">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_RANDOM</option>
-				<option value="inverse">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
+				<option value="reversed">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
 			</field>
 
+			<field type="list" name="ozio_nano_albumSorting" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_DSC" default="standard">
+				<option value="standard">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_RANDOM</option>
+				<option value="reversed">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
+			</field>
 
 			<field type="radio" name="ozio_nano_displayBreadcrumb" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_DISPLAYBREADCRUMB_LBL"
@@ -89,6 +93,33 @@
 			</field>
 			<field type="text" name="ozio_nano_thumbnailLabel_maxDescription" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_DSC" size="6" default="0"/>
 			
+			<field type="radio" name="ozio_nano_thumbnailLabel_hideIcons" default="0"
+				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_HIDEICONS_LBL"
+				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_HIDEICONS_DSC"
+				class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			
+			
+			<field type="list" name="ozio_nano_thumbnailLabel_align" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ALIGN_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ALIGN_DSC" default="left">
+				<option value="right">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ALIGN_RIGHT</option>
+				<option value="center">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ALIGN_CENTER</option>
+				<option value="left">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ALIGN_LEFT</option>
+			</field>
+			
+			
+			<field type="list" name="ozio_nano_viewerToolbar_position" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_DSC" default="bottom">
+				<option value="top">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_TOP</option>
+				<option value="bottom">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_BOTTOM</option>
+			</field>
+			
+			<field type="list" name="ozio_nano_viewerToolbar_style" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STYLE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STYLE_DSC" default="innerImage">
+				<option value="innerImage">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STYLE_INNERIMAGE</option>
+				<option value="stuckImage">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STYLE_STUCKIMAGE</option>
+				<option value="fullWidth">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STYLE_FULLWIDTH</option>
+			</field>
+			
 			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="imageOpacity50"  multiple="true" >
 				<option value="none">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_NONE</option>
 				<option value="slideUp">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEUP</option>
@@ -123,6 +154,14 @@
 				<option value="rotateCornerBL">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_ROTATECORNERBL</option>
 				<option value="imageRotateCornerBR">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGEROTATECORNERBR</option>
 				<option value="imageRotateCornerBL">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGEROTATECORNERBL</option>
+				
+				<option value="labelSplitVert">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LABELSPLITVERT</option>
+				<option value="labelSplit4">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LABELSPLIT4</option>
+				<option value="labelAppearSplitVert">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LABELAPPEARSPLITVERT</option>
+				<option value="labelAppearSplit4">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LABELAPPEARSPLIT4</option>
+				<option value="imageSplitVert">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGESPLITVERT</option>
+				<option value="imageSplit4">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGESPLIT4</option>
+				
 			</field>
 			
 			<field type="list" name="ozio_nano_theme" label="COM_OZIOGALLERY3_OZIO_NANO_THEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THEME_DSC" default="clean">

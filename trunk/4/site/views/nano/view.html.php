@@ -59,7 +59,7 @@ class OzioGalleryViewNano extends JViewLegacy
 		
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/imagesloaded/imagesloaded.pkgd.min.js");
 		
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/jquery-jsonp/jquery.jsonp.js");
+		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/jquery-jsonp/jquery.jsonp.js");
 		
 		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.pack.js?v=2.1.4");
 		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5");
