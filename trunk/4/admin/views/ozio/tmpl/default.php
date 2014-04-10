@@ -242,7 +242,7 @@
 						<td align="left">
 
 							<br />Skin Fuerte is based on <a href="http://www.buildinternet.com/project/supersized/" target='blank'>Supersized</a> Design/Development by <a href="http://buildinternet.com/" target='blank'> Build Internet project by Sam Dunn of One Mighty Roar</a>.
-							<br />
+							<br />Skin Nano is based on <a href="http://nanogallery.brisbois.fr/" target="blank">nanoGALLERY</a> Design/Development by <a href="http://www.brisbois.fr/" target="blank">Christophe Brisbois</a>
 							<br />
 							Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 							Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
