@@ -83,7 +83,7 @@
 				<option value="0">JNO</option>
 			</field>
 			<field type="text" name="ozio_nano_thumbnailLabel_maxTitle" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXTITLE_DSC" size="6" default="25"/>
-			
+			<!-- 
 			<field type="radio" name="ozio_nano_thumbnailLabel_displayDescription" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_DISPLAYDESCRIPTION_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_DISPLAYDESCRIPTION_DSC"
@@ -91,8 +91,10 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+			-->
+			<!-- 
 			<field type="text" name="ozio_nano_thumbnailLabel_maxDescription" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_MAXDESCRIPTION_DSC" size="6" default="0"/>
-			
+			-->
 			<field type="radio" name="ozio_nano_thumbnailLabel_hideIcons" default="0"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_HIDEICONS_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_HIDEICONS_DSC"
@@ -190,14 +192,14 @@
 				<option value="light">COM_OZIOGALLERY3_OZIO_NANO_COLORSCHEMEVIEWER_LIGHT</option>
 			</field>
 			
-			<field type="radio" name="ozio_nano_touchAnimation" default="1"
+<!--			<field type="radio" name="ozio_nano_touchAnimation" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_TOUCHANIMATION_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_TOUCHANIMATION_DSC"
 				class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
-			
+ -->			
 			<field type="radio" name="ozio_nano_galleryToolbarWidthAligned" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_GALLERYTOOLBARWIDTHALIGNED_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_GALLERYTOOLBARWIDTHALIGNED_DSC"
@@ -209,15 +211,17 @@
 			<field type="text" name="ozio_nano_slideshowDelay" label="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_DSC" size="6" default="3000"/>
 			<field type="text" name="ozio_nano_paginationMaxItemsPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_DSC" size="6" default="0"/>
 			<field type="text" name="ozio_nano_paginationMaxLinesPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXLINESPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXLINESPERPAGE_DSC" size="6" default="0"/>
-			<field type="text" name="ozio_nano_thumbnailDisplayInterval" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_DSC" size="6" default="30"/>
+<!--			<field type="text" name="ozio_nano_thumbnailDisplayInterval" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_DSC" size="6" default="30"/>
 
-			<field type="radio" name="ozio_nano_thumbnailDisplayTransition" default="1"
+ -->
+<!--			<field type="radio" name="ozio_nano_thumbnailDisplayTransition" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYTRANSITION_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYTRANSITION_DSC"
 				class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+ -->			
 			<field type="radio" name="ozio_nano_thumbnailLazyLoad" default="1"
 				label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOAD_LBL"
 				description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOAD_DSC"
@@ -226,7 +230,7 @@
 				<option value="0">JNO</option>
 			</field>
 
-			<field type="text" name="ozio_nano_thumbnailLazyLoadTreshold" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOADTRESHOLD_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOADTRESHOLD_DSC" size="6" default="100"/>
+			<field type="text" name="ozio_nano_thumbnailLazyLoadTreshold" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOADTRESHOLD_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLAZYLOADTRESHOLD_DSC" size="6" default="150"/>
 			
 		</fieldset>			
 		<fieldset name="advanced">
