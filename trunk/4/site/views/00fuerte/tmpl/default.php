@@ -104,16 +104,15 @@
 </div>
 
  
- 
+ <?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
 
 
 <div id="photo-info" class="modal hide fade">
-	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
-			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
-			<h3 class="pi-album"></h3>
 			<?php }else{?>
+<div id="photo-info" class="modal hide fade">
+	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>			
 			<h3>Info</h3>
-			<?php }?>
+			
 	</div>
 	<div class="modal-body">
 	
@@ -178,4 +177,5 @@
 		<?php }?>
 		<span class="btn" data-dismiss="modal"><i class="icon-cancel"></i> <?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></span>
         </div>
+    <?php }?>    
 </div>
