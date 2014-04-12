@@ -6,6 +6,7 @@
 
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 		<fieldset name="basic">
+			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
 <!-- 			<field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
