@@ -55,7 +55,12 @@
 											</tr>
 											<tr>
 												<td align="left" valign="bottom">
-													<b><a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank">Ozio Gallery FORUM</a></b>  -  <b><a href="http://code.google.com/p/oziogallery2/" target="blank">Ozio Gallery Google Code Project</a></b>  -  <b><a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank">Ozio Gallery download and info page</a></b>  -  <b><a href="http://www.opensourcesolutions.es/ozio" target="blank">Ozio Gallery DEMO</a></b>
+
+												    <a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank" class="btn btn-large btn-warning">FORUM</a>
+												    <a href="http://code.google.com/p/oziogallery2/" target="blank" class="btn btn-large btn-inverse">CODE</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" class="btn btn-large btn-success">INFO & DOWNLOAD</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" class="btn btn-large btn-info">DEMO</a>
+												    <br /><br />
 												</td>
 											</tr>
 										</table>
