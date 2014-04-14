@@ -56,10 +56,10 @@
 											<tr>
 												<td align="left" valign="bottom">
 
-												    <a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank" class="btn btn-large btn-warning">FORUM</a>
-												    <a href="http://code.google.com/p/oziogallery2/" target="blank" class="btn btn-large btn-inverse">CODE</a>
-												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" class="btn btn-large btn-success">INFO & DOWNLOAD</a>
-												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" class="btn btn-large btn-info">DEMO</a>
+												    <a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank" class="btn btn-large btn-warning"><i class="icon-users"></i>  FORUM</a>
+												    <a href="http://code.google.com/p/oziogallery2/" target="blank" class="btn btn-large btn-inverse"><i class="icon-cogs"></i>  CODE</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" class="btn btn-large btn-success"><i class="icon-download"></i>  INFO & DOWNLOAD</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" class="btn btn-large btn-info"><i class="icon-eye"></i>  DEMO</a>
 												    <br /><br />
 												</td>
 											</tr>
