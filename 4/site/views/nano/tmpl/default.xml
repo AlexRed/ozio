@@ -59,7 +59,7 @@
 				<option value="auto">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_AUTO</option>
 			</field>
 			
-			<field type="text" name="ozio_nano_thumbnailHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_DSC" size="6" default="150"/>
+			<field type="text" name="ozio_nano_thumbnailHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_DSC" size="6" default="134"/>
 			<field type="text" name="ozio_nano_thumbnailWidth" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILWIDTH_DSC" size="6" default="200"/>
 			<field type="text" name="ozio_nano_maxItemsPerLine" label="COM_OZIOGALLERY3_OZIO_NANO_MAXITEMSPERLINE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_MAXITEMSPERLINE_DSC" size="6" default="0"/>
 			<field type="text" name="ozio_nano_maxWidth" label="COM_OZIOGALLERY3_OZIO_NANO_MAXWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_MAXWIDTH_DSC" size="6" default="0"/>
