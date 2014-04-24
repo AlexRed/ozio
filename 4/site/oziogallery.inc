@@ -19,19 +19,28 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
  */
 
-if (!class_exists("ZipArchive"))
-{
-	die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
-}
-
-$zip = new ZipArchive();
 $name = str_replace(".inc", "", __FILE__);
 
-if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
+if (class_exists("ZipArchive"))
 {
-	die("Error while opening my own zip file.");
-}
 
-$zipcode = $zip->getFromName(basename($name) . ".php");
+	$zip = new ZipArchive();
+	if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
+	{
+		die("Error while opening my own zip file.");
+	}
+	
+	$zipcode = $zip->getFromName(basename($name) . ".php");
+	$zip->close();
+}else{
+	//die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
+	//http://old.phpconcept.net/pclzip/man/en/index.php
+	require_once('pclzip.lib.php');
+	$archive = new PclZip($name . ".zip");
+	$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
+	if ($list == 0) {
+		die("Error while opening my own zip file: ".$archive->errorInfo(true));
+	}
+	$zipcode = $list[0]['content'];	
+}
 eval((string)$zipcode);
-$zip->close();
