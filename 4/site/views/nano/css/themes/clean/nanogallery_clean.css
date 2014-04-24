@@ -718,7 +718,7 @@
 }
 
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .infoButton:after{
-	content: '\e808';	/* .icon-th-list */
+	content: '\e824';	/* .icon-th-list */
 }
 
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .playButton:after{
