@@ -628,6 +628,7 @@
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .previousButton,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .nextButton,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .closeButton,
+.nanogallery_theme_clean .nanoGalleryViewer .toolbar .infoButton,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .playButton,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .pauseButton,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .setFullscreenButton ,
@@ -667,6 +668,7 @@
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .previousButton:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .nextButton:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .closeButton:after,
+.nanogallery_theme_clean .nanoGalleryViewer .toolbar .infoButton:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .playButton:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .pauseButton:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .setFullscreenButton:after,
@@ -695,6 +697,7 @@
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .previousButton:hover:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .nextButton:hover:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .closeButton:hover:after,
+.nanogallery_theme_clean .nanoGalleryViewer .toolbar .infoButton:hover:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .playButton:hover:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .pauseButton:hover:after,
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .setFullscreenButton:hover:after,
@@ -712,6 +715,10 @@
 
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .closeButton:after{
 	content: '\e80a';	/* .icon-cancel */
+}
+
+.nanogallery_theme_clean .nanoGalleryViewer .toolbar .infoButton:after{
+	content: '\e808';	/* .icon-th-list */
 }
 
 .nanogallery_theme_clean .nanoGalleryViewer .toolbar .playButton:after{
