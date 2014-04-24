@@ -1,4 +1,17 @@
+function OnMarkersIconChange()
+{
+	var select = $('jform_params_markers_icon');
+	var value = select.options[select.selectedIndex].value;
+	if (value==''){
+		value='default.png';
+	}
+	document.getElementById("ozio_markerpreview").src='../components/com_oziogallery3/views/map/img/markers/icons/'+value;
+}
+
 jQuery( document ).ready(function( $ ) {
+	
+	OnMarkersIconChange();
+	
 	var g_flickrApiKey="2f0e634b471fdb47446abcb9c5afebdc";
 	var g_picasaThumbSize=64;
 	var non_printable_separator="\x16";
