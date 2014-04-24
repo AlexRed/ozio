@@ -59,3 +59,105 @@
 .nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaNext:after{
 	background-color:transparent;
 }
+
+.nanogallery_theme_default .nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_default .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_default .nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+.nanogallery_theme_light .nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_light .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_light .nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+
+.ozio-nano-white-info-box {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+
+
+/*.pi-map-container #nano-gmap-viewer{
+	float:left;
+}*/
+
+
+.nanoGalleryInfoBox .pi-map-container
+{
+	display:inline-block;
+	vertical-align: top;
+}
+.nanoGalleryInfoBox .pi-map-container
+{
+	width:100%;
+	max-width:500px;
+}
+.nanoGalleryInfoBox #nano-gmap-viewer{
+	float:left;
+}
+
+
+.nanoGalleryInfoBox #nano-gmap-viewer img { 
+	max-width: none; 
+	height: auto; 
+}
+
+.nanoGalleryInfoBox .pi-photo-buttons{
+	clear:both;
+}
+
+.nanoGalleryInfoBox .pi-photo-buttons a{
+	width:96px;
+}
+
+
+
+.nanoGalleryInfoBox dl {
+    margin-bottom: 18px;
+	max-width:500px;
+	width:100%;
+	float:left;
+}
+.nanoGalleryInfoBox dt, .nanoGalleryInfoBox dd {
+    line-height: 18px;
+}
+.nanoGalleryInfoBox dt {
+    font-weight: bold;
+}
+.nanoGalleryInfoBox dd {
+    margin-left: 9px;
+}
+.nanoGalleryInfoBox .odl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+.nanoGalleryInfoBox .odl-horizontal dd {
+    margin-left: 130px;
+}
+
+.nanoGalleryInfoBox .oimg-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}
+
+.mfp-close{
+line-height:22px;
+height:22px;
+width:22px;
+}

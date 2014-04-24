@@ -110,12 +110,29 @@ nanoGALLERY v4.3.0 release notes.
       photoSorting:'',
       albumSorting:'',
       i18n:{
-        'paginationPrevious':'Previous','paginationPrevious_FR':'Précédent','paginationPrevious_DE':'Zurück','paginationPrevious_IT':'Indietro',
+        'paginationPrevious':'Previous','paginationPrevious_FR':'Prï¿½cï¿½dent','paginationPrevious_DE':'Zurï¿½ck','paginationPrevious_IT':'Indietro',
         'paginationNext':'Next','paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti',
         'thumbnailImageTitle':'',
         'thumbnailAlbumTitle':'',
         'thumbnailImageDescription':'',
-        'thumbnailAlbumDescription':''
+        'thumbnailAlbumDescription':'',
+        
+        'infoBoxPhoto':'Photo',
+        'infoBoxDate':'Date',
+        'infoBoxAlbum':'Album',
+        'infoBoxDimensions':'Dimensions',
+        'infoBoxFilename':'Filename',
+        'infoBoxFileSize':'File size',
+        'infoBoxCamera':'Camera',
+        'infoBoxFocalLength':'Focal length',
+        'infoBoxExposure':'Exposure',
+        'infoBoxFNumber':'F Number',
+        'infoBoxISO':'ISO',
+        'infoBoxMake':'Make',
+        'infoBoxFlash':'Flash',
+        'infoBoxViews':'Views',
+        'infoBoxComments':'Comments'
+        
         }
     }, options );
     
@@ -147,6 +164,7 @@ function nanoGALLERY() {
     g_containerNavigationbarContDisplayed=false,
     $g_containerViewerContainer=null,
     $g_containerViewer=null,
+    $g_containerInfoBox=null,
     $g_ViewerImagePrevious=null,
     $g_ViewerImageNext=null,
     $g_ViewerImageCurrent=null,
@@ -488,7 +506,7 @@ function nanoGALLERY() {
     if( document.fullscreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled || document.mozFullScreenEnabled) {
       g_supportFullscreenAPI=true;
     } else {
-      nanoConsoleLog('Your browser doesn’t support the fullscreen API. Fullscreen button will not be displayed.')
+      nanoConsoleLog('Your browser doesnï¿½t support the fullscreen API. Fullscreen button will not be displayed.')
     }
     
     
@@ -1008,7 +1026,101 @@ function nanoGALLERY() {
           case 'thumbnailAlbumDescription':
             g_i18nTranslations.thumbnailAlbumDescription=g_options.i18n[key];
             break;
-        
+
+            
+            
+            //gi
+          case 'infoBoxPhoto_'+g_i18nLang:
+            g_i18nTranslations.infoBoxPhoto=g_options.i18n[key];
+            break;
+          case 'infoBoxPhoto':
+            g_i18nTranslations.infoBoxPhoto=g_options.i18n[key];
+            break;
+          case 'infoBoxDate_'+g_i18nLang:
+        	g_i18nTranslations.infoBoxDate=g_options.i18n[key];
+        	break;
+    	  case 'infoBoxDate':
+    		g_i18nTranslations.infoBoxDate=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxAlbum_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxAlbum=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxAlbum':
+    		g_i18nTranslations.infoBoxAlbum=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxDimensions_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxDimensions=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxDimensions':
+    		g_i18nTranslations.infoBoxDimensions=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFilename_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxFilename=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFilename':
+    		g_i18nTranslations.infoBoxFilename=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFileSize_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxFileSize=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFileSize':
+    		g_i18nTranslations.infoBoxFileSize=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxCamera_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxCamera=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxCamera':
+    		g_i18nTranslations.infoBoxCamera=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFocalLength_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxFocalLength=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFocalLength':
+    		g_i18nTranslations.infoBoxFocalLength=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxExposure_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxExposure=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxExposure':
+    		g_i18nTranslations.infoBoxExposure=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFNumber_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxFNumber=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFNumber':
+    		g_i18nTranslations.infoBoxFNumber=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxISO_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxISO=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxISO':
+    		g_i18nTranslations.infoBoxISO=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxMake_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxMake=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxMake':
+    		g_i18nTranslations.infoBoxMake=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFlash_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxFlash=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxFlash':
+    		g_i18nTranslations.infoBoxFlash=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxViews_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxViews=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxViews':
+    		g_i18nTranslations.infoBoxViews=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxComments_'+g_i18nLang:
+    		g_i18nTranslations.infoBoxComments=g_options.i18n[key];
+    		break;
+    	  case 'infoBoxComments':
+    		g_i18nTranslations.infoBoxComments=g_options.i18n[key];
+    		break;            
+            
         }
       });
     }
@@ -1738,6 +1850,106 @@ function nanoGALLERY() {
           newItem.height=data.gphoto$height.$t;
           newItem.thumbWidth=data.media$group.media$thumbnail[0].width;
           newItem.thumbHeight=data.media$group.media$thumbnail[0].height;
+          
+          newItem.infobox={};
+          newItem.infobox.album='-na-';
+          if (g_ngItems[albumIdx].title!=''){
+        	  newItem.infobox.album=g_ngItems[albumIdx].title;
+          }
+          
+          newItem.infobox.photo='-na-';
+          if (data.summary.$t!=''){
+        	  newItem.infobox.photo=data.summary.$t;
+          }
+          newItem.infobox.date='-na-';
+  		  if (typeof data.gphoto$timestamp !== "undefined" && typeof data.gphoto$timestamp.$t !== "undefined"){
+	    	  var timestamp=data.gphoto$timestamp.$t;
+	    	  var photo_date=new Date();
+	    	  photo_date.setTime(timestamp);
+	    	  newItem.infobox.date=photo_date.getDate()+'/'+(photo_date.getUTCMonth()+1)+'/'+photo_date.getUTCFullYear()+' '+photo_date.getUTCHours()+':'+photo_date.getUTCMinutes();
+		  }
+    	  
+  		  newItem.infobox.dimensions=data.gphoto$width.$t+' x '+data.gphoto$height.$t;
+		  newItem.infobox.filename='-na-';
+			if (typeof data.title !== "undefined" && typeof data.title.$t !== "undefined"){
+				newItem.infobox.filename=data.title.$t;
+			}
+  		  
+  		  	newItem.infobox.filesize='-na-';
+			if (typeof data.gphoto$size !== "undefined" && typeof data.gphoto$size.$t !== "undefined"){
+				newItem.infobox.filesize=data.gphoto$size.$t;
+				if (newItem.infobox.filesize>(1024*1024)){
+					newItem.infobox.filesize=(newItem.infobox.filesize/(1024*1024)).toFixed(2);
+					newItem.infobox.filesize=newItem.infobox.filesize+'M';
+				}else if (newItem.infobox.filesize>(1024)){
+					newItem.infobox.filesize=(newItem.infobox.filesize/(1024)).toFixed(2);
+					newItem.infobox.filesize=newItem.infobox.filesize+'K';
+				}				
+			}
+  		  	newItem.infobox.camera='-na-';
+     		newItem.infobox.focallength='-na-';
+      		newItem.infobox.exposure='-na-';
+      		newItem.infobox.fnumber='-na-';
+      		newItem.infobox.iso='-na-';
+      		newItem.infobox.make='-na-';
+      		newItem.infobox.flash='-na-';
+			if (typeof data.exif$tags !== "undefined"){
+  		  	
+				if (typeof data.exif$tags.exif$model !== "undefined" && typeof data.exif$tags.exif$model.$t !== "undefined"){
+					newItem.infobox.camera=data.exif$tags.exif$model.$t;
+				}
+				if (typeof data.exif$tags.exif$exposure !== "undefined" && typeof data.exif$tags.exif$exposure.$t !== "undefined"){
+					var photo_exposure_d=Math.round(1/data.exif$tags.exif$exposure.$t);
+					newItem.infobox.exposure='1/'+photo_exposure_d+" sec";
+				}
+				if (typeof data.exif$tags.exif$focallength !== "undefined" && typeof data.exif$tags.exif$focallength.$t !== "undefined"){
+					newItem.infobox.focallength=data.exif$tags.exif$focallength.$t+" mm";
+				}
+				if (typeof data.exif$tags.exif$iso !== "undefined" && typeof data.exif$tags.exif$iso.$t !== "undefined"){
+					newItem.infobox.iso=data.exif$tags.exif$iso.$t;
+				}
+				if (typeof data.exif$tags.exif$make !== "undefined" && typeof data.exif$tags.exif$make.$t !== "undefined"){
+					newItem.infobox.make=data.exif$tags.exif$make.$t;
+				}
+				if (typeof data.exif$tags.exif$flash !== "undefined" && typeof data.exif$tags.exif$flash.$t !== "undefined"){
+					newItem.infobox.flash=data.exif$tags.exif$flash.$t?'Yes':'No';
+				}
+				if (typeof data.exif$tags.exif$fstop !== "undefined" && typeof data.exif$tags.exif$fstop.$t !== "undefined"){
+					newItem.infobox.fnumber=data.exif$tags.exif$fstop.$t;
+				}
+			}
+			newItem.infobox.lat='';
+			newItem.infobox.long='';
+			if (typeof data.georss$where !== "undefined" && typeof data.georss$where.gml$Point !== "undefined" &&
+				typeof data.georss$where.gml$Point.gml$pos !== "undefined" && typeof data.georss$where.gml$Point.gml$pos.$t !== "undefined"){
+			
+				var latlong=data.georss$where.gml$Point.gml$pos.$t.split(" ");
+				newItem.infobox.lat=latlong[0];
+				newItem.infobox.long=latlong[1];
+			}
+	  		  
+  		  newItem.infobox.comments='-na-';
+		  if (typeof data.gphoto$commentCount !== "undefined" && typeof data.gphoto$commentCount.$t !== "undefined"){
+			  newItem.infobox.comments=data.gphoto$commentCount;
+		  }
+  		  	
+  		  newItem.infobox.views='...';
+  		newItem.infobox.json_details='';
+			if (typeof data.link !== "undefined"){
+				for (var j=0;j<data.link.length;j++){
+					if (data.link[j].rel=='self' && data.link[j].type=='application/atom+xml'){
+						newItem.infobox.json_details=data.link[j].href;
+						break;
+					}
+				}
+			}
+  		  
+  		
+  		  newItem.infobox.link="https://plus.google.com/photos/"+g_options.userID+"/albums/"+albumID+"/"+itemID;
+  		  newItem.infobox.download=picasaSpecificData.seed+ 's0-d/';
+  		  newItem.infobox.image= picasaSpecificData.seed+ 's200/';
+          
+          
         }
         else {
           if( g_options.thumbnailHeight == 'auto' ) {
@@ -3855,6 +4067,153 @@ function nanoGALLERY() {
       }
     }
   };
+  function OpenInfoBox(){
+	  $g_containerInfoBox=jQuery('<div  class="nanoGalleryInfoBox ozio-nano-white-info-box mfp-hide">\
+			  	<div class="ozio-nano-infobox-middle">\
+				<dl class="odl-horizontal">\
+			  		<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>\
+			  		<dt>'+g_i18nTranslations.infoBoxAlbum+'</dt><dd class="pi-album"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxPhoto+'</dt><dd class="pi-photo"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxDate+'</dt><dd class="pi-date"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxDimensions+'</dt><dd class="pi-dimensions"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxFilename+'</dt><dd class="pi-filename"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxFileSize+'</dt><dd class="pi-filesize"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxCamera+'</dt><dd class="pi-camera"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxFocalLength+'</dt><dd class="pi-focallength"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxExposure+'</dt><dd class="pi-exposure"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxFNumber+'</dt><dd class="pi-fnumber"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxISO+'</dt><dd class="pi-iso"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxMake+'</dt><dd class="pi-make"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxFlash+'</dt><dd class="pi-flash"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxViews+'</dt><dd class="pi-views"></dd>\
+					<dt>'+g_i18nTranslations.infoBoxComments+'</dt><dd class="pi-comments"></dd>\
+				</dl>\
+				<div class="pi-map-container"></div>\
+				</div>\
+					<div class="pi-photo-buttons">\
+					<a href="#" class="btn pi-link" target="_blank">\
+						â†— Google+\
+					</a>\
+					<a href="#" class="btn pi-download">\
+						â¬‡ Download\
+					</a>\
+					</div>\
+				').appendTo('body');
+/*	  
+	  var infobox={};
+	  infobox.album='-na-';
+	  infobox.photo='-na-';
+	  infobox.date='-na-';
+	  infobox.dimensions='-na-';
+	  infobox.filename='-na-';
+	  infobox.filesize='-na-';
+	  infobox.camera='-na-';
+	  infobox.focallength='-na-';
+	  infobox.exposure='-na-';
+	  infobox.fnumber='-na-';
+	  infobox.iso='-na-';
+	  infobox.make='-na-';
+	  infobox.flash='-na-';
+	  infobox.views='-na-';
+	  infobox.comments='-na-';
+	  infobox.image=g_ngItems[g_viewerCurrentItemIdx].thumbsrc;
+	  infobox.lat='34.5';
+	  infobox.long='55.6';
+	  infobox.link='#';
+	  infobox.download='#';
+	  g_ngItems[g_viewerCurrentItemIdx].infobox=infobox;
+	*/  
+	  $g_containerInfoBox.find('.pi-album').text(g_ngItems[g_viewerCurrentItemIdx].infobox.album);
+	  $g_containerInfoBox.find('.pi-photo').text(g_ngItems[g_viewerCurrentItemIdx].infobox.photo);
+	  $g_containerInfoBox.find('.pi-date').text(g_ngItems[g_viewerCurrentItemIdx].infobox.date);
+	  $g_containerInfoBox.find('.pi-dimensions').text(g_ngItems[g_viewerCurrentItemIdx].infobox.dimensions);
+	  $g_containerInfoBox.find('.pi-filename').text(g_ngItems[g_viewerCurrentItemIdx].infobox.filename);
+	  $g_containerInfoBox.find('.pi-filesize').text(g_ngItems[g_viewerCurrentItemIdx].infobox.filesize);
+	  $g_containerInfoBox.find('.pi-camera').text(g_ngItems[g_viewerCurrentItemIdx].infobox.camera);
+	  $g_containerInfoBox.find('.pi-focallength').text(g_ngItems[g_viewerCurrentItemIdx].infobox.focallength);
+	  $g_containerInfoBox.find('.pi-exposure').text(g_ngItems[g_viewerCurrentItemIdx].infobox.exposure);
+	  $g_containerInfoBox.find('.pi-fnumber').text(g_ngItems[g_viewerCurrentItemIdx].infobox.fnumber);
+	  $g_containerInfoBox.find('.pi-iso').text(g_ngItems[g_viewerCurrentItemIdx].infobox.iso);
+	  $g_containerInfoBox.find('.pi-make').text(g_ngItems[g_viewerCurrentItemIdx].infobox.make);
+	  $g_containerInfoBox.find('.pi-flash').text(g_ngItems[g_viewerCurrentItemIdx].infobox.flash);
+	  $g_containerInfoBox.find('.pi-views').text(g_ngItems[g_viewerCurrentItemIdx].infobox.views);
+	  $g_containerInfoBox.find('.pi-comments').text(g_ngItems[g_viewerCurrentItemIdx].infobox.comments);
+	  $g_containerInfoBox.find('.pi-image').attr('src',g_ngItems[g_viewerCurrentItemIdx].infobox.image);
+	  $g_containerInfoBox.find('.pi-link').attr('href',g_ngItems[g_viewerCurrentItemIdx].infobox.link);
+	  $g_containerInfoBox.find('.pi-download').attr('href',g_ngItems[g_viewerCurrentItemIdx].infobox.download);
+	  
+	  jQuery.magnificPopup.open({
+	    items: {
+	      src: $g_containerInfoBox, // can be a HTML string, jQuery object, or CSS selector
+	      type: 'inline',
+	      closeBtnInside: true,
+	      showCloseBtn: true,
+	      enableEscapeKey: true,
+	      modal: true
+	    },
+	    callbacks: {
+	    	open: function(){
+				var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
+				var long=g_ngItems[g_viewerCurrentItemIdx].infobox.long;
+				
+				if (lat=='' || long==''){
+					$g_containerInfoBox.find('.pi-map-container').html('');
+				}else{
+					$g_containerInfoBox.find('.pi-map-container').html('<span id="nano-gmap-viewer" style="width:100%; height:400px;"></span>');
+					var latLng = new google.maps.LatLng(lat,long);
+
+				     var map = new google.maps.Map(document.getElementById('nano-gmap-viewer'), {
+				        zoom: 14,
+				        center: latLng,
+						mapTypeId: google.maps.MapTypeId.MAP,
+						scrollwheel: false
+				     });	
+				     var marker = new google.maps.Marker({
+				    	    position: latLng,
+				    	});
+
+				     marker.setMap(map);				     
+				}	
+				var json_details_url=g_ngItems[g_viewerCurrentItemIdx].infobox.json_details;
+				if (json_details_url!=''){
+					$g_containerInfoBox.find('.pi-views').text('...');
+					$g_containerInfoBox.find('.pi-comments').text('...');
+					jQuery.ajax({
+						'url':json_details_url,
+						'dataType': 'json',
+						'success': function (result, textStatus, jqXHR){
+							if ($g_containerInfoBox!=null){
+								if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$commentCount !== "undefined" && typeof result.entry.gphoto$commentCount.$t !== "undefined"){
+									$g_containerInfoBox.find('.pi-comments').text(result.entry.gphoto$commentCount.$t);
+								}else{
+									$g_containerInfoBox.find('.pi-comments').text('-na-');
+								}
+	
+								if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
+									$g_containerInfoBox.find('.pi-views').text(result.entry.gphoto$viewCount.$t);
+								}else{
+									$g_containerInfoBox.find('.pi-views').text('-na-');
+								}
+							}
+						},
+						'error': function (jqXHR, textStatus, error){
+							$g_containerInfoBox.find('.pi-views').text('-na-');
+							$g_containerInfoBox.find('.pi-comments').text('-na-');
+						}
+					});
+				}else{
+					$g_containerInfoBox.find('.pi-views').text('-na-');
+					$g_containerInfoBox.find('.pi-comments').text('-na-');
+				}
+	    	},
+	    	afterClose: function() {
+	        	$g_containerInfoBox.remove();
+	        	$g_containerInfoBox=null;
+	        }
+	      }	    
+	  });	  
+	  
+  }
   
   function OpenInternalViewer( imageIdx ) {
 
@@ -3887,7 +4246,11 @@ function nanoGALLERY() {
     if( g_supportFullscreenAPI ) {
       fs='<div class="setFullscreenButton fullscreenButton"></div>';
     }
-    $g_containerViewerToolbar=jQuery('<div class="toolbarContainer" style="visibility:hidden;"><div class="toolbar"><div class="previousButton"></div><div class="pageCounter"></div><div class="nextButton"></div><div class="playButton playPauseButton"></div>'+fs+'<div class="closeButton"></div><div class="label"><div class="title"></div><div class="description"></div></div></div>').appendTo($g_containerViewer);
+    var ib='';
+    if (g_options.kind=='picasa'){
+    	ib='<div class="infoButton"></div>';
+    }
+    $g_containerViewerToolbar=jQuery('<div class="toolbarContainer" style="visibility:hidden;"><div class="toolbar"><div class="previousButton"></div><div class="pageCounter"></div><div class="nextButton"></div><div class="playButton playPauseButton"></div>'+fs+ib+'<div class="closeButton"></div><div class="label"><div class="title"></div><div class="description"></div></div></div>').appendTo($g_containerViewer);
     if( g_options.viewerDisplayLogo ) {
       $g_containerViewerLogo=jQuery('<div class="nanoLogo"></div>').appendTo($g_containerViewer);
     }
@@ -3965,6 +4328,10 @@ function nanoGALLERY() {
         window.history.back();
       }
     });
+    $g_containerViewerToolbar.find('.infoButton').on("click",function(e){
+        e.stopPropagation();
+        OpenInfoBox();//$g_containerInfoBox
+      });
 
     $g_containerViewerContent.find('img').on("click",function(e){
       e.stopPropagation();
@@ -4277,6 +4644,7 @@ function nanoGALLERY() {
     
     //ResizeInternalViewer();
   }
+  
   
   function CloseInternalViewer( setLocationHash ) {
 
