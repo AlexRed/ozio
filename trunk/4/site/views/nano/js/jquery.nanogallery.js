@@ -1818,13 +1818,41 @@ function nanoGALLERY() {
       
       if( ok ) {
 
+		var thumbScale=1;
+		for( j=0; j<g_thumbnailHoverEffect.length; j++) {
+			switch(g_thumbnailHoverEffect[j].name ) {
+				case 'imageScale150':
+					if (thumbScale<1.5){
+						thumbScale=1.5;
+					}
+					break;
+				case 'imageScale150Outside':
+					if (thumbScale<1.5){
+						thumbScale=1.5;
+					}
+					break;
+				case 'scale120':
+					if (thumbScale<1.2){
+						thumbScale=1.2;
+					}
+					break;
+			}
+		}
+
         if( g_options.thumbnailHeight == 'auto' ) {
           if( g_picasaThumbSizeHack ) {
             var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
             s=s.substring(0, s.lastIndexOf('/')) + '/';
-            itemThumbURL=s+'w'+g_options.thumbnailWidth+'/';
+            itemThumbURL=s+'w'+(g_options.thumbnailWidth*thumbScale)+'/';
           }
-        }
+        }else if (thumbScale>1){
+          if( g_picasaThumbSizeHack ) {
+            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
+            s=s.substring(0, s.lastIndexOf('/')) + '/';
+            itemThumbURL=s+'s'+(g_picasaThumbSize*thumbScale)+'/';
+          }
+		
+		}
 
         var src='';
         if( kind == 'album' ) {
@@ -4068,37 +4096,73 @@ function nanoGALLERY() {
     }
   };
   function OpenInfoBox(){
-	  $g_containerInfoBox=jQuery('<div  class="nanoGalleryInfoBox ozio-nano-white-info-box mfp-hide">\
-			  	<div class="ozio-nano-infobox-middle">\
-				<dl class="odl-horizontal">\
-			  		<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>\
-			  		<dt>'+g_i18nTranslations.infoBoxAlbum+'</dt><dd class="pi-album"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxPhoto+'</dt><dd class="pi-photo"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxDate+'</dt><dd class="pi-date"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxDimensions+'</dt><dd class="pi-dimensions"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxFilename+'</dt><dd class="pi-filename"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxFileSize+'</dt><dd class="pi-filesize"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxCamera+'</dt><dd class="pi-camera"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxFocalLength+'</dt><dd class="pi-focallength"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxExposure+'</dt><dd class="pi-exposure"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxFNumber+'</dt><dd class="pi-fnumber"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxISO+'</dt><dd class="pi-iso"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxMake+'</dt><dd class="pi-make"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxFlash+'</dt><dd class="pi-flash"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxViews+'</dt><dd class="pi-views"></dd>\
-					<dt>'+g_i18nTranslations.infoBoxComments+'</dt><dd class="pi-comments"></dd>\
-				</dl>\
-				<div class="pi-map-container"></div>\
-				</div>\
-					<div class="pi-photo-buttons">\
-					<a href="#" class="btn pi-link" target="_blank">\
-						↗ Google+\
-					</a>\
-					<a href="#" class="btn pi-download">\
-						⬇ Download\
-					</a>\
-					</div>\
-				').appendTo('body');
+			 var html='';
+			 html+='<div  class="nanoGalleryInfoBox ozio-nano-white-info-box mfp-hide">';
+			 html+='<div class="ozio-nano-infobox-middle">';
+			 html+='	<dl class="odl-horizontal">';
+			 html+=' 		<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>';
+			 if (g_options.showInfoBoxAlbum){
+				 html+=' 		<dt>'+g_i18nTranslations.infoBoxAlbum+'</dt><dd class="pi-album"></dd>';
+			 }
+			 if (g_options.showInfoBoxPhoto){
+			 html+='	<dt>'+g_i18nTranslations.infoBoxPhoto+'</dt><dd class="pi-photo"></dd>';
+			 }
+			 if (g_options.showInfoBoxDate){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxDate+'</dt><dd class="pi-date"></dd>';
+			 }
+			 if (g_options.showInfoBoxDimensions){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxDimensions+'</dt><dd class="pi-dimensions"></dd>';
+			 }
+			 if (g_options.showInfoBoxFilename){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxFilename+'</dt><dd class="pi-filename"></dd>';
+			 }
+			 if (g_options.showInfoBoxFilesize){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxFileSize+'</dt><dd class="pi-filesize"></dd>';
+			 }
+			 if (g_options.showInfoBoxCamera){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxCamera+'</dt><dd class="pi-camera"></dd>';
+			 }
+			 if (g_options.showInfoBoxFocallength){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxFocalLength+'</dt><dd class="pi-focallength"></dd>';
+			 }
+			 if (g_options.showInfoBoxExposure){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxExposure+'</dt><dd class="pi-exposure"></dd>';
+			 }
+			 if (g_options.showInfoBoxFNumber){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxFNumber+'</dt><dd class="pi-fnumber"></dd>';
+			 }
+			 if (g_options.showInfoBoxISO){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxISO+'</dt><dd class="pi-iso"></dd>';
+			 }
+			 if (g_options.showInfoBoxMake){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxMake+'</dt><dd class="pi-make"></dd>';
+			 }
+			 if (g_options.showInfoBoxFlash){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxFlash+'</dt><dd class="pi-flash"></dd>';
+			 }
+			 if (g_options.showInfoBoxViews){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxViews+'</dt><dd class="pi-views"></dd>';
+			 }
+			 if (g_options.showInfoBoxComments){
+			 html+='					<dt>'+g_i18nTranslations.infoBoxComments+'</dt><dd class="pi-comments"></dd>';
+			 }
+			 html+='				</dl>';
+			 html+='				<div class="pi-map-container"></div>';
+			 html+='				</div>';
+			 html+='					<div class="pi-photo-buttons">';
+			 if (g_options.showInfoBoxLink){
+			 html+='					<a href="#" class="btn pi-link" target="_blank">';
+			 html+='						↗ Google+';
+			 html+='					</a>';
+			 }
+			 if (g_options.showInfoBoxDownload){
+			 html+='					<a href="#" class="btn pi-download">';
+			 html+='						⬇ Download';
+			 html+='					</a>';
+			 }
+			 html+='					</div>';
+			  		
+			  $g_containerInfoBox=jQuery(html).appendTo('body');
 /*	  
 	  var infobox={};
 	  infobox.album='-na-';
@@ -4247,7 +4311,7 @@ function nanoGALLERY() {
       fs='<div class="setFullscreenButton fullscreenButton"></div>';
     }
     var ib='';
-    if (g_options.kind=='picasa'){
+    if (g_options.kind=='picasa' && g_options.showInfoBoxButton){
     	ib='<div class="infoButton"></div>';
     }
     $g_containerViewerToolbar=jQuery('<div class="toolbarContainer" style="visibility:hidden;"><div class="toolbar"><div class="previousButton"></div><div class="pageCounter"></div><div class="nextButton"></div><div class="playButton playPauseButton"></div>'+fs+ib+'<div class="closeButton"></div><div class="label"><div class="title"></div><div class="description"></div></div></div>').appendTo($g_containerViewer);

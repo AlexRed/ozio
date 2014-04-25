@@ -39,7 +39,25 @@ jQuery( document ).ready(function( $ ) {
 									'style'=>$this->Params->get("ozio_nano_viewerToolbar_style", "innerImage"),
 							)); 
 						?>,
-						
+		showInfoBoxButton: <?php echo json_encode(intval($this->Params->get("info_button", "1"))==1); ?>,
+		showInfoBoxAlbum: <?php echo json_encode(!intval($this->Params->get("hide_infobox_album", "0"))); ?>,
+		showInfoBoxPhoto: <?php echo json_encode(!intval($this->Params->get("hide_infobox_photo", "0"))); ?>,
+		showInfoBoxDate: <?php echo json_encode(!intval($this->Params->get("hide_infobox_date", "0"))); ?>,
+		showInfoBoxDimensions: <?php echo json_encode(!intval($this->Params->get("hide_infobox_width_height", "0"))); ?>,
+		showInfoBoxFilename: <?php echo json_encode(!intval($this->Params->get("hide_infobox_file_name", "0"))); ?>,
+		showInfoBoxFilesize: <?php echo json_encode(!intval($this->Params->get("hide_infobox_file_size", "0"))); ?>,
+		showInfoBoxCamera: <?php echo json_encode(!intval($this->Params->get("hide_infobox_model", "0"))); ?>,
+		showInfoBoxFocallength: <?php echo json_encode(!intval($this->Params->get("hide_infobox_focallength", "0"))); ?>,
+		showInfoBoxFNumber: <?php echo json_encode(!intval($this->Params->get("hide_infobox_fstop", "0"))); ?>,
+		showInfoBoxExposure: <?php echo json_encode(!intval($this->Params->get("hide_infobox_exposure", "0"))); ?>,
+		showInfoBoxISO: <?php echo json_encode(!intval($this->Params->get("hide_infobox_iso", "0"))); ?>,
+		showInfoBoxMake: <?php echo json_encode(!intval($this->Params->get("hide_infobox_make", "0"))); ?>,
+		showInfoBoxFlash: <?php echo json_encode(!intval($this->Params->get("hide_infobox_flash", "0"))); ?>,
+		showInfoBoxViews: <?php echo json_encode(!intval($this->Params->get("hide_infobox_views", "0"))); ?>,
+		showInfoBoxComments: <?php echo json_encode(!intval($this->Params->get("hide_infobox_comments", "0"))); ?>,
+		showInfoBoxLink: <?php echo json_encode(!intval($this->Params->get("hide_infobox_link", "0"))); ?>,
+		showInfoBoxDownload: <?php echo json_encode(!intval($this->Params->get("hide_infobox_download", "0"))); ?>,
+				
 						
 		thumbnailHoverEffect: <?php echo json_encode(implode(',',$this->Params->get("ozio_nano_thumbnailHoverEffect", array("imageOpacity50")))); ?>,
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
