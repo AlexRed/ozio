@@ -86,6 +86,10 @@ class Com_OzioGallery3InstallerScript
 		$db->setQuery($query);
 		$db->query();
 
+		$query = "DELETE FROM `#__update_sites` WHERE `name` = 'Ozio Gallery3 update site';";
+		$db->setQuery($query);
+		$db->query();
+
 		// Clear updates cache related to this extension
 		$query = "DELETE FROM `#__updates` WHERE `name` = '" . $this->extension_name . "';";
 		$db->setQuery($query);
