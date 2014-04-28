@@ -2789,7 +2789,7 @@ function nanoGALLERY() {
     $newDiv.find('img').data('index',idx);
 
     if( checkImageSize ) {
-      $newDiv.imagesLoaded().always( function( instance ) {
+      $newDiv.imagesLoaded().always( function( instance ) {//TODO error with isotope $newDiv.imagesLoaded(...).always is not a function
         var item=g_ngItems[jQuery(instance.images[0].img).data('index')];
         var b=false;
 
@@ -4020,6 +4020,7 @@ function nanoGALLERY() {
             break;
           case 'imageScale150':
           case 'imageScale150Outside':
+        	jQuery(elt).css('z-index','auto');
             if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).find('img').transition({ scale: 1 },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
@@ -4028,6 +4029,7 @@ function nanoGALLERY() {
             }
             break;
           case 'scale120':
+          	jQuery(elt).css('z-index','auto');
             if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               jQuery(elt).transition({ scale: 1 },g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
             }
@@ -4096,8 +4098,16 @@ function nanoGALLERY() {
     }
   };
   function OpenInfoBox(){
+		var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
+		var long=g_ngItems[g_viewerCurrentItemIdx].infobox.long;
+		
+		var info_box_css='ozio-nano-white-info-box-with-gmap';
+		if (lat=='' || long==''){
+			info_box_css='ozio-nano-white-info-box';
+		}
+	  
 			 var html='';
-			 html+='<div  class="nanoGalleryInfoBox ozio-nano-white-info-box mfp-hide">';
+			 html+='<div  class="nanoGalleryInfoBox '+info_box_css+' mfp-hide">';
 			 html+='<div class="ozio-nano-infobox-middle">';
 			 html+='	<dl class="odl-horizontal">';
 			 html+=' 		<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>';
