@@ -101,8 +101,27 @@ jQuery( document ).ready(function( $ ) {
 			}
 			
 		}
+		
+		
 		?>
-				
+		i18n:{
+	        'infoBoxPhoto':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL'));?>,
+	        'infoBoxDate':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_DATE_LBL'));?>,
+	        'infoBoxAlbum':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL'));?>,
+	        'infoBoxDimensions':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_DIMENSIONS_LBL'));?>,
+	        'infoBoxFilename':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILENAME_LBL'));?>,
+	        'infoBoxFileSize':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_FILESIZE_LBL'));?>,
+	        'infoBoxCamera':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERA_LBL'));?>,
+	        'infoBoxFocalLength':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_FOCALLENGTH_LBL'));?>,
+	        'infoBoxExposure':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_EXPOSURE_LBL'));?>,
+	        'infoBoxFNumber':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_FSTOP_LBL'));?>,
+	        'infoBoxISO':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_ISO_LBL'));?>,
+	        'infoBoxMake':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_CAMERAMAKE_LBL'));?>,
+	        'infoBoxFlash':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_FLASH_LBL'));?>,
+	        'infoBoxViews':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_VIEWS_LBL'));?>,
+	        'infoBoxComments':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_COMMENTS_LBL'));?>
+	        
+	        }				
 
 	});
 

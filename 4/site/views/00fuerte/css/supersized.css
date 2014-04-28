@@ -246,6 +246,16 @@ a#nextslide:focus
 	max-width: none;
 }
 
+.ozio-00fuerte-white-info-box, .ozio-00fuerte-white-info-box-with-gmap {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  
+  margin: 20px auto;
+}
+.ozio-00fuerte-white-info-box{max-width: 500px;}
+.ozio-00fuerte-white-info-box-with-gmap {max-width: 1000px;}
 
 #photo-info .map-container
 {
@@ -255,6 +265,7 @@ a#nextslide:focus
 #photo-info .map-container
 {
 	width:100%;
+	max-width:500px;
 }
 #photo-info #ozio_gmap{
 	float:left;
@@ -266,16 +277,20 @@ a#nextslide:focus
 	height: auto; 
 }
 
-#photo-info .photo-buttons{
-	width:120px;
-	display:inline-block;
-	vertical-align:top;
+#photo-info .pi-photo-buttons{
+	clear:both;
 }
 
+#photo-info .pi-photo-buttons a{
+	width:96px;
+}
 
 
 #photo-info dl {
     margin-bottom: 18px;
+	max-width:500px;
+	width:100%;
+	float:left;
 }
 #photo-info dt, #photo-info dd {
     line-height: 18px;
@@ -304,4 +319,16 @@ a#nextslide:focus
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 4px;
+}
+
+
+.mfp-close{
+line-height:22px;
+height:22px;
+width:22px;
+}
+
+.ozio-photowall-lazy{
+	width:68px;
+	height:68px;
 }

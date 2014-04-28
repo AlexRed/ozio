@@ -281,49 +281,6 @@
 					theme.updatePhotoInfo();
 					theme.showPhotoInfo();
 				});
-			    $('#photo-info').on('shown', function () {
-
-					var lat=api.getField('lat');
-					var long=api.getField('long');
-					
-					if (lat=='' || long==''){
-						//non metto nulla
-						$('#photo-info .map-container').html('');
-					}else{
-						$('#photo-info .map-container').html('<span id="ozio_gmap" style="width:100%; height:400px;"></span>');
-						var latLng = new google.maps.LatLng(lat,long);
-
-					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
-					        zoom: 14,
-					        center: latLng,
-							mapTypeId: google.maps.MapTypeId.MAP,
-							scrollwheel: false
-					     });	
-					     var marker = new google.maps.Marker({
-					    	    position: latLng,
-					    	});
-
-					     marker.setMap(map);				     
-					}	
-					
-					var na='- na -';
-					var json_details_url=api.getField('json_details');
-					if (json_details_url!=''){
-						$('#photo-info .pi-views').text('...');
-						$('#photo-info .pi-comments').text('...');
-						$.ajax({
-							'url':json_details_url,
-							'dataType': 'json',
-							'success': theme.OnLoadViewsAndCommentsSuccess,
-							'error': theme.OnLoadViewsAndCommentsError
-						});
-					}else{
-						$('#photo-info .pi-views').text(na);
-						$('#photo-info .pi-comments').text(na);
-					}			
-					
-					
-			    });
 			}
 			
 			
@@ -411,8 +368,73 @@
 		
 		showPhotoInfo: function ()
 		{
-			$('#photo-info').modal('show');
+			var lat=api.getField('lat');
+			var long=api.getField('long');
+			
+			$('#photo-info').removeClass('ozio-00fuerte-white-info-box');
+			$('#photo-info').removeClass('ozio-00fuerte-white-info-box-with-gmap');
+			if (lat=='' || long==''){
+				$('#photo-info').addClass('ozio-00fuerte-white-info-box');
+			}else{
+				$('#photo-info').addClass('ozio-00fuerte-white-info-box-with-gmap');
+			}
+			//$('#photo-info').modal('show');
+			jQuery.magnificPopup.open({
+			items: {
+			  src: $('#photo-info'), // can be a HTML string, jQuery object, or CSS selector
+			  type: 'inline',
+			  closeBtnInside: true,
+			  showCloseBtn: true,
+			  enableEscapeKey: true,
+			  modal: true
+			},
+			callbacks: {
+				open: function(){
+			
 
+					var lat=api.getField('lat');
+					var long=api.getField('long');
+					
+					if (lat=='' || long==''){
+						//non metto nulla
+						$('#photo-info .map-container').html('');
+					}else{
+						$('#photo-info .map-container').html('<span id="ozio_gmap" style="width:100%; height:400px;"></span>');
+						var latLng = new google.maps.LatLng(lat,long);
+
+					     var map = new google.maps.Map(document.getElementById('ozio_gmap'), {
+					        zoom: 14,
+					        center: latLng,
+							mapTypeId: google.maps.MapTypeId.MAP,
+							scrollwheel: false
+					     });	
+					     var marker = new google.maps.Marker({
+					    	    position: latLng,
+					    	});
+
+					     marker.setMap(map);				     
+					}	
+					
+					var na='- na -';
+					var json_details_url=api.getField('json_details');
+					if (json_details_url!=''){
+						$('#photo-info .pi-views').text('...');
+						$('#photo-info .pi-comments').text('...');
+						$.ajax({
+							'url':json_details_url,
+							'dataType': 'json',
+							'success': theme.OnLoadViewsAndCommentsSuccess,
+							'error': theme.OnLoadViewsAndCommentsError
+						});
+					}else{
+						$('#photo-info .pi-views').text(na);
+						$('#photo-info .pi-comments').text(na);
+					}			
+								
+			
+				},
+			  }	    
+		  });
 		},
 		
 		

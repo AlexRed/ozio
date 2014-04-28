@@ -75,14 +75,16 @@
 }
 
 
-.ozio-nano-white-info-box {
+.ozio-nano-white-info-box, .ozio-nano-white-info-box-with-gmap {
   position: relative;
   background: #FFF;
   padding: 20px;
   width: auto;
-  max-width: 1000px;
+  
   margin: 20px auto;
 }
+.ozio-nano-white-info-box{max-width: 500px;}
+.ozio-nano-white-info-box-with-gmap {max-width: 1000px;}
 
 
 

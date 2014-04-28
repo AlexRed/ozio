@@ -41,6 +41,7 @@ class OzioGalleryView00fuerte extends JViewLegacy
 		if ($robots = $this->Params->get('robots'))
 			$this->document->setMetadata('robots', $robots);
 
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
 
@@ -51,7 +52,8 @@ class OzioGalleryView00fuerte extends JViewLegacy
 		if ($this->Params->get("load_css_bootstrap", 0)==1){
 			JHtmlBootstrap::loadCSS();
 		}
-
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
+		
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
 					

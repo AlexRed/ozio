@@ -86,6 +86,7 @@ class plgContentOzio extends JPlugin
 	function display(&$cparams, $galleriaozio)
 	{
 		$document = JFactory::getDocument();
+		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
 		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/supersized.css");
 		$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
 
@@ -97,6 +98,7 @@ class plgContentOzio extends JPlugin
 			JHtmlBootstrap::loadCSS();
 		}
 
+		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
 					

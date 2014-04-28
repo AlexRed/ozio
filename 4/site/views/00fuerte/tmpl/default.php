@@ -106,20 +106,13 @@
  
  <?php if ($this->Params->get("info_button", false)==true) { ?>
 
-
-<div id="photo-info" class="modal hide fade">
-        <div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
-                        <?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
-                        <h3 class="pi-album"></h3>
-                        <?php }else{?>
-                        <h3>Info</h3>
-                        <?php }?>
-        </div>
-        <div class="modal-body">
-
-	
-		<img class="oimg-polaroid  pi-image" src="" alt="preview" style="float:right;"/>
+<div id="photo-info" class="nanoGalleryInfoBox ozio-00fuerte-white-info-box mfp-hide">
+	<div class="ozio-00fuerte-infobox-middle">
 		<dl class="odl-horizontal">
+			<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>
+			<?php if ($this->Params->get("hide_infobox_album", false)==false) { ?>
+			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL');?></dt><dd class="pi-album"></dd>
+			<?php }?>
 			<?php if ($this->Params->get("hide_infobox_photo", false)==false) { ?>
 			<dt><?php echo JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL');?></dt><dd class="pi-photo"></dd>
 			<?php }?>
@@ -166,18 +159,17 @@
 			<dt>+1</dt><dd></dd> -->
 		</dl>
 	
-	<div class="map-container">
-	</div>
+		<div class="map-container">
+		</div>
 	
 	</div>
-	<div class="modal-footer">
+	<div class="pi-photo-buttons">
 		<?php if ($this->Params->get("hide_infobox_link", false)==false) { ?>
-		<span class="photo-buttons"><a href="#" class="btn pi-google btn-info" target="_blank"><i class="icon-out-2"></i> Google+</a></span>
+		<a href="#" class="btn pi-google btn-info" target="_blank">↗ Google+</a>
 		<?php }?>
 		<?php if ($this->Params->get("hide_infobox_download", false)==false) { ?>
-		<span class="photo-buttons"><a href="" class="btn pi-dowload"><i class="icon-download"></i> Download</a></span>
+		<a href="#" class="btn pi-dowload">⬇ Download</a>
 		<?php }?>
-		<span class="btn" data-dismiss="modal"><i class="icon-cancel"></i> <?php echo JText::_('JLIB_HTML_BEHAVIOR_CLOSE');?></span>
-        </div>
+    </div>
 </div>
 <?php }?>    

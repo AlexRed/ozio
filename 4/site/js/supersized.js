@@ -228,9 +228,10 @@
 				});
 				
 				$("img.ozio-photowall-lazy").lazyload({
-					 container: $(vars.photo_wall_nano+" > .ozio-pw-content:first")
+					 container: $(vars.photo_wall_nano+" > .ozio-pw-content:first"),
+					 skip_invisible: false
 				});				
-				$(vars.photo_wall_nano).nanoScroller();
+				$(window).resize();
 			}
 			
 
