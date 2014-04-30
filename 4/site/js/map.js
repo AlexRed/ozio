@@ -292,7 +292,8 @@ jQuery(document).ready(function ($)
         markerCluster = new MarkerClusterer(googlemap,[],{maxZoom: 15});
 <?php } ?>
 		oms = new OverlappingMarkerSpiderfier(googlemap);
-		oms.addListener('<?php echo $this->Params->get("infowindow_event", "click"); ?>', function(marker, event) {
+		<?php if ($this->Params->get("infowindow_event", "click")!='never'){ ?>
+		oms.addListener('click', function(marker, event) {
 <?php 		if ($this->Params->get("markers_action","infowindow") == "infowindow") { ?>
 			// InfoWindow handling event
 			var html=$('<div></div>');
@@ -376,6 +377,7 @@ jQuery(document).ready(function ($)
 			location.href = marker.oziodata.link;
 <?php 		} ?>
 		});
+		<?php } /*chiusura != never*/?>
 
 		for (var i=0;i<g_parameters.length;i++){
 			g_parameters[i].views=0;
@@ -595,6 +597,10 @@ jQuery(document).ready(function ($)
 					markerCluster.addMarker(marker);
 				}
 	<?php } ?>
+		<?php if ($this->Params->get("infowindow_event", "click")=='mouseover'){ ?>
+			google.maps.event.addListener(marker,'mouseover',function(ev){ if( marker._omsData == undefined ){ google.maps.event.trigger(marker,'click'); }});
+		<?php } ?>
+	
 				oms.addMarker(marker);
 				marker.setVisible(markervisible);
 				googlemarkers.push(marker);
@@ -898,6 +904,9 @@ jQuery(document).ready(function ($)
 							markerCluster.addMarker(marker);
 						}
 			<?php } ?>
+		<?php if ($this->Params->get("infowindow_event", "click")=='mouseover'){ ?>
+			google.maps.event.addListener(marker,'mouseover',function(ev){ if( marker._omsData == undefined ){ google.maps.event.trigger(marker,'click'); }});
+		<?php } ?>
 						oms.addMarker(marker);
 						marker.setVisible(markervisible);
 						googlemarkers.push(marker);
