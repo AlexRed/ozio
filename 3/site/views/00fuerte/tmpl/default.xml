@@ -82,11 +82,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-
-			<field type="radio" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
+			
 			<field type="radio" name="image_protect" label="COM_OZIOGALLERY3_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY3_IMAGEPROTECT_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -101,6 +97,16 @@
 				<option value="1">JYES</option>
 			</field>
 			
+
+			<field type="radio" name="jquery" label="COM_OZIOGALLERY3_JQUERY_LBL" description="COM_OZIOGALLERY3_JQUERY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="radio" name="disable_deeplink" label="COM_OZIOGALLERY3_DISABLE_DEEPLINK_LBL" description="COM_OZIOGALLERY3_DISABLE_DEEPLINK_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_INFOBOX_SETTINGS" icon="information.png"/>
 			<field type="radio" name="hide_infobox_date" label="COM_OZIOGALLERY3_HIDE_INFOBOX_DATE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_DATE_DSC" default="0">
@@ -109,5 +115,6 @@
 			</field>
 			
 		</fieldset>
+		
 	</fields>
 </metadata>

@@ -263,7 +263,9 @@ jQuery(document).ready(function ($)
 					authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 					square: '<?php echo $this->Params->get("square", ""); ?>',
 					big: '<?php echo $this->Params->get("big", ""); ?>',
-					base_jurl: '<?php echo JURI::root(true); ?>'
+					base_jurl: '<?php echo JURI::root(true); ?>',
+					
+					use_deeplink: !parseInt('<?php echo $this->Params->get("disable_deeplink", 0); ?>')
 				});
 			});
 		}else{
