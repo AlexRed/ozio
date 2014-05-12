@@ -110,8 +110,8 @@ nanoGALLERY v4.3.0 release notes.
       photoSorting:'',
       albumSorting:'',
       i18n:{
-        'paginationPrevious':'Previous','paginationPrevious_FR':'Pr�c�dent','paginationPrevious_DE':'Zur�ck','paginationPrevious_IT':'Indietro',
-        'paginationNext':'Next','paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti',
+        'paginationPrevious':'Previous',/*'paginationPrevious_FR':'Pr&eacute;c&eacute;dent','paginationPrevious_DE':'Zur&uuml;ck','paginationPrevious_IT':'Indietro','paginationPrevious_ES':'Anterior','paginationPrevious_PL':'Poprz.',*/
+        'paginationNext':'Next',/*'paginationNext_FR':'Suivant','paginationNext_DE':'Weiter','paginationNext_IT':'Avanti','paginationNext_ES':'Siguiente','paginationNext_ES-ES':'Siguiente','paginationNext_PL':'Nast.',*/
         'thumbnailImageTitle':'',
         'thumbnailAlbumTitle':'',
         'thumbnailImageDescription':'',
@@ -1800,7 +1800,7 @@ function nanoGALLERY() {
 	  var picasaSpecificData={
 				'seed':'',
 				'img_orig_width':0,
-				'img_orig_height':0,
+				'img_orig_height':0
 			  };
 
       var ok=true;
@@ -1947,13 +1947,13 @@ function nanoGALLERY() {
 				}
 			}
 			newItem.infobox.lat='';
-			newItem.infobox.long='';
+			newItem.infobox.lng='';
 			if (typeof data.georss$where !== "undefined" && typeof data.georss$where.gml$Point !== "undefined" &&
 				typeof data.georss$where.gml$Point.gml$pos !== "undefined" && typeof data.georss$where.gml$Point.gml$pos.$t !== "undefined"){
 			
 				var latlong=data.georss$where.gml$Point.gml$pos.$t.split(" ");
 				newItem.infobox.lat=latlong[0];
-				newItem.infobox.long=latlong[1];
+				newItem.infobox.lng=latlong[1];
 			}
 	  		  
   		  newItem.infobox.comments='-na-';
@@ -4099,10 +4099,10 @@ function nanoGALLERY() {
   };
   function OpenInfoBox(){
 		var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
-		var long=g_ngItems[g_viewerCurrentItemIdx].infobox.long;
+		var lng=g_ngItems[g_viewerCurrentItemIdx].infobox.lng;
 		
 		var info_box_css='ozio-nano-white-info-box-with-gmap';
-		if (lat=='' || long==''){
+		if (lat=='' || lng==''){
 			info_box_css='ozio-nano-white-info-box';
 		}
 	  
@@ -4192,7 +4192,7 @@ function nanoGALLERY() {
 	  infobox.comments='-na-';
 	  infobox.image=g_ngItems[g_viewerCurrentItemIdx].thumbsrc;
 	  infobox.lat='34.5';
-	  infobox.long='55.6';
+	  infobox.lng='55.6';
 	  infobox.link='#';
 	  infobox.download='#';
 	  g_ngItems[g_viewerCurrentItemIdx].infobox=infobox;
@@ -4228,13 +4228,13 @@ function nanoGALLERY() {
 	    callbacks: {
 	    	open: function(){
 				var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
-				var long=g_ngItems[g_viewerCurrentItemIdx].infobox.long;
+				var lng=g_ngItems[g_viewerCurrentItemIdx].infobox.lng;
 				
-				if (lat=='' || long==''){
+				if (lat=='' || lng==''){
 					$g_containerInfoBox.find('.pi-map-container').html('');
 				}else{
 					$g_containerInfoBox.find('.pi-map-container').html('<span id="nano-gmap-viewer" style="width:100%; height:400px;"></span>');
-					var latLng = new google.maps.LatLng(lat,long);
+					var latLng = new google.maps.LatLng(lat,lng);
 
 				     var map = new google.maps.Map(document.getElementById('nano-gmap-viewer'), {
 				        zoom: 14,
@@ -4243,7 +4243,7 @@ function nanoGALLERY() {
 						scrollwheel: false
 				     });	
 				     var marker = new google.maps.Marker({
-				    	    position: latLng,
+				    	    position: latLng
 				    	});
 
 				     marker.setMap(map);				     
