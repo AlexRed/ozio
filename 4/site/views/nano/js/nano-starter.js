@@ -105,6 +105,8 @@ jQuery( document ).ready(function( $ ) {
 		
 		?>
 		i18n:{
+			'paginationPrevious':<?php echo json_encode(JText::_('JPREV'));?>,
+            'paginationNext':<?php echo json_encode(JText::_('JNEXT'));?>,		
 	        'infoBoxPhoto':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_PHOTO_LBL'));?>,
 	        'infoBoxDate':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_DATE_LBL'));?>,
 	        'infoBoxAlbum':<?php echo json_encode(JText::_('COM_OZIOGALLERY3_PHOTOINFO_ALBUM_LBL'));?>,
