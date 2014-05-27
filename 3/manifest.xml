@@ -7,7 +7,7 @@
 	<authorUrl>http://www.joomla.it</authorUrl>
 	<copyright>(C) 2008 - 2012 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.3.17</version>
+	<version>3.3.18</version>
 	<description>Ozio Gallery for Joomla! 2.5</description>
 
 	<uninstallfile>uninstall.oziogallery.php</uninstallfile>
@@ -18,6 +18,7 @@
 		<filename>oziogallery3.php</filename>
 		<filename>oziogallery.inc</filename>
 		<filename>oziogallery.zip</filename>
+		<filename>pclzip.lib.php</filename>
 		<filename>controller.php</filename>
 		<folder>assets</folder>
 		<folder>js</folder>
