@@ -114,7 +114,13 @@ class plgContentOzio extends JPlugin
 		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
 		$current_uri = JFactory::getURI();
-		$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+		if ($cparams->get("info_button", false)) {
+			if (empty($GLOBALS["contentmap"]["gapi"]))
+			{
+				$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$GLOBALS["contentmap"]["gapi"] = true;
+			}
+		}
 		
 		$this->gallerywidth = $cparams->get("gallerywidth", array("text" => "100", "select" => "%"));
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
