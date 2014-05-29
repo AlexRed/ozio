@@ -71,7 +71,11 @@ class OzioGalleryViewmap extends JViewLegacy
 		$language = $language ? "&amp;language=" . $language : "";
 
 		$current_uri =JFactory::getURI();
-		$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
+		if (empty($GLOBALS["contentmap"]["gapi"]))
+		{
+			$GLOBALS["contentmap"]["gapi"] = true;
+			$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
+		}
 
 		if ($this->Params->get("cluster", "1"))
 		{
