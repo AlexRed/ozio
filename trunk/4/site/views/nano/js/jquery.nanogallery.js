@@ -1496,11 +1496,11 @@ function nanoGALLERY() {
 
     if( g_ngItems[albumIdx].GetID() == 0 ) {
       // albums
-      url = (location.protocol=='https:'?'https:':'http:')+"//api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_flickrApiKey + "&user_id="+g_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSize+"&format=json&jsoncallback=?";
+      url = 'https:'+"//api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_flickrApiKey + "&user_id="+g_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSize+"&format=json&jsoncallback=?";
     }
     else {
       // photos
-      url = (location.protocol=='https:'?'https:':'http:')+"//api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=" + g_flickrApiKey + "&photoset_id="+g_ngItems[albumIdx].GetID()+"&extras=description,views,url_o,url_z,url_"+g_flickrPhotoSize+",url_"+g_flickrThumbSize+"&format=json&jsoncallback=?";
+      url = 'https:'+"//api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=" + g_flickrApiKey + "&photoset_id="+g_ngItems[albumIdx].GetID()+"&extras=description,views,url_o,url_z,url_"+g_flickrPhotoSize+",url_"+g_flickrThumbSize+"&format=json&jsoncallback=?";
       kind='image';
     }
 
@@ -2789,7 +2789,8 @@ function nanoGALLERY() {
     $newDiv.find('img').data('index',idx);
 
     if( checkImageSize ) {
-      $newDiv.imagesLoaded().always( function( instance ) {//TODO error with isotope $newDiv.imagesLoaded(...).always is not a function
+	  var gi_imgLoad = imagesLoaded( $newDiv );
+	  gi_imgLoad.on( 'always', function( instance ) {
         var item=g_ngItems[jQuery(instance.images[0].img).data('index')];
         var b=false;
 
@@ -4097,6 +4098,25 @@ function nanoGALLERY() {
       }
     }
   };
+  
+	function nano_gi_linkify(inputText) {
+	    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+	    //URLs starting with http://, https://, or ftp://
+	    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+	    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+	    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+	    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+	    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+	    //Change email addresses to mailto:: links.
+	    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+	    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+	    return replacedText;
+	}
+  
   function OpenInfoBox(){
 		var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
 		var lng=g_ngItems[g_viewerCurrentItemIdx].infobox.lng;
@@ -4173,6 +4193,7 @@ function nanoGALLERY() {
 			 html+='					</div>';
 			  		
 			  $g_containerInfoBox=jQuery(html).appendTo('body');
+			  $g_containerInfoBox.css('background-image','url(\''+g_options.infoboxBgUrl+'\')');
 /*	  
 	  var infobox={};
 	  infobox.album='-na-';
@@ -4199,6 +4220,9 @@ function nanoGALLERY() {
 	*/  
 	  $g_containerInfoBox.find('.pi-album').text(g_ngItems[g_viewerCurrentItemIdx].infobox.album);
 	  $g_containerInfoBox.find('.pi-photo').text(g_ngItems[g_viewerCurrentItemIdx].infobox.photo);
+	  
+	  $g_containerInfoBox.find('.pi-photo').html(nano_gi_linkify($g_containerInfoBox.find('.pi-photo').html()));
+	  
 	  $g_containerInfoBox.find('.pi-date').text(g_ngItems[g_viewerCurrentItemIdx].infobox.date);
 	  $g_containerInfoBox.find('.pi-dimensions').text(g_ngItems[g_viewerCurrentItemIdx].infobox.dimensions);
 	  $g_containerInfoBox.find('.pi-filename').text(g_ngItems[g_viewerCurrentItemIdx].infobox.filename);
@@ -4227,6 +4251,28 @@ function nanoGALLERY() {
 	    },
 	    callbacks: {
 	    	open: function(){
+				var highest_index=getHighestZIndex( $g_containerViewer );
+				var $mfpwrap= $g_containerInfoBox.closest('.mfp-wrap');
+				var $mfpbg= jQuery('.mfp-bg');
+				var $mfpcontent= $g_containerInfoBox.closest('.mfp-content');
+				var $mfppreloader=$mfpwrap.find('.mfp-preloader');
+				var $mfpclose=$g_containerInfoBox.find('.mfp-close');
+				
+				$mfpbg.css('z-index',highest_index+1);
+				$mfpwrap.css('z-index',highest_index+2);
+				$mfppreloader.css('z-index',highest_index+3);
+				$mfpcontent.css('z-index',highest_index+4);
+				$mfpclose.css('z-index',highest_index+5);
+				
+				/*
+.mfp-bg -> z-index: 100042;
+.mfp-wrap -> z-index: 100043;
+.mfp-preloader -> z-index: 100044;
+.mfp-content -> z-index: 100045;
+button.mfp-close, button.mfp-arrow -> z-index: 100046;  
+				*/
+				
+			
 				var lat=g_ngItems[g_viewerCurrentItemIdx].infobox.lat;
 				var lng=g_ngItems[g_viewerCurrentItemIdx].infobox.lng;
 				
@@ -4691,7 +4737,7 @@ function nanoGALLERY() {
 //    $g_containerViewerToolbar.css({'visibility':'visible'});
     // set title
     if( g_ngItems[imageIdx].title !== undefined ) {
-      $g_containerViewerToolbar.find('.title').html(g_ngItems[imageIdx].title);
+      $g_containerViewerToolbar.find('.title').html(nano_gi_linkify(g_ngItems[imageIdx].title));
     }
     else {
       $g_containerViewerToolbar.find('.title').html('');
@@ -5282,6 +5328,15 @@ function nanoGALLERY() {
     }
   }
 
+  function getHighestZIndex( start ) {
+    var highest_index = 0;
+    if( start=='' ) { start= '*'; }
+    jQuery(start).each(function() {
+      var cur = parseInt(jQuery(this).css('z-index'));
+      highest_index = cur > highest_index ? cur : highest_index;
+    });
+    return highest_index;
+  };
   
   // set z-index to display element on top of all others
   function setElementOnTop( start, elt ) {

@@ -106,7 +106,7 @@
  
  <?php if ($this->Params->get("info_button", false)==true) { ?>
 
-<div id="photo-info" class="nanoGalleryInfoBox ozio-00fuerte-white-info-box mfp-hide">
+<div id="photo-info" class="nanoGalleryInfoBox ozio-00fuerte-white-info-box mfp-hide" style="background-image:url('<?php echo $this->Params->get("infobox_bg_url", "http://lh5.ggpht.com/-cTYTnx8gwZ0/U6bfvWl5LpI/AAAAAAAAPmw/uBsVjAdVoHA/w100/"); ?>');">
 	<div class="ozio-00fuerte-infobox-middle">
 		<dl class="odl-horizontal">
 			<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>
