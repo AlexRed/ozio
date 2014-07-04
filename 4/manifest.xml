@@ -44,6 +44,7 @@
 	<plugins>
 		<plugin folder="plugins/content" plugin="ozio" name="OzioGallery into articles" group="content" />
 		<plugin folder="plugins/editors-xtd" plugin="oziogallery" name="OzioGallery" group="editors-xtd" />
+		<plugin folder="plugins/system" plugin="oziojquery" name="OzioGallery jQuery" group="system" />
 	</plugins>
 	<templates>
 		<template folder="templates" template="oziofullscreen" />

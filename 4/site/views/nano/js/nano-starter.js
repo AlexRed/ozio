@@ -2,6 +2,8 @@
 $non_printable_separator="\x16";
 ?>
 jQuery( document ).ready(function( $ ) {
+	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "http://lh5.ggpht.com/-cTYTnx8gwZ0/U6bfvWl5LpI/AAAAAAAAPmw/uBsVjAdVoHA/w100/")); ?>;
+
 	$("#nanoGallery").nanoGallery({
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
@@ -57,9 +59,15 @@ jQuery( document ).ready(function( $ ) {
 		showInfoBoxComments: <?php echo json_encode(!intval($this->Params->get("hide_infobox_comments", "0"))); ?>,
 		showInfoBoxLink: <?php echo json_encode(!intval($this->Params->get("hide_infobox_link", "0"))); ?>,
 		showInfoBoxDownload: <?php echo json_encode(!intval($this->Params->get("hide_infobox_download", "0"))); ?>,
-				
+		infoboxBgUrl: infobox_bg_url,
 						
-		thumbnailHoverEffect: <?php echo json_encode(implode(',',$this->Params->get("ozio_nano_thumbnailHoverEffect", array("imageOpacity50")))); ?>,
+		thumbnailHoverEffect: <?php 
+			$ozio_nano_thumbnailHoverEffect= $this->Params->get("ozio_nano_thumbnailHoverEffect", array("imageOpacity50"));
+			if (!is_array($ozio_nano_thumbnailHoverEffect)){
+				$ozio_nano_thumbnailHoverEffect=array("imageOpacity50");
+			}
+			echo json_encode(implode(',',$ozio_nano_thumbnailHoverEffect)); 
+		?>,
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
 		colorSchemeViewer: <?php echo json_encode($this->Params->get("ozio_nano_colorSchemeViewer", "light")); ?>,
@@ -126,5 +134,9 @@ jQuery( document ).ready(function( $ ) {
 	        }				
 
 	});
+	if (infobox_bg_url){
+		nano_preload_imageObj = new Image();
+		nano_preload_imageObj.src = infobox_bg_url;
+	}
 
 });
