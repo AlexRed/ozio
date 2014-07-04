@@ -88,7 +88,7 @@
 			</field>
 			
 
-			<field name="infobox_bg_url" type="url" default="http://lh5.ggpht.com/-cTYTnx8gwZ0/U6bfvWl5LpI/AAAAAAAAPmw/uBsVjAdVoHA/w100/" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
+			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
 						
 			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
 				<option value="0">JNO</option>
