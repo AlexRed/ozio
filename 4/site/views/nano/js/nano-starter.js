@@ -2,7 +2,7 @@
 $non_printable_separator="\x16";
 ?>
 jQuery( document ).ready(function( $ ) {
-	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "http://lh5.ggpht.com/-cTYTnx8gwZ0/U6bfvWl5LpI/AAAAAAAAPmw/uBsVjAdVoHA/w100/")); ?>;
+	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200")); ?>;
 
 	$("#nanoGallery").nanoGallery({
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
