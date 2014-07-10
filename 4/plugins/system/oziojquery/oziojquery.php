@@ -493,6 +493,15 @@ class plgSystemOziojquery extends JPlugin {
 			}
 		}
 		
+		//subito dopo tutto ciò che è ozio gallery
+		/*
+		foreach ($scripts as $url => $type) {
+			if (preg_match('#com_oziogallery3#s', $url)) {
+				$headerdata['scripts'][$url] = $type;
+				unset($scripts[$url]);
+			}
+		}
+		*/
 		// remaining scripts
 		foreach ($scripts as $url => $type) {
 			$headerdata['scripts'][$url] = $type;
@@ -621,11 +630,11 @@ class plgSystemOziojquery extends JPlugin {
 				}
 			}		
 			*/
-			
 			// remove all '...jQuery.noConflict(...);' or '... $.noConflict(...);'
 			$removejQueryNoConflict = true;//$this->params->get('removenoconflict'.$suffix, 1);
 			if ($removejQueryNoConflict) {
 				$matches = array();
+				
 				if (preg_match_all('#[^}^;^\n^>]*(jQuery|\$)\.no[cC]onflict\((true|false|)\);#', $body, $matches, PREG_SET_ORDER) > 0) {	
 
 					$quoted_javascript = preg_quote('<script type="text/javascript">', '/');
@@ -789,6 +798,7 @@ class plgSystemOziojquery extends JPlugin {
 		        /*if ($count > 0 && $this->_showreport) {
 		        	$this->_verbose_array[] = JText::sprintf('PLG_SYSTEM_JQUERYEASY_VERBOSE_REPLACEDDOCUMENTREADY', $count);
 		        }*/
+				$body = preg_replace('#jQuery\(document\).ready#s', 'jQuery(window).load', $body, -1, $count);
 	        //}        
 			/*
 			if ($this->_usejQueryUI) {
