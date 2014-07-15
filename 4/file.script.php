@@ -28,7 +28,6 @@ class Com_OzioGallery3InstallerScript
 
 	function install($parent)
 	{
-
 		//Inzio attivazione Plugin
 		$manifest 	= $parent->get("manifest");
 		$parent 	= $parent->getParent();
@@ -118,6 +117,22 @@ class Com_OzioGallery3InstallerScript
 
 	function preflight($type, $parent)
 	{
+	
+        $jversion = new JVersion();
+ 
+        // Installing component manifest file version
+        $this->release = $parent->get( "manifest" )->version;
+ 
+        // Manifest file minimum Joomla version
+        $this->minimum_joomla_release = $parent->get( "manifest" )->attributes()->version;   
+ 
+        // abort if the current Joomla release is older
+        if( version_compare( $jversion->getShortVersion(), $this->minimum_joomla_release, 'lt' ) ) {
+                Jerror::raiseWarning(null, 'Cannot install Ozio Gallery v4 in a Joomla release prior to '.$this->minimum_joomla_release);
+                return false;
+        }	
+	
+	
 		$this->component_name = $parent->get("element");
 		$this->extension_name = substr($this->component_name, 4);
 	}

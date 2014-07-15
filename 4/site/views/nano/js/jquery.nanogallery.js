@@ -2938,7 +2938,10 @@ function nanoGALLERY() {
   
   function ThumbnailClick( elt ) {
     var n=jQuery(elt).data('index');
-    if( g_options.touchAnimation == false || g_ngItems[n].hovered === true ) {
+	
+	
+	
+    if( jQuery(window).width() < 768 || g_options.touchAnimation == false || g_ngItems[n].hovered === true ) {
       // open URL
       if( g_ngItems[n].destinationURL !== undefined && g_ngItems[n].destinationURL.length >0 ) {
         window.location = g_ngItems[n].destinationURL;
@@ -3005,7 +3008,7 @@ function nanoGALLERY() {
             elt.find('.imgContainer').eq(2).css({'left':'0%', 'bottom':'0%', 'clip':s, 'position':'absolute'});
             s='rect('+h/2+'px, '+w/2+'px, '+h+'px, 0px)'
             elt.find('.imgContainer').eq(3).css({'right':'0%', 'bottom':'0%', 'clip':s, 'position':'absolute'});
-            setElementOnTop('', jQuery(elt).find('.imgContainer'));
+            //setElementOnTop('', jQuery(elt).find('.imgContainer'));
           }
           break;
         case 'imageSplitVert':
@@ -3018,7 +3021,7 @@ function nanoGALLERY() {
             elt.find('.imgContainer').eq(0).css({'right':'0%', 'clip':s, 'position':'absolute'});
             s='rect(0px, '+w+'px, '+h+'px, '+w/2+'px)'
             elt.find('.imgContainer').eq(1).css({'left':'0%', 'clip':s, 'position':'absolute'});
-            setElementOnTop('', jQuery(elt).find('.imgContainer'));
+            //setElementOnTop('', jQuery(elt).find('.imgContainer'));
           }
           break;
           
@@ -3086,7 +3089,7 @@ function nanoGALLERY() {
         case 'scaleLabelOverImage':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
             //jQuery(elt).css('overflow','hidden');
-            setElementOnTop('', jQuery(elt).find('.imgContainer'));
+            //setElementOnTop('', jQuery(elt).find('.imgContainer'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:0.5});
             jQuery(elt).find('.imgContainer').css({ 'scale':'1'});
             useTransitPlugin=true;
@@ -3095,7 +3098,7 @@ function nanoGALLERY() {
         case 'overScale':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
             jQuery(elt).css('overflow','hidden');
-            setElementOnTop('', jQuery(elt).find('.labelImage'));
+            //setElementOnTop('', jQuery(elt).find('.labelImage'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:1.5});
             jQuery(elt).find('.imgContainer').css({ 'opacity': '1', 'scale':'1'});
             useTransitPlugin=true;
@@ -3103,7 +3106,7 @@ function nanoGALLERY() {
           break;
         case 'overScaleOutside':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
-            setElementOnTop('', jQuery(elt).find('.labelImage'));
+            //setElementOnTop('', jQuery(elt).find('.labelImage'));
             jQuery(elt).find('.labelImage').css({'opacity':'0', scale:1.5});
             jQuery(elt).find('.imgContainer').css({ 'opacity': '1', 'scale':'1'});
             useTransitPlugin=true;
@@ -3132,7 +3135,7 @@ function nanoGALLERY() {
         case 'imageRotateCornerBL':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
-              setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
+              //setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
               jQuery(elt).css('overflow','hidden');
               jQuery(elt).find('.labelImage').css('opacity','1');
               jQuery(elt).find('.imgContainer').css({ rotate: '0', 'transform-origin': '100% 100%' });
@@ -3143,7 +3146,7 @@ function nanoGALLERY() {
         case 'imageRotateCornerBR':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
             if( g_supportTransit ) {
-              setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
+              //setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
               jQuery(elt).css('overflow','hidden');
               jQuery(elt).find('.labelImage').css('opacity','1');
               jQuery(elt).find('.imgContainer').css({ rotate: '0', 'transform-origin': '0 100%' });
@@ -3188,7 +3191,7 @@ function nanoGALLERY() {
         case 'imageSlideRight':
         case 'imageSlideLeft':
           if( g_options.thumbnailLabel.position != 'onBottom' ) {
-            setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
+            //setElementOnTop(elt, jQuery(elt).find('.imgContainer'));
             jQuery(elt).css('overflow','hidden');
             jQuery(elt).find('.labelImage').css('opacity','1');
             jQuery(elt).find('.imgContainer').css({'left':'0', 'top':'0'});
@@ -4044,6 +4047,7 @@ function nanoGALLERY() {
               //jQuery(elt).find('.subcontainer').transition({rotateX: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               jQuery(elt).find('.imgContainer').transition({ perspective: n, rotateX: '0deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelImage').transition({ perspective: n, rotateX: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+			  jQuery(elt).css('z-index','auto');
             }
             break;
           case 'imageFlipVertical':
@@ -4052,18 +4056,21 @@ function nanoGALLERY() {
               //jQuery(elt).find('.subcontainer').transition({ rotateY: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
               jQuery(elt).find('.imgContainer').transition({ perspective: n, rotateY: '0deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
               jQuery(elt).find('.labelImage').transition({ perspective: n, rotateY: '180deg'}, g_thumbnailHoverEffect[j].duration, g_thumbnailHoverEffect[j].easing);
+			  jQuery(elt).css('z-index','auto');
             }
             break;
           case 'flipHorizontal':
             if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(g_oneThumbnailHeight*1.2) + 'px';
               jQuery(elt).transition({ perspective:n, rotateX: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+			  jQuery(elt).css('z-index','auto');
             }
             break;
           case 'flipVertical':
             if( g_thumbnailHoverEffect[j].method == 'transit' ) {
               var n= Math.round(item.thumbRealWidth*1.2) + 'px';
               jQuery(elt).transition({ perspective:n, rotateY: '0deg'}, g_thumbnailHoverEffect[j].durationBack, g_thumbnailHoverEffect[j].easingBack);
+			  jQuery(elt).css('z-index','auto');
             }
             break;
           case 'TEST':
