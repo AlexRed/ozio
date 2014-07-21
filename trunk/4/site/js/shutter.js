@@ -11,6 +11,8 @@
 
  */
 
+gi_ozio_intenseViewer=false;
+ 
 (function ($)
 {
 	theme = {
@@ -257,6 +259,29 @@
 			var view_button = document.getElementById('view-button');
 			if (view_button)
 			{
+				
+				$(view_button).click(function() {
+				
+					if (!gi_ozio_intenseViewer){
+						gi_ozio_intenseViewer=true
+						var link = api.getField('seed');
+						var bigdata = api.options.big;
+						$(this).find('.ozio-intense-div').remove();
+						var newdiv=$('<div class="ozio-intense-div"></div>');
+						$(this).append(newdiv);
+						
+						if (bigdata == 0){
+							newdiv.attr('data-image',link + 's0/');
+						}else{
+							newdiv.attr('data-image',link + 's'+bigdata+'/');
+						}
+						newdiv.attr('data-title',api.getField('album'));
+						newdiv.attr('data-caption',api.getField('summary'));
+						Intense( newdiv );
+					}
+				});
+			
+				/*
 				//view_button.href = link + 's0/';
 
 				if (api.options.big == 0)
@@ -267,6 +292,7 @@
 				{
 					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
+				*/
 
 			}
 			// Top bar
@@ -613,6 +639,8 @@
 			var view_button = document.getElementById('view-button');
 			if (view_button)
 			{
+			
+				/*
 				//view_button.href = link + 's0/';
 
 				if (api.options.big == 0)
@@ -623,7 +651,7 @@
 				{
 					view_button.href = "javascript:TINY.box.show({iframe:'" + link + 's' + bigdata + '/' + "',boxid:'frameless',animate:false,fixed:false,maxwidth:" + api.getField('width') + ",maxheight:" + api.getField('height') + "})";
 				}
-
+				*/
 			}
 			// DP *F*
 

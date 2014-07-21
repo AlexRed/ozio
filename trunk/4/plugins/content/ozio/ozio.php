@@ -122,6 +122,8 @@ class plgContentOzio extends JPlugin
 			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/nanoscroller.css");
 		}
 		
+		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/intense.js");
+		
 		// per la compatibilità con Internet Explorer 
 		$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
 		
