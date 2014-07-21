@@ -77,6 +77,9 @@ class OzioGalleryView00fuerte extends JViewLegacy
 	        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery.lazyload.min.js");
 			$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/00fuerte/css/nanoscroller.css");
 		}
+
+		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/intense.js");
+
 		
 		// per la compatibilità con Internet Explorer 
 		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
