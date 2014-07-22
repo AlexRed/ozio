@@ -277,6 +277,7 @@ gi_ozio_intenseViewer=false;
 						}
 						newdiv.attr('data-title',api.getField('album'));
 						newdiv.attr('data-caption',api.getField('summary'));
+						newdiv.attr('data-loading-gif',$(view_button).attr('data-loading-gif'));
 						Intense( newdiv );
 					}
 				});
