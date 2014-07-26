@@ -285,6 +285,7 @@ var Intense = (function() {
 
         sourceDimensions = { w: img.width, h: img.height }; // Save original dimensions for later.
         target = this;
+		
         createViewer( title, caption );
         lockBody();
         bindEvents();
@@ -392,6 +393,7 @@ var Intense = (function() {
 		  }
 		  
 		  if (updatePos){
+			  target.style.maxWidth='none';
 
 			  target.style[ 'webkitTransform' ] = 'translate3d(' + positionX + 'px, '+positionY+'px, 0px)';
 			  target.style[ 'MozTransform' ] = 'translate3d(' + positionX + 'px, '+positionY+'px, 0px)';
