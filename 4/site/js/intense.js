@@ -33,7 +33,8 @@ var Intense = (function() {
     var looper;
   
     // Current position of scrolly element
-    var lastPosition, currentPosition = 0;
+    var lastPositionX,lastPositionY, currentPositionX = 0;
+	var currentPositionY = 0;
     
     var sourceDimensions, target;
     var targetDimensions = { w: 0, h: 0 };
@@ -74,7 +75,7 @@ var Intense = (function() {
     function getFit( 
 
       source ) {
-		
+		/*
 		if (source.w>window.innerWidth && source.h>window.innerHeight){
 
 		  var heightRatio = window.innerHeight / source.h;
@@ -90,8 +91,9 @@ var Intense = (function() {
 		}else if (source.h>window.innerHeight){
 			return { w: source.w, h: source.h, fit: false };
 		}else{
+		*/
 			return { w: source.w, h: source.h, fit: false };
-		}
+		//}
     }
 
     /* -------------------------
@@ -299,7 +301,7 @@ var Intense = (function() {
 
 			  mouse.xCurr = mouse.xDest = window.innerWidth / 2;
 			  mouse.yCurr = mouse.yDest = window.innerHeight / 2;
-			  lastPosition=currentPosition = 0
+			  lastPositionX=lastPositionY=currentPositionX = currentPositionY=0
 			positionTarget();      
 		  }
 		  
@@ -359,39 +361,44 @@ var Intense = (function() {
 
       mouse.xCurr += ( mouse.xDest - mouse.xCurr ) * 0.05;
       mouse.yCurr += ( mouse.yDest - mouse.yCurr ) * 0.05;
-
-      if ( horizontalOrientation === true ) {
-
+	  var updatePos=false;
         // HORIZONTAL SCANNING
-        currentPosition += ( mouse.xCurr - currentPosition );
-        if( mouse.xCurr !== lastPosition ) {
-          var position = parseFloat( currentPosition / containerDimensions.w );
-          position = overflowArea.x * position;
-		  var centery=(containerDimensions.h-target.height)/2;
-          target.style[ 'webkitTransform' ] = 'translate3d(' + position + 'px, '+centery+'px, 0px)';
-          target.style[ 'MozTransform' ] = 'translate3d(' + position + 'px, '+centery+'px, 0px)';
-          target.style[ 'msTransform' ] = 'translate3d(' + position + 'px, '+centery+'px, 0px)';
-          lastPosition = mouse.xCurr;
+        currentPositionX += ( mouse.xCurr - currentPositionX );
+        if( mouse.xCurr !== lastPositionX ) {
+          lastPositionX = mouse.xCurr;
+		  updatePos=true;
         }
-      } else if ( horizontalOrientation === false ) {
 
         // VERTICAL SCANNING
-        currentPosition += ( mouse.yCurr - currentPosition );
-        if( mouse.yCurr !== lastPosition ) {
-          var position = parseFloat( currentPosition / containerDimensions.h );
-          position = overflowArea.y * position;
-		  var centerx=(containerDimensions.w-target.width)/2;
+        currentPositionY += ( mouse.yCurr - currentPositionY );
+        if( mouse.yCurr !== lastPositionY ) {
+          lastPositionY = mouse.yCurr;
+		  updatePos=true;
+        }
+	  
+	  
+          var positionX = parseFloat( currentPositionX / containerDimensions.w );
+          positionX = overflowArea.x * positionX;
+		  
+          var positionY = parseFloat( currentPositionY / containerDimensions.h );
+          positionY = overflowArea.y * positionY;
+		  
 		  
 		  if (target.height<containerDimensions.h){
-			position=(containerDimensions.h-target.height)/2;
+			positionY=(containerDimensions.h-target.height)/2;
+		  }
+		  if (target.width<containerDimensions.w){
+			positionX=(containerDimensions.w-target.width)/2;
 		  }
 		  
-          target.style[ 'webkitTransform' ] = 'translate3d( '+centerx+'px, ' + position + 'px, 0px)';
-          target.style[ 'MozTransform' ] = 'translate3d( '+centerx+'px, ' + position + 'px, 0px)';
-          target.style[ 'msTransform' ] = 'translate3d( '+centerx+'px, ' + position + 'px, 0px)';
-          lastPosition = mouse.yCurr;
-        }
-      }
+		  if (updatePos){
+
+			  target.style[ 'webkitTransform' ] = 'translate3d(' + positionX + 'px, '+positionY+'px, 0px)';
+			  target.style[ 'MozTransform' ] = 'translate3d(' + positionX + 'px, '+positionY+'px, 0px)';
+			  target.style[ 'msTransform' ] = 'translate3d(' + positionX + 'px, '+positionY+'px, 0px)';
+		  }
+	  
+	  
     }
 
     function main( element ) {
