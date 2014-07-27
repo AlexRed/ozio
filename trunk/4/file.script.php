@@ -145,7 +145,7 @@ class Com_OzioGallery3InstallerScript
 	{
 		echo '<p>Congratulations! Ozio Gallery 4 Component for Joomla 3! has been installed successfully</p>';
 		echo "<p><img src=\"http://www.opensourcesolutions.es/logo/responsive4.jpg" . "\"></p>";
-		echo "<p>Take a look to 'Fuerte': our new, responsive and adaptive skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
+		echo "<p>Take a look to 'Nano': our new, responsive and adaptive skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
 
 		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
 		if (!$GLOBALS["oziogallery3"]["registered"])
