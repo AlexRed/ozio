@@ -218,11 +218,11 @@ class Com_OzioGallery3InstallerScript
 		'<img ' .
 		'class="install_logo" ' .
 		'src="' . JURI::base(true) . "/components/" . $this->component_name . "/css/images/logo.png" . '" '.
-		'alt=" Ozio Gallery 3 Logo" ' .
+		'alt=" Ozio Gallery Logo" ' .
 		'/>' .
 		'<div class="install_container">' .
 		'<div class="install_row">' .
-		'<h2 class="install_title">Ozio Gallery 3</h2>' .
+		'<h2 class="install_title">Ozio Gallery</h2>' .
 		'</div>');
 		
 		
