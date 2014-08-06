@@ -7,13 +7,23 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>info@joomla.it</authorEmail>
 	<authorUrl>www.joomla.it</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>COM_OZIOGALLERY3_PLG_OZIOJQUERY_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="oziojquery">oziojquery.php</filename>
 		<filename>index.html</filename>
 		<folder>language</folder>
+		<folder>sql</folder>
 	</files>
+	
+	<install>
+		<sql><file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file></sql>
+	</install>
+	
+	<update>
+		<schemas><schemapath type="mysql">sql/updates/mysql</schemapath></schemas>
+	</update>
+	
 	<config>
 		<fields name="params">
 		</fields>

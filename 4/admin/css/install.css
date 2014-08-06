@@ -1,0 +1,71 @@
+.install_logo {
+	float: left;
+	margin: 16px;
+}
+
+html[dir="rtl"] .install_logo {
+	float: right;
+}
+
+.install_container {
+	display: table;
+}
+
+.install_row {
+	display: table-row;
+}
+
+.install_icon {
+	display: table-cell;
+	padding: 0 20px;
+	background-repeat: no-repeat;
+	background-position: left 50%;
+	line-height: 18px;
+}
+
+html[dir="rtl"] .install_icon {
+	background-position: right 50%;
+}
+
+
+.install_title {
+	line-height: 60px;
+	display: table-cell;
+}
+
+.install_component {
+	background-image: url("images/ext-component-small.png");
+}
+
+.install_module {
+	background-image: url("images/ext-module-small.png");
+}
+
+.install_plugin {
+	background-image: url("images/ext-plugin-small.png");
+}
+
+.install_template {
+	background-image: url("images/ext-template-small.png");
+}
+
+.install_library {
+	background-image: url("images/ext-library-small.png");
+}
+
+.install_languages {
+	background-image: url("images/ext-language-small.png");
+}
+
+.install_installed {
+	background-image: url("images/tick-small.png");
+	color: #20b020;
+	font-weight: bold;
+}
+
+.install_not_installed {
+	background-image: url("images/cross-small.png");
+	color: #b02020;
+	font-weight: bold;
+}
+

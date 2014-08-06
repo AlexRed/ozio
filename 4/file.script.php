@@ -25,9 +25,12 @@ class Com_OzioGallery3InstallerScript
 {
 	protected $component_name;
 	protected $extension_name;
+	protected $results=array();
 
 	function install($parent)
 	{
+	
+	
 		//Inzio attivazione Plugin
 		$manifest 	= $parent->get("manifest");
 		$parent 	= $parent->getParent();
@@ -39,7 +42,13 @@ class Com_OzioGallery3InstallerScript
 
 			$attributes = $plugin->attributes();
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
-			$installer->install($plg);
+
+			$result = array();
+			$result["type"] = 'PLUGIN';
+			$result["result"] = $installer->install($plg) ? "INSTALLED" : "NOT_INSTALLED";
+			$this->results[(string)$attributes["name"]] = $result;
+			
+			
 		}
 		foreach($manifest->templates->template as $template)
 		{
@@ -47,8 +56,34 @@ class Com_OzioGallery3InstallerScript
 
 			$attributes = $template->attributes();
 			$tmplt = $source . "/" . $attributes['folder'] . "/" . $attributes['template'];
-			$installer->install($tmplt);
+			
+			$result = array();
+			$result["type"] = 'TEMPLATE';
+			$result["result"] = $installer->install($tmplt) ? "INSTALLED" : "NOT_INSTALLED";
+			$this->results['OZIO TEMPLATE'] = $result;
+			
+			
 		}
+		
+		// If Installscript is running, the component is already installed
+		$result = array();
+		$result["type"] = "COMPONENT";
+		$result["result"] = "INSTALLED";
+		$this->results[$this->component_name] = $result;
+
+		// Language files are installed within the single pacakges
+		$result = array();
+		$result["type"] = "LANGUAGES";
+		$result["result"] = "INSTALLED";
+		foreach ($this->results as $res){
+			if ($res['result']!="INSTALLED"){
+				$result["result"]="NOT_INSTALLED";
+				break;
+			}
+		}
+		$this->results["Languages"] = $result;
+		
+		
 		$db = JFactory::getDbo();
 		$tableExtensions = $db->quoteName("#__extensions");
 		$columnEnabled   = $db->quoteName("enabled");
@@ -83,7 +118,13 @@ class Com_OzioGallery3InstallerScript
 
 			$attributes = $plugin->attributes();
 			$plg = $source . "/" . $attributes['folder'] . "/" . $attributes['plugin'];
-			$installer->install($plg);
+			
+			$result = array();
+			$result["type"] = 'PLUGIN';
+			$result["result"] = $installer->install($plg) ? "INSTALLED" : "NOT_INSTALLED";
+			$this->results[(string)$attributes["name"]] = $result;
+			
+			
 		}
 		foreach($manifest->templates->template as $template)
 		{
@@ -91,8 +132,31 @@ class Com_OzioGallery3InstallerScript
 
 			$attributes = $template->attributes();
 			$tmplt = $source . "/" . $attributes['folder'] . "/" . $attributes['template'];
-			$installer->install($tmplt);
+
+			$result = array();
+			$result["type"] = 'TEMPLATE';
+			$result["result"] = $installer->install($tmplt) ? "INSTALLED" : "NOT_INSTALLED";
+			$this->results['OZIO TEMPLATE'] = $result;
 		}
+		
+		// If Installscript is running, the component is already installed
+		$result = array();
+		$result["type"] = "COMPONENT";
+		$result["result"] = "INSTALLED";
+		$this->results[$this->component_name] = $result;
+
+		// Language files are installed within the single pacakges
+		$result = array();
+		$result["type"] = "LANGUAGES";
+		$result["result"] = "INSTALLED";
+		foreach ($this->results as $res){
+			if ($res['result']!="INSTALLED"){
+				$result["result"]="NOT_INSTALLED";
+				break;
+			}
+		}
+		$this->results["Languages"] = $result;
+		
 		
 		$db = JFactory::getDBO();
 
@@ -147,6 +211,34 @@ class Com_OzioGallery3InstallerScript
 		echo "<p><img src=\"http://www.opensourcesolutions.es/logo/responsive4.jpg" . "\"></p>";
 		echo "<p>Take a look to 'Nano': our new, responsive and adaptive skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
 
+		echo(
+		'<style type="text/css">' .
+		'@import url("' . JURI::base(true) . "/components/" . $this->component_name . "/css/install.css" . '");' .
+		'</style>' .
+		'<img ' .
+		'class="install_logo" ' .
+		'src="' . JURI::base(true) . "/components/" . $this->component_name . "/css/images/logo.png" . '" '.
+		'alt=" Ozio Gallery 3 Logo" ' .
+		'/>' .
+		'<div class="install_container">' .
+		'<div class="install_row">' .
+		'<h2 class="install_title">Ozio Gallery 3</h2>' .
+		'</div>');
+		
+		
+		foreach ($this->results as $name => $extension)
+		{
+			echo(
+			'<div class="install_row">' .
+			'<div class="install_' . strtolower($extension["type"]) . ' install_icon">' . strtoupper($name) . '</div>' .
+			'<div class="install_' . strtolower($extension["result"]) . ' install_icon">' . $extension["result"] . '</div>' .
+			'</div>'
+			);
+
+		}
+		echo('</div>');
+		
+		
 		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
 		if (!$GLOBALS["oziogallery3"]["registered"])
 		{
