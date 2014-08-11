@@ -381,7 +381,7 @@ class plgSystemOziojquery extends JPlugin {
 		if ($app->isAdmin()) {
 			return;
 		}
-		if (!isset($GLOBALS["oziogallery3"])){
+		if (!isset($GLOBALS["enable_jquery_ozio_plugin"]) || !$GLOBALS["enable_jquery_ozio_plugin"]){
 			$this->_enabled=false;
 			$headerdata = $doc->getHeadData();
 			unset($headerdata['scripts']["OZJQUERY_JQLIB"]);
