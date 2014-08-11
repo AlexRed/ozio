@@ -18,6 +18,8 @@
  * @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
  */
+
+$GLOBALS["enable_jquery_ozio_plugin"]=true;
 ?>
 
 <div class="album-map<?php echo $this->Params->get("pageclass_sfx", ""); ?>">

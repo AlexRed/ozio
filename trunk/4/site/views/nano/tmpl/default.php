@@ -19,6 +19,8 @@
 	* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 	*/
 
+$GLOBALS["enable_jquery_ozio_plugin"]=true;
+
 /*<div class="fuertecontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>" id="nanoGallery" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
 </div>	*/
 ?>

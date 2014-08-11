@@ -18,6 +18,9 @@
 	* @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
 	* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
 	*/
+	
+$GLOBALS["enable_jquery_ozio_plugin"]=true;
+	
 ?>
 <?php if ($this->Params->get("show_page_heading", 1)) { ?>
 <h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
