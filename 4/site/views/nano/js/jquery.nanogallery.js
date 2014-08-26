@@ -1688,13 +1688,13 @@ function nanoGALLERY() {
    
     if( g_ngItems[albumIdx].GetID() == 0 ) {
       // albums
-      url = (location.protocol=='https:'?'https:':'http:')+'//picasaweb.google.com/data/feed/api/user/'+g_options.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_picasaThumbSize;
+      url = (location.protocol=='https:'?'https:':'https:')+'//picasaweb.google.com/data/feed/api/user/'+g_options.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_picasaThumbSize;
     }
     else {
       // photos
       var opt='';
       if( typeof g_ngItems[albumIdx].customVars.authkey !== 'undefined' ) { opt=g_ngItems[albumIdx].customVars.authkey; }
-      url = (location.protocol=='https:'?'https:':'http:')+'//picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+g_picasaThumbSize+'&imgmax=d';
+      url = (location.protocol=='https:'?'https:':'https:')+'//picasaweb.google.com/data/feed/api/user/'+g_options.userID+'/albumid/'+g_ngItems[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+g_picasaThumbSize+'&imgmax=d';
       kind='image';
     }
     url = url + "&callback=?";
