@@ -109,7 +109,7 @@ Issue fixed by switching the Google+/Picasa requests to HTTPS.
       lazyBuildTreshold : 150,
       flickrSkipOriginal : true,
       i18n : {
-        'breadcrumbHome' : 'Galleries', 'breadcrumbHome_FR' : 'Galeries',
+        'breadcrumbHome' : '',/* 'breadcrumbHome_FR' : 'Galeries',*/
         'paginationPrevious' : 'Previous', 'paginationPrevious_FR' : 'Pr&eacute;c&eacute;dent', 'paginationPrevious_DE' : 'Zur&uuml;ck', 'paginationPrevious_IT' : 'Indietro',
         'paginationNext' : 'Next', 'paginationNext_FR' : 'Suivant', 'paginationNext_DE' : 'Weiter', 'paginationNext_IT' : 'Avanti',
         'thumbnailLabelItemsCountPart1' : '| ',
@@ -2269,6 +2269,15 @@ this.thumbImgHeight = 0;           // thumbnail image height
             var y =  b.title._content.toUpperCase();
             return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
           });
+		  break;
+		  case 'id':
+			source.sort(function (a, b) {
+			  var x =  a.id;
+			  var y =  b.id;
+			  return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+			});
+			break;
+		  
       }
 
       jQuery.each(source, function(i,item){
@@ -2412,7 +2421,6 @@ this.thumbImgHeight = 0;           // thumbnail image height
     else {
       source = data.photoset.photo;
     }
-
     switch( gO.photoSorting ) {
       case 'random':
 				source = AreaShuffle(source);
@@ -2434,7 +2442,14 @@ this.thumbImgHeight = 0;           // thumbnail image height
           return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
         });
         break;
-    }
+		case 'id':
+			source.sort(function (a, b) {
+			  var x =  a.id;
+			  var y =  b.id;
+			  return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+			});
+			break;
+	}
 
     var albumID=gI[albumIdx].GetID(),
     nb=0;
@@ -2680,6 +2695,13 @@ this.thumbImgHeight = 0;           // thumbnail image height
           var x =  kind == 'image' ? a.media$group.media$description.$t.toUpperCase() : a.media$group.media$title.$t.toUpperCase();
           var y =  kind == 'image' ? b.media$group.media$description.$t.toUpperCase() : b.media$group.media$title.$t.toUpperCase();
           return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+        });
+        break;
+      case 'id':
+        source.sort(function (a, b) {
+          var x =  a.gphoto$id.$t;
+          var y =  b.gphoto$id.$t;
+          return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
         });
         break;
     }
@@ -3960,7 +3982,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
         var aIdx=$gE.conPagin.data('galleryIdx'),
         pn=jQuery(this).data('pageNumber');
         if( !inViewportVert($gE.base, 0) ) {
-          $('html, body').animate({scrollTop: $gE.base.offset().top}, 200);
+          jQuery('html, body').animate({scrollTop: $gE.base.offset().top}, 200);
         }
         renderGallery(aIdx,pn);
       });
@@ -3998,7 +4020,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
     }
     
     if( !inViewportVert($gE.base, 0) ) {
-      $('html, body').animate({scrollTop: $gE.base.offset().top }, 200);
+      jQuery('html, body').animate({scrollTop: $gE.base.offset().top }, 200);
     }
 
     renderGallery(aIdx,pn);
@@ -4023,7 +4045,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
     }
 
     if( !inViewportVert($gE.base, 0) ) {
-      $('html, body').animate({scrollTop: $gE.base.offset().top }, 200);
+      jQuery('html, body').animate({scrollTop: $gE.base.offset().top }, 200);
     }
 
     renderGallery(aIdx,pn);
@@ -4222,10 +4244,12 @@ this.thumbImgHeight = 0;           // thumbnail image height
         if( item.contentLength > 0 ) {
           switch( gO.thumbnailLabel.itemsCount) {
             case 'title':
-              sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
+              //sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
+              sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelImageTitle"></span>' + item.contentLength;
               break;
             case 'description':
-              sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
+              //sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
+              sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelImageTitle"></span>' + item.contentLength;
               break;
             }
           }
@@ -6169,6 +6193,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
 			 html+='					</div>';
 			  		
 			  $gE.conInfoBox=jQuery(html).appendTo('body');
+			  
 			  $gE.conInfoBox.css('background-image','url(\''+gO.infoboxBgUrl+'\')');
 /*	  
 	  var infobox={};
@@ -8950,9 +8975,9 @@ function makeArray( obj ) {
 
     this.getImages();
 
-    if ( $ ) {
+    if ( jQuery ) {
       // add jQuery Deferred object
-      this.jqDeferred = new $.Deferred();
+      this.jqDeferred = new jQuery.Deferred();
     }
 
     // HACK check async to allow time to bind listeners
@@ -9058,10 +9083,10 @@ function makeArray( obj ) {
 
   // -------------------------- jquery -------------------------- //
 
-  if ( $ ) {
-    $.fn.ngimagesLoaded = function( options, callback ) {
+  if ( jQuery ) {
+    jQuery.fn.ngimagesLoaded = function( options, callback ) {
       var instance = new ngImagesLoaded( this, options, callback );
-      return instance.jqDeferred.promise( $(this) );
+      return instance.jqDeferred.promise( jQuery(this) );
     };
   }
 
