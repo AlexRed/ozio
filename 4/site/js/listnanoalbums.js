@@ -93,7 +93,7 @@ jQuery( document ).ready(function( $ ) {
 	
 	
   function FlickrRetrieveItems(userID) {
-	var url = "http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_flickrApiKey + "&user_id="+userID+"&primary_photo_extras=tags&format=json&jsoncallback=?";
+	var url = "https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_flickrApiKey + "&user_id="+userID+"&primary_photo_extras=tags&format=json&jsoncallback=?";
 	jQuery.ajaxSetup({ cache: false });
 	jQuery.support.cors = true;
 

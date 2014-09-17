@@ -241,7 +241,7 @@ jQuery(document).ready(function ($)
 			if (album_nano_options.kind=='picasa'){
 				url = 'http://picasaweb.google.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+album_nano_options.thumbSize;
 			}else{
-				url="http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + album_nano_options.g_flickrApiKey + "&user_id="+album_nano_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
+				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + album_nano_options.g_flickrApiKey + "&user_id="+album_nano_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 			}
 			jQuery.ajax({
 				'url':url,

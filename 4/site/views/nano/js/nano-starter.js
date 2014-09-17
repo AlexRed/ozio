@@ -16,7 +16,17 @@ jQuery( document ).ready(function( $ ) {
 		galleryToolbarWidthAligned: <?php echo json_encode(intval($this->Params->get("ozio_nano_galleryToolbarWidthAligned", "1"))); ?>,
 		slideshowDelay: <?php echo json_encode(intval($this->Params->get("ozio_nano_slideshowDelay", "3000"))); ?>,
 		/*paginationMaxItemsPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxItemsPerPage", "0"))); ?>,*/
-		paginationMaxLinesPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxLinesPerPage", "0"))); ?>,
+		paginationMaxLinesPerPage: <?php 
+			$ozio_nano_paginationMaxLinesPerPage=intval($this->Params->get("ozio_nano_paginationMaxLinesPerPage", "0"));
+			$ozio_nano_paginationMaxItemsPerPage=intval($this->Params->get("ozio_nano_paginationMaxItemsPerPage", "0"));
+			
+			if ($ozio_nano_paginationMaxItemsPerPage>0 && $ozio_nano_paginationMaxLinesPerPage==0){
+				$ozio_nano_paginationMaxLinesPerPage=5;
+			}
+			
+			echo json_encode($ozio_nano_paginationMaxLinesPerPage); 
+		
+		?>,
 		thumbnailDisplayInterval: 0,
 		thumbnailDisplayTransition: 1,
 		thumbnailLazyLoad: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLazyLoad", "1"))); ?>,
@@ -47,7 +57,7 @@ jQuery( document ).ready(function( $ ) {
 		galleryFullpageButton:<?php echo json_encode($this->Params->get("ozio_nano_galleryFullpageButton", 0)==1); ?>,
 		thumbnailGutterWidth:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterWidth", "2"))); ?>,
 		thumbnailGutterHeight:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterHeight", "2"))); ?>,
-		thumbnailAlignment:<?php echo json_encode($this->Params->get("ozio_nano_thumbnailAlignment", "justified")); ?>,
+		thumbnailAlignment:<?php echo json_encode($this->Params->get("ozio_nano_thumbnailAlignment", "center")); ?>,
 						
 		showInfoBoxButton: <?php echo json_encode(intval($this->Params->get("info_button", "1"))==1); ?>,
 		showInfoBoxAlbum: <?php echo json_encode(!intval($this->Params->get("hide_infobox_album", "0"))); ?>,
