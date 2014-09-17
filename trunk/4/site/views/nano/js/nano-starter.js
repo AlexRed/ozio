@@ -8,14 +8,14 @@ jQuery( document ).ready(function( $ ) {
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
-		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")=="fixed"?intval($this->Params->get("ozio_nano_thumbnailHeight", "134")):"auto" ); ?>,
-		thumbnailWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailWidth", "200"))); ?>,
+		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")=="fixed"?$this->Params->get("ozio_nano_thumbnailHeight", "134"):"auto" ); ?>,
+		thumbnailWidth: <?php echo json_encode($this->Params->get("ozio_nano_thumbnailWidth", "200")); ?>,
 		maxItemsPerLine: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxItemsPerLine", "0"))); ?>,
 		maxWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxWidth", "0"))); ?>,
 		touchAnimation: 1,
 		galleryToolbarWidthAligned: <?php echo json_encode(intval($this->Params->get("ozio_nano_galleryToolbarWidthAligned", "1"))); ?>,
 		slideshowDelay: <?php echo json_encode(intval($this->Params->get("ozio_nano_slideshowDelay", "3000"))); ?>,
-		paginationMaxItemsPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxItemsPerPage", "0"))); ?>,
+		/*paginationMaxItemsPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxItemsPerPage", "0"))); ?>,*/
 		paginationMaxLinesPerPage: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationMaxLinesPerPage", "0"))); ?>,
 		thumbnailDisplayInterval: 0,
 		thumbnailDisplayTransition: 1,
@@ -32,6 +32,7 @@ jQuery( document ).ready(function( $ ) {
 									'descriptionMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
 									'hideIcons'=>intval($this->Params->get("ozio_nano_thumbnailLabel_hideIcons", "0")),
 									'align'=>$this->Params->get("ozio_nano_thumbnailLabel_align", "left"),
+									'itemsCount'=>$this->Params->get("ozio_nano_thumbnailLabel_itemsCount", "none")
 							)); 
 						?>,
 						
@@ -41,6 +42,13 @@ jQuery( document ).ready(function( $ ) {
 									'style'=>$this->Params->get("ozio_nano_viewerToolbar_style", "innerImage"),
 							)); 
 						?>,
+						
+						
+		galleryFullpageButton:<?php echo json_encode($this->Params->get("ozio_nano_galleryFullpageButton", 0)==1); ?>,
+		thumbnailGutterWidth:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterWidth", "2"))); ?>,
+		thumbnailGutterHeight:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterHeight", "2"))); ?>,
+		thumbnailAlignment:<?php echo json_encode($this->Params->get("ozio_nano_thumbnailAlignment", "justified")); ?>,
+						
 		showInfoBoxButton: <?php echo json_encode(intval($this->Params->get("info_button", "1"))==1); ?>,
 		showInfoBoxAlbum: <?php echo json_encode(!intval($this->Params->get("hide_infobox_album", "0"))); ?>,
 		showInfoBoxPhoto: <?php echo json_encode(!intval($this->Params->get("hide_infobox_photo", "0"))); ?>,

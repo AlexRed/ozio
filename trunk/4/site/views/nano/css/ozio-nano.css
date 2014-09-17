@@ -167,3 +167,9 @@ width:22px;
 #nanoGallery .nanoGalleryContainer, #nanoGallery{
 	overflow:visible;
 }
+
+
+
+.labelDescription > span.labelImageTitle, .labelTitle > span.labelImageTitle{
+	vertical-align:baseline !important;
+}
