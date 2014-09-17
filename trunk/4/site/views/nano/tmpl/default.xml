@@ -72,7 +72,7 @@
 			<field type="text" name="ozio_nano_thumbnailGutterWidth" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERWIDTH_DSC" size="6" default="2"/>
 			<field type="text" name="ozio_nano_thumbnailGutterHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERHEIGHT_DSC" size="6" default="2"/>
 			
-			<field type="list" name="ozio_nano_thumbnailAlignment" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_DSC" default="justified">
+			<field type="list" name="ozio_nano_thumbnailAlignment" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_DSC" default="center">
 				<option value="left">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_LEFT</option>
 				<option value="right">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_RIGHT</option>
 				<option value="justified">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILALIGNMENT_JUSTIFIED</option>
@@ -235,9 +235,9 @@
 			</field>
 
 			<field type="text" name="ozio_nano_slideshowDelay" label="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_DSC" size="6" default="3000"/>
-
-<!--			<field type="text" name="ozio_nano_paginationMaxItemsPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_DSC" size="6" default="0"/>-->
-
+<!--
+			<field type="hidden" name="ozio_nano_paginationMaxItemsPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_DSC" size="6" default="0"/>
+-->
 			<field type="text" name="ozio_nano_paginationMaxLinesPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXLINESPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXLINESPERPAGE_DSC" size="6" default="0"/>
 <!--			<field type="text" name="ozio_nano_thumbnailDisplayInterval" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILDISPLAYINTERVAL_DSC" size="6" default="30"/>
 

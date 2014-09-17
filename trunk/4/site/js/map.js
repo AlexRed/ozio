@@ -391,7 +391,7 @@ jQuery(document).ready(function ($)
 			if (g_list_nano_options[i].kind=='picasa'){
 				url = 'http://picasaweb.google.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
 			}else{
-				url="http://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
+				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 			}
 			jQuery.ajax({
 				'url':url,
@@ -806,7 +806,7 @@ jQuery(document).ready(function ($)
 	 */
 	function load_album_flickr_data(i){
 		var obj={'album_index':i};
-		url = "http://api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=" + g_parameters[i].g_flickrApiKey + "&photoset_id="+g_parameters[i].photoset_id+"&extras=exif,date_taken,tags,machine_tags,geo,description,views,url_o,url_z,url_t&format=json&jsoncallback=?";
+		url = "https://api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=" + g_parameters[i].g_flickrApiKey + "&photoset_id="+g_parameters[i].photoset_id+"&extras=exif,date_taken,tags,machine_tags,geo,description,views,url_o,url_z,url_t&format=json&jsoncallback=?";
 		$.ajax({
 			'url':url,
 			'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
