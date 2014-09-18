@@ -60,9 +60,10 @@
 				<option value="0">JNO</option>
 			</field>
 			
-			<field type="list" name="ozio_nano_thumbnailHeight_kind" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_DSC" default="auto">
+			<field type="list" name="ozio_nano_thumbnailHeight_kind" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAIL_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAIL_KIND_DSC" default="auto">
 				<option value="fixed">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_FIXED</option>
-				<option value="auto">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_KIND_AUTO</option>
+				<option value="auto">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAIL_KIND_AUTOHEIGHT</option>
+				<option value="autowidth">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAIL_KIND_AUTOWIDTH</option>
 			</field>
 			
 			<field type="text" name="ozio_nano_thumbnailHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHEIGHT_DSC" size="6" default="134"/>
@@ -235,6 +236,15 @@
 			</field>
 
 			<field type="text" name="ozio_nano_slideshowDelay" label="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_SLIDESHOWDELAY_DSC" size="6" default="3000"/>
+			
+			
+			
+			<field type="list" name="ozio_nano_imageTransition" label="COM_OZIOGALLERY3_OZIO_NANO_IMAGETRANSITION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_IMAGETRANSITION_DSC" default="swipe">
+				<option value="swipe">COM_OZIOGALLERY3_OZIO_NANO_IMAGETRANSITION_SWIPE</option>
+				<option value="slideAppear">COM_OZIOGALLERY3_OZIO_NANO_IMAGETRANSITION_SLIDEAPPEAR</option>
+			</field>
+			
+			
 <!--
 			<field type="hidden" name="ozio_nano_paginationMaxItemsPerPage" label="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PAGINATIONMAXITEMSPERPAGE_DSC" size="6" default="0"/>
 -->
@@ -268,6 +278,7 @@
 				<option value="0">JNO</option>
 			</field>
 			
+			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
 			
 			<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>

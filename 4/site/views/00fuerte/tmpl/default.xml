@@ -37,6 +37,9 @@
 				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
 			</field>
 			
+			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
+			
+			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 <!--
 			<field type="list" name="viewmode" label="COM_OZIOGALLERY3_VIEWMODE_LBL" description="COM_OZIOGALLERY3_VIEWMODE_DSC">

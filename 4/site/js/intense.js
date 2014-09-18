@@ -263,17 +263,35 @@ var Intense = (function() {
     function setDimensions() {
 
       // Manually set height to stop bug where 
+	  
       var imageDimensions = getFit( sourceDimensions );
       target.width = imageDimensions.w;
       target.height = imageDimensions.h;
       horizontalOrientation = imageDimensions.fit;
 
-      targetDimensions = { w: target.width, h: target.height };
+	  
+      targetDimensions = { w: imageDimensions.w, h: imageDimensions.h };
       containerDimensions = { w: window.innerWidth, h: window.innerHeight };
       overflowArea = {x: containerDimensions.w - targetDimensions.w, y: containerDimensions.h - targetDimensions.h};
 
     }
 
+	function load_and_get_dimensions(img,img2,imageSource){
+		if (img2.width==0 || img2.height==0){
+			setTimeout(function(){load_and_get_dimensions(img,img2,imageSource);},100);
+		}else{
+			sourceDimensions = { w: img2.width, h: img2.height }; // Save original dimensions for later.
+			
+			img.src=imageSource;
+		  setDimensions();
+
+			  mouse.xCurr = mouse.xDest = window.innerWidth / 2;
+			  mouse.yCurr = mouse.yDest = window.innerHeight / 2;
+			  lastPositionX=lastPositionY=currentPositionX = currentPositionY=0;
+				positionTarget(); 
+			}
+	}
+	
     function init( element ) {
 
       var imageSource = element.getAttribute( 'data-image') || element.src;
@@ -282,8 +300,8 @@ var Intense = (function() {
       
       var img = new Image();
       img.onload = function() {
-
         sourceDimensions = { w: img.width, h: img.height }; // Save original dimensions for later.
+	  
         target = this;
 		
         createViewer( title, caption );
@@ -295,19 +313,11 @@ var Intense = (function() {
 		
 		  var img2 = new Image();
 		  img2.onload = function() {
-
-			sourceDimensions = { w: img2.width, h: img2.height }; // Save original dimensions for later.
-			img.src=imageSource
-			  setDimensions();
-
-			  mouse.xCurr = mouse.xDest = window.innerWidth / 2;
-			  mouse.yCurr = mouse.yDest = window.innerHeight / 2;
-			  lastPositionX=lastPositionY=currentPositionX = currentPositionY=0
-			positionTarget();      
+			load_and_get_dimensions(img,img2,imageSource);
 		  }
 		  
 		  img2.src = imageSource;
-		
+		  
 		
       }
 	  
@@ -385,11 +395,11 @@ var Intense = (function() {
           positionY = overflowArea.y * positionY;
 		  
 		  
-		  if (target.height<containerDimensions.h){
-			positionY=(containerDimensions.h-target.height)/2;
+		  if (targetDimensions.h<containerDimensions.h){
+			positionY=(containerDimensions.h-targetDimensions.h)/2;
 		  }
-		  if (target.width<containerDimensions.w){
-			positionX=(containerDimensions.w-target.width)/2;
+		  if (targetDimensions.w<containerDimensions.w){
+			positionX=(containerDimensions.w-targetDimensions.w)/2;
 		  }
 		  
 		  if (updatePos){

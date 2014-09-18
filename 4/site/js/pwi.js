@@ -297,7 +297,11 @@ jQuery(document).ready(function ($)
 			/*<?php if ($this->Params->get("show_title", 1)) { ?>*/
 			// Always show our custom local album title
 			var localtitle = $("<div class='ozio-pwi_album_title'/>");
-			localtitle.append(album.album_local_title);
+			<?php if ($this->Params->get("album_title_from", "menutitle")=="menutitle") { ?>
+				localtitle.append(album.album_local_title);
+			<?php }else{ ?>
+				localtitle.append(album.title);
+			<?php } ?>
 			scAlbum.append(localtitle);
 			/*<?php } ?>*/
 

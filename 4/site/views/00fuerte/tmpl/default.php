@@ -106,6 +106,14 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
  </div> 
 </div>
 
+<?php 
+$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+if (!empty($testo_sotto_mappa)) {  ?>
+	<div class="ozio_00fuerte_bottom_description">
+	<?php echo $testo_sotto_mappa; ?>
+	</div>
+<?php }?>
+
  
  <?php if ($this->Params->get("info_button", false)==true) { ?>
 

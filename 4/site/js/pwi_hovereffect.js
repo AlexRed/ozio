@@ -278,7 +278,14 @@ jQuery(document).ready(function ($)
 			/*<?php if ($this->Params->get("show_title", 1)) { ?>*/
 			// Always show our custom local album title
 			var localtitle = jQuery("<h3/>");
-			localtitle.text(album.album_local_title);
+			
+			<?php if ($this->Params->get("album_title_from", "menutitle")=="menutitle") { ?>
+				localtitle.append(album.album_local_title);
+			<?php }else{ ?>
+				localtitle.append(album.title);
+			<?php } ?>
+			
+			
 			figcaption.append(localtitle);
 			/*<?php } ?>*/
 
