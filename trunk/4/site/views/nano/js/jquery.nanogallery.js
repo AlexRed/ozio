@@ -1240,7 +1240,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
           var n=$t.data('index');
           if( n == undefined ) { return; }
           
-          if( gO.touchAnimation && !g_openNoDelay ) {
+          if( jQuery(window).width() > 768 && gO.touchAnimation && !g_openNoDelay ) {
             // automatically opens the touched thumbnail (to disply an image or to open an album)
             if( gO.touchAutoOpenDelay > 0 ) { 
               ThumbnailHoverOutAll();

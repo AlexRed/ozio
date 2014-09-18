@@ -8,8 +8,8 @@ jQuery( document ).ready(function( $ ) {
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
-		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")=="fixed"?$this->Params->get("ozio_nano_thumbnailHeight", "134"):"auto" ); ?>,
-		thumbnailWidth: <?php echo json_encode($this->Params->get("ozio_nano_thumbnailWidth", "200")); ?>,
+		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")!="auto"?$this->Params->get("ozio_nano_thumbnailHeight", "134"):"auto" ); ?>,
+		thumbnailWidth: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","autowidth")!="autowidth"?$this->Params->get("ozio_nano_thumbnailWidth", "200"):"auto" ); ?>,
 		maxItemsPerLine: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxItemsPerLine", "0"))); ?>,
 		maxWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxWidth", "0"))); ?>,
 		touchAnimation: 1,
@@ -89,6 +89,8 @@ jQuery( document ).ready(function( $ ) {
 		theme: <?php echo json_encode($this->Params->get("ozio_nano_theme", "clean")); ?>,
 		colorScheme: <?php echo json_encode($this->Params->get("ozio_nano_colorScheme", "light")); ?>,
 		colorSchemeViewer: <?php echo json_encode($this->Params->get("ozio_nano_colorSchemeViewer", "light")); ?>,
+		
+		imageTransition: <?php echo json_encode($this->Params->get("ozio_nano_imageTransition", "swipe")); ?>,
 
 		kind: <?php echo json_encode($this->Params->get("ozio_nano_kind", "picasa")); ?>,
 		userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "110359559620842741677")); ?>,

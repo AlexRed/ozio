@@ -29,4 +29,11 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 <?php } ?>
 
 <div id="nanoGallery" class="ozionanocontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>"></div>
+<?php 
+$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+if (!empty($testo_sotto_mappa)) {  ?>
+	<div class="ozio_nano_bottom_description">
+	<?php echo $testo_sotto_mappa; ?>
+	</div>
+<?php }?>
 

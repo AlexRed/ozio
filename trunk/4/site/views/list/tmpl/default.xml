@@ -28,6 +28,12 @@
 				<option value="1">JYES</option>
 			</field>
 
+				<field name="album_title_from" type="list" default="menutitle" label="COM_OZIOGALLERY3_ALBUM_TITLE_FROM_LBL" description="COM_OZIOGALLERY3_ALBUM_TITLE_FROM_DSC">
+					<option value="menutitle">COM_OZIOGALLERY3_ALBUM_TITLE_FROM_MENUTITLE</option>
+					<option value="albumtitle">COM_OZIOGALLERY3_ALBUM_TITLE_FROM_ALBUMTITLE</option>
+				</field>
+			
+			
 				<field name="menuitems_filter_type" type="list" default="0" label="COM_OZIOGALLERY3_FILTERINGTYPE_LBL" description="COM_OZIOGALLERY3_FILTERINGTYPE_DSC">
 					<option value="IN">COM_OZIOGALLERY3_INCLUSIVE</option>
 					<option value="NOT IN">COM_OZIOGALLERY3_EXCLUSIVE</option>
