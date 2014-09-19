@@ -170,6 +170,6 @@ width:22px;
 
 
 
-.labelDescription > span.labelImageTitle, .labelTitle > span.labelImageTitle{
+.labelDescription > span.labelImageTitle, .labelTitle > span.labelImageTitle, .labelDescription > span.labelNumPhotoTitle, .labelTitle > span.labelNumPhotoTitle{
 	vertical-align:baseline !important;
 }
