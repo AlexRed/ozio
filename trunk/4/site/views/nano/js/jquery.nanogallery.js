@@ -897,19 +897,19 @@ this.thumbImgHeight = 0;           // thumbnail image height
 		}
     var si=0;
     if( SettingsGetTnHeight() == 'auto' ) {
-      g_thumbSize=SettingsGetTnWidth()*g_tn.scale;
+      g_thumbSize=Math.ceil(SettingsGetTnWidth()*g_tn.scale);
       g_flickr.thumbSizeDir='width_';
     }
     else if( SettingsGetTnWidth() == 'auto' ) {
-        g_thumbSize=SettingsGetTnHeight()*g_tn.scale;
+        g_thumbSize=Math.ceil(SettingsGetTnHeight()*g_tn.scale);
       }
       else {
         if( SettingsGetTnWidth() > SettingsGetTnHeight() ) {
-          g_thumbSize=SettingsGetTnWidth()*g_tn.scale;
+          g_thumbSize=Math.ceil(SettingsGetTnWidth()*g_tn.scale);
           g_flickr.thumbSizeDir='width_';
         }
         else {
-          g_thumbSize=SettingsGetTnHeight()*g_tn.scale;
+          g_thumbSize=Math.ceil(SettingsGetTnHeight()*g_tn.scale);
         }
       }
 
@@ -2531,7 +2531,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
     for(var i=0; i<sizes.length; i++ ) {
       if( g_tn.settings.width[level][sizes[i]] == 'auto' ) {
         var sdir='height_';
-        var tsize=g_tn.settings.height[level][sizes[i]]*g_tn.scale;
+        var tsize=Math.ceil(g_tn.settings.height[level][sizes[i]]*g_tn.scale);
         var one=FlickrRetrieveOneImage(sdir, tsize, item );
         tn.url[level][sizes[i]]=one.url;
         tn.width[level][sizes[i]]=one.width;
@@ -2540,7 +2540,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
       else 
         if( g_tn.settings.height[level][sizes[i]] == 'auto' ) {
           var sdir='width_';
-          var tsize=g_tn.settings.width[level][sizes[i]]*g_tn.scale;
+          var tsize=Math.ceil(g_tn.settings.width[level][sizes[i]]*g_tn.scale);
           var one=FlickrRetrieveOneImage(sdir, tsize, item );
           tn.url[level][sizes[i]]=one.url;
           tn.width[level][sizes[i]]=one.width;
@@ -2548,10 +2548,10 @@ this.thumbImgHeight = 0;           // thumbnail image height
         }
         else {
           var sdir='height_';
-          var tsize=g_tn.settings.height[level][sizes[i]]*g_tn.scale;
+          var tsize=Math.ceil(g_tn.settings.height[level][sizes[i]]*g_tn.scale);
           if( g_tn.settings.width[level][sizes[i]] > g_tn.settings.height[level][sizes[i]] ) {
             sdir='width_';
-            tsize=g_tn.settings.width[level][sizes[i]]*g_tn.scale;
+            tsize=Math.ceil(g_tn.settings.width[level][sizes[i]]*g_tn.scale);
           }
           var one=FlickrRetrieveOneImage(sdir, tsize, item );
           tn.url[level][sizes[i]]=one.url;
@@ -2738,15 +2738,15 @@ this.thumbImgHeight = 0;           // thumbnail image height
   // ##########################
 
   function AddOneThumbSize(thumbSizes, v1, v2, c1, c2 ) {
-    var v=(v2*g_tn.scale)+c2;
+    var v=Math.ceil(v2*g_tn.scale)+c2;
     if( v1 == 'auto' ) {
-      v=(v2*g_tn.scale)+c2;
+      v=Math.ceil(v2*g_tn.scale)+c2;
     }
     else if( v2 == 'auto' ) {
-        v=(v1*g_tn.scale)+c1;
+        v=Math.ceil(v1*g_tn.scale)+c1;
       }
       else if( v1 > v2 ) {
-        v=(v1*g_tn.scale)+c1;
+        v=Math.ceil(v1*g_tn.scale)+c1;
       }
       
     if( thumbSizes.length > 0 ) {
@@ -3140,9 +3140,23 @@ this.thumbImgHeight = 0;           // thumbnail image height
         }
       }
       else {
-        if( g_tn.settings.width[level][sizes[i]] != 'auto' ) { tn.width[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].width; }
-        if( g_tn.settings.height[level][sizes[i]] != 'auto' ) { tn.height[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].height; }
-      }
+        if( g_tn.settings.width[level][sizes[i]] != 'auto' ) {
+          tn.width[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].width;
+        }
+        else {
+          var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
+          url=url.substring(0, url.lastIndexOf('/')) + '/';
+          tn.url[level][sizes[i]]=url+'h'+g_tn.settings.height[level][sizes[i]]+'/';
+        }
+        if( g_tn.settings.height[level][sizes[i]] != 'auto' ) { 
+          tn.height[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].height;
+        }
+        else {
+            var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
+            url=url.substring(0, url.lastIndexOf('/')) + '/';
+            tn.url[level][sizes[i]]=url+'w'+g_tn.settings.width[level][sizes[i]]+'/';
+        }
+	}
       // if( kind == 'image' || g_tn.settings.width.l1[sizes[i]] != 'auto' ) { tn.width.l1[sizes[i]]=data.media$group.media$thumbnail[i].width; }
       // if( kind == 'image' || g_tn.settings.height.l1[sizes[i]] != 'auto' ) { tn.height.l1[sizes[i]]=data.media$group.media$thumbnail[i].height; }
     }
@@ -3827,7 +3841,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
         }
 
         // by grief-of-these-days
-        if( item.thumbHeight > item.thumbWidth ) {
+        if( item.thumbImg().height > item.thumbImg().width ) {
           rowHasVertical = true;
         }
         else {
@@ -4433,11 +4447,11 @@ this.thumbImgHeight = 0;           // thumbnail image height
           switch( gO.thumbnailLabel.itemsCount) {
             case 'title':
               //sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
-              sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelImageTitle"></span>' + item.contentLength;
+              sTitle += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelNumPhotoTitle"></span>' + item.contentLength;
               break;
             case 'description':
               //sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + item.contentLength + g_i18nTranslations.thumbnailLabelItemsCountPart2;
-              sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelImageTitle"></span>' + item.contentLength;
+              sDesc += ' ' + g_i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelNumPhotoTitle"></span>' + item.contentLength;
               break;
             }
           }
@@ -4470,15 +4484,15 @@ this.thumbImgHeight = 0;           // thumbnail image height
         if( item == undefined || jQuery(instance.images[0].img).attr('src') == g_emptyGif ) { return; }    // also fired for blank image --> ignore
         var b=false;
         if( item.thumbImg().height != instance.images[0].img.naturalHeight ) {
-          item.thumbImgHeight=instance.images[0].img.naturalHeight;
-          item.thumbImgWidth=instance.images[0].img.naturalWidth;
+//          item.thumbImgHeight=instance.images[0].img.naturalHeight;
+//          item.thumbImgWidth=instance.images[0].img.naturalWidth;
           item.thumbSetImgHeight(instance.images[0].img.naturalHeight);
           item.thumbSetImgWidth(instance.images[0].img.naturalWidth);
           b=true;
         }
         if( item.thumbImg().width != instance.images[0].img.naturalWidth ) {
-          item.thumbImgHeight=instance.images[0].img.naturalHeight;
-          item.thumbImgWidth=instance.images[0].img.naturalWidth;
+//          item.thumbImgHeight=instance.images[0].img.naturalHeight;
+//          item.thumbImgWidth=instance.images[0].img.naturalWidth;
           item.thumbSetImgHeight(instance.images[0].img.naturalHeight);
           item.thumbSetImgWidth(instance.images[0].img.naturalWidth);
           b=true;
