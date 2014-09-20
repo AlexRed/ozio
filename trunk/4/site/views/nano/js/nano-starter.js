@@ -42,7 +42,7 @@ jQuery( document ).ready(function( $ ) {
 									'descriptionMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
 									'hideIcons'=>intval($this->Params->get("ozio_nano_thumbnailLabel_hideIcons", "1")),
 									'align'=>$this->Params->get("ozio_nano_thumbnailLabel_align", "left"),
-									'itemsCount'=>$this->Params->get("ozio_nano_thumbnailLabel_itemsCount", "title")
+									'itemsCount'=>$this->Params->get("ozio_nano_thumbnailLabel_itemsCount", "none")
 							)); 
 						?>,
 						
