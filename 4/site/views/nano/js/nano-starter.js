@@ -9,7 +9,7 @@ jQuery( document ).ready(function( $ ) {
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
 		thumbnailHeight: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","auto")!="auto"?$this->Params->get("ozio_nano_thumbnailHeight", "134"):"auto" ); ?>,
-		thumbnailWidth: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","autowidth")!="autowidth"?$this->Params->get("ozio_nano_thumbnailWidth", "200"):"auto" ); ?>,
+		thumbnailWidth: <?php echo json_encode( $this->Params->get("ozio_nano_thumbnailHeight_kind","autowidth")!="autowidth"?$this->Params->get("ozio_nano_thumbnailWidth", "226"):"auto" ); ?>,
 		maxItemsPerLine: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxItemsPerLine", "0"))); ?>,
 		maxWidth: <?php echo json_encode(intval($this->Params->get("ozio_nano_maxWidth", "0"))); ?>,
 		touchAnimation: 1,
@@ -40,9 +40,9 @@ jQuery( document ).ready(function( $ ) {
 									'displayDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'titleMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
 									'descriptionMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
-									'hideIcons'=>intval($this->Params->get("ozio_nano_thumbnailLabel_hideIcons", "0")),
+									'hideIcons'=>intval($this->Params->get("ozio_nano_thumbnailLabel_hideIcons", "1")),
 									'align'=>$this->Params->get("ozio_nano_thumbnailLabel_align", "left"),
-									'itemsCount'=>$this->Params->get("ozio_nano_thumbnailLabel_itemsCount", "none")
+									'itemsCount'=>$this->Params->get("ozio_nano_thumbnailLabel_itemsCount", "title")
 							)); 
 						?>,
 						
@@ -55,8 +55,8 @@ jQuery( document ).ready(function( $ ) {
 						
 						
 		galleryFullpageButton:<?php echo json_encode($this->Params->get("ozio_nano_galleryFullpageButton", 0)==1); ?>,
-		thumbnailGutterWidth:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterWidth", "2"))); ?>,
-		thumbnailGutterHeight:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterHeight", "2"))); ?>,
+		thumbnailGutterWidth:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterWidth", "5"))); ?>,
+		thumbnailGutterHeight:<?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailGutterHeight", "5"))); ?>,
 		thumbnailAlignment:<?php echo json_encode($this->Params->get("ozio_nano_thumbnailAlignment", "center")); ?>,
 						
 		showInfoBoxButton: <?php echo json_encode(intval($this->Params->get("info_button", "1"))==1); ?>,
