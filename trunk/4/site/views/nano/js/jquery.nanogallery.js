@@ -4108,6 +4108,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
         if( jQuery($image).attr('src') == g_emptyGif ) {
           var idx=jQuery(this).data('index');
           // jQuery($image).attr('src',gI[idx].thumbsrc);
+		  jQuery($image).attr('src','');
           jQuery($image).attr('src',gI[idx].thumbImg().src);
         }
     });
@@ -4358,6 +4359,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
             if( gO.thumbnailLazyLoad ) {
               if( !endInViewportTest ) {
                 if( inViewport($newDiv, g_tn.lazyLoadTreshold) ) {
+				  $newDiv.find('img').attr('src','');
                   $newDiv.find('img').attr('src',item.thumbImg().src);
                   startInViewportTest=true;
                 }
@@ -8531,27 +8533,8 @@ colors = jQuery.Color.names = {
 })( jQuery );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*!
- * imagesLoaded PACKAGED v3.1.5
+ * imagesLoaded PACKAGED v3.1.8
  * JavaScript is all like "You images are done yet or what?"
  * MIT License
  */
@@ -8571,7 +8554,7 @@ colors = jQuery.Color.names = {
 	 * Class for managing events.
 	 * Can be extended to provide event functionality in other classes.
 	 *
-	 * @class EventEmitter Manages event registering and emitting.
+	 * @class ngEventEmitter Manages event registering and emitting.
 	 */
 	function ngEventEmitter() {}
 
@@ -8686,7 +8669,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|RegExp} evt Name of the event to attach the listener to.
 	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.addListener = function addListener(evt, listener) {
 		var listeners = this.getListenersAsObject(evt);
@@ -8716,7 +8699,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|RegExp} evt Name of the event to attach the listener to.
 	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.addOnceListener = function addOnceListener(evt, listener) {
 		return this.addListener(evt, {
@@ -8735,7 +8718,7 @@ colors = jQuery.Color.names = {
 	 * You need to tell it what event names should be matched by a regex.
 	 *
 	 * @param {String} evt Name of the event to create.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.defineEvent = function defineEvent(evt) {
 		this.getListeners(evt);
@@ -8746,7 +8729,7 @@ colors = jQuery.Color.names = {
 	 * Uses defineEvent to define multiple events.
 	 *
 	 * @param {String[]} evts An array of event names to define.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.defineEvents = function defineEvents(evts) {
 		for (var i = 0; i < evts.length; i += 1) {
@@ -8761,7 +8744,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|RegExp} evt Name of the event to remove the listener from.
 	 * @param {Function} listener Method to remove from the event.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.removeListener = function removeListener(evt, listener) {
 		var listeners = this.getListenersAsObject(evt);
@@ -8794,7 +8777,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
 	 * @param {Function[]} [listeners] An optional array of listener functions to add.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.addListeners = function addListeners(evt, listeners) {
 		// Pass through to manipulateListeners
@@ -8809,7 +8792,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
 	 * @param {Function[]} [listeners] An optional array of listener functions to remove.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.removeListeners = function removeListeners(evt, listeners) {
 		// Pass through to manipulateListeners
@@ -8826,7 +8809,7 @@ colors = jQuery.Color.names = {
 	 * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
 	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
 	 * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
 		var i;
@@ -8869,7 +8852,7 @@ colors = jQuery.Color.names = {
 	 * You can also pass a regex to remove all events that match it.
 	 *
 	 * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.removeEvent = function removeEvent(evt) {
 		var type = typeof evt;
@@ -8914,7 +8897,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
 	 * @param {Array} [args] Optional array of arguments to be passed to each listener.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.emitEvent = function emitEvent(evt, args) {
 		var listeners = this.getListenersAsObject(evt);
@@ -8959,7 +8942,7 @@ colors = jQuery.Color.names = {
 	 *
 	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
 	 * @param {...*} Optional additional arguments to be passed to each listener.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.emit = function emit(evt) {
 		var args = Array.prototype.slice.call(arguments, 1);
@@ -8972,7 +8955,7 @@ colors = jQuery.Color.names = {
 	 * after execution. This value defaults to true.
 	 *
 	 * @param {*} value The new value to check for when executing listeners.
-	 * @return {Object} Current instance of ngEventEmitter for chaining.
+	 * @return {Object} Current instance of EventEmitter for chaining.
 	 */
 	proto.setOnceReturnValue = function setOnceReturnValue(value) {
 		this._onceReturnValue = value;
@@ -9109,7 +9092,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( this );
 
 /*!
- * imagesLoaded v3.1.5
+ * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
  * MIT License
  */
@@ -9131,7 +9114,7 @@ if ( typeof define === 'function' && define.amd ) {
     // CommonJS
     module.exports = factory(
       window,
-      require('ngEventEmitter'),
+      require('wolfy87-eventemitter'),
       require('eventie')
     );
   } else {
@@ -9143,7 +9126,7 @@ if ( typeof define === 'function' && define.amd ) {
     );
   }
 
-})( this,
+})( window,
 
 // --------------------------  factory -------------------------- //
 
@@ -9196,7 +9179,7 @@ function makeArray( obj ) {
    * @param {Function} onAlways - callback function
    */
   function ngImagesLoaded( elem, options, onAlways ) {
-    // coerce ngImagesLoaded() without new, to be new ngImagesLoaded()
+    // coerce ImagesLoaded() without new, to be new ImagesLoaded()
     if ( !( this instanceof ngImagesLoaded ) ) {
       return new ngImagesLoaded( elem, options );
     }
@@ -9248,7 +9231,8 @@ function makeArray( obj ) {
       }
       // find children
       // no non-element nodes, #143
-      if ( !elem.nodeType || !( elem.nodeType === 1 || elem.nodeType === 9 ) ) {
+      var nodeType = elem.nodeType;
+      if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
         continue;
       }
       var childElems = elem.querySelectorAll('img');
@@ -9442,9 +9426,6 @@ function makeArray( obj ) {
   return ngImagesLoaded;
 
 });
-
-
-
 
 
 
