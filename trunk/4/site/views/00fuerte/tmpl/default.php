@@ -184,3 +184,5 @@ if (!empty($testo_sotto_mappa)) {  ?>
     </div>
 </div>
 <?php }?>    
+
+<div style="display:none;">ozio_gallery_fuerte</div>
