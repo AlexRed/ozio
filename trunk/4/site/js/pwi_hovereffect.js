@@ -206,6 +206,7 @@ jQuery(document).ready(function ($)
 			
 			
 			var album_nano_options={
+				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_local_url:'<?php echo JRoute::_($link); ?>',
 				thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
 				g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
@@ -352,6 +353,42 @@ jQuery(document).ready(function ($)
 		/*
 		 * Nano
 		 */
+
+		var nanoAlbums=[];
+		 
+		function finalizeAlbumNano(){
+			if (<?php echo json_encode($this->Params->get("nano_albums", "all")=="all"); ?>){
+				for (var i=0;i<nanoAlbums.length;i++){
+					var author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'});
+					jQuery("#container_pwi_list > ul").append(author);
+					addAlbum(nanoAlbums[i],author);
+					
+					
+				}
+			}else{
+				//prendo l'ultimo
+				var last_album=null;
+				for (var i=0;i<nanoAlbums.length;i++){
+					if (last_album===null || parseInt(last_album.timestamp)<parseInt(nanoAlbums[i].timestamp)  ){
+						last_album=nanoAlbums[i];
+					}
+				}
+				nanoAlbums=[];//lo svuoto
+				if (last_album!==null){
+					last_album.album_local_url=last_album.album_real_local_url;
+					var author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'});
+					jQuery("#container_pwi_list > ul").append(author);
+					addAlbum(last_album,author);
+				}
+			
+			}
+		}
+		 
+		function addAlbumNano(album){
+			nanoAlbums.push(album);
+		}
+		 		 
+		 
 		function OnNanoBeforeSend(jqXHR, settings)
 		{
 			document.body.style.cursor = "wait";
@@ -401,14 +438,11 @@ jQuery(document).ready(function ($)
 									'timestamp':data.gphoto$timestamp.$t,
 									'numphotos':data.gphoto$numphotos.$t,
 									'album_local_url':context.album_local_url+deeplink,
-									'album_local_title':itemTitle
+									'album_local_title':context.album_local_title,
+									'album_real_local_url':context.album_local_url
 								};
 				  			
-								jQuery("#container_pwi_list > ul").append(
-									author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
-								);
-								
-								addAlbum(album,author);
+							    addAlbumNano(album);
 				  			
 			        }
 			        
@@ -454,22 +488,19 @@ jQuery(document).ready(function ($)
 									'timestamp':(item.date_update*1000),
 									'numphotos':item.photos,
 									'album_local_url':context.album_local_url+deeplink,
-									'album_local_title':itemTitle
+									'album_local_title':context.album_local_title,
+									'album_real_local_url':context.album_local_url
 								};
 				  			
-								jQuery("#container_pwi_list > ul").append(
-									author = jQuery("<li/>", {'class':'ozio-he-author','style':'width:<?php echo $this->Params->get("images_size", 180); ?>px'})
-								);
+							    addAlbumNano(album);
 								
-								addAlbum(album,author);
-			        	  
 			        	  
 			        	  
 			          }
                  });
 				
 			}
-			
+			finalizeAlbumNano();
 		}
 
 		function OnNanoError(jqXHR, textStatus, error)

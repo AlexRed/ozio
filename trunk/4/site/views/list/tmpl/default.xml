@@ -15,6 +15,13 @@
 			</field>
 
 			<field name="images_size" type="text" label="COM_OZIOGALLERY3_IMAGES_SIZE_LBL" description="COM_OZIOGALLERY3_IMAGES_SIZE_DSC" default="180" />
+
+			<field name="nano_albums" type="radio" label="COM_OZIOGALLERY3_NANO_ALBUMS_LBL" description="COM_OZIOGALLERY3_NANO_ALBUMS_DSC" default="all">
+				<option value="all">COM_OZIOGALLERY3_NANO_ALBUMS_ALL</option>
+				<option value="last">COM_OZIOGALLERY3_NANO_ALBUMS_LAST</option>
+			</field>
+
+
 			<field name="show_title" type="radio" label="COM_OZIOGALLERY3_SHOW_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_TITLE_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
