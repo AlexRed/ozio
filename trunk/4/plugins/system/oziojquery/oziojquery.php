@@ -246,6 +246,10 @@ class plgSystemOziojquery extends JPlugin {
         }	
 		
 		// jQuery Migrate
+		$this->_jqmigratepath = JURI::root(true).'/media/jui/js/jquery-migrate'.$jQueryCompressed.'.js';
+		if (!empty($this->_jqmigratepath)) {
+			$doc->addScript("OZJQUERY_JQMIGRATELIB");	
+		}	
 		/*
         $migrateVersion = $this->params->get('migrateversion'.$suffix, 'none');
         if ($migrateVersion != 'none') {

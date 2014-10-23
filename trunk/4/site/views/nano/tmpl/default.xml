@@ -136,6 +136,44 @@
 				<option value="title">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ITEMSCOUNT_TITLE</option>
 				<option value="description">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_ITEMSCOUNT_DESCRIPTION</option>
 			</field>
+
+			<field type="radio" name="ozio_nano_viewerToolbar_display" default="1"
+				label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_DISPLAY_LBL"
+				description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_DISPLAY_DSC"
+				class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			
+			
+			<field type="list" name="ozio_nano_viewerToolbar_standard" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STANDARD_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_STANDARD_DSC"  multiple="true" >
+				<option value="minimizeButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_MINIMIZE</option>
+				<option value="previousButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_PREVIOUS</option>
+				<option value="pageCounter">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_PAGECOUNTER</option>
+				<option value="nextButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_NEXT</option>
+				<option value="playPauseButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_PLAYPAUSE</option>
+				<option value="fullscreenButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_FULLSCREEN</option>
+				<option value="infoButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_INFO</option>
+				<option value="shareButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_SHARE</option>
+				<option value="linkOriginalButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_LINKORIGINAL</option>
+				<option value="closeButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_CLOSE</option>
+				<option value="label">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_LABEL</option>
+			</field>			
+
+			<field type="list" name="ozio_nano_viewerToolbar_minimized" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_MINIMIZED_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_MINIMIZED_DSC"   multiple="true" >
+				<option value="minimizeButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_MINIMIZE</option>
+				<option value="previousButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_PREVIOUS</option>
+				<option value="pageCounter">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_PAGECOUNTER</option>
+				<option value="nextButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_NEXT</option>
+				<option value="playPauseButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_PLAYPAUSE</option>
+				<option value="fullscreenButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_FULLSCREEN</option>
+				<option value="infoButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_INFO</option>
+				<option value="shareButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_SHARE</option>
+				<option value="linkOriginalButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_LINKORIGINAL</option>
+				<option value="closeButton">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_BTN_CLOSE</option>
+				<option value="label">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_LABEL</option>
+			</field>			
+
 			
 			<field type="list" name="ozio_nano_viewerToolbar_position" label="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_DSC" default="bottom">
 				<option value="top">COM_OZIOGALLERY3_OZIO_NANO_VIEWERTOOLBAR_POSITION_TOP</option>

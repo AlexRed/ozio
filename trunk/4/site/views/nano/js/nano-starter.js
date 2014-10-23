@@ -46,12 +46,30 @@ jQuery( document ).ready(function( $ ) {
 							)); 
 						?>,
 						
-		viewerToolbar: <?php echo json_encode(
+		viewerToolbar: <?php 
+							$standard=$this->Params->get("ozio_nano_viewerToolbar_standard", array());
+							$minimized=$this->Params->get("ozio_nano_viewerToolbar_minimized", array());
+							if (empty($standard)){
+								$standard=array('minimizeButton','previousButton','pageCounter','nextButton','playPauseButton','fullscreenButton','infoButton','shareButton','linkOriginalButton','closeButton','label');
+							}
+							if (empty($minimized)){
+								$minimized=array('minimizeButton','label');
+							}
+		
+		
+							echo json_encode(
 							array(
+									'display'=>($this->Params->get("ozio_nano_viewerToolbar_display", 1)==1),
 									'position'=>$this->Params->get("ozio_nano_viewerToolbar_position", "bottom"),
 									'style'=>$this->Params->get("ozio_nano_viewerToolbar_style", "innerImage"),
+									'autoMinimize'=>800,
+									'standard'=>implode(',',$standard),
+									'minimized'=>implode(',',$minimized)
+									
 							)); 
 						?>,
+						
+		RTL: <?php $lang = JFactory::getLanguage(); echo json_encode($lang->isRTL()); ?>,
 						
 						
 		galleryFullpageButton:<?php echo json_encode($this->Params->get("ozio_nano_galleryFullpageButton", 0)==1); ?>,
