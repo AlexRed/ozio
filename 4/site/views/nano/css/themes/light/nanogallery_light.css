@@ -226,6 +226,31 @@
 	font-variant: normal;
 	text-transform: none;
 }
+.nanogallery_theme_light .nanoGalleryBreadcrumb .separatorRTL {
+	margin: 0px 5px;
+	display: inline;
+	cursor:pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+.nanogallery_theme_light .nanoGalleryBreadcrumb .separatorRTL:hover{
+	color: #fff;
+}
+.nanogallery_theme_light .nanoGalleryBreadcrumb .separatorRTL:before {
+	content: '\e81f';	/* .icon-right-big */
+	margin-left: .2em;
+	margin-right: .3em;
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+}
 
 
 .nanogallery_theme_light .nanoGalleryBreadcrumb .loading{
@@ -331,7 +356,7 @@
 	-o-box-sizing: border-box;
 }
 
-.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelImageTitle, .nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelImageTitle{
 	color:#eee;
   left: 0px;
 	overflow:hidden;
@@ -342,10 +367,10 @@
 	-moz-box-sizing: border-box;
 	-o-box-sizing: border-box;
 }
-.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelImageTitle:before, .nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelImageTitle:before{
 	content: '\e803';	/* .icon-picture */
-	/*margin-left: .2em;*/
-	margin-right: .3em;
+	margin-left: .2em;
+	margin-right: .2em;
 	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
 	font-family: "nano_icon_font3";
 	font-style: normal;
@@ -375,10 +400,25 @@
 	-moz-box-sizing: border-box;
 	-o-box-sizing: border-box;
 }
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span ,
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelDescription > span {
+	color:rgba(34, 34, 34, 0.75);
+  background-color:#eee;
+  border: 0px solid #eee;
+  border-radius: 2px;
+  padding:0px 4px;
+	Text-Shadow: none;
+	vertical-align: middle;
+	display: inline;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
 .nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle:before{
 	content: '\e815';	/* .icon-folder-empty */
-	/*margin-left: .2em;*/
-	margin-right: .3em;
+	margin-left: .2em;
+	margin-right: .2em;
 	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
 	font-family: "nano_icon_font3";
 	font-style: normal;
@@ -624,7 +664,6 @@
 	display:inline-block;
 	vertical-align:middle;
 	overflow:hidden;
-	min-width:50px;
 	background:rgba(4,4,4,0.7);
   color:#eee;
 	margin: 1px;
@@ -723,6 +762,14 @@
 	content: '\e82c';	/* icon-info */
 }
 
+.nanogallery_theme_light .nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';	
+}
+
+.nanogallery_theme_light .nanoGalleryViewer .toolbar .linkOriginalButton:after{
+	content: '\e80d';	/* icon-link-ext */
+}
+
 .nanogallery_theme_light .nanoGalleryViewer .toolbar .viewToolbarButton:after{
 	content: '\e817';	/* icon-menu */
 }
@@ -743,8 +790,7 @@
 }
 
 .nanogallery_theme_light .nanoGalleryViewer .toolbar .label{
-  padding:3px 20px 3px 10px;
-	min-width: 10px;
+  padding:3px 10px 3px 10px;
 	border-left: 0px solid #000;
 	overflow: hidden;
 	display: table-cell;
@@ -790,12 +836,12 @@
   height:0px;
   background:#111;
   color:#e00;
-  padding:5px;
+  padding:0px;
   margin:2px;
 }
 .nanogallery_theme_light .nanoGalleryConsoleParent p {
   color:#e00;
-  padding:2px;
+  padding:1px;
   margin:0px;
 }
 

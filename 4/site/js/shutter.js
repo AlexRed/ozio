@@ -457,7 +457,7 @@ gi_ozio_intenseViewer=false;
 							scrollwheel: false
 					     });	
 					     var marker = new google.maps.Marker({
-					    	    position: latLng,
+					    	    position: latLng
 					    	});
 
 					     marker.setMap(map);				     
@@ -480,7 +480,7 @@ gi_ozio_intenseViewer=false;
 					}			
 								
 			
-				},
+				}
 			  }	    
 		  });
 		},
@@ -739,7 +739,7 @@ gi_ozio_intenseViewer=false;
 
 		photo_wall_nano: '#ozio-pw-nano',
 		photo_wall: '#photo-wall',
-		photo_wall_list: '#photo-wall-list',
+		photo_wall_list: '#photo-wall-list'
 	};
 
 	/* Theme Specific Options

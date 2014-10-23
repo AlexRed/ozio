@@ -1919,7 +1919,7 @@ if (loadSlide > base.options.slides.length) return;
 		thumb_links: 1, // Individual thumb links for each slide
 		thumbnail_navigation: 0, // Thumbnail navigation
 		square: 0, // immagini quadrate
-		big: 0, // dimensioni dell'immagine ingrandita
+		big: 0 // dimensioni dell'immagine ingrandita
 
 	};
 

@@ -164,6 +164,10 @@ class plgContentOzio extends JPlugin
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/nanogallery.css");
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/themes/clean/nanogallery_clean.css");
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/themes/light/nanogallery_light.css");
+		
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.css");
+		
 		//$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.css?v=2.1.4");
 		//$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5");
 
@@ -177,7 +181,9 @@ class plgContentOzio extends JPlugin
 		}
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
 
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/transit/jquery.transit.min.js");
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.js");
+		
+		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/transit/jquery.transit.min.js");
 		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/hammer.js/hammer.min.js");
 		
 		//$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/imagesloaded/imagesloaded.pkgd.min.js");

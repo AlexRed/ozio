@@ -327,7 +327,7 @@ jQuery(document).ready(function ($)
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
 			var album={
 				'title':result.feed.title.$t,
-				'thumb_url':$thumbnail0.url,
+				'thumb_url':result.feed.icon.$t/*$thumbnail0.url*/,
 				'thumb_height':$thumbnail0.height,
 				'thumb_width':$thumbnail0.width,
 				'timestamp':result.feed.gphoto$timestamp.$t,

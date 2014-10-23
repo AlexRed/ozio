@@ -52,6 +52,7 @@ class OzioGalleryView00fuerte extends JViewLegacy
 		if ($this->Params->get("load_css_bootstrap", 0)==1){
 			JHtmlBootstrap::loadCSS();
 		}
+		
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
 		
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");

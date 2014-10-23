@@ -170,6 +170,115 @@ width:22px;
 
 
 
+
+
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+	color:#eee !important;
+	background-color:inherit !important;
+	
+	margin: 0px 2px;
+  left: 0px;
+	overflow:hidden;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+  padding: 2px;
+	color:#eee !important;
+	background-color:inherit !important;
+  left: 0px;
+	overflow:hidden;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+	color:#eee !important;
+	background-color:inherit !important;
+  left: 0px;
+	overflow:hidden;
+	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
 .labelDescription > span.labelImageTitle, .labelTitle > span.labelImageTitle, .labelDescription > span.labelNumPhotoTitle, .labelTitle > span.labelNumPhotoTitle{
 	vertical-align:baseline !important;
+}
+
+.nanoGalleryViewer .toolbar{
+	overflow:visible !important;
 }
