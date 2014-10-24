@@ -98,7 +98,7 @@ class plgContentOzio extends JPlugin
 			JHtmlBootstrap::loadCSS();
 		}
 
-		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
+		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/supersized.js");
 		$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
 					

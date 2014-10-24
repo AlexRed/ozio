@@ -6329,7 +6329,10 @@ this.thumbImgHeight = 0;           // thumbnail image height
 			 }
 			 html+='					</div>';
 			  		
-			  $gE.conInfoBox=jQuery(html).appendTo('body');
+			if ($gE.conInfoBox){
+			  }else{
+					$gE.conInfoBox=jQuery(html).appendTo('body');
+			  }
 			  
 			  $gE.conInfoBox.css('background-image','url(\''+gO.infoboxBgUrl+'\')');
 /*	  
@@ -6389,6 +6392,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
 	    },
 	    callbacks: {
 	    	open: function(){
+			
 				var highest_index=getHighestZIndex( $gE.conVw );
 				var $mfpwrap= $gE.conInfoBox.closest('.mfp-wrap');
 				var $mfpbg= jQuery('.mfp-bg');
@@ -6465,8 +6469,9 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
 				}
 	    	},
 	    	afterClose: function() {
-	        	$gE.conInfoBox.remove();
-	        	$gE.conInfoBox=null;
+	        	//$gE.conInfoBox.remove();
+	        	//$gE.conInfoBox=null;
+				//jQuery('div.nanoGalleryInfoBox').remove();
 	        }
 	      }	    
 	  });	  

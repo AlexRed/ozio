@@ -50,7 +50,7 @@ jQuery( document ).ready(function( $ ) {
 							$standard=$this->Params->get("ozio_nano_viewerToolbar_standard", array());
 							$minimized=$this->Params->get("ozio_nano_viewerToolbar_minimized", array());
 							if (empty($standard)){
-								$standard=array('minimizeButton','previousButton','pageCounter','nextButton','playPauseButton','fullscreenButton','infoButton','shareButton','linkOriginalButton','closeButton','label');
+								$standard=array('minimizeButton','previousButton','pageCounter','nextButton','playPauseButton','fullscreenButton','infoButton','shareButton','closeButton','label');
 							}
 							if (empty($minimized)){
 								$minimized=array('minimizeButton','label');

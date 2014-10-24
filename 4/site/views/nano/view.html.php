@@ -67,7 +67,7 @@ class OzioGalleryViewNano extends JViewLegacy
 			}
 		}
 
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
+		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
 
 		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.js");
 		
