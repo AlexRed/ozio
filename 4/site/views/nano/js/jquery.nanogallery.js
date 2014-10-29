@@ -7534,7 +7534,6 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
   }
   
   function CloseInternalViewer( setLocationHash ) {
-
     if( g_viewerImageIsChanged ) {
       $gE.vwContent.find('*').stop(true,true);
       //return;
@@ -7557,9 +7556,10 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
       }
       g_containerViewerDisplayed=false;
 
-      if( gO.galleryFullpageButton && !$gE.base.hasClass('fullpage') ) {      // avoid displaying scrollbar when gallery is in fullpage mode
+	  
+      //if( gO.galleryFullpageButton && !$gE.base.hasClass('fullpage') ) {      // avoid displaying scrollbar when gallery is in fullpage mode
         ScrollbarSetVisible();
-      }
+      //}
       
       $gE.conVwCon.hide(0).off().show(0).html('').remove('');
       //$gE.conVwCon.off().remove();
