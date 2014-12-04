@@ -130,8 +130,7 @@ jQuery( document ).ready(function( $ ) {
   }
 
   function PicasaRetrieveItems( userID ) {
-	url = 'http://picasaweb.google.com/data/feed/api/user/'+userID+'?alt=json&kind=album&thumbsize='+g_picasaThumbSize;
-	jQuery.ajaxSetup({ cache: false });
+	url = 'https://photos.googleapis.com/data/feed/api/user/'+userID+'?alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize;
 	jQuery.support.cors = true;
 	url = url ;
 

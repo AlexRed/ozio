@@ -223,7 +223,7 @@ jQuery(document).ready(function ($)
  	var remainingphotos=0;
  	var max_remainingphotos=1;
  	var strings = {
- 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//picasaweb.google.com/data/feed/api/user/"
+ 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//photos.googleapis.com/data/feed/api/user/"
  		}; 	
 	var markerCluster;
 	var oms;
@@ -389,7 +389,7 @@ jQuery(document).ready(function ($)
 		for (var i=0;i<g_list_nano_options.length;i++){
 			var url='';
 			if (g_list_nano_options[i].kind=='picasa'){
-				url = 'http://picasaweb.google.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
+				url = 'https://photos.googleapis.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
 			}else{
 				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 			}

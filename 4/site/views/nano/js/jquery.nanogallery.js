@@ -2872,7 +2872,7 @@ this.thumbImgHeight = 0;           // thumbnail image height
       // albums
       //url = g_picasa.url() + 'user/'+gO.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+g_picasa.thumbSize;
       // url = g_picasa.url() + 'user/'+gO.userID+'?alt=json&kind=album&imgmax=d&thumbsize=320';
-      url = g_picasa.url() + 'user/'+gO.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+thumbSizes;
+      url = g_picasa.url() + 'user/'+gO.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+thumbSizes;
     }
     else {
       // photos
