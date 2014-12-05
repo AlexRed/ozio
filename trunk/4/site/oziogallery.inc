@@ -35,7 +35,10 @@ if (class_exists("ZipArchive"))
 }else{
 	//die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
 	//http://old.phpconcept.net/pclzip/man/en/index.php
+	if (!defined('PCLZIP_READ_BLOCK_SIZE')){
 	require_once('pclzip.lib.php');
+	}
+
 	$archive = new PclZip($name . ".zip");
 	$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
 	if ($list == 0) {
