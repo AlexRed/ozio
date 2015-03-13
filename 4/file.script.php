@@ -209,7 +209,7 @@ class Com_OzioGallery3InstallerScript
 	{
 		echo '<p>Congratulations! Ozio Gallery 4 Component for Joomla 3! has been installed successfully</p>';
 		echo "<p><img src=\"http://www.opensourcesolutions.es/logo/responsive4.jpg" . "\"></p>";
-		echo "<p>Take a look to 'Nano': our new, responsive and adaptive skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
+		echo "<p>Take a look to 'jGallery': our new, responsive, adaptive and zoom skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
 
 		echo(
 		'<style type="text/css">' .
@@ -249,7 +249,7 @@ class Com_OzioGallery3InstallerScript
 			<img src="' . JUri::base(true) . '/components/com_oziogallery3/assets/images/buy_now.jpg" border="0" alt="Buy now">
 			</a>
 			</div>
-			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature [Ozio Gallery by joomla.it] below each gallery, by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
+			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature below each gallery by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
 			' . "</p>";
 		}
 	}

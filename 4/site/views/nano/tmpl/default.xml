@@ -75,7 +75,7 @@
 			<field type="text" name="ozio_nano_thumbnailGutterWidth" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERWIDTH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERWIDTH_DSC" size="6" default="5"/>
 			<field type="text" name="ozio_nano_thumbnailGutterHeight" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERHEIGHT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILGUTTERHEIGHT_DSC" size="6" default="5"/>
 
-			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="scale120"  multiple="true" >
+			<field type="list" name="ozio_nano_thumbnailHoverEffect" label="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DSC" default="imageScale150"  multiple="true" >
 				<option value="none">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_NONE</option>
 				<option value="slideUp">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEUP</option>
 				<option value="slideDown">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_SLIDEDOWN</option>
@@ -114,10 +114,8 @@
 				<option value="labelAppearSplit4">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_LABELAPPEARSPLIT4</option>
 				<option value="imageSplitVert">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGESPLITVERT</option>
 				<option value="imageSplit4">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGESPLIT4</option>
-				
 				<option value="descriptionAppear">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_DESCRIPTIONAPPEAR</option>
 				<option value="imageScaleIn80">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILHOVEREFFECT_IMAGESCALEIN80</option>
-				
 			</field>
 			
 			<field type="list" name="ozio_nano_theme" label="COM_OZIOGALLERY3_OZIO_NANO_THEME_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_THEME_DSC" default="clean">
