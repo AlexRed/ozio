@@ -1029,6 +1029,8 @@
 				'album_local_title':settings.album_local_title,
 				'album_id':settings.album_id,
 				'manual_date':settings.manual_date
+				
+				
 			});
 
 			return $self;

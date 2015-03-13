@@ -41,10 +41,15 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 	protected function getOptions()
 	{
 		$non_printable_separator="\x16";
+		$new_non_printable_separator="|!|";
 		$options = array();
 		if (!empty($this->value) && is_array($this->value)){
 			foreach ($this->value as $v){
-				list($id,$title)=explode($non_printable_separator,$v);
+				if (strpos($v,$non_printable_separator)!==FALSE){
+					list($id,$title)=explode($non_printable_separator,$v);
+				}else{
+					list($id,$title)=explode($new_non_printable_separator,$v);
+				}
 				$tmp = JHtml::_('select.option', $v,$title);
 	
 				$options[] = $tmp;

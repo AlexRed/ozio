@@ -390,6 +390,7 @@ class plgSystemOziojquery extends JPlugin {
 			$headerdata = $doc->getHeadData();
 			unset($headerdata['scripts']["OZJQUERY_JQLIB"]);
 			unset($headerdata['scripts']["OZJQUERY_JQNOCONFLICT"]);
+			unset($headerdata['scripts']["OZJQUERY_JQMIGRATELIB"]);
 			$doc->setHeadData($headerdata);	
 			return;
 		}
@@ -586,7 +587,6 @@ class plgSystemOziojquery extends JPlugin {
 	}
 		
 	function onAfterRender() {
-		
 		if (!$this->_enabled) {
 			return;
 		}

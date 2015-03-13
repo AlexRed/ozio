@@ -15,6 +15,7 @@ jQuery( document ).ready(function( $ ) {
 	var g_flickrApiKey="2f0e634b471fdb47446abcb9c5afebdc";
 	var g_picasaThumbSize=64;
 	var non_printable_separator="\x16";
+	var new_non_printable_separator="|!|";
 	
 	$('#jform_params_ozio_nano_kind').change(function() {
 		gi_update_listnanoalbums();
@@ -31,7 +32,12 @@ jQuery( document ).ready(function( $ ) {
 	
 	var ozio_nano_albumList_orig_values=[];
 	function gi_update_listnanoalbums(){
-		var kind=$('#jform_params_ozio_nano_kind').val();
+		var nano_kind=$('#jform_params_ozio_nano_kind');
+		var kind='picasa';
+		if (nano_kind.length>0){
+			var kind=nano_kind.val();
+		}	
+		
 		albumvisibility='public';
 		if (kind=='picasa'){
 			$('#jform_params_albumvisibility').closest('.control-group').show();
@@ -52,7 +58,11 @@ jQuery( document ).ready(function( $ ) {
 			gi_update_albumList_msg('...');
 			ozio_nano_albumList_orig_values=[];
 			$('#jform_params_ozio_nano_albumList').find('option:selected').each(function (){
-				ozio_nano_albumList_orig_values.push($(this).attr('value').split(non_printable_separator)[0]);
+				if ($(this).attr('value').indexOf(non_printable_separator)!=-1){
+					ozio_nano_albumList_orig_values.push($(this).attr('value').split(non_printable_separator)[0]);
+				}else{
+					ozio_nano_albumList_orig_values.push($(this).attr('value').split(new_non_printable_separator)[0]);
+				}
 			});
 			
 			var userID=$('#jform_params_ozio_nano_userID').val();
@@ -81,7 +91,7 @@ jQuery( document ).ready(function( $ ) {
 		var endappend=$('#jform_params_ozio_nano_albumList').find('option').remove().end();
 		for (var i=0;i<albums.length;i++){
 			var opt=$('<option></option>').text(albums[i].title);
-			opt.attr('value',albums[i].id+non_printable_separator+albums[i].title);
+			opt.attr('value',albums[i].id+new_non_printable_separator+albums[i].title);
 			if ( ozio_nano_albumList_orig_values.indexOf(albums[i].id) > -1 ){
 				opt.attr('selected','selected');
 			}
@@ -147,15 +157,18 @@ jQuery( document ).ready(function( $ ) {
   function PicasaParseData( data ) {
 	var albums=[];
     jQuery.each(data.feed.entry, function(i,data){
-		//Get the title 
-		var itemTitle = data.media$group.media$title.$t;
-		//Get the ID 
-		var itemID = data.id.$t;
-		itemID = itemID.split('/')[9].split('?')[0];
-		albums.push({
-			'id':itemID,
-			'title':itemTitle
-		});
+		console.log(data.gphoto$numphotos.$t+" "+data.media$group.media$title.$t);
+		if (data.gphoto$numphotos.$t>0){
+			//Get the title 
+			var itemTitle = data.media$group.media$title.$t;
+			//Get the ID 
+			var itemID = data.id.$t;
+			itemID = itemID.split('/')[9].split('?')[0];
+			albums.push({
+				'id':itemID,
+				'title':itemTitle
+			});
+		}
       
     });
 	gi_update_listnanoalbums_callback(albums);	

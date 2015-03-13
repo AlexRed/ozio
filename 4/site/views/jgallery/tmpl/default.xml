@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY3_JGALLERY_VIEW_DEFAULT_TITLE">
+		<message>COM_OZIOGALLERY3_JGALLERY_VIEW_DEFAULT_DESC</message>
+	</layout>
+
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
+		<fieldset name="basic">
+		
+		
+			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
+			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
+			
+			<field type="text" name="ozio_nano_userID" label="COM_OZIOGALLERY3_OZIO_NANO_USERID_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
+
+			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public">
+				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
+				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
+			</field>
+ 
+			<field type="listnanoalbums" name="ozio_nano_albumList" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_DSC" multiple="true" default="">
+			</field>
+			
+			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
+			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
+			
+
+			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|2013-" />
+			<field type="text" name="ozio_nano_whiteList" label="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_DSC" />
+
+			
+<!--			
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
+			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public" onchange="OnAlbumVisibilityChange()">
+				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
+				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
+			</field>
+			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
+			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
+			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
+-->
+			<field type="text" name="gallery_date" label="COM_OZIOGALLERY3_GALLERY_DATE_LBL" description="COM_OZIOGALLERY3_GALLERY_DATE_DSC" />
+
+			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY3_WIDTH_LBL" description="COM_OZIOGALLERY3_WIDTH_DSC" size="4" default="100|%">
+				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
+				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
+			</field>
+			
+			<field type="text" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="6" default="600"/>
+			
+			<field type="list" name="photoSorting" label="COM_OZIOGALLERY3_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_PHOTOSORTING_DSC" default="normal">
+				<option value="normal">COM_OZIOGALLERY3_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY3_PHOTOSORTING_RANDOM</option>
+				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
+			</field>
+			
+			<field type="list" name="ozio_nano_albumSorting" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_DSC" default="standard">
+				<option value="standard">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_RANDOM</option>
+				<option value="reversed">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
+				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
+				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
+				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID</option>
+			</field>
+			
+			
+			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
+			
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
+		  
+			<field type="list" name="mode" label="COM_OZIOGALLERY3_JGALLERY_MODE_LBL" description="COM_OZIOGALLERY3_JGALLERY_MODE_DSC" default="standard">
+				<option value="standard">COM_OZIOGALLERY3_JGALLERY_MODE_STANDARD</option>
+				<option value="full-screen">COM_OZIOGALLERY3_JGALLERY_MODE_FULLSCREEN</option>
+				<option value="slider">COM_OZIOGALLERY3_JGALLERY_MODE_SLIDER</option>
+			</field>
+		  
+		  
+			<field type="list" name="transition" label="COM_OZIOGALLERY3_TRANSITION_LBL" description="COM_OZIOGALLERY3_TRANSITION_DSC" default="rotateCubeRightOut_rotateCubeRightIn">
+				<option value="moveToLeft_moveFromRight">moveToLeft_moveFromRight</option>
+				<option value="moveToRight_moveFromLeft">moveToRight_moveFromLeft</option>
+				<option value="moveToTop_moveFromBottom">moveToTop_moveFromBottom</option>
+				<option value="moveToBottom_moveFromTop">moveToBottom_moveFromTop</option>
+				<option value="fade_moveFromRight">fade_moveFromRight</option>
+				<option value="fade_moveFromLeft">fade_moveFromLeft</option>
+				<option value="fade_moveFromBottom">fade_moveFromBottom</option>
+				<option value="fade_moveFromTop">fade_moveFromTop</option>
+				<option value="moveToLeftFade_moveFromRightFade">moveToLeftFade_moveFromRightFade</option>
+				<option value="moveToRightFade_moveFromLeftFade">moveToRightFade_moveFromLeftFade</option>
+				<option value="moveToTopFade_moveFromBottomFade">moveToTopFade_moveFromBottomFade</option>
+				<option value="moveToBottomFade_moveFromTopFade">moveToBottomFade_moveFromTopFade</option>
+				<option value="moveToLeftEasing_moveFromRight">moveToLeftEasing_moveFromRight</option>
+				<option value="moveToRightEasing_moveFromLeft">moveToRightEasing_moveFromLeft</option>
+				<option value="moveToTopEasing_moveFromBottom">moveToTopEasing_moveFromBottom</option>
+				<option value="moveToBottomEasing_moveFromTop">moveToBottomEasing_moveFromTop</option>
+				<option value="scaleDown_moveFromRight">scaleDown_moveFromRight</option>
+				<option value="scaleDown_moveFromLeft">scaleDown_moveFromLeft</option>
+				<option value="scaleDown_moveFromBottom">scaleDown_moveFromBottom</option>
+				<option value="scaleDown_moveFromTop">scaleDown_moveFromTop</option>
+				<option value="scaleDown_scaleUpDown">scaleDown_scaleUpDown</option>
+				<option value="scaleDownUp_scaleUp">scaleDownUp_scaleUp</option>
+				<option value="moveToLeft_scaleUp">moveToLeft_scaleUp</option>
+				<option value="moveToRight_scaleUp">moveToRight_scaleUp</option>
+				<option value="moveToTop_scaleUp">moveToTop_scaleUp</option>
+				<option value="moveToBottom_scaleUp">moveToBottom_scaleUp</option>
+				<option value="scaleDownCenter_scaleUpCenter">scaleDownCenter_scaleUpCenter</option>
+				<option value="rotateRightSideFirst_moveFromRight">rotateRightSideFirst_moveFromRight</option>
+				<option value="rotateLeftSideFirst_moveFromLeft">rotateLeftSideFirst_moveFromLeft</option>
+				<option value="rotateTopSideFirst_moveFromTop">rotateTopSideFirst_moveFromTop</option>
+				<option value="rotateBottomSideFirst_moveFromBottom">rotateBottomSideFirst_moveFromBottom</option>
+				<option value="flipOutRight_flipInLeft">flipOutRight_flipInLeft</option>
+				<option value="flipOutLeft_flipInRight">flipOutLeft_flipInRight</option>
+				<option value="flipOutTop_flipInBottom">flipOutTop_flipInBottom</option>
+				<option value="flipOutBottom_flipInTop">flipOutBottom_flipInTop</option>
+				<option value="rotateFall_scaleUp">rotateFall_scaleUp</option>
+				<option value="rotateOutNewspaper_rotateInNewspaper">rotateOutNewspaper_rotateInNewspaper</option>
+				<option value="rotatePushLeft_moveFromRight">rotatePushLeft_moveFromRight</option>
+				<option value="rotatePushRight_moveFromLeft">rotatePushRight_moveFromLeft</option>
+				<option value="rotatePushTop_moveFromBottom">rotatePushTop_moveFromBottom</option>
+				<option value="rotatePushBottom_moveFromTop">rotatePushBottom_moveFromTop</option>
+				<option value="rotatePushLeft_rotatePullRight">rotatePushLeft_rotatePullRight</option>
+				<option value="rotatePushRight_rotatePullLeft">rotatePushRight_rotatePullLeft</option>
+				<option value="rotatePushTop_rotatePullBottom">rotatePushTop_rotatePullBottom</option>
+				<option value="rotatePushBottom_page">rotatePushBottom_page</option>
+				<option value="rotateFoldLeft_moveFromRightFade">rotateFoldLeft_moveFromRightFade</option>
+				<option value="rotateFoldRight_moveFromLeftFade">rotateFoldRight_moveFromLeftFade</option>
+				<option value="rotateFoldTop_moveFromBottomFade">rotateFoldTop_moveFromBottomFade</option>
+				<option value="rotateFoldBottom_moveFromTopFade">rotateFoldBottom_moveFromTopFade</option>
+				<option value="moveToRightFade_rotateUnfoldLeft">moveToRightFade_rotateUnfoldLeft</option>
+				<option value="moveToLeftFade_rotateUnfoldRight">moveToLeftFade_rotateUnfoldRight</option>
+				<option value="moveToBottomFade_rotateUnfoldTop">moveToBottomFade_rotateUnfoldTop</option>
+				<option value="moveToTopFade_rotateUnfoldBottom">moveToTopFade_rotateUnfoldBottom</option>
+				<option value="rotateRoomLeftOut_rotateRoomLeftIn">rotateRoomLeftOut_rotateRoomLeftIn</option>
+				<option value="rotateRoomRightOut_rotateRoomRightIn">rotateRoomRightOut_rotateRoomRightIn</option>
+				<option value="rotateRoomTopOut_rotateRoomTopIn">rotateRoomTopOut_rotateRoomTopIn</option>
+				<option value="rotateRoomBottomOut_rotateRoomBottomIn">rotateRoomBottomOut_rotateRoomBottomIn</option>
+				<option value="rotateCubeLeftOut_rotateCubeLeftIn">rotateCubeLeftOut_rotateCubeLeftIn</option>
+				<option value="rotateCubeRightOut_rotateCubeRightIn">rotateCubeRightOut_rotateCubeRightIn</option>
+				<option value="rotateCubeTopOut_rotateCubeTopIn">rotateCubeTopOut_rotateCubeTopIn</option>
+				<option value="rotateCubeBottomOut_rotateCubeBottomIn">rotateCubeBottomOut_rotateCubeBottomIn</option>
+				<option value="rotateCarouselLeftOut_rotateCarouselLeftIn">rotateCarouselLeftOut_rotateCarouselLeftIn</option>
+				<option value="rotateCarouselRightOut_rotateCarouselRightIn">rotateCarouselRightOut_rotateCarouselRightIn</option>
+				<option value="rotateCarouselTopOut_rotateCarouselTopIn">rotateCarouselTopOut_rotateCarouselTopIn</option>
+				<option value="rotateCarouselBottomOut_rotateCarouselBottomIn">rotateCarouselBottomOut_rotateCarouselBottomIn</option>
+				<option value="rotateSidesOut_rotateSidesInDelay">rotateSidesOut_rotateSidesInDelay</option>
+				<option value="rotateSlideOut_rotateSlideIn">rotateSlideOut_rotateSlideIn</option>
+				<option value="random">random</option>
+			</field>
+			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="700"/>
+
+			<field type="text" name="transitionCols" label="COM_OZIOGALLERY3_TRANSITIONCOLS_LBL" description="COM_OZIOGALLERY3_TRANSITIONCOLS_DSC" size="6" default="6"/>
+			<field type="text" name="transitionRows" label="COM_OZIOGALLERY3_TRANSITIONROWS_LBL" description="COM_OZIOGALLERY3_TRANSITIONROWS_DSC" size="6" default="1"/>
+
+			<field type="list" name="square" label="COM_OZIOGALLERY3_SQUARE_LBL" description="COM_OZIOGALLERY3_SQUARE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+
+			<field type="list" name="thumbnailsPosition" label="COM_OZIOGALLERY3_JGALLERY_THUMBPOS_LBL" description="COM_OZIOGALLERY3_JGALLERY_THUMBPOS_DSC" default="bottom">
+				<option value="top">COM_OZIOGALLERY3_JGALLERY_THUMBPOS_TOP</option>
+				<option value="bottom">COM_OZIOGALLERY3_JGALLERY_THUMBPOS_BOTTOM</option>
+				<option value="left">COM_OZIOGALLERY3_JGALLERY_THUMBPOS_LEFT</option>
+				<option value="right">COM_OZIOGALLERY3_JGALLERY_THUMBPOS_RIGHT</option>
+			</field>
+
+			<field type="list" name="thumbType" label="COM_OZIOGALLERY3_JGALLERY_THUMBTYPE_LBL" description="COM_OZIOGALLERY3_JGALLERY_THUMBTYPE_DSC" default="image">
+				<option value="image">COM_OZIOGALLERY3_JGALLERY_THUMBTYPE_IMAGE</option>
+				<option value="square">COM_OZIOGALLERY3_JGALLERY_THUMBTYPE_SQUARE</option>
+				<option value="number">COM_OZIOGALLERY3_JGALLERY_THUMBTYPE_NUMBER</option>
+			</field>			
+			
+			<field name="backgroundColor" type="color" default="#fff" label="COM_OZIOGALLERY3_JGALLERY_BGCOLOR_LBL"	description="COM_OZIOGALLERY3_JGALLERY_BGCOLOR_DSC" />
+			<field name="textColor" type="color" default="#000" label="COM_OZIOGALLERY3_JGALLERY_TXTCOLOR_LBL"	description="COM_OZIOGALLERY3_JGALLERY_TXTCOLOR_DSC" />
+
+			<field type="radio" name="canZoom" default="1"
+				label="COM_OZIOGALLERY3_JGALLERY_CANZOOM_LBL"
+				description="COM_OZIOGALLERY3_JGALLERY_CANZOOM_DSC"
+				class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+		  
+			<field type="radio" name="canChangeMode" default="1"
+				label="COM_OZIOGALLERY3_JGALLERY_CANCHANGEMODE_LBL"
+				description="COM_OZIOGALLERY3_JGALLERY_CANCHANGEMODE_DSC"
+				class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field type="radio" name="title" default="0"
+				label="COM_OZIOGALLERY3_JGALLERY_SHOW_TITLE_LBL"
+				description="COM_OZIOGALLERY3_JGALLERY_SHOW_TITLE_DSC"
+				class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			
+			
+			<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
+			<field name="markers_icon" type="filelist" label="COM_OZIOGALLERY3_MAP_MARKERS_ICON_LBL" description="COM_OZIOGALLERY3_MAP_MARKERS_ICON_DSC" default="" hide_none="true" directory="components/com_oziogallery3/views/map/img/markers/icons" filter="\.png$" exclude="" stripext=""  onchange="OnMarkersIconChange()"/>
+	        <field name="markers_preview" type="markerpreview" label="COM_OZIOGALLERY3_MAP_MARKERS_PREVIEW"/>
+		  
+		  
+		</fieldset>			
+		<fieldset name="advanced">
+			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="ozio_nano_locationHash" label="COM_OZIOGALLERY3_OZIO_NANO_LOCATIONHASH_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_LOCATIONHASH_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY3_INFOBOX_SETTINGS" icon="information.png"/>
+			<field type="list" name="info_button" label="COM_OZIOGALLERY3_INFOBUTTON_LBL" description="COM_OZIOGALLERY3_INFOBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
+			
+		  	<field type="list" name="hide_infobox_album" label="COM_OZIOGALLERY3_HIDE_INFOBOX_ALBUM_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_ALBUM_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_photo" label="COM_OZIOGALLERY3_HIDE_INFOBOX_PHOTO_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_PHOTO_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_date" label="COM_OZIOGALLERY3_HIDE_INFOBOX_DATE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_DATE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_width_height" label="COM_OZIOGALLERY3_HIDE_INFOBOX_DIMENSIONS_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_DIMENSIONS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_file_name" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FILENAME_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FILENAME_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_file_size" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FILESIZE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FILESIZE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_model" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERA_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERA_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_focallength" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FOCALLENGTH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FOCALLENGTH_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_exposure" label="COM_OZIOGALLERY3_HIDE_INFOBOX_EXPOSURE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_EXPOSURE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_fstop" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FSTOP_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FSTOP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_iso" label="COM_OZIOGALLERY3_HIDE_INFOBOX_ISO_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_ISO_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_CAMERAMAKE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_views" label="COM_OZIOGALLERY3_HIDE_INFOBOX_VIEWS_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_VIEWS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_comments" label="COM_OZIOGALLERY3_HIDE_INFOBOX_COMMENTS_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_COMMENTS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_link" label="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_download" label="COM_OZIOGALLERY3_HIDE_INFOBOX_DOWNLOAD_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_DOWNLOAD_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>			
+			
+			
+			
+		</fieldset>
+		
+	</fields>
+</metadata>

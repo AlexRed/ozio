@@ -148,6 +148,9 @@ MagnificPopup.prototype = {
 		//if(!_body) {
 			//_body = $(document.body);
 			_body = $('#nanoGalleryViewer');
+			if (_body.length==0){
+				_body = $(document.body);
+			}
 		//}
 
 		var i;

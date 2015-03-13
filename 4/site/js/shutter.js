@@ -20,6 +20,11 @@ gi_ozio_intenseViewer=false;
 		 ----------------------------*/
 		_init: function ()
 		{
+			
+			if (api.options.hide_bottombar && !api.options.autoplay){
+				api.options.progress_bar=false;
+			}
+			
 			// Center Slide Links
 			if (api.options.slide_links) $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2);
 

@@ -268,6 +268,8 @@ jQuery(document).ready(function ($)
 	
 					// Theme Options
 					progress_bar: parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
+
+					hide_bottombar: parseInt('<?php echo $this->Params->get("hide_bottombar", 0); ?>'),
 					mouse_scrub: 0,
 	
 					username: '<?php echo $this->Params->get("userid", ""); ?>',

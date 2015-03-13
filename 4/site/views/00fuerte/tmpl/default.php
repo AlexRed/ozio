@@ -44,7 +44,19 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 	-->
 
 	<!--Time Bar-->
-	<div id="progress-back" class="load-item">
+	<?php 
+	
+		$class_progressbar='';
+		if ($this->Params->get("hide_bottombar", false)) { 
+			if ($this->Params->get("autoplay", 0)){
+				$class_progressbar='progress-back-bottom';
+			}else{
+				$class_progressbar='progress-back-hide';
+			}
+		}
+		
+	?>
+	<div id="progress-back" class="load-item <?php echo $class_progressbar;?>">
 		<div id="progress-bar"></div>
 	</div>
 
@@ -54,6 +66,8 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 			<div id="oziotoptitle" class="oziotitle"></div>
 		</div>
 		<?php } ?>
+
+	<?php if (!$this->Params->get("hide_bottombar", false)) { ?>
 
 	<!-- Bottom Bar -->
 	<div id="oziobottombar" class="load-item oziobar">
@@ -86,6 +100,8 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 
 		</div>
 	</div>
+
+	<?php } ?>
 
 	<div id="supersized-loader"></div>
 	<ul id="supersized"></ul>

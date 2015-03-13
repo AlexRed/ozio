@@ -33,7 +33,7 @@ jQuery(document).ready(function ($)
 	{
 		$item = $menu->getItem($i);
 		// Skip album list menu items
-		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=nano") === false) continue;
+		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false) continue;
 
 		$link = JRoute::_( 'index.php?Itemid='.$item->id, false ); //aggiunto il false
 		$icon='';
@@ -59,10 +59,14 @@ jQuery(document).ready(function ($)
 				);
 				$deeplink='';
 				if (intval($item->params->get("ozio_nano_locationHash", "1"))==1){
-					$deeplink='#nanogallery/nanoGallery/'.$item->params->get("limitedalbum", "");
+					if (strpos($item->link, "&view=jgallery") === false){
+						$deeplink='#nanogallery/nanoGallery/'.$item->params->get("limitedalbum", "");
+					}else{
+						$deeplink='#'.$item->params->get("limitedalbum", "");
+					}
 				}
 				
-				$g_parameters[]=array('skin'=>'nano','params'=>$p,'link'=>$link.$deeplink,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+				$g_parameters[]=array('skin'=>strpos($item->link, "&view=jgallery") === false?'nano':'jgallery','params'=>$p,'link'=>$link.$deeplink,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
 				
 			}else{
 			
@@ -76,16 +80,22 @@ jQuery(document).ready(function ($)
 					legend_icon:<?php echo json_encode($legend_icon); ?>,
 					g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
 					locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
+					skin: <?php echo json_encode(strpos($item->link, "&view=jgallery") === false?'nano':'jgallery'); ?>,
 					kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
 					userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
 					blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 					whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
 					<?php
 					$non_printable_separator="\x16";
+					$new_non_printable_separator="|!|";
 					$albumList=$item->params->get("ozio_nano_albumList", array());
 					if (!empty($albumList) && is_array($albumList) ){
 						if (count($albumList)==1){
-							list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+							if (strpos($albumList[0],$non_printable_separator)!==FALSE){
+								list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+							}else{
+								list($albumid,$title)=explode($new_non_printable_separator,$albumList[0]);
+							}
 							$kind=$item->params->get("ozio_nano_kind", "picasa");
 							if ($kind=='picasa'){
 								echo 'album:'.json_encode($albumid).",\n";
@@ -95,7 +105,11 @@ jQuery(document).ready(function ($)
 						}else{
 							$albumTitles=array();
 							foreach ($albumList as $a){
-								list($albumid,$title)=explode($non_printable_separator,$a);
+								if (strpos($a,$non_printable_separator)!==FALSE){
+									list($albumid,$title)=explode($non_printable_separator,$a);
+								}else{
+									list($albumid,$title)=explode($new_non_printable_separator,$a);
+								}
 								$albumTitles[]=$title;
 							}
 							echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
@@ -535,6 +549,8 @@ jQuery(document).ready(function ($)
 				var photolink='';
 				if (g_parameters[obj.album_index].skin=='00fuerte'){
 					photolink=g_parameters[obj.album_index].link+'#'+(obj.photo_index+1);
+				}else if (g_parameters[obj.album_index].skin=='jgallery'){
+					photolink=g_parameters[obj.album_index].link+'/'+entry.gphoto$id.$t;
 				}else{
 					photolink=g_parameters[obj.album_index].link+'/'+entry.gphoto$id.$t;
 				}
@@ -716,14 +732,18 @@ jQuery(document).ready(function ($)
 		        if( ok ) {
 		        		var deeplink='';
 		        		if (context.locationHash){
-		        			deeplink='#nanogallery/nanoGallery/'+itemID;
+							if (context.skin=='nano'){
+								deeplink='#nanogallery/nanoGallery/'+itemID;
+							}else{
+								deeplink='#'+itemID;
+							}
 		        		}
 						
 						//$g_parameters[]=array('params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
 						var nextI=g_parameters.length;
 						g_parameters[nextI]={};
 						jQuery.extend(g_parameters[nextI],context);
-						g_parameters[nextI].skin='nano';
+						g_parameters[nextI].skin=context.skin;
 						g_parameters[nextI].views=0;
 						g_parameters[nextI].checked=true;
 						g_parameters[nextI].num_photos=0;

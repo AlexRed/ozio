@@ -122,6 +122,15 @@
 
 			<field type="text" name="photowall_height" label="COM_OZIOGALLERY3_PHOTOWALL_HEIGHT_LBL" description="COM_OZIOGALLERY3_PHOTOWALL_HEIGHT_DSC" size="6" default="200"/>
 			
+			
+			
+		  	<field type="list" name="hide_bottombar" label="COM_OZIOGALLERY3_HIDE_BOTTOMBAR_LBL" description="COM_OZIOGALLERY3_HIDE_BOTTOMBAR_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			
+			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_INFOBOX_SETTINGS" icon="information.png"/>
 		  	<field type="list" name="hide_infobox_album" label="COM_OZIOGALLERY3_HIDE_INFOBOX_ALBUM_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_ALBUM_DSC" default="0">
 				<option value="0">JNO</option>

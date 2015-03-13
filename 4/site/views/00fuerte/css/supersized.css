@@ -336,3 +336,12 @@ width:22px;
 .ozio_00fuerte_bottom_description{
  margin-top:10px;
 }
+
+#progress-back.progress-back-hide{
+	display:none !important;
+}
+
+#progress-back.progress-back-bottom{
+	bottom:0px;
+}
+

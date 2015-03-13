@@ -21,7 +21,7 @@
  * @copyright 2014 Garda Informatica Snc. All Rights Reserved.
  */
 
-.nanoGalleryViewer .toolbar .label{
+#nanoGalleryViewer .toolbar .label{
 	white-space: normal;
 	background-color:transparent;
 }
@@ -53,24 +53,24 @@
     color: #777777;
 }
 
-.nanogallery_theme_clean .nanoGalleryViewer .closeButtonFloating:after {
+.nanogallery_theme_clean #nanoGalleryViewer .closeButtonFloating:after {
 	background-color:transparent;
 }
-.nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_clean .nanoGalleryViewer .content .contentAreaNext:after{
-	background-color:transparent;
-}
-
-.nanogallery_theme_default .nanoGalleryViewer .closeButtonFloating:after {
-	background-color:transparent;
-}
-.nanogallery_theme_default .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_default .nanoGalleryViewer .content .contentAreaNext:after{
+.nanogallery_theme_clean #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_clean #nanoGalleryViewer .content .contentAreaNext:after{
 	background-color:transparent;
 }
 
-.nanogallery_theme_light .nanoGalleryViewer .closeButtonFloating:after {
+.nanogallery_theme_default #nanoGalleryViewer .closeButtonFloating:after {
 	background-color:transparent;
 }
-.nanogallery_theme_light .nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_light .nanoGalleryViewer .content .contentAreaNext:after{
+.nanogallery_theme_default #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_default #nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+.nanogallery_theme_light #nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_light #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_light #nanoGalleryViewer .content .contentAreaNext:after{
 	background-color:transparent;
 }
 
@@ -164,10 +164,15 @@ height:22px;
 width:22px;
 }
 
-#nanoGallery .nanoGalleryContainer, #nanoGallery{
+/*
+#nanoGallery .nanoGalleryContainer{
 	overflow:visible;
 }
 
+#nanoGallery{
+	overflow:visible;
+}
+*/
 
 
 
@@ -279,6 +284,29 @@ width:22px;
 	vertical-align:baseline !important;
 }
 
-.nanoGalleryViewer .toolbar{
+#nanoGalleryViewer .toolbar{
 	overflow:visible !important;
 }
+
+
+.nanogallery_theme_default #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';	
+}
+.nanogallery_theme_clean #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';
+}
+.nanogallery_theme_light #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';	
+}
+
+/*
+prima
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span ,
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelDescription > span {
+
+dopo
+
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span{
+
+*/
+

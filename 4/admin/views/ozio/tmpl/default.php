@@ -87,6 +87,29 @@
 						$row->link='index.php?option=com_oziogallery3&view=00fuerte&Itemid='.$row->id;
 						$g_parameters[]=$row;
 					}
+					if ( $row->link == 'index.php?option=com_oziogallery3&view=jgallery'){
+						$result = new JRegistry;
+						$result->loadString($row->params);
+						$albumvisibility=$result->get("albumvisibility", "public");
+						if ($albumvisibility=='limited'){
+							//lo aggiungo come gli altri g_parameters
+							
+							$row->params=array(
+								'userid'=>$result->get("ozio_nano_userID", "110359559620842741677"),
+								'albumvisibility'=>'limited',
+								'limitedalbum'=>$result->get("limitedalbum", ""),
+								'limitedpassword'=>$result->get("limitedpassword", "")
+							);
+							$row->skin='jgallery';
+							$deeplink='';
+							if (intval($result->get("ozio_nano_locationHash", "1"))==1){
+								$deeplink='#'.$result->get("limitedalbum", "");
+							}							
+							$row->link='index.php?option=com_oziogallery3&view=nano&Itemid='.$row->id.$deeplink;
+
+							$g_parameters[]=$row;
+						}
+					}
 					if ( $row->link == 'index.php?option=com_oziogallery3&view=nano'){
 						$result = new JRegistry;
 						$result->loadString($row->params);
@@ -149,10 +172,17 @@
 											whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
 											<?php
 											$non_printable_separator="\x16";
+											$new_non_printable_separator="|!|";
 											$albumList=$item->params->get("ozio_nano_albumList", array());
 											if (!empty($albumList) && is_array($albumList) ){
 												if (count($albumList)==1){
-													list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+													if (strpos($albumList[0],$non_printable_separator)!==FALSE){
+														list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+													}else{
+														list($albumid,$title)=explode($new_non_printable_separator,$albumList[0]);
+													}
+													
+													
 													$kind=$item->params->get("ozio_nano_kind", "picasa");
 													if ($kind=='picasa'){
 														echo 'album:'.json_encode($albumid).",\n";
@@ -162,7 +192,11 @@
 												}else{
 													$albumTitles=array();
 													foreach ($albumList as $a){
-														list($albumid,$title)=explode($non_printable_separator,$a);
+														if (strpos($a,$non_printable_separator)!==FALSE){
+															list($albumid,$title)=explode($non_printable_separator,$a);
+														}else{
+															list($albumid,$title)=explode($new_non_printable_separator,$a);
+														}
 														$albumTitles[]=$title;
 													}
 													echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
@@ -245,9 +279,9 @@
 				<table class="admintable">
 					<tr>
 						<td align="left">
-
-							<br />Skin Fuerte is based on <a href="http://www.buildinternet.com/project/supersized/" target='blank'>Supersized</a> Design/Development by <a href="http://buildinternet.com/" target='blank'> Build Internet project by Sam Dunn of One Mighty Roar</a>.
+							Skin Fuerte is based on <a href="http://www.buildinternet.com/project/supersized/" target='blank'>Supersized</a> Design/Development by <a href="http://buildinternet.com/" target='blank'> Build Internet project by Sam Dunn of One Mighty Roar</a>.
 							<br />Skin Nano is based on <a href="http://nanogallery.brisbois.fr/" target="blank">nanoGALLERY</a> Design/Development by <a href="http://www.brisbois.fr/" target="blank">Christophe Brisbois</a>
+							<br />Skin jGallery is based on <a href="http://jgallery.jakubkowalczyk.pl/" target="blank">jGallery</a> Design/Development by Jakub Kowalczyk
 							<br />
 							Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 							Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />

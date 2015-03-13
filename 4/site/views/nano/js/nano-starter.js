@@ -1,5 +1,6 @@
 <?php
 $non_printable_separator="\x16";
+$new_non_printable_separator="|!|";
 ?>
 jQuery( document ).ready(function( $ ) {
 	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200")); ?>;
@@ -27,6 +28,7 @@ jQuery( document ).ready(function( $ ) {
 			echo json_encode($ozio_nano_paginationMaxLinesPerPage); 
 		
 		?>,
+		
 		thumbnailDisplayInterval: 0,
 		thumbnailDisplayTransition: 1,
 		thumbnailLazyLoad: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLazyLoad", "1"))); ?>,
@@ -117,6 +119,12 @@ jQuery( document ).ready(function( $ ) {
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
 		photoSorting: <?php echo json_encode($this->Params->get("ozio_nano_photoSorting", "standard")); ?>,
 		albumSorting: <?php echo json_encode($this->Params->get("ozio_nano_albumSorting", "standard")); ?>,
+		
+		thumbnailLabelL2_display: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLabelL2_display", "1"))); ?>,
+		//paginationDisableSwipe: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationDisableSwipe", "0"))); ?>,
+		paginationDisableSwipe: false,
+		paginationNumSelectable: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationNumSelectable", "10"))); ?>,
+		
 		<?php
 		$kind=$this->Params->get("ozio_nano_kind", "picasa");
 		$albumvisibility=$this->Params->get("albumvisibility", "public");
@@ -129,7 +137,11 @@ jQuery( document ).ready(function( $ ) {
 			$albumList=$this->Params->get("ozio_nano_albumList", array());
 			if (!empty($albumList) && is_array($albumList) ){
 				if (count($albumList)==1){
-					list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+					if (strpos($albumList[0],$non_printable_separator)!==FALSE){
+						list($albumid,$title)=explode($non_printable_separator,$albumList[0]);
+					}else{
+						list($albumid,$title)=explode($new_non_printable_separator,$albumList[0]);
+					}
 					$kind=$this->Params->get("ozio_nano_kind", "picasa");
 					if ($kind=='picasa'){
 						echo 'album:'.json_encode($albumid).",\n";
@@ -139,7 +151,11 @@ jQuery( document ).ready(function( $ ) {
 				}else{
 					$albumTitles=array();
 					foreach ($albumList as $a){
-						list($albumid,$title)=explode($non_printable_separator,$a);
+						if (strpos($a,$non_printable_separator)!==FALSE){
+							list($albumid,$title)=explode($non_printable_separator,$a);
+						}else{
+							list($albumid,$title)=explode($new_non_printable_separator,$a);
+						}
 						$albumTitles[]=$title;
 					}
 					echo 'albumList:'.json_encode(implode('|',$albumTitles)).",\n";
