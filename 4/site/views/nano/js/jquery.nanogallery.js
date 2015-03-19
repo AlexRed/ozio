@@ -1108,7 +1108,15 @@ nanoGALLERY v5.5.1 release notes.
       });
       
       // Event page scrolled
+      G.$E.base.on('scroll', function () {
+        OnScroll();
+      });
       jQuery(window).on('scroll', function () {
+        OnScroll();
+      });
+    }
+    
+    function OnScroll() {
         if( G.scrollTimeOut ) clearTimeout(G.scrollTimeOut);
         G.scrollTimeOut = setTimeout(function () {
 
@@ -1128,7 +1136,7 @@ nanoGALLERY v5.5.1 release notes.
             return;
           }
         }, 100);
-      });
+     
     }
     
     function getSpecialKeysPressed(e){
@@ -1334,6 +1342,13 @@ nanoGALLERY v5.5.1 release notes.
             }
             G.$E.conNavBFullpage.removeClass('setFullPageButton').addClass('removeFullPageButton');
             setElementOnTop('', G.$E.base);
+			
+            for( j=0; j<G.tn.getHE().length; j++) {
+              if( /scale120|imageScale150Outside|overScaleOutside|imageFlipHorizontal|imageFlipVertical/i.test(G.tn.getHE()[j].name) ) {
+                G.$E.base.css({overflow: 'auto'});
+              }
+            }
+			
             G.$E.base.addClass('fullpage');
             jQuery('body').css({overflow:'hidden'});
             ResizeGallery();
@@ -1346,6 +1361,11 @@ nanoGALLERY v5.5.1 release notes.
               jQuery(G.$E.base).css({'maxWidth':G.O.maxWidth});
             }
             G.$E.base.removeClass('fullpage');
+            for( j=0; j<G.tn.getHE().length; j++) {
+              if( /scale120|imageScale150Outside|overScaleOutside|imageFlipHorizontal|imageFlipVertical/i.test(G.tn.getHE()[j].name) ) {
+                G.$E.base.css({overflow: 'visible'});
+              }
+            }			
             ScrollbarSetVisible();
             ResizeGallery();
           }
@@ -4796,12 +4816,12 @@ nanoGALLERY v5.5.1 release notes.
 
       jQuery($eltInViewport).each(function(){
         var $image=jQuery(this).find('img');
-        if( jQuery($image).attr('src') == G.emptyGif ) {
+        if( $image.attr('src') == G.emptyGif ) {
           var idx=jQuery(this).data('index');
           if( idx == undefined || G.I[idx] == undefined ) { return; }
-          jQuery($image).attr('src','');
-          jQuery($image).attr('src',G.I[idx].thumbImg().src);
-        }
+          $image.attr('src','');
+          $image.attr('src',G.I[idx].thumbImg().src);
+        }		
       });
     }
 
@@ -5658,7 +5678,9 @@ nanoGALLERY v5.5.1 release notes.
             break;
             
           case 'scale120':
-            G.$E.base.css({overflow: 'visible'});
+			if( !G.$E.base.hasClass('fullpage') ) {
+				G.$E.base.css({overflow: 'visible'});
+			}
             G.$E.conTn.css({overflow: 'visible'});
             newCSSTransform(item, 'base', $e);
             SetCSSTransform(item, 'base');
@@ -5691,7 +5713,9 @@ nanoGALLERY v5.5.1 release notes.
             break;
             
           case 'overScaleOutside':
-            G.$E.base.css({overflow: 'visible'});
+            if( !G.$E.base.hasClass('fullpage') ) {
+				G.$E.base.css({overflow: 'visible'});
+			}
             G.$E.conTn.css({overflow: 'visible'});
             $e.css({overflow: 'visible'});
             var $t=item.$getElt('.imgContainer');
@@ -5895,7 +5919,9 @@ nanoGALLERY v5.5.1 release notes.
                 item.$getElt('.labelImage').css({bottom:G.tn.imgcBorderWidth/2, left:0, right:0});
                 break;
             }
-            G.$E.base.css({overflow: 'visible'});
+			if( !G.$E.base.hasClass('fullpage') ) {
+				G.$E.base.css({overflow: 'visible'});
+			}
             G.$E.conTn.css({overflow: 'visible'});
             $e.css({overflow: 'visible'});
             setElementOnTop( '', $e);
@@ -5937,7 +5963,9 @@ nanoGALLERY v5.5.1 release notes.
                 item.$getElt('.labelImage').css({bottom:G.tn.imgcBorderWidth/2, left:0, right:0});
                 break;
             }
-            G.$E.base.css({overflow: 'visible'});
+			if( !G.$E.base.hasClass('fullpage') ) {
+				G.$E.base.css({overflow: 'visible'});
+			}
             G.$E.conTn.css({overflow: 'visible'});
             $e.css({overflow: 'visible'});
             setElementOnTop( '', $e);
