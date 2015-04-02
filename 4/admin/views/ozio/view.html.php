@@ -66,7 +66,7 @@ class OzioViewOzio extends JViewLegacy
 		$document	= JFactory::getDocument();
 		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
 
-		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ),'logo' );
+		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ),'camera' );
 		// Options button
 		if (JFactory::getUser()->authorise("core.admin", "com_oziogallery3"))
 		{
