@@ -34,6 +34,8 @@ class JFormFieldListGalleries extends JFormFieldList
 		if ($resources)
 		{
 			$resources = false;
+			
+			JHtml::_('behavior.framework', true);			
 			$document = JFactory::getDocument();
 			$prefix = JUri::current() . "?option=" . $name . "&amp;view=loader";
 
