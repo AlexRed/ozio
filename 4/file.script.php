@@ -101,6 +101,72 @@ class Com_OzioGallery3InstallerScript
 
 	function uninstall($parent)
 	{
+		
+		//Inzio attivazione Plugin
+		$manifest 	= $parent->get("manifest");
+		$parent 	= $parent->getParent();
+		$source 	= $parent->getPath("source");
+
+		$db = JFactory::getDbo();
+
+		foreach($manifest->plugins->plugin as $plugin)
+		{
+			$installer 	= new JInstaller();
+
+			$attributes = $plugin->attributes();
+
+			//SELECT `extension_id` FROM `#__extensions` WHERE `type` = 'plugin' folder= <group> element =<plugin>
+
+			$query = $db->getQuery(true);
+			$query
+				->select($db->quoteName(array('extension_id')))
+				->from($db->quoteName('#__extensions'))
+				->where($db->quoteName('type') . ' = \'plugin\'  AND '.$db->quoteName('folder').' = '.$db->quote($attributes['group']).' AND '.$db->quoteName('element').' = '.$db->quote($attributes['plugin']));
+
+			$db->setQuery($query);
+			$id = $db->loadResult();
+
+			$result = array();
+			$result["type"] = 'PLUGIN';
+			$result["result"] = "NOT_FOUND";
+			if ($id){
+				$result["result"] = $installer->uninstall('plugin',$id,1) ? "UNINSTALLED" : "NOT_UNINSTALLED";
+				error_log("Uninstall plugin ".$attributes['plugin'],3,'/workspace/php-errors.log');
+			}
+				
+			$this->results[(string)$attributes["name"]] = $result;
+		}
+		
+		
+		foreach($manifest->templates->template as $template)
+		{
+			$installer 	= new JInstaller();
+
+			$attributes = $template->attributes();
+
+			//SELECT extension_id FROM extensions WHERE type = 'template' element =<template>
+
+
+			$query = $db->getQuery(true);
+			$query
+				->select($db->quoteName(array('extension_id')))
+				->from($db->quoteName('#__extensions'))
+				->where($db->quoteName('type') . ' = \'template\'  AND '.$db->quoteName('element').' = '.$db->quote($attributes['template']));
+
+			$db->setQuery($query);
+			$id = $db->loadResult();
+
+			$result = array();
+			$result["type"] = 'TEMPLATE';
+			$result["result"] = "NOT_FOUND";
+			if ($id){
+				$result["result"] = $installer->uninstall('template',$id,1) ? "UNINSTALLED" : "NOT_UNINSTALLED";
+				error_log("Uninstall template ".$attributes['template'],3,'/workspace/php-errors.log');
+			}
+				
+			$this->results['OZIO TEMPLATE'] = $result;
+			
+		}		
 
 		echo '<p>The component Ozio Gallery 4 Component for Joomla 3! has been uninstalled successfully.</p>';
 	}

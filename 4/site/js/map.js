@@ -3,6 +3,8 @@ jQuery(document).ready(function ($)
 	g_flickrThumbSizeStr='sq';
 	g_list_nano_options=[];
 //<?php
+
+
 	$application = JFactory::getApplication("site");
 	$menu = $application->getMenu();
 	$menuitems_filter_type = $this->Params->get('menuitems_filter_type', 0);  // Can be "IN", "NOT IN" or "0"
@@ -129,6 +131,13 @@ jQuery(document).ready(function ($)
 	
 	jQuery("#container_ozio_map").append('<div id="oziomap-container"><div class="oziomap_border"><div class="oziomap_map_container"><div id="oziomap"></div></div></div></div>');
 	jQuery("#oziomap-container").append('<div id="oziomap-container-album"></div>');
+	
+	
+<?php if ($this->Params->get("showAlbumFilter", "1")==0) { ?>
+	jQuery("#oziomap-container-album").hide();
+<?php } ?>	
+	
+	
 <?php if ($this->Params->get("camera_filter", "0")) { ?>
 	jQuery("#oziomap-container").append('<div id="oziomap-container-maker"></div>');
 <?php } ?>	

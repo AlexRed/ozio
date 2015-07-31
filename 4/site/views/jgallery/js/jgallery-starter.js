@@ -513,6 +513,13 @@ jQuery( document ).ready(function( $ ) {
 			
 			jcontainer.attr("data-jgallery-album-gallery-id",g_parameters[this.album_index]['params']['gallery_id']);
 			
+			var slider_links = [];
+			<?php
+			for ($sl=1;$sl<=10;$sl++){
+				echo "slider_links.push(".json_encode($this->Params->get("slider_link".$sl, "")).");\n";
+			}
+			?>
+			
 			for (var i=0;i<num_slides;i++){
 				
 				var large=g_parameters[this.album_index].slides[i].seed + actual_width;
@@ -521,14 +528,33 @@ jQuery( document ).ready(function( $ ) {
 				var alt=g_parameters[this.album_index].slides[i].photo;
 				
 				
+				
 				if (viewer_mode=='slider'){
-					var himg=$('<img>');
-					himg.attr("src",large);
-					himg.attr("alt",alt);
 					
-					himg.attr("data-jgallery-photo-gallery-id",g_parameters[this.album_index].slides[i].photo_id);
+					if (this.album_index==0 && i<slider_links.length && slider_links[i]!=''){
+						var sl = slider_links[i];
+						
+						var himg=$('<img>');
+						himg.attr("src",large);
+						himg.attr("alt",alt);
+
+						var ha=$('<a>');
+						ha.attr("href",sl);
+
+						ha.attr("data-jgallery-photo-gallery-id",g_parameters[this.album_index].slides[i].photo_id);
+						
+						ha.append(himg);
+						jcontainer.append(ha);
+					}else{
+						var himg=$('<img>');
+						himg.attr("src",large);
+						himg.attr("alt",alt);
+						
+						himg.attr("data-jgallery-photo-gallery-id",g_parameters[this.album_index].slides[i].photo_id);
+						
+						jcontainer.append(himg);
+					}
 					
-					jcontainer.append(himg);
 				}else{
 					var himg=$('<img>');
 					himg.attr("src",thumb);
@@ -624,8 +650,31 @@ jQuery( document ).ready(function( $ ) {
 				//Fine sort album
 				
 				
+				<?php 
+					echo 'var galleryheight = '.json_encode($this->Params->get("galleryheight", "600")."px").";\n";
+					$galleryheight_mode = $this->Params->get("galleryheight_mode", "fixed");
+					echo 'var galleryheight_mode = '.json_encode($galleryheight_mode).";\n";
+					
+					if ($galleryheight_mode=='fixed'){
+					}else if ($galleryheight_mode=='eq_width'){
+						echo 'galleryheight = jgallery.width()+"px";'."\n";
+					}else if ($galleryheight_mode=='two_thirds'){
+						echo 'galleryheight = Math.round(2*jgallery.width()/3)+"px";'."\n";
+					}
+				?>
 				
-				
+				if (galleryheight_mode=='eq_width' || galleryheight_mode=='two_thirds'){
+					$(window).resize(function(){
+						if (galleryheight_mode=='eq_width'){
+							galleryheight = jgallery.next().width();
+						}else{
+							//two_thirds
+							galleryheight = Math.round(2*jgallery.next().width()/3);
+						}
+						jgallery.next().height(galleryheight);
+						console.log(galleryheight);
+					});
+				}
 				
 				jgallery.jGallery({
 					
@@ -644,7 +693,7 @@ jQuery( document ).ready(function( $ ) {
 					textColor: <?php echo json_encode($this->Params->get("textColor", "#000")); ?>,
 					
 					width: <?php echo json_encode($gallerywidth["text"] . $gallerywidth["select"]); ?>,
-					height: <?php echo json_encode($this->Params->get("galleryheight", "600")."px"); ?>,
+					height: galleryheight,
 					transition: <?php echo json_encode($this->Params->get("transition", "rotateCubeRightOut_rotateCubeRightIn")); ?>,
 					transitionDuration: <?php echo json_encode(intval($this->Params->get("transition_speed", 700))/1000.0); ?>,
 					mode: viewer_mode,

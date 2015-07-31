@@ -46,6 +46,14 @@
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
 			
+			<field type="list" name="galleryheight_mode" label="COM_OZIOGALLERY3_HEIGHT_MODE_LBL" description="COM_OZIOGALLERY3_HEIGHT_MODE_DSC" default="fixed">
+				<option value="fixed">COM_OZIOGALLERY3_HEIGHT_FIXED</option>
+				<option value="eq_width">COM_OZIOGALLERY3_HEIGHT_EQ_WIDTH</option>
+				<option value="two_thirds">COM_OZIOGALLERY3_HEIGHT_TWO_THIRDS</option>
+			</field>
+			
+			
+			
 			<field type="text" name="galleryheight" label="COM_OZIOGALLERY3_HEIGHT_LBL" description="COM_OZIOGALLERY3_HEIGHT_DSC" size="6" default="600"/>
 			
 			<field type="list" name="photoSorting" label="COM_OZIOGALLERY3_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_PHOTOSORTING_DSC" default="normal">
@@ -196,6 +204,17 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+			
+			<field name="slider_link1" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link2" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link3" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link4" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link5" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link6" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link7" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link8" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link9" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
+			<field name="slider_link10" type="url" default="" label="COM_OZIOGALLERY3_SLIDER_LINK_URL_LBL" description="COM_OZIOGALLERY3_SLIDER_LINK_URL_DSC" />
 			
 			
 			<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>

@@ -1028,8 +1028,8 @@
 				'album_local_url':settings.album_local_url,
 				'album_local_title':settings.album_local_title,
 				'album_id':settings.album_id,
-				'manual_date':settings.manual_date
-				
+				'manual_date':settings.manual_date,
+				'gallery_id':((typeof settings.gallery_id!=='undefined')?settings.gallery_id:'')
 				
 			});
 

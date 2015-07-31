@@ -124,10 +124,17 @@ jQuery(document).ready(function ($)
 
 				mode:'album_cover',
 				username:'<?php echo $item->params->get("userid"); ?>',
-				album:'<?php echo ($item->params->get("albumvisibility") == "public") ? $item->params->get("gallery_id", "") : $item->params->get("limitedalbum"); ?>',
+				
+				<?php
+					if ($item->params->get("albumvisibility") != "public"){
+						echo 'album: '.$item->params->get("limitedalbum").",\n";
+					}else{
+						echo 'gallery_id: '.$item->params->get("gallery_id","").",\n";
+					}
+				?>
 				authKey:"<?php echo $item->params->get("limitedpassword"); ?>",
-				StartIndex: 1,
-				MaxResults: 1,
+				//StartIndex: 1,
+				//MaxResults: 1,
 				beforeSend:OnBeforeSend,
 				success:OnLoadSuccess,
 				error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
@@ -436,6 +443,7 @@ jQuery(document).ready(function ($)
 		
 		function OnLoadSuccess(result, textStatus, jqXHR)
 		{
+			/*
 			var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
 
 			var album={
@@ -454,6 +462,66 @@ jQuery(document).ready(function ($)
 				album.manual_date=this.manual_date;
 			}
 			addAlbum(album,jQuery('#ozio-he-author' + this.album_id));
+			*/
+			
+			
+			
+			
+			
+			if (typeof result.feed.gphoto$timestamp !=='undefined'){
+				//siamo sull'immagine
+			
+			
+				var $thumbnail0 = result.feed.entry[0].media$group.media$thumbnail[0];
+				var album={
+					
+					'title':result.feed.title.$t,
+					'thumb_url':$thumbnail0.url,
+					'thumb_height':$thumbnail0.height,
+					'thumb_width':$thumbnail0.width,
+					'timestamp':result.feed.gphoto$timestamp.$t,
+					'numphotos':result.feed.gphoto$numphotos.$t,
+					'album_local_url':this.album_local_url,
+					'album_local_title':this.album_local_title,
+					'album_id':this.album_id
+				};
+				if (this.hasOwnProperty("manual_date")){
+					album.manual_date=this.manual_date;
+				}
+				addAlbum(album,jQuery('#ozio-he-author' + this.album_id));
+			}else{
+				//siamo sugli album
+				
+				for (var i=0; i<result.feed.entry.length;i++){
+					var albumItem = result.feed.entry[i];
+					if (albumItem.gphoto$id.$t==this.gallery_id){
+						//ok trovato
+						var $thumbnail0 = albumItem.media$group.media$thumbnail[0];
+						var album={
+							
+							'title':albumItem.title.$t,
+							'thumb_url':$thumbnail0.url,
+							'thumb_height':$thumbnail0.height,
+							'thumb_width':$thumbnail0.width,
+							'timestamp':albumItem.gphoto$timestamp.$t,
+							'numphotos':albumItem.gphoto$numphotos.$t,
+							'album_local_url':this.album_local_url,
+							'album_local_title':this.album_local_title,
+							'album_id':this.album_id
+						};
+						if (this.hasOwnProperty("manual_date")){
+							album.manual_date=this.manual_date;
+						}
+						addAlbum(album,jQuery('#ozio-he-author' + this.album_id));
+						
+						break;
+					}
+				}
+				
+			}
+			
+			
+			
 		}
 
 		function OnLoadError(jqXHR, textStatus, error)

@@ -3523,13 +3523,18 @@ nanoGALLERY v5.5.1 release notes.
       // get the content and display it
       jQuery.ajaxSetup({ cache: false });
       jQuery.support.cors = true;
+	  
+	  
+
+	  
       var tId = setTimeout( function() {
         // workaround to handle JSONP (cross-domain) errors
         PreloaderHide();
         nanoAlert('Could not retrieve Picasa/Google+ data...');
       }, 60000 );
-      jQuery.getJSON(url, 'callback=?', function(data) {
-        
+	  
+	  var gi_getJSONfinished = function(data){
+
         clearTimeout(tId);
         PreloaderHide();
         PicasaParseData(albumIdx,data,kind);
@@ -3555,19 +3560,46 @@ nanoGALLERY v5.5.1 release notes.
               DisplayAlbum(albumIdx,setLocationHash);
             }
           }
-      })
-      .fail( function(jqxhr, textStatus, error) {
-        clearTimeout(tId);
-        PreloaderHide();
-        
-        //alertObject(jqxhr);
-        var k=''
-        for(var key in jqxhr) {
-          k+= key + '=' + jqxhr[key] +'<br>';
-        }
-        var err = textStatus + ', ' + error + ' ' + k + '<br><br>URL:'+url;
-        nanoAlert("Could not retrieve Picasa/Google+ data. Error: " + err);
-      });
+	  };	  
+	  
+	  var gi_data_loaded = null;
+	  
+	  var gi_loadJSON = function(url,start_index){
+		jQuery.getJSON(url+"&start-index="+start_index, 'callback=?', function(data) {
+				
+				if (gi_data_loaded===null){
+					gi_data_loaded = data;
+				}else{
+					gi_data_loaded.feed.entry=gi_data_loaded.feed.entry.concat(data.feed.entry);
+				}
+				
+				if (data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t>=data.feed.openSearch$totalResults.$t){
+					//ok finito
+					gi_getJSONfinished(gi_data_loaded);
+				}else{
+					//ce ne sono ancora da caricare
+					//altra chiamata per il rimanente
+					gi_loadJSON(url,data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t);
+				}
+				
+			  })
+			  .fail( function(jqxhr, textStatus, error) {
+				clearTimeout(tId);
+				PreloaderHide();
+				
+				//alertObject(jqxhr);
+				var k=''
+				for(var key in jqxhr) {
+				  k+= key + '=' + jqxhr[key] +'<br>';
+				}
+				var err = textStatus + ', ' + error + ' ' + k + '<br><br>URL:'+url;
+				nanoAlert("Could not retrieve Picasa/Google+ data. Error: " + err);
+			  });		  
+	  };
+	  
+	  gi_loadJSON(url,1);
+	  
+      
       
     }
     
@@ -8620,7 +8652,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
       s+=s1+'.nanoGalleryContainer > .nanoGalleryThumbnailContainer .labelFolderTitle > span:not(.labelNumPhotoTitle) { background-color:'+cs.thumbnail.titleColor+' !important; color:'+c+' !important; }'+'\n';
       s+=s1+'.nanoGalleryContainer > .nanoGalleryThumbnailContainer .labelFolderTitle:before { color:'+cs.thumbnail.titleColor+' !important; Text-Shadow:'+cs.thumbnail.titleShadow+' !important; }'+'\n';
       s+=s1+'.nanoGalleryContainer > .nanoGalleryThumbnailContainer .labelDescription { color:'+cs.thumbnail.descriptionColor+' !important; Text-Shadow:'+cs.thumbnail.descriptionShadow+' !important; }'+'\n';
-      s+=s1+'.nanoGalleryContainer > .nanoGalleryThumbnailContainer .labelDescription > span { background-color:'+cs.thumbnail.titleColor+' !important; color:'+c+' !important; }'+'\n';
+      s+=s1+'.nanoGalleryContainer > .nanoGalleryThumbnailContainer .labelDescription > span:not(.labelNumPhotoTitle) { background-color:'+cs.thumbnail.titleColor+' !important; color:'+c+' !important; }'+'\n';
       // s+='.' + G.colorSchemeLabel +'.fullpage { background:'+G.O.galleryFullpageBgColor+' !important; }'+'\n';
 
       // pagination dot based
