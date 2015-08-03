@@ -1001,8 +1001,11 @@
 		{
 			// Aggiunto supporto per album id numerico
 			// Pur essendo le foto dai posts un album in formato alfanumerico, va trattato come numerico (|posts)
-			var numeric = settings.album.match(/^[0-9]{19}|posts$/);
+			var numeric = false;
 			var album_type;
+			if (typeof settings.album !== 'undefined' && (typeof settings.album === 'string' || settings.album instanceof String) && settings.album !== ""){
+				numeric = settings.album.match(/^[0-9]{19}|posts$/);
+			}
 			if (numeric) album_type = 'albumid';
 			else album_type = 'album';
 

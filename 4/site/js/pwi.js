@@ -126,9 +126,11 @@ jQuery(document).ready(function ($)
 				
 				<?php
 					if ($item->params->get("albumvisibility") != "public"){
-						echo 'album: '.$item->params->get("limitedalbum").",\n";
+						echo 'album: "'.$item->params->get("limitedalbum")."\",\n";
+					}else if (is_numeric($item->params->get("gallery_id",""))){
+						echo 'gallery_id: "'.$item->params->get("gallery_id","")."\",\n";
 					}else{
-						echo 'gallery_id: '.$item->params->get("gallery_id","").",\n";
+						echo 'album: "'.$item->params->get("gallery_id","")."\",\n";
 					}
 				?>
 				
