@@ -131,7 +131,6 @@ class Com_OzioGallery3InstallerScript
 			$result["result"] = "NOT_FOUND";
 			if ($id){
 				$result["result"] = $installer->uninstall('plugin',$id,1) ? "UNINSTALLED" : "NOT_UNINSTALLED";
-				error_log("Uninstall plugin ".$attributes['plugin'],3,'/workspace/php-errors.log');
 			}
 				
 			$this->results[(string)$attributes["name"]] = $result;
@@ -161,7 +160,6 @@ class Com_OzioGallery3InstallerScript
 			$result["result"] = "NOT_FOUND";
 			if ($id){
 				$result["result"] = $installer->uninstall('template',$id,1) ? "UNINSTALLED" : "NOT_UNINSTALLED";
-				error_log("Uninstall template ".$attributes['template'],3,'/workspace/php-errors.log');
 			}
 				
 			$this->results['OZIO TEMPLATE'] = $result;
@@ -267,9 +265,60 @@ class Com_OzioGallery3InstallerScript
 		$this->extension_name = substr($this->component_name, 4);
 	}
 
-	function postflight($type, $parent)
-	{
-	}
+	function postflight($type, $parent) {
+		if ($type == 'uninstall') return true;
+
+		$installed = true;
+		foreach ($this->results as $res){
+			if ($res['result']!="INSTALLED"){
+				$installed = false;
+				break;
+			}
+		}
+		if (!$installed){
+			return true;
+		}
+		
+		
+		$language =& JFactory::getLanguage();
+		$language_tag = $language->getTag(); // loads the current language-tag
+		$language->load('com_oziogallery3', JPATH_ADMINISTRATOR . '/' . "components" . '/' . "com_oziogallery3", $language_tag, true);
+		
+		//style="width:34%;margin-left:-20%;top:25%;"
+		$app = JFactory::getApplication();
+		$html=array();			
+		$html[] ='<div id="oziogallery-modal" class="modal hide fade" >';
+		$html[] ='';
+		$html[] ='	<div class="modal-header">';
+		$html[] ='		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+		$html[] ='		<h3>Ozio Gallery</h3>';
+		$html[] ='	</div>';
+		$html[] ='	<div class="modal-body">';
+		$html[] ='		<div class="progress progress-success progress-striped">';
+		$html[] ='			<div class="bar" style="width: 0;"></div>';
+		$html[] ='		</div>';
+		//$html[] ='		<p>One fine body…</p>';
+		require_once JPATH_SITE . "/components/com_oziogallery3/oziogallery.inc";
+		if (!$GLOBALS["oziogallery3"]["registered"])
+		{
+		$html[] ='			<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button> ';
+		$html[] ='				<div style="float:left;margin-right:16px;margin-left:10px;"> ';
+		$html[] ='					<a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="_blank"> ';
+		$html[] ='						<img src="'.JUri::base(true) . "/components/com_oziogallery3/assets/images/buy_now.jpg".'" border="0" alt="Buy now"> ';
+		$html[] ='					</a> ';
+		$html[] ='				</div> ';
+		$html[] ='			<p><strong>'.JText::_("COM_OZIOGALLERY3_PURCHASE").'</strong></p></div> ';
+		}
+		$html[] ='	</div>';
+		$html[] ='	<div class="modal-footer">';
+		$html[] ='		<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>';
+		$html[] ='	</div>';
+		$html[] ='</div>';
+		$html[] ="<script>jQuery('#oziogallery-modal').remove().prependTo('body').modal({keyboard: false});jQuery('#oziogallery-modal .bar').animate({ width: '100%' },1000);</script>";
+		$app->enqueueMessage('Installing OzioGallery... '.implode("\n",$html));
+
+		return true;
+	}	
 
 	function message()
 	{
