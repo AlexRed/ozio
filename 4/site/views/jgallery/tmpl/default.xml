@@ -46,7 +46,7 @@
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
 			
-			<field type="list" name="galleryheight_mode" label="COM_OZIOGALLERY3_HEIGHT_MODE_LBL" description="COM_OZIOGALLERY3_HEIGHT_MODE_DSC" default="fixed">
+			<field type="list" name="galleryheight_mode" label="COM_OZIOGALLERY3_HEIGHT_MODE_LBL" description="COM_OZIOGALLERY3_HEIGHT_MODE_DSC" default="eq_width">
 				<option value="fixed">COM_OZIOGALLERY3_HEIGHT_FIXED</option>
 				<option value="eq_width">COM_OZIOGALLERY3_HEIGHT_EQ_WIDTH</option>
 				<option value="two_thirds">COM_OZIOGALLERY3_HEIGHT_TWO_THIRDS</option>
