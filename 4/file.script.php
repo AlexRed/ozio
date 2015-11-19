@@ -280,7 +280,7 @@ class Com_OzioGallery3InstallerScript
 		}
 		
 		
-		$language =& JFactory::getLanguage();
+		$language =JFactory::getLanguage();
 		$language_tag = $language->getTag(); // loads the current language-tag
 		$language->load('com_oziogallery3', JPATH_ADMINISTRATOR . '/' . "components" . '/' . "com_oziogallery3", $language_tag, true);
 		

@@ -22,6 +22,19 @@
 class JFormFieldTextImproved extends JFormField
 {
 	protected $type = "TextImproved";
+	
+	public function __construct($form = null)
+	{
+		parent::__construct($form);
+
+		if (!isset($GLOBALS["ozio_textimproved_fields_loaded"]))
+		{
+			JFactory::getDocument()->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
+			JFactory::getDocument()->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
+			$GLOBALS["ozio_textimproved_fields_loaded"] = true;
+		}
+	}
+	
 
 	protected function getInput()
 	{
@@ -37,7 +50,12 @@ class JFormFieldTextImproved extends JFormField
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
+		$buttons = '';
+		$buttons .= '<div class="ozio-buttons-frame">';
+		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/get_id.html"></iframe>';
+		$buttons .= '</div>';		
+		
 		return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
-			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . $autocomplete . '/>';
+			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . $autocomplete . '/>'.$buttons;
 	}
 }

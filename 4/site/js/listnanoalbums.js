@@ -42,8 +42,10 @@ jQuery( document ).ready(function( $ ) {
 		if (kind=='picasa'){
 			$('#jform_params_albumvisibility').closest('.control-group').show();
 			albumvisibility=$('#jform_params_albumvisibility').val();
+			$('.ozio-buttons-frame').show();
 		}else{
 			$('#jform_params_albumvisibility').closest('.control-group').hide();
+			$('.ozio-buttons-frame').hide();
 			
 		}
 		if (albumvisibility=='public'){

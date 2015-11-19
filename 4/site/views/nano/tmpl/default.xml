@@ -17,7 +17,7 @@
 				<option value="flickr">COM_OZIOGALLERY3_OZIO_NANO_KIND_FLICKR</option>
 			</field>
 
-			<field type="text" name="ozio_nano_userID" label="COM_OZIOGALLERY3_OZIO_NANO_USERID_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
+			<field type="textimproved" name="ozio_nano_userID" label="COM_OZIOGALLERY3_OZIO_NANO_USERID_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
 
 			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public">
 				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
