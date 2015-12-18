@@ -419,7 +419,8 @@
 	-moz-box-sizing: border-box;
 	-o-box-sizing: border-box;
 }
-.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span{
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span ,
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelDescription > span {
 	color:rgba(34, 34, 34, 0.75);
   background-color:#eee;
   border: 0px solid #eee;
@@ -881,10 +882,18 @@
 /**************************************/
 /* LOADING BAR                        */
 /**************************************/
-.nanogallery_theme_clean .nanoGalleryLBar {
+.nanogallery_theme_clean .nanoGalleryLBarOff {
 	position:relative;
   width:100%;
   visibility: hidden;
+  height:2px;
+  margin:0 0 1px 0;
+  background-color:#555;
+}
+.nanogallery_theme_clean .nanoGalleryLBar {
+	position:relative;
+  width:100%;
+  visibility: visible;
   height:2px;
   margin:0 0 1px 0;
   background-color:#555;
