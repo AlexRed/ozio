@@ -9,13 +9,8 @@
 			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
 			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
-			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public" onchange="OnAlbumVisibilityChange()">
-				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
-				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
-			</field>
+			
 			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
-			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
-			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
 
 <!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC" required="true"/> -->
 			<field type="text" name="gallery_date" label="COM_OZIOGALLERY3_GALLERY_DATE_LBL" description="COM_OZIOGALLERY3_GALLERY_DATE_DSC" />
@@ -39,6 +34,12 @@
 			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
+			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public" onchange="OnAlbumVisibilityChange()">
+				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
+				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
+			</field>
+			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
+			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 <!--
