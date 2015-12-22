@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>info@joomla.it</authorEmail>
 	<authorUrl>www.joomla.it</authorUrl>
-	<version>1.0.1</version>
+	<version>4.5.0</version>
 	<description>COM_OZIOGALLERY3_PLG_OZIOJQUERY_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="oziojquery">oziojquery.php</filename>
