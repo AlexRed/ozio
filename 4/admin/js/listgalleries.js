@@ -113,6 +113,57 @@ function OnBeforeSend(jqXHR, settings)
 	$('jform_params_gallery_id_loader').show();
 }
 
+function ozio_addalbums(albums){
+	var select = $('jform_params_gallery_id');
+	// Clear previous options
+	select.options.length = 0;
+	
+	// Show the select
+	select.show();
+
+	var tabella = new Array();
+	tabella['NONE'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
+	tabella['PROFILEPHOTOS'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
+	tabella['SCRAPBOOK'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
+	tabella['BUZZ'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
+
+	var numbuzz = 0;
+
+	for (var a = 0; a < albums.length; ++a)
+	{
+		var album = albums[a];
+		var id = album.id;
+		// Album unique name (see below)
+		// var name = album.gphoto$name.$t;
+		var numphotos = album.numphotos;
+
+		var title;
+		// Standard album
+		title = album.title;
+
+		if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
+		{
+			numbuzz += parseInt(numphotos);
+		}
+		else
+		{
+			// Old identifier: the album number
+			addoption(select, id, title + ' (' + numphotos + ')');
+			// New identifier: the album unique name
+			//addoption(select, name, title + ' (' + numphotos + ')');
+		}
+	}
+
+	addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
+
+	// Todo: Predisposto ma lasciato incompleto
+	// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
+	// come quella utilizzata dal selettore posizione modulo in Joomla 1.5
+	// ...
+	//addoption(select, 0, 'Selezione manuale');
+	SelectCurrentAlbum();
+}
+
 function OnLoadSuccess(result, textStatus, jqXHR)
 {
 	var select = $('jform_params_gallery_id');

@@ -2096,7 +2096,10 @@ nanoGALLERY v5.9.1 release notes.
       if( G.O.albumList != '' ) { G.albumList=G.O.albumList.toUpperCase().split('|'); }
 
       if( G.O.kind == 'picasa' || G.O.kind == 'flickr' ) {
-        G.O.displayBreadcrumb=true;
+		  
+		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+			G.O.displayBreadcrumb=true;
+		}
       }
       // flickr
       if( G.O.photoset !== undefined ) {
@@ -3018,7 +3021,9 @@ nanoGALLERY v5.9.1 release notes.
       });
 
       if( foundAlbumID ) {
-        G.O.displayBreadcrumb=true;
+		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+			G.O.displayBreadcrumb=true;
+		}
       }
 
       // get the number of images per album for all the items
@@ -3183,7 +3188,9 @@ nanoGALLERY v5.9.1 release notes.
       jQuery.each(elements, function(i,item){ jQuery(item).remove(); });
 
       if( foundAlbumID ) {
-        G.O.displayBreadcrumb=true;
+		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+			G.O.displayBreadcrumb=true;
+		}
       }
 
       // get the number of images per album for all the items
@@ -3350,7 +3357,9 @@ nanoGALLERY v5.9.1 release notes.
       });
 
       if( foundAlbumID ) {
-        G.O.displayBreadcrumb=true;
+		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+			G.O.displayBreadcrumb=true;
+		}
       }
 
       G.I[albumIdx].contentIsLoaded=true;
@@ -9137,7 +9146,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
       s+=s1+'.nanoGalleryNavigationbar .nanoGalleryTags { color:'+cs.navigationbar.color+' !important; }'+'\n';
       s+=s1+'.nanoGalleryNavigationbar .setFullPageButton { color:'+cs.navigationbar.color+' !important; }'+'\n';
       s+=s1+'.nanoGalleryNavigationbar .removeFullPageButton { color:'+cs.navigationbar.color+' !important; }'+'\n';
-      s+=s1+'.nanoGalleryNavigationbar .oneFolder:hover { color:'+cs.navigationbar.colorHover+' !important; }'+'\n';
+      s+=s1+'.nanoGalleryNavigationbar .oneFolder:hover { color:'+cs.navigationbar.color+' !important; }'+'\n';
       s+=s1+'.nanoGalleryNavigationbar .separatorRTL:hover { color:'+cs.navigationbar.colorHover+' !important; }'+'\n';
       s+=s1+'.nanoGalleryNavigationbar .nanoGalleryTags:hover { color:'+cs.navigationbar.colorHover+' !important; }'+'\n';
       s+=s1+'.nanoGalleryNavigationbar .setFullPageButton:hover { color:'+cs.navigationbar.colorHover+' !important; }'+'\n';

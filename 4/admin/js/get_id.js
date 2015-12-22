@@ -54,7 +54,7 @@ eventer(messageEvent,function(e) {
 			$table.empty();
 			for (var i=0; i< obj.entries.length; i++){
 				var entry=obj.entries[i];
-				$table.append('<tr data-entryidx="'+i+'"><td>'+gi_escape_html(entry.title)+'</td><td class="ozio_album_rights">'+gi_escape_html(entry.rights)+'</td><td><button class="btn btn-primary ozio-to-private" type="button">To Private</button><button class="btn btn-primary ozio-to-public" type="button">To Public</button><button class="btn btn-primary ozio-to-protected" type="button">To Protected</button></td></tr>');
+				$table.append('<tr data-entryidx="'+i+'"><td>'+gi_escape_html(entry.title)+'</td><td class="ozio_album_rights">'+gi_escape_html(g_ozio_admin_buttons[entry.rights])+'</td><td><div class="btn-group"><button class="btn btn-small btn-success ozio-to-public" type="button"><span class="icon-save icon-white"></span>'+g_ozio_admin_buttons.topublic+'</button><button class="btn btn-small ozio-to-protected" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprotected+'</button><button class="btn btn-small ozio-to-private" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprivate+'</button></div></td></tr>');
 			}
 			$table.find('button.ozio-to-private').on('click',function(){
 				var $tr = jQuery(this).closest('tr');
@@ -72,6 +72,57 @@ eventer(messageEvent,function(e) {
 			
 			jQuery('#oziogallery-modal').modal({keyboard: false});
 			jQuery('#oziogallery-modal').on('hidden', function () {
+				
+					var userID=0;
+					var kind='picasa';
+					var albumvisibility='public';
+					
+					if (jQuery('#jform_params_ozio_nano_userID').length>0){
+						userID=jQuery('#jform_params_ozio_nano_userID').val();
+						var nano_kind=jQuery('#jform_params_ozio_nano_kind');
+						if (nano_kind.length>0){
+							kind=nano_kind.val();
+						}	
+						if (kind=='picasa'){
+							albumvisibility=jQuery('#jform_params_albumvisibility').val();
+						}
+					}else if (jQuery('#jform_params_userid').length>0){
+						//jform_params_albumvisibility
+						userID=jQuery('#jform_params_userid').val();
+						albumvisibility=jQuery('#jform_params_albumvisibility').val();
+					}
+					
+					if (albumvisibility=='public' && userID == obj.user_id){
+						
+						if (jQuery('#jform_params_ozio_nano_userID').length>0){
+							var albums = [];
+							for (var i=0;i<obj.entries.length;i++){
+								if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
+									albums.push({
+										'id':obj.entries[i].id,
+										'title':obj.entries[i].title
+									});
+								}
+							}
+							gi_update_listnanoalbums_callback(albums);
+						}else if (jQuery('#jform_params_userid').length>0){
+							//
+							var albums = [];
+							for (var i=0;i<obj.entries.length;i++){
+								if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
+									albums.push({
+										'id':obj.entries[i].id,
+										'title':obj.entries[i].title,
+										'numphotos':obj.entries[i].num_photos
+									});
+								}
+							}
+							ozio_addalbums(albums);
+						}
+				
+					}
+				/*
+				
 				//Sul close del modale aggiorno gli album!
 					var element = document.getElementById('jform_params_userid');
 					if (element == null){
@@ -85,6 +136,7 @@ eventer(messageEvent,function(e) {
 					else{
 						element.fireEvent("onchange");
 					}
+					*/
 			});
 			
 			
@@ -118,7 +170,7 @@ function ozio_new_access(obj,$tr,new_access){
 					}
 				}
 				
-				$tr.find('.ozio_album_rights').text(obj.entries[idx].rights);
+				$tr.find('.ozio_album_rights').text(g_ozio_admin_buttons[obj.entries[idx].rights]);
 			}else{
 				$tr.find('.ozio_album_rights').text('error');
 			}
