@@ -53,3 +53,7 @@ select.selext {
 #ozio-button-getid {
 	background-image: url('media/login-16.png');
 }
+
+#jform_params_gallery_id{
+    display: inline-block !important;
+}

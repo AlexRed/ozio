@@ -26,17 +26,58 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 {
 	protected $type = "ListNanoAlbums";
 
+	
+	
 	protected function getInput()
 	{
 		static $resources = true;
+		$i18n=array(
+			'public'=>JText::_("COM_OZIOGALLERY3_ALBUM_PUBLIC"),
+			'private'=>JText::_("COM_OZIOGALLERY3_ALBUM_PRIVATE"),
+			'protected'=>JText::_("COM_OZIOGALLERY3_ALBUM_PROTECTED"),
+			'topublic'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPUBLIC"),
+			'toprivate'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPRIVATE"),
+			'toprotected'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPROTECTED"),
+		);
+
 		if ($resources)
 		{
 			$resources = false;
 			$document = JFactory::getDocument();
 			$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/listnanoalbums.js");
+			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
+			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
 		}
 		
-		return parent::getInput().'<div id="jform_params_ozio_nano_albumList_alert"></div>';
+		
+		
+		
+		$buttons = '';
+		$buttons .= '<div class="ozio-buttons-frame">';
+		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish.html"></iframe>';
+		$buttons .= '</div>';
+
+		$html=array();
+		$html[] ='<div id="oziogallery-modal" class="modal hide fade" >';
+		$html[] ='';
+		$html[] ='	<div class="modal-header">';
+		$html[] ='		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+		$html[] ='		<h3>Ozio Gallery</h3>';
+		$html[] ='	</div>';
+		$html[] ='	<div class="modal-body" style="overflow-y:auto;">';
+		$html[] ='	<table class="table table-striped">';
+		$html[] ='	</table>';
+		$html[] ='	</div>';
+		$html[] ='	<div class="modal-footer">';
+		$html[] ='		<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>';
+		$html[] ='	</div>';
+		$html[] ='</div>';	
+
+		$buttons .=	implode(" ",$html);		
+		
+		
+		return parent::getInput().$buttons.'<div id="jform_params_ozio_nano_albumList_alert"></div>';
 	}
 	protected function getOptions()
 	{

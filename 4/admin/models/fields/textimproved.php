@@ -50,42 +50,13 @@ class JFormFieldTextImproved extends JFormField
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		$i18n=array(
-			'public'=>JText::_("COM_OZIOGALLERY3_ALBUM_PUBLIC"),
-			'private'=>JText::_("COM_OZIOGALLERY3_ALBUM_PRIVATE"),
-			'protected'=>JText::_("COM_OZIOGALLERY3_ALBUM_PROTECTED"),
-			'topublic'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPUBLIC"),
-			'toprivate'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPRIVATE"),
-			'toprotected'=>JText::_("COM_OZIOGALLERY3_ALBUM_TOPROTECTED"),
-		);
-		
-		$document = JFactory::getDocument();
-		$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
 		
 		$buttons = '';
 		$buttons .= '<div class="ozio-buttons-frame">';
 		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/get_id.html"></iframe>';
-		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish.html"></iframe>';
 		$buttons .= '</div>';
 
-		$html=array();
-		$html[] ='<div id="oziogallery-modal" class="modal hide fade" >';
-		$html[] ='';
-		$html[] ='	<div class="modal-header">';
-		$html[] ='		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-		$html[] ='		<h3>Ozio Gallery</h3>';
-		$html[] ='	</div>';
-		$html[] ='	<div class="modal-body" style="overflow-y:auto;">';
-		$html[] ='	<table class="table table-striped">';
-		$html[] ='	</table>';
-		$html[] ='	</div>';
-		$html[] ='	<div class="modal-footer">';
-		$html[] ='		<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>';
-		$html[] ='	</div>';
-		$html[] ='</div>';	
 
-		$buttons .=	implode(" ",$html);
-		
 		return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . $autocomplete . '/>'.$buttons;
 	}
