@@ -426,7 +426,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="hide_infobox_link" label="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_DSC" default="0">
+			<field type="list" name="hide_infobox_link" label="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_LINK_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
