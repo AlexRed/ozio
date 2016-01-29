@@ -1794,7 +1794,9 @@ nanoGALLERY v5.9.1 release notes.
         if( isAnimating ) { return; }
 
         if( G.O.paginationSwipe ) {
-          if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+          //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
 			if (G.O.paginationDisableSwipe){//GI
 				return;
 			}				  
@@ -1940,7 +1942,9 @@ nanoGALLERY v5.9.1 release notes.
         var differenceInX = initialTouchPos.x - lastTouchPos.x;
         var differenceInY = initialTouchPos.y - lastTouchPos.y;
         currentXPosition = currentXPosition - differenceInX;
-        if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+        //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
           // pagination
           // if( Math.abs(differenceInX) > 30) {
           if( G.O.paginationSwipe && (Math.abs(differenceInX) > 40 && Math.abs(initialViewport.t-getViewport().t) <= 10) ) {
@@ -1989,7 +1993,9 @@ nanoGALLERY v5.9.1 release notes.
       function onAnimFrame() {
         if(!isAnimating) { return; }
 
-        if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto'  ) {
+        //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto'  ) {
           var differenceInX = initialTouchPos.x - lastTouchPos.x;
           ElementTranslateX(elementToSwipe,currentXPosition - differenceInX);
         }
@@ -5295,7 +5301,9 @@ nanoGALLERY v5.9.1 release notes.
 
       var firstPage=0;
       // pagination - max lines per page mode
-      if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+      //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
         n2=Math.ceil(G.I[albumIdx].contentLength/(G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow));
       }
 
@@ -5535,7 +5543,9 @@ nanoGALLERY v5.9.1 release notes.
       firstCounter=0,
       lastCounter=0;
 
-      if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+      //Anpassung
+      if( G.pgMaxLinesPerPage > 0 ) {
+      // if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
         firstCounter=pageNumber*G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow;
         lastCounter=firstCounter+G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow;
       }
@@ -5558,7 +5568,9 @@ nanoGALLERY v5.9.1 release notes.
             currentCounter++;
 
             // pagination - max lines per page mode
-            if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+            //Anpassung
+      if( G.pgMaxLinesPerPage > 0 ) {
+      // if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
               if( (G.galleryItemsCount+1) > (G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow) ) {
                 onComplete(albumIdx, pageNumber);
                 return;
