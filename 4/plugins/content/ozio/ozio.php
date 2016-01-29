@@ -53,6 +53,15 @@ class plgContentOzio extends JPlugin
 
 	protected function _load($galleriaozio)
 	{
+		//Anpassung
+		if( substr($galleriaozio,0 , 2) == "__") {
+			$gallery = explode("__", $galleriaozio);
+			$galleriaozio = $gallery[1];
+			$specialAlbum = $gallery[2];
+		} else {
+			$specialAlbum = false;
+		}
+
 		// Load the component url from the database
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -75,7 +84,9 @@ class plgContentOzio extends JPlugin
 			return $this->display_map($cparams, $galleriaozio);
 		}else if (strpos($item["link"], "nano")){
 			$cparams = new JRegistry($item["params"]);
-			return $this->display_nano($cparams, $galleriaozio);
+			//Anpassung
+			return $this->display_nano($cparams, $galleriaozio, $specialAlbum);
+			//return $this->display_nano($cparams, $galleriaozio);
 		}else if (strpos($item["link"], "jgallery")){
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_jgallery($cparams, $galleriaozio);
@@ -151,7 +162,9 @@ class plgContentOzio extends JPlugin
 		return $result;
 	}
 	
-	function display_nano(&$cparams, $galleriaozio)
+	//Anpassung
+	function display_nano(&$cparams, $galleriaozio, $specialAlbum)
+	//function display_nano(&$cparams, $galleriaozio)
 	{
 		$this->Params = $cparams;
 		$this->document = JFactory::getDocument();
@@ -202,7 +215,11 @@ class plgContentOzio extends JPlugin
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
-		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio;
+
+		//Anpassung
+		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio . "&amp;specialAlbum=" . $specialAlbum;
+
+		//$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio;
 
 		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/css/ozio-nano.css");
 		$this->document->addScript($prefix . "&amp;v=nano&amp;filename=nano-starter&amp;type=js" .$postfix );		
