@@ -48,7 +48,7 @@ class JFormFieldListGalleries extends JFormFieldList
 			$prefix = JUri::current() . "?option=" . $name . "&amp;view=loader";
 
 			// pwi
-			$document->addScript(JUri::root(true) . "/components/" . $name . "/js/jquery-pwi.js");
+			$document->addScript(JUri::root(true) . "/media/" . $name . "/js/jquery-pwi.js");
 
 			// Alternative code: $type = strtolower($this->type);
 			$type = (string)$this->element["type"];
@@ -60,7 +60,7 @@ class JFormFieldListGalleries extends JFormFieldList
 				$document->addStyleSheet(JUri::base(true) . "/components/" . $name . "/css/" . $type . ".css");
 
 			// per la compatibilità con Internet Explorer
-			$document->addScript(JURI::root(true) . "/components/" . $name . "/js/jQuery.XDomainRequest.js");
+			$document->addScript(JURI::root(true) . "/media/" . $name . "/js/jQuery.XDomainRequest.js");
 
 			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
 			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");

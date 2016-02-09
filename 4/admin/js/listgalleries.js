@@ -382,7 +382,7 @@ function OnMarkersIconChange()
 	if (value==''){
 		value='default.png';
 	}
-	document.getElementById("ozio_markerpreview").src='../components/com_oziogallery3/views/map/img/markers/icons/'+value;
+	document.getElementById("ozio_markerpreview").src='../media/com_oziogallery3/views/map/img/markers/icons/'+value;
 }
 
 // Inizializzazione

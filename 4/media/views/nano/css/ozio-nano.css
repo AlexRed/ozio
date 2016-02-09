@@ -1,0 +1,312 @@
+/**
+ * (C) 2014 Garda Informatica Snc. Tutti i diritti riservati.
+ *
+ * QUESTO SOFTWARE VIENE FORNITO DA "GARDA INFORMATICA SNC" "COSI` COM'E`", SENZA
+ * GARANZIE DI ALCUN TIPO, ESPLICITE O IMPLICITE, INCLUSE, MA NON LIMITATE A, LE
+ * GARANZIE DI COMMERCIABILITA` E IDONEITA` PER UN PARTICOLARE SCOPO. IN NESSUN CASO
+ * "GARDA INFORMATICA SNC" POTRA` ESSERE RITENUTA RESPONSABILE PER QUALSIASI DANNO
+ * DIRETTO, INDIRETTO, ACCIDENTALE, SPECIALE, ESEMPLARE O CONSEGUENTE (INCLUSI,
+ * MA NON LIMITATI A, FORNITURA DI BENI E SERVIZI SOSTITUTIVI; PERDITA DI
+ * UTILIZZO, DATI O PROFITTO; O INTERRUZIONE DELL'ATTIVITA`) COMUNQUE CAUSATO E SU
+ * QUALSIASI IPOTESI DI RESPONSABILITA`, PER CONTRATTO, RESPONSABILITA` OGGETTIVA O
+ * TORTO (INCLUSA NEGLIGENZA O ALTRO) DERIVANTI IN QUALSIASI MODO DALL'USO DI
+ * QUESTO SOFTWARE, ANCHE SE INFORMATI DELLA POSSIBILITA` DI TALI DANNI.
+ *
+ * @date      31/gen/2014
+ * @author    Garda Informatica <info@gardainformatica.it>
+ * @website   www.gardainformatica.it
+ * @phone     (+39) 030-6898477
+ * @address   via Trento 34 - 25080 Nuvolento (BS) - Italy
+ *
+ * @copyright 2014 Garda Informatica Snc. All Rights Reserved.
+ */
+
+#nanoGalleryViewer .toolbar .label{
+	white-space: normal;
+	background-color:transparent;
+}
+/*
+.nano_folder_home:before{
+	content: '\e80c';
+	font-family: "nano_icon_font";
+}
+
+.nanogallery_colorscheme_light .nanoGalleryNavigationbarContainer .nanoGalleryNavigationbar .folder:hover {
+    color: #ffffff;
+}
+
+.nanogallery_colorscheme_light .nanoGalleryNavigationbarContainer .nanoGalleryNavigationbar .separator:hover {
+    color: #ffffff;
+}
+*/
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryBreadcrumb {
+    color: #777777;
+}
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryBreadcrumb .folderHome:hover {
+    color: #bbbbbb;
+}
+
+
+#nanoGallery.nanogallery_theme_clean .nanoGalleryContainerParent .nanoGalleryPagination {
+    color: #777777;
+}
+
+.nanogallery_theme_clean #nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_clean #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_clean #nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+.nanogallery_theme_default #nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_default #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_default #nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+.nanogallery_theme_light #nanoGalleryViewer .closeButtonFloating:after {
+	background-color:transparent;
+}
+.nanogallery_theme_light #nanoGalleryViewer .content .contentAreaPrevious:after, .nanogallery_theme_light #nanoGalleryViewer .content .contentAreaNext:after{
+	background-color:transparent;
+}
+
+
+.ozio-nano-white-info-box, .ozio-nano-white-info-box-with-gmap {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  
+  margin: 20px auto;
+}
+.ozio-nano-white-info-box{max-width: 500px;}
+.ozio-nano-white-info-box-with-gmap {max-width: 1000px;}
+
+
+
+/*.pi-map-container #nano-gmap-viewer{
+	float:left;
+}*/
+
+
+.nanoGalleryInfoBox .pi-map-container
+{
+	display:inline-block;
+	vertical-align: top;
+}
+.nanoGalleryInfoBox .pi-map-container
+{
+	width:100%;
+	max-width:500px;
+}
+.nanoGalleryInfoBox #nano-gmap-viewer{
+	float:left;
+}
+
+
+.nanoGalleryInfoBox #nano-gmap-viewer img { 
+	max-width: none; 
+	height: auto; 
+}
+
+.nanoGalleryInfoBox .pi-photo-buttons{
+	clear:both;
+}
+
+.nanoGalleryInfoBox .pi-photo-buttons a{
+	width:96px;
+}
+
+
+
+.nanoGalleryInfoBox dl {
+    margin-bottom: 18px;
+	max-width:500px;
+	width:100%;
+	float:left;
+}
+.nanoGalleryInfoBox dt, .nanoGalleryInfoBox dd {
+    line-height: 18px;
+}
+.nanoGalleryInfoBox dt {
+    font-weight: bold;
+}
+.nanoGalleryInfoBox dd {
+    margin-left: 9px;
+}
+.nanoGalleryInfoBox .odl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+.nanoGalleryInfoBox .odl-horizontal dd {
+    margin-left: 130px;
+}
+
+.nanoGalleryInfoBox .oimg-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}
+
+.mfp-close{
+line-height:22px;
+height:22px;
+width:22px;
+}
+
+/*
+#nanoGallery .nanoGalleryContainer{
+	overflow:visible;
+}
+
+#nanoGallery{
+	overflow:visible;
+}
+*/
+
+
+
+
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+	color:#eee !important;
+	background-color:inherit !important;
+	
+	margin: 0px 2px;
+  left: 0px;
+	overflow:hidden;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+  padding: 2px;
+	color:#eee !important;
+	background-color:inherit !important;
+  left: 0px;
+	overflow:hidden;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle{
+	color:#eee !important;
+	background-color:inherit !important;
+  left: 0px;
+	overflow:hidden;
+	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
+	vertical-align: middle;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+.nanogallery_theme_light .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelNumPhotoTitle:before{
+	content: '\e803';	/* .icon-picture */
+	margin-left: .2em;
+	margin-right: .2em;
+	/*Text-Shadow: #000000 1px 0px 0px, #000000 1px 1px 0px, #000000 1px -1px 0px, #000000 -1px 1px 0px, #000000 -1px 0px 0px, #000000 -1px -1px 0px, #000000 0px 1px 0px, #000000 0px -1px 0px;*/
+	font-family: "nano_icon_font3";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.labelDescription > span.labelImageTitle, .labelTitle > span.labelImageTitle, .labelDescription > span.labelNumPhotoTitle, .labelTitle > span.labelNumPhotoTitle{
+	vertical-align:baseline !important;
+}
+
+#nanoGalleryViewer .toolbar{
+	overflow:visible !important;
+}
+
+
+.nanogallery_theme_default #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';	
+}
+.nanogallery_theme_clean #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';
+}
+.nanogallery_theme_light #nanoGalleryViewer .toolbar .shareButton:after{
+	content: '\e829';	
+}
+
+/*
+prima
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span ,
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelDescription > span {
+
+dopo
+
+.nanogallery_theme_clean .nanoGalleryContainer .nanoGalleryThumbnailContainer  .labelFolderTitle > span{
+
+*/
+

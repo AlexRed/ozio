@@ -18,13 +18,19 @@
 		<filename>oziogallery.zip</filename>
 		<filename>pclzip.lib.php</filename>
 		<filename>controller.php</filename>
-		<folder>assets</folder>
 		<folder>js</folder>
 		<folder>language</folder>
 		<folder>lib</folder>
 		<folder>skin</folder>
 		<folder>views</folder>
 	</files>
+	<media folder="media" destination="com_oziogallery3">
+		<folder>assets</folder>
+		<folder>js</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+	</media>	
+	
 	<administration>
 		<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">com_oziogallery3</menu>
 		<files folder="admin">

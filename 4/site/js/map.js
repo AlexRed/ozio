@@ -42,10 +42,10 @@ jQuery(document).ready(function ($)
 		$legend_icon='';
 		$markers_icon=trim($item->params->get('markers_icon',''));
 		if (!empty($markers_icon)){
-			$icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
-			$legend_icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
+			$icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
+			$legend_icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
 		}else{
-			$legend_icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . 'default.png';
+			$legend_icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . 'default.png';
 		}
 		if (strpos($item->link, "&view=00fuerte") !== false){
 			$g_parameters[]=array('skin'=>'00fuerte','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);

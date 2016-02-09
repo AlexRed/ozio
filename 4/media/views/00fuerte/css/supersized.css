@@ -1,0 +1,347 @@
+/*
+
+	Supersized - Fullscreen Slideshow jQuery Plugin
+	Version : 3.2.7
+	Site	: www.buildinternet.com/project/supersized
+
+	Author	: Sam Dunn
+	Company : One Mighty Roar (www.onemightyroar.com)
+	License : MIT License / GPL License
+
+*/
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+img
+{
+	border: none !important;
+}
+
+#supersized-loader
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 0;
+	width: 60px;
+	height: 60px;
+	margin: -30px 0 0 -30px;
+	text-indent: -999em;
+	background: url(../img/progress.gif) no-repeat center center;
+}
+
+#supersized
+{
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	z-index: 0;
+	height: 100%;
+	width: 100%;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#supersized img
+{
+	width: auto;
+	height: auto;
+	position: relative;
+	display: none;
+	outline: none;
+	border: none;
+}
+
+#supersized.speed img
+{
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -moz-crisp-edges;
+}
+
+/*Speed*/
+#supersized.quality img
+{
+	-ms-interpolation-mode: bicubic;
+	image-rendering: optimizeQuality;
+}
+
+/*Quality*/
+
+#supersized li
+{
+	display: block;
+	list-style: none;
+	z-index: -30;
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #111;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#supersized a
+{
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+#supersized li.prevslide
+{
+	z-index: -20;
+}
+
+#supersized li.activeslide
+{
+	z-index: -10;
+}
+
+#supersized li.image-loading
+{
+	background: #111 url(../img/progress.gif) no-repeat center center;
+	width: 100%;
+	height: 100%;
+}
+
+#supersized li.image-loading img
+{
+	visibility: hidden;
+}
+
+#supersized li.prevslide img, #supersized li.activeslide img
+{
+	display: inline;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+/* Rimozione sfondo blu su selezione immagine grande */
+#supersized a:hover,
+#supersized a:active,
+#supersized a:focus
+{
+	background-color: transparent !important;
+}
+
+/* Rimozione sfondo blu su pulsanti avanti/indietro */
+a#prevslide:hover,
+a#prevslide:active,
+a#prevslide:focus
+{
+	background: url("../img/back.png") repeat scroll 0 0 transparent !important;
+}
+
+a#nextslide:hover,
+a#nextslide:active,
+a#nextslide:focus
+{
+	background: url("../img/forward.png") repeat scroll 0 0 transparent !important;
+}
+
+.fuertecontainer
+{
+	position: relative;
+	background: none repeat scroll 0 0 #111111;
+}
+
+/* TinyBox */
+.tbox
+{
+	position: absolute;
+	display: none;
+	padding: 16px;
+	z-index: 900
+}
+
+.tinner
+{
+	padding: 15px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #fff url("../img/tb_preload.gif") no-repeat 50% 50%;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid #333
+}
+
+.tmask
+{
+	position: absolute;
+	display: none;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	z-index: 800
+}
+
+.tclose
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	background: url("../img/tb_close.png") no-repeat
+}
+
+.tclose:hover
+{
+	background-position: 0 -30px
+}
+
+#error
+{
+	background: #ff6969;
+	color: #fff;
+	text-shadow: 1px 1px #cf5454;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: 0
+}
+
+#error .tcontent
+{
+	padding: 10px 14px 11px;
+	border: 1px solid #ffb8b8;
+	-moz-border-radius: 5px;
+	border-radius: 5px
+}
+
+#success
+{
+	background: #2ea125;
+	color: #fff;
+	text-shadow: 1px 1px #1b6116;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: 10;
+	-moz-border-radius: 0;
+	border-radius: 0
+}
+
+#frameless
+{
+	padding: 0
+}
+
+#frameless .tclose
+{
+	left: 6px
+}
+
+#fuertecontainer.fuertecontainer img
+{
+	max-width: none;
+}
+
+.ozio-00fuerte-white-info-box, .ozio-00fuerte-white-info-box-with-gmap {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  
+  margin: 20px auto;
+}
+.ozio-00fuerte-white-info-box{max-width: 500px;}
+.ozio-00fuerte-white-info-box-with-gmap {max-width: 1000px;}
+
+#photo-info .map-container
+{
+	display:inline-block;
+	vertical-align: top;
+}
+#photo-info .map-container
+{
+	width:100%;
+	max-width:500px;
+}
+#photo-info #ozio_gmap{
+	float:left;
+}
+
+
+#photo-info #ozio_gmap img { 
+	max-width: none; 
+	height: auto; 
+}
+
+#photo-info .pi-photo-buttons{
+	clear:both;
+}
+
+#photo-info .pi-photo-buttons a{
+	width:96px;
+}
+
+
+#photo-info dl {
+    margin-bottom: 18px;
+	max-width:500px;
+	width:100%;
+	float:left;
+}
+#photo-info dt, #photo-info dd {
+    line-height: 18px;
+}
+#photo-info dt {
+    font-weight: bold;
+}
+#photo-info dd {
+    margin-left: 9px;
+}
+#photo-info .odl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+#photo-info .odl-horizontal dd {
+    margin-left: 130px;
+}
+
+#photo-info .oimg-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}
+
+
+.mfp-close{
+line-height:22px;
+height:22px;
+width:22px;
+}
+
+.ozio-photowall-lazy{
+	width:68px;
+	height:68px;
+}
+
+.ozio_00fuerte_bottom_description{
+ margin-top:10px;
+}
+
+#progress-back.progress-back-hide{
+	display:none !important;
+}
+
+#progress-back.progress-back-bottom{
+	bottom:0px;
+}
+
