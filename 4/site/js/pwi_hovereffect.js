@@ -411,7 +411,7 @@ jQuery(document).ready(function ($)
 			}
 			else
 			{
-				figcaption.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format("d mmm yyyy") + '</span>');
+				figcaption.append('<span class="indicator og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format(gi_php_date_format_to_mask('<?php echo JText::_("DATE_FORMAT_LC3"); ?>')) + '</span>');
 			}
 			/*<?php } ?>*/
 			

@@ -88,7 +88,7 @@ jQuery(document).ready(function ($)
 			a.text(photos[i].title);
 			
 			var img=$('<img>');
-			img.attr('src','../components/com_oziogallery3/views/00fuerte/img/progress.gif');
+			img.attr('src','../media/com_oziogallery3/views/00fuerte/img/progress.gif');
 			
 			var a_album=$('<a target="_blank"></a>');
 			a_album.attr('href','../'+photos[i].album_link);

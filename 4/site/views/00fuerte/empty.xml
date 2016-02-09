@@ -4,7 +4,7 @@
 
 	<entry>
 		<summary type='text'>COM_OZIOGALLERY3_FAILURE_READING_GP</summary>
-		<content type='image/jpeg' src='/components/com_oziogallery3/views/00fuerte/img/empty.png'/>
+		<content type='image/jpeg' src='/media/com_oziogallery3/views/00fuerte/img/empty.png'/>
 		<gphoto:width>640</gphoto:width>
 		<gphoto:height>480</gphoto:height>
 	</entry>

@@ -7,6 +7,13 @@ $lang->load('com_oziogallery3',JPATH_ROOT . "/administrator/components/com_oziog
 
 ?>
 jQuery( document ).ready(function( $ ) {
+	
+	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		jQuery('a.close_fullscreen').attr('href',closelink);
+		jQuery('a.close_fullscreen').css('left','15px');
+	}
+	
  	var strings = {
  			picasaUrl:"https://photos.googleapis.com/data/feed/api/user/"
  		}; 	
@@ -526,7 +533,9 @@ jQuery( document ).ready(function( $ ) {
 				
 				var thumb=g_parameters[this.album_index].slides[i].seed + 's75-c/';
 				var alt=g_parameters[this.album_index].slides[i].photo;
-				
+				if (alt == '-na-'){
+					alt = '';
+				}
 				
 				
 				if (viewer_mode=='slider'){
@@ -662,6 +671,14 @@ jQuery( document ).ready(function( $ ) {
 						echo 'galleryheight = Math.round(2*jgallery.width()/3)+"px";'."\n";
 					}
 				?>
+				if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+					galleryheight_mode = 'fixed';
+					var siblings_height=0;
+					jgallery.nextAll(':visible').each(function (){
+						siblings_height+=$(this).outerHeight(true);
+					});
+					galleryheight = ($(window).height()-siblings_height);					
+				}
 				
 				if (galleryheight_mode=='eq_width' || galleryheight_mode=='two_thirds'){
 					$(window).resize(function(){
@@ -675,6 +692,8 @@ jQuery( document ).ready(function( $ ) {
 						console.log(galleryheight);
 					});
 				}
+				
+
 				
 				jgallery.jGallery({
 					
@@ -704,7 +723,8 @@ jQuery( document ).ready(function( $ ) {
 					
 					canZoom: <?php echo json_encode(intval($this->Params->get("canZoom", "1"))==1); ?>,
 					canChangeMode: <?php echo json_encode(intval($this->Params->get("canChangeMode", "1"))==1); ?>,
-					title: <?php echo json_encode(intval($this->Params->get("title", "1"))==1); ?>,
+					title: <?php echo json_encode(intval($this->Params->get("title", "1"))==1 || intval($this->Params->get("titleExpanded", "0"))==1); ?>,
+					titleExpanded: <?php echo json_encode(intval($this->Params->get("titleExpanded", "0"))==1); ?>,
 					browserHistory: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))==1); ?>,
 					
 					

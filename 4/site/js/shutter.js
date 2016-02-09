@@ -719,7 +719,7 @@ gi_ozio_intenseViewer=false;
 		progress_delay: false, // Delay after resize before resuming slideshow
 		thumb_page: false, // Thumbnail page
 		thumb_interval: false, // Thumbnail interval
-		image_path: '<?php echo JURI::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/', // Default image path
+		image_path: '<?php echo JURI::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/', // Default image path
 
 		// General Elements
 		play_button: '#pauseplay', // Play/Pause button

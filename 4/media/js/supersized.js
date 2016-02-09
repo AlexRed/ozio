@@ -140,7 +140,7 @@
 					//{
 						// Sta lavorando su elementi in overflow del vettore slides[].
 						// Se ne conosce l'esistenza, ma non sono ancora stati caricati, quindi la relativa slides[thisSlide] non esiste
-						thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progress.gif';
+						thumbImage = base.options.base_jurl+'/media/com_oziogallery3/views/00fuerte/img/progress.gif';
 					//}
 					//else
 					//{
@@ -154,7 +154,7 @@
 			}
 			if (base.options.photowall_show){
 				for (var pw=0;pw<=base.options.slide_total - 1;pw++){
-					thumbImage = base.options.base_jurl+'/components/com_oziogallery3/views/00fuerte/img/progressWall.gif';
+					thumbImage = base.options.base_jurl+'/media/com_oziogallery3/views/00fuerte/img/progressWall.gif';
 					
 					thumbImageLoad = base.options.slides[pw + 1 - start_slide].seed + 's68-c/';
 					

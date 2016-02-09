@@ -3,6 +3,12 @@ $non_printable_separator="\x16";
 $new_non_printable_separator="|!|";
 ?>
 jQuery( document ).ready(function( $ ) {
+	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
+		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		jQuery('a.close_fullscreen').attr('href',closelink);
+	}
+
+
 	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200")); ?>;
 
 	$("#nanoGallery").nanoGallery({

@@ -433,7 +433,7 @@ jQuery(document).ready(function ($)
 			}
 			else
 			{
-				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format("d mmm yyyy") + '</span>');
+				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format(gi_php_date_format_to_mask('<?php echo JText::_("DATE_FORMAT_LC3"); ?>')) + '</span>');
 			}
 
 			scAlbum.append(date);

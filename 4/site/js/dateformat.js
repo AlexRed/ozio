@@ -125,3 +125,61 @@ Date.prototype._format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
 
+function gi_php_date_format_to_mask(format){
+	var formatMap = {
+		d: 'dd',
+		D: 'ddd',
+		j: 'd',
+		l: 'dddd',
+		//N: 'E',//TODO  1 lunedì
+		S: 'S',
+		//w: 'd', //0 per domenica fino a 6 sabato
+		/*z: function(){ //giorno dell'anno partendo da 0
+			return this.format('DDD') - 1;
+		},*/
+		//W: 'W',//numero settimana
+		F: 'mmmm',
+		m: 'mm',
+		M: 'mmm',
+		n: 'm',
+		//t:  //num giorni nel mese
+		/*
+		L: function(){
+			return this.isLeapYear() ? 1 : 0;
+		},
+		o: 'GGGG',*/
+		Y: 'yyyy',
+		y: 'yy',
+		a: 'tt',
+		A: 'TT',
+		/*B: function(){
+			var thisUTC = this.clone().utc(),
+				// Shamelessly stolen from http://javascript.about.com/library/blswatch.htm
+				swatch = ((thisUTC.hours()+1) % 24) + (thisUTC.minutes() / 60) + (thisUTC.seconds() / 3600);
+			return Math.floor(swatch * 1000 / 24);
+		},*/
+		g: 'h',
+		G: 'H',
+		h: 'hh',
+		H: 'HH',
+		
+		i: 'MM',
+		s: 'ss',
+		//u: '[u]', 
+		//e: '[e]', // moment does not have this
+		//I: function(){
+		O: 'o',
+		//P: 'Z',
+		T: 'Z', // deprecated in moment
+		//Z: function(){
+		c: 'yyyy-mm-dd HH:MM:ss',
+		//Thu, 21 Dec 2000 16:01:07 +0200
+		r: 'ddd, dd mmm yyyy HH:MM:ss',
+		//U
+	},
+	formatEx = /[dDjlNSwzWFmMntLoYyaABgGhHisueIOPTZcrU]/g;
+
+	return format.replace(formatEx, function(phpStr){
+	  return formatMap[phpStr];
+	});
+}
