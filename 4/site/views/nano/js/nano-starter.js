@@ -6,6 +6,8 @@ jQuery( document ).ready(function( $ ) {
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
 		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
 		jQuery('a.close_fullscreen').attr('href',closelink);
+		jQuery('a.close_fullscreen').css('left','15px');
+		jQuery('a.close_fullscreen').css('right','auto');
 	}
 
 

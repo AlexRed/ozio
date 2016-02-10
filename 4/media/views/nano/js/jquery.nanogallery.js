@@ -4338,15 +4338,19 @@ nanoGALLERY v5.9.1 release notes.
     function CheckAlbumName( title, ID) {
       var s=title.toUpperCase();
 
+	  var found = false;
       if( G.albumList !== null ) {
         for( var j=0; j<G.albumList.length; j++) {
           if( s == G.albumList[j].toUpperCase() || ID == G.albumList[j] ) {
-            return true;
+            found = true;
+			break;
           }
         }
+		if (!found){
+			return false;
+		}
       }
-      else {
-        var found=false;
+      found=false;
         if( G.whiteList !== null ) {
           //whiteList : authorize only album cointaining one of the specified keyword in the title
           for( var j=0; j<G.whiteList.length; j++) {
@@ -4368,7 +4372,6 @@ nanoGALLERY v5.9.1 release notes.
         }
 
         return true;
-      }
     }
 
     // ###########################

@@ -12,6 +12,7 @@ jQuery( document ).ready(function( $ ) {
 		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
 		jQuery('a.close_fullscreen').attr('href',closelink);
 		jQuery('a.close_fullscreen').css('left','15px');
+		jQuery('a.close_fullscreen').css('right','auto');
 	}
 	
  	var strings = {
