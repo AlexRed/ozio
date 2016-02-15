@@ -79,6 +79,9 @@ class plgContentOzio extends JPlugin
 		}else if (strpos($item["link"], "jgallery")){
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_jgallery($cparams, $galleriaozio);
+		}else if (strpos($item["link"], "lightgallery")){
+			$cparams = new JRegistry($item["params"]);
+			return $this->display_lightgallery($cparams, $galleriaozio);
 		}else{
 			$cparams = new JRegistry($item["params"]);
 			return $this->display_list($cparams, $galleriaozio);
@@ -267,7 +270,63 @@ class plgContentOzio extends JPlugin
 		$result = JPATH_COMPONENT("com_oziogallery3/views/jgallery/tmpl/default.php") . ob_get_contents();
 		ob_end_clean();
 		return $result;
-	}		
+	}
+	
+	
+	
+	function display_lightgallery(&$cparams, $galleriaozio)
+	{
+		$this->Params = $cparams;
+		$this->document = JFactory::getDocument();
+		
+		//Inizio Include view.html.php
+		JHtml::_('bootstrap.framework');
+		if ($this->Params->get("load_css_bootstrap", 0)==1){
+			JHtmlBootstrap::loadCSS();
+		}
+
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
+
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
+
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lightgallery.css?v=1.2.14");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-fb-comment-box.css?v=1.2.14");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-transitions.css?v=1.2.14");
+
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/ozio-lg.css?v=1.0");
+
+		$current_uri = JFactory::getURI();
+		if ($this->Params->get("info_button", false)) {
+			if (empty($GLOBALS["contentmap"]["gapi"]))
+			{
+				$GLOBALS["contentmap"]["gapi"] = true;
+				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+			}
+		}
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
+
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/lightgallery-all.js?v=1.2.14");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-infobtn.js?v=1.0");
+
+		//$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
+		
+		
+		$prefix = JUri::root(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
+		$menu = JFactory::getApplication()->getMenu();
+		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
+		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $galleriaozio;
+
+		$this->document->addScript($prefix . "&amp;v=lightgallery&amp;filename=lightgallery-starter&amp;type=js" .$postfix );
+
+		//Fine Include view.html.php
+		
+		ob_start();
+		require JPATH_SITE . "/components/com_oziogallery3/views/lightgallery/tmpl/default.php";
+		$result = JPATH_COMPONENT("com_oziogallery3/views/lightgallery/tmpl/default.php") . ob_get_contents();
+		ob_end_clean();
+		return $result;
+	}	
+	
 	
 	function display_list(&$cparams, $galleriaozio)
 	{

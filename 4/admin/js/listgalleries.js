@@ -357,6 +357,41 @@ function OnAlbumVisibilityChange()
 	}
 }
 
+function OnLightGallerySourceKindChange()
+{
+	var select = $('jform_params_source_kind');
+	if (select){
+		var value = select.options[select.selectedIndex].value;
+		if (value == 'photo')
+		{
+			
+			jQuery('#jform_params_userid').closest('.control-group').show();
+			jQuery('#jform_params_albumvisibility').closest('.control-group').show();
+			jQuery('#jform_params_gallery_id').closest('.control-group').show();
+			jQuery('#jform_params_limitedalbum').closest('.control-group').show();
+			jQuery('#jform_params_limitedpassword').closest('.control-group').show();
+
+			jQuery('#jform_params_video_list').closest('.control-group').hide();
+			
+			OnAlbumVisibilityChange();
+		}
+		else
+		{
+
+			jQuery('#jform_params_video_list').closest('.control-group').show();
+
+			jQuery('#jform_params_userid').closest('.control-group').hide();
+			jQuery('#jform_params_albumvisibility').closest('.control-group').hide();
+			jQuery('#jform_params_gallery_id').closest('.control-group').hide();
+			jQuery('#jform_params_limitedalbum').closest('.control-group').hide();
+			jQuery('#jform_params_limitedpassword').closest('.control-group').hide();
+
+			
+		}
+	}
+}
+
+
 function OnFixedHeightChange()
 {
 	var select = $('jform_params_fixedheight');
@@ -403,4 +438,5 @@ window.addEvent('domready', OnUseridChange);
 window.addEvent('domready', OnAlbumVisibilityChange);
 window.addEvent('domready', OnFixedHeightChange);
 window.addEvent('domready', OnMarkersIconChange);
+window.addEvent('domready', OnLightGallerySourceKindChange);
 
