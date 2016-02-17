@@ -15,6 +15,9 @@
 			</field>
 			
 			<field name="video_list" type="textarea" default="" label="COM_OZIOGALLERY3_VIDEO_LIST_LBL" description="COM_OZIOGALLERY3_VIDEO_LIST_DSC" rows="3" cols="10" filter="safehtml" />
+			
+			<field type="text" name="youtube_apikey" label="COM_OZIOGALLERY3_YOUTUBE_APIKEY_LBL" description="COM_OZIOGALLERY3_YOUTUBE_APIKEY_DSC" />
+			
 
 			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" autocomplete="off" default="110359559620842741677"/>
 			
@@ -37,6 +40,50 @@
 			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
+			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="200"/>
+			<field type="text" name="list_thumb_margin" label="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_DSC" size="6" default="20"/>
+			<field type="text" name="list_thumb_border" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_DSC" size="6" default="3"/>
+			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="3"/>
+		   <field name="list_thumb_border_color" type="oziocolor" default="#04070a"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
+			
+			
+			
+			<field type="text" name="thumbWidth" label="COM_OZIOGALLERY3_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_THUMB_WIDTH_DSC" size="6" default="100"/>
+			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="100"/>
+			
+			<field type="text" name="thumbMargin" label="COM_OZIOGALLERY3_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_THUMB_MARGIN_DSC" size="6" default="5"/>
+			
+			<field type="list" name="pager" label="COM_OZIOGALLERY3_PAGER_LBL" description="COM_OZIOGALLERY3_PAGER_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY3_STYLE_SETTINGS" icon="effects.png"/>
+
+		   <field type="text" name="backdrop-opacity" label="COM_OZIOGALLERY3_BACKDROP_OPACITY_LBL" description="COM_OZIOGALLERY3_BACKDROP_OPACITY_DSC" size="6" default="1"/>
+		   <field name="lg-toolbar-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_TOOLBAR_BG_LBL" description="COM_OZIOGALLERY3_LG_TOOLBAR_BG_DSC" />
+		   <field type="text" name="lg-border-radius-base" label="COM_OZIOGALLERY3_BORDER_RADIUS_BASE_LBL" description="COM_OZIOGALLERY3_BORDER_RADIUS_BASE_DSC" size="6" default="2"/>
+		   <field name="lg-theme-highlight" type="oziocolor" default="rgb(169, 7, 7)"	label="COM_OZIOGALLERY3_LG_THEME_HIGHLIGHT_LBL" description="COM_OZIOGALLERY3_LG_THEME_HIGHLIGHT_DSC" />
+		   <field name="lg-icon-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_ICON_BG_LBL" description="COM_OZIOGALLERY3_LG_ICON_BG_DSC" />
+		   <field name="lg-icon-color" type="oziocolor" default="#999"	label="COM_OZIOGALLERY3_LG_ICON_COLOR_LBL" description="COM_OZIOGALLERY3_LG_ICON_COLOR_DSC" />
+		   <field name="lg-counter-color" type="oziocolor" default="#e6e6e6"	label="COM_OZIOGALLERY3_LG_COUNTER_COLOR_LBL" description="COM_OZIOGALLERY3_LG_COUNTER_COLOR_DSC" />
+		   <field type="text" name="lg-counter-font-size" label="COM_OZIOGALLERY3_LG_COUNTER_FONT_SIZE_LBL" description="COM_OZIOGALLERY3_LG_COUNTER_FONT_SIZE_DSC" size="6" default="16"/>
+		   <field name="lg-next-prev-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_NEXT_PREV_BG_LBL" description="COM_OZIOGALLERY3_LG_NEXT_PREV_BG_DSC" />
+		   <field name="lg-next-prev-color" type="oziocolor" default="#999"	label="COM_OZIOGALLERY3_LG_NEXT_PREV_COLOR_LBL" description="COM_OZIOGALLERY3_LG_NEXT_PREV_COLOR_DSC" />
+		   <field name="lg-next-prev-hover-color" type="oziocolor" default="#FFF"	label="COM_OZIOGALLERY3_LG_NEXT_PREV_HOVER_COLOR_LBL" description="COM_OZIOGALLERY3_LG_NEXT_PREV_HOVER_COLOR_DSC" />
+		   <field name="lg-progress-bar-bg" type="oziocolor" default="#333"	label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_BG_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_BG_DSC" />
+		   <field name="lg-progress-bar-active-bg" type="oziocolor" default="rgb(169, 7, 7)"	label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_ACTIVE_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_ACTIVE_DSC" />
+		   <field type="text" name="lg-progress-bar-height" label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_HEIGHT_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_HEIGHT_DSC" size="6" default="5"/>
+		   <field type="text" name="zoom-transition-duration" label="COM_OZIOGALLERY3_ZOOM_TRANSITION_DURATION_LBL" description="COM_OZIOGALLERY3_ZOOM_TRANSITION_DURATION_DSC" size="6" default="0.3"/>
+		   <field name="lg-sub-html-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_SUB_HTML_BG_LBL" description="COM_OZIOGALLERY3_LG_SUB_HTML_BG_DSC" />
+		   <field name="lg-sub-html-color" type="oziocolor" default="#EEE"	label="COM_OZIOGALLERY3_LG_SUB_HTML_COLOR_LBL" description="COM_OZIOGALLERY3_LG_SUB_HTML_COLOR_DSC" />
+		   <field name="lg-thumb-toggle-bg" type="oziocolor" default="#0D0A0A"	label="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_BG_LBL" description="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_BG_DSC" />
+		   <field name="lg-thumb-toggle-color" type="oziocolor" default="#999"	label="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_COLOR_LBL" description="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_COLOR_DSC" />
+		   <field name="lg-thumb-toggle-hover-color" type="oziocolor" default="#FFF"	label="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_HOVER_COLOR_LBL" description="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_HOVER_COLOR_DSC" />
+		   <field name="lg-thumb-bg" type="oziocolor" default="#0D0A0A"	label="COM_OZIOGALLERY3_LG_THUMB_BG_LBL" description="COM_OZIOGALLERY3_LG_THUMB_BG_DSC" />
+		   
+		   
+
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_EFFECTS_SETTINGS" icon="effects.png"/>
 		  
@@ -100,12 +147,17 @@
 			
 
 			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
-						
-			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOWALBUM_LBL" description="COM_OZIOGALLERY3_SHOWALBUM_DSC" default="0">
+
+			<field type="list" name="show_list_title" label="COM_OZIOGALLERY3_SHOW_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_LIST_TITLE_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="show_summary" label="COM_OZIOGALLERY3_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY3_SHOWSUMMARY_DSC" default="1">
+						
+			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOW_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_TITLE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="show_summary" label="COM_OZIOGALLERY3_SHOW_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_SHOW_DESCRIPTION_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>

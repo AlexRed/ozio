@@ -66,6 +66,8 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 		$html[] ='		<h3>Ozio Gallery</h3>';
 		$html[] ='	</div>';
 		$html[] ='	<div class="modal-body" style="overflow-y:auto;">';
+		$html[] ='			<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button> ';
+		$html[] ='			<p><strong>'.JText::_("COM_OZIOGALLERY3_WAIT_GDATA_MSG").'</strong></p></div> ';
 		$html[] ='	<table class="table table-striped">';
 		$html[] ='	</table>';
 		$html[] ='	</div>';

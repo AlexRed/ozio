@@ -121,9 +121,11 @@ width:22px;
 }
 .ozio-lightgallery-container > ul > li {
 	float: left;
+	/*
 	margin-bottom: 15px;
 	margin-right: 20px;
 	width: 200px;
+	*/
 	/*
 	width: 25%;
 	min-height: 1px;
@@ -249,4 +251,8 @@ width:22px;
 
 .ozio_lightgallery_bottom_description{
  clear: both;
+}
+
+.ozio-thumb-list-sub-title{
+	text-align:center;
 }

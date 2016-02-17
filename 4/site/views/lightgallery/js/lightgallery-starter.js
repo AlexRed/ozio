@@ -48,31 +48,44 @@ jQuery( document ).ready(function( $ ) {
 				'limitedalbum'=>$this->Params->get("limitedalbum", ""),
 				'limitedpassword'=>$this->Params->get("limitedpassword", ""),
 			);
-			$g_parameters[]=array('params'=>$p);
+			$g_parameters[]=array('source_kind'=>'photo','params'=>$p);
 		}else{
 			$p=array(
 				'userid'=>$userid,
 				'albumvisibility'=>'public',
 				'gallery_id'=>$this->Params->get("gallery_id", ""),
 			);
-			$g_parameters[]=array('params'=>$p);
+			$g_parameters[]=array('source_kind'=>'photo','params'=>$p);
 		}
+	}else{
+		$g_parameters[]=array('source_kind'=>'video','video_ids'=>$video_ids,'params'=>array('gallery_id'=>0));
 	}
 	
 	
 	echo "\n".'var g_parameters='.json_encode($g_parameters).';';
-	echo "\n".'var g_video_ids='.json_encode($video_ids).';';
+	
+	echo "\n".'var g_max_thumb_size='.json_encode(max(intval($this->Params->get("list_thumb_width", "200")),intval($this->Params->get("thumbWidth", "100")),100)).';';
+	
+	
+	$youtube_apikey = $this->Params->get("youtube_apikey", "");
+	
+	echo "\n".'var g_youtube_apikey='.json_encode($youtube_apikey).';';
+	
 				
 	?>
 	num_album_to_load=g_parameters.length;
 	if (num_album_to_load>0){
-		lightgallery_load_album_data(0,1);
+		for (var i=0; i<g_parameters.length; i++){
+			lightgallery_load_album_data(i,1);
+		}
 	}else{
-		lightgallery_load_complete(0);
+		lightgallery_load_complete();
 	}
 	
 	
 	function lightgallery_load_album_data(i,start_index){
+		
+			
 		
 		var obj={'album_index':i};
 		
@@ -80,47 +93,126 @@ jQuery( document ).ready(function( $ ) {
 			g_parameters[i].slides=[];
 		}
 		
+		if (g_parameters[i].source_kind == 'photo'){
 		
-		LightGalleryGetAlbumData({
-				//mode: 'album_data',
-				username: g_parameters[i]['params']['userid'],
-				album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
-				authKey: g_parameters[i]['params']['limitedpassword'],
-				StartIndex: start_index,
-				beforeSend: OnLightGalleryBeforeSend,
-				success: OnLightGalleryLoadSuccess,
-				error: OnLightGalleryLoadError, 
-				complete: OnLightGalleryLoadComplete,
-	
-				// Tell the library to ignore parameters through GET ?par=...
-				useQueryParameters: false,
-				keyword:'',
-				thumbSize:72,
-				thumbCrop:false,
-				photoSize:"auto",
-				
-				
-				context:obj
-			});
+			LightGalleryGetAlbumData({
+					//mode: 'album_data',
+					username: g_parameters[i]['params']['userid'],
+					album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+					authKey: g_parameters[i]['params']['limitedpassword'],
+					StartIndex: start_index,
+					beforeSend: OnLightGalleryBeforeSend,
+					success: OnLightGalleryLoadSuccess,
+					error: OnLightGalleryLoadError, 
+					complete: OnLightGalleryLoadComplete,
+		
+					// Tell the library to ignore parameters through GET ?par=...
+					useQueryParameters: false,
+					keyword:'',
+					thumbSize:72,
+					thumbCrop:false,
+					photoSize:"auto",
+					
+					
+					context:obj
+				});
+		}else{
+			//carico i titoli dei video
+			//video_ids
+			g_parameters[i].num_video_to_load = g_parameters[i].video_ids.length;
+			
+			for (var j=0;j<g_parameters[i].video_ids.length;j++){
+				lightgallery_load_yt_data(i,j);
+			}
+		}
 		
 	}
 	
-	function lightgallery_load_complete(album_index){
-			if (g_parameters.length == 0){
-				g_parameters[0]={};
-				g_parameters[0].slides=[];
-				g_parameters[0]['params']={};
-				g_parameters[0]['params']['gallery_id'] = 0;
-				album_index = 0;
-			}
+	function lightgallery_load_yt_data(album_index,index){
+		var video_id = g_parameters[album_index].video_ids[index];
+		if (g_youtube_apikey==''){
+			var video_data = {};
+			video_data.kind ='youtube';
+			video_data.video_id = video_id;
+			g_parameters[album_index].slides.push(video_data);
 			
-			for (var i=0; i< g_video_ids.length; i++){
-				var video_data = {};
-				video_data.kind ='youtube';
-				video_data.video_id = g_video_ids[i];
+			g_parameters[album_index].num_video_to_load--;
+			if (g_parameters[album_index].num_video_to_load==0){
+				num_album_to_load--;
 				
-				g_parameters[album_index].slides.push(video_data);
+				if (num_album_to_load==0){
+					lightgallery_load_complete();
+				}
+				
 			}
+		}else{
+			var api_key = g_youtube_apikey;
+			jQuery.ajax({
+				  url: "https://www.googleapis.com/youtube/v3/videos?id=" + video_id + "&key="+ api_key + "&fields=items(snippet(title,description))&part=snippet", 
+				  dataType: "jsonp",
+				  success: function(data){
+					  
+					var video_data = {};
+					video_data.kind ='youtube';
+					video_data.video_id = video_id;
+					if (data && data.items.length>0){
+						video_data.title = data.items[0].snippet.title;
+						video_data.description = data.items[0].snippet.description;
+					}
+
+					g_parameters[album_index].slides.push(video_data);
+					
+					g_parameters[album_index].num_video_to_load--;
+					if (g_parameters[album_index].num_video_to_load==0){
+						num_album_to_load--;
+						
+						if (num_album_to_load==0){
+							lightgallery_load_complete();
+						}
+						
+					}
+					  
+				  },
+				  error: function(jqXHR, textStatus, errorThrown) {
+					var video_data = {};
+					video_data.kind ='youtube';
+					video_data.video_id = video_id;
+					g_parameters[album_index].slides.push(video_data);
+
+					if (g_parameters[album_index].num_video_to_load==0){
+						num_album_to_load--;
+						
+						if (num_album_to_load==0){
+							lightgallery_load_complete();
+						}
+					}
+					
+				  }
+			  });
+		}
+  
+	}
+	
+	function lightgallery_linkify(inputText) {
+		var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+		//URLs starting with http://, https://, or ftp://
+		replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+		replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+		//URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+		replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+		//Change email addresses to mailto:: links.
+		replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+		replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+		return replacedText;
+	};	
+	
+	function lightgallery_load_complete(){
+			album_index = 0;
 			
 			//aggiungo il nuovo album!
 			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
@@ -150,6 +242,7 @@ jQuery( document ).ready(function( $ ) {
 			
 			jcontainer.attr("data-lightgallery-album-gallery-id",g_parameters[album_index]['params']['gallery_id']);
 			
+			var show_list_title = <?php echo json_encode(intval($this->Params->get("show_list_title", "0"))==1); ?>;
 			var show_album = <?php echo json_encode(intval($this->Params->get("show_album", "0"))==1); ?>;
 			var show_summary = <?php echo json_encode(intval($this->Params->get("show_summary", "1"))==1); ?>;
 			
@@ -161,7 +254,7 @@ jQuery( document ).ready(function( $ ) {
 					var large=c_slide.seed + actual_width;
 					
 					//var thumb=c_slide.seed + 's120-c/';
-					var thumb=c_slide.seed + 's194/';
+					var thumb=c_slide.seed + 's'+g_max_thumb_size+'/';
 					var alt=c_slide.photo;
 					if (alt == '-na-'){
 						alt = '';
@@ -183,6 +276,9 @@ jQuery( document ).ready(function( $ ) {
 					var sub_html_h4 = $("<h4></h4>");
 					var sub_html_p = $("<p></p>");
 					sub_html_p.text(alt);
+					
+					sub_html_p.html(lightgallery_linkify(sub_html_p.html()));
+					
 					sub_html_h4.text(album_name);
 					
 					var sub_div = $('<div>');
@@ -201,6 +297,14 @@ jQuery( document ).ready(function( $ ) {
 					
 					ha.append(himg);
 					li.append(ha);
+					if (show_list_title && alt){
+						sub_html_p = $('<p class="ozio-thumb-list-sub-title"></p>');
+						sub_html_p.text(alt);
+						
+						sub_html_p.html(lightgallery_linkify(sub_html_p.html()));
+						
+						li.append(sub_html_p);
+					}
 					
 					//../static/img/zoom.png
 					
@@ -230,8 +334,48 @@ jQuery( document ).ready(function( $ ) {
 
 					var ha=$('<a href="">');
 
+					
+					var alt = '';
+					var album_name = '';
+					if (c_slide.title){
+						album_name = c_slide.title;
+					}
+					if (c_slide.description){
+						alt = c_slide.description;
+					}
+					
+
+					var sub_html_h4 = $("<h4></h4>");
+					var sub_html_p = $("<p></p>");
+					sub_html_p.text(alt);
+					
+					sub_html_p.html(lightgallery_linkify(sub_html_p.html()));
+					
+					sub_html_h4.text(album_name);
+					
+					var sub_div = $('<div>');
+					if (show_album && album_name){
+						sub_div.append(sub_html_h4);
+					}
+					if (show_summary && alt){
+						sub_div.append(sub_html_p);
+					}
+					
+					if (show_album || show_summary){
+						li.attr("data-sub-html",sub_div.html());
+					}
+					
+					
 					ha.append(himg);
 					li.append(ha);
+					
+					if (show_list_title && album_name){
+						sub_html_p = $('<p class="ozio-thumb-list-sub-title"></p>');
+						sub_html_p.text(album_name);
+						
+						li.append(sub_html_p);
+					}
+					
 					
 					//../static/img/zoom.png
 					
@@ -273,6 +417,9 @@ jQuery( document ).ready(function( $ ) {
 				?>
 				
 				jcontainer.lightGallery({
+					
+					
+					
 					mode: <?php echo json_encode($this->Params->get("transition", "lg-slide")); ?>,
 					speed: <?php echo json_encode(intval($this->Params->get("transition_speed", 600))); ?>,
 					
@@ -288,9 +435,17 @@ jQuery( document ).ready(function( $ ) {
 					
 					hash: <?php echo json_encode(intval($this->Params->get("disable_deeplink", "0"))==0); ?>,
 					
+					thumbWidth:<?php echo json_encode(intval($this->Params->get("thumbWidth", 100))); ?>,
+					thumbContHeight:<?php echo json_encode(intval($this->Params->get("thumbContHeight", 100))); ?>,
+					thumbMargin:<?php echo json_encode(intval($this->Params->get("thumbMargin", 5))); ?>,
+					pager: <?php echo json_encode(intval($this->Params->get("pager", "1"))==1); ?>,
+					
 					photoData: g_photo_data,
 					
-					showInfoBoxButton: <?php echo json_encode(intval($this->Params->get("info_button", "1"))==1); ?>,
+					infobtn: <?php echo json_encode($source_kind == 'photo' && intval($this->Params->get("info_button", "1"))==1); ?>,
+					zoom:<?php echo json_encode($source_kind == 'photo'); ?>,
+					
+					
 					showInfoBoxAlbum: <?php echo json_encode(!intval($this->Params->get("hide_infobox_album", "0"))); ?>,
 					showInfoBoxPhoto: <?php echo json_encode(!intval($this->Params->get("hide_infobox_photo", "0"))); ?>,
 					showInfoBoxDate: <?php echo json_encode(!intval($this->Params->get("hide_infobox_date", "0"))); ?>,
@@ -584,10 +739,11 @@ jQuery( document ).ready(function( $ ) {
 		
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
 			//ho finito!
-
-			lightgallery_load_complete(this.album_index);
+			num_album_to_load--;
 			
-			
+			if (num_album_to_load==0){
+				lightgallery_load_complete();
+			}
 			
 		}else{
 			//altra chiamata per il rimanente
