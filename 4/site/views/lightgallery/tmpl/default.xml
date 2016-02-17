@@ -6,7 +6,7 @@
 
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 		<fieldset name="basic">
-			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
+			<field type="ossheader" default="COM_OZIOGALLERY3_LIGHTGALLERY_INFORMATION" icon="information.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
 
 			<field type="list" name="source_kind" label="COM_OZIOGALLERY3_SOURCE_LBL" description="COM_OZIOGALLERY3_SOURCE_DSC" default="photo" onchange="OnLightGallerySourceKindChange()">
@@ -46,13 +46,6 @@
 			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="3"/>
 		   <field name="list_thumb_border_color" type="oziocolor" default="#04070a"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
 			
-			
-			
-			<field type="text" name="thumbWidth" label="COM_OZIOGALLERY3_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_THUMB_WIDTH_DSC" size="6" default="100"/>
-			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="100"/>
-			
-			<field type="text" name="thumbMargin" label="COM_OZIOGALLERY3_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_THUMB_MARGIN_DSC" size="6" default="5"/>
-			
 			<field type="list" name="pager" label="COM_OZIOGALLERY3_PAGER_LBL" description="COM_OZIOGALLERY3_PAGER_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -74,7 +67,6 @@
 		   <field name="lg-progress-bar-bg" type="oziocolor" default="#333"	label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_BG_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_BG_DSC" />
 		   <field name="lg-progress-bar-active-bg" type="oziocolor" default="rgb(169, 7, 7)"	label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_ACTIVE_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_ACTIVE_DSC" />
 		   <field type="text" name="lg-progress-bar-height" label="COM_OZIOGALLERY3_LG_PROGRESS_BAR_HEIGHT_LBL" description="COM_OZIOGALLERY3_LG_PROGRESS_BAR_HEIGHT_DSC" size="6" default="5"/>
-		   <field type="text" name="zoom-transition-duration" label="COM_OZIOGALLERY3_ZOOM_TRANSITION_DURATION_LBL" description="COM_OZIOGALLERY3_ZOOM_TRANSITION_DURATION_DSC" size="6" default="0.3"/>
 		   <field name="lg-sub-html-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_SUB_HTML_BG_LBL" description="COM_OZIOGALLERY3_LG_SUB_HTML_BG_DSC" />
 		   <field name="lg-sub-html-color" type="oziocolor" default="#EEE"	label="COM_OZIOGALLERY3_LG_SUB_HTML_COLOR_LBL" description="COM_OZIOGALLERY3_LG_SUB_HTML_COLOR_DSC" />
 		   <field name="lg-thumb-toggle-bg" type="oziocolor" default="#0D0A0A"	label="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_BG_LBL" description="COM_OZIOGALLERY3_LG_THUMB_TOGGLE_BG_DSC" />
@@ -89,38 +81,38 @@
 		  
 			<field type="list" name="transition" label="COM_OZIOGALLERY3_TRANSITION_LBL" description="COM_OZIOGALLERY3_TRANSITION_DSC" default="lg-slide">
 
-				<option value="lg-slide">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE</option>
-				<option value="lg-fade">COM_OZIOGALLERY3_TRANSITION_LG_FADE</option>
-				<option value="lg-zoom-in">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_IN</option>
+				<option value="lg-slide">SLIDE</option>
+				<option value="lg-fade">FADE</option>
+				<option value="lg-zoom-in">ZOOM IN</option>
 							
-				<option value="lg-zoom-in-big">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_IN_BIG</option>
-				<option value="lg-zoom-out">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_OUT</option>
-				<option value="lg-zoom-out-big">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_OUT_BIG</option>
-				<option value="lg-zoom-out-in">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_OUT_IN</option>
-				<option value="lg-zoom-in-out">COM_OZIOGALLERY3_TRANSITION_LG_ZOOM_IN_OUT</option>
-				<option value="lg-soft-zoom">COM_OZIOGALLERY3_TRANSITION_LG_SOFT_ZOOM</option>
-				<option value="lg-scale-up">COM_OZIOGALLERY3_TRANSITION_LG_SCALE_UP</option>
-				<option value="lg-slide-circular">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_CIRCULAR</option>
-				<option value="lg-slide-circular-vertical">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_CIRCULAR_VERTICAL</option>
-				<option value="lg-slide-vertical">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_VERTICAL</option>
-				<option value="lg-slide-vertical-growth">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_VERTICAL_GROWTH</option>
-				<option value="lg-slide-skew-only">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_ONLY</option>
-				<option value="lg-slide-skew-only-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_ONLY_REV</option>
-				<option value="lg-slide-skew-only-y">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_ONLY_Y</option>
-				<option value="lg-slide-skew-only-y-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_ONLY_Y_REV</option>
-				<option value="lg-slide-skew">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW</option>
-				<option value="lg-slide-skew-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_REV</option>
-				<option value="lg-slide-skew-cross">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_CROSS</option>
-				<option value="lg-slide-skew-cross-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_CROSS_REV</option>
-				<option value="lg-slide-skew-ver">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_VER</option>
-				<option value="lg-slide-skew-ver-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_VER_REV</option>
-				<option value="lg-slide-skew-ver-cross">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_VER_CROSS</option>
-				<option value="lg-slide-skew-ver-cross-rev">COM_OZIOGALLERY3_TRANSITION_LG_SLIDE_SKEW_VER_CROSS_REV</option>
-				<option value="lg-lollipop">COM_OZIOGALLERY3_TRANSITION_LG_LOLLIPOP</option>
-				<option value="lg-lollipop-rev">COM_OZIOGALLERY3_TRANSITION_LG_LOLLIPOP_REV</option>
-				<option value="lg-rotate">COM_OZIOGALLERY3_TRANSITION_LG_ROTATE</option>
-				<option value="lg-rotate-rev">COM_OZIOGALLERY3_TRANSITION_LG_ROTATE_REV</option>
-				<option value="lg-tube">COM_OZIOGALLERY3_TRANSITION_LG_TUBE</option>
+				<option value="lg-zoom-in-big">ZOOM IN BIG</option>
+				<option value="lg-zoom-out">ZOOM OUT</option>
+				<option value="lg-zoom-out-big">ZOOM OUT BIG</option>
+				<option value="lg-zoom-out-in">ZOOM OUT IN</option>
+				<option value="lg-zoom-in-out">ZOOM IN OUT</option>
+				<option value="lg-soft-zoom">SOFT ZOOM</option>
+				<option value="lg-scale-up">SCALE UP</option>
+				<option value="lg-slide-circular">SLIDE CIRCULAR</option>
+				<option value="lg-slide-circular-vertical">SLIDE CIRCULAR VERTICAL</option>
+				<option value="lg-slide-vertical">SLIDE VERTICAL</option>
+				<option value="lg-slide-vertical-growth">SLIDE VERTICAL GROWTH</option>
+				<option value="lg-slide-skew-only">SLIDE SKEW ONLY</option>
+				<option value="lg-slide-skew-only-rev">SLIDE SKEW ONLY REV</option>
+				<option value="lg-slide-skew-only-y">SLIDE SKEW ONLY Y</option>
+				<option value="lg-slide-skew-only-y-rev">LIDE SKEW ONLY Y REV</option>
+				<option value="lg-slide-skew">SLIDE SKEW</option>
+				<option value="lg-slide-skew-rev">SLIDE SKEW REV</option>
+				<option value="lg-slide-skew-cross">SLIDE SKEW CROSS</option>
+				<option value="lg-slide-skew-cross-rev">SLIDE SKEW CROSS REV</option>
+				<option value="lg-slide-skew-ver">SLIDE SKEW VER</option>
+				<option value="lg-slide-skew-ver-rev">SLIDE SKEW VER REV</option>
+				<option value="lg-slide-skew-ver-cross">SLIDE SKEW VER CROSS</option>
+				<option value="lg-slide-skew-ver-cross-rev">SLIDE SKEW VER CROSS REV</option>
+				<option value="lg-lollipop">LOLLIPOP</option>
+				<option value="lg-lollipop-rev">LOLLIPOP REV</option>
+				<option value="lg-rotate">ROTATE</option>
+				<option value="lg-rotate-rev">ROTATE REV</option>
+				<option value="lg-tube">TUBE</option>
 			
 			</field>
 			<field type="text" name="transition_speed" label="COM_OZIOGALLERY3_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY3_TRANSITION_SPEED_DSC" default="600"/>
@@ -144,9 +136,12 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			
 
-			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
+
+			<field type="text" name="thumbWidth" label="COM_OZIOGALLERY3_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_THUMB_WIDTH_DSC" size="6" default="100"/>
+			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="100"/>
+
+			<field type="text" name="thumbMargin" label="COM_OZIOGALLERY3_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_THUMB_MARGIN_DSC" size="6" default="5"/>
 
 			<field type="list" name="show_list_title" label="COM_OZIOGALLERY3_SHOW_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_LIST_TITLE_DSC" default="0">
 				<option value="0">JNO</option>
@@ -248,6 +243,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_FULLSCREEN_SETTINGS" icon="information.png"/>
 				<field name="closelink"  type="text" default=""
