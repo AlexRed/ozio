@@ -123,7 +123,7 @@ jQuery(document).ready(function ($)
 			var video_album ={
 				album_local_url:'<?php echo JRoute::_($link); ?>',
 				title: <?php echo json_encode($item->title); ?>,
-				thumb_url: <?php echo json_encode("http://img.youtube.com/vi/".$video_ids[0]."/0.jpg"); ?>,
+				thumb_url: <?php echo json_encode("https://img.youtube.com/vi/".$video_ids[0]."/0.jpg"); ?>,
 				thumb_height: '<?php echo $this->Params->get("images_size", 180); ?>',
 				thumb_width: '<?php echo $this->Params->get("images_size", 180); ?>',
 				album_local_title: <?php echo json_encode($item->title); ?>,

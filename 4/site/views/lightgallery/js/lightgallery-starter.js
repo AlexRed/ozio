@@ -122,6 +122,11 @@ jQuery( document ).ready(function( $ ) {
 			g_parameters[i].num_video_to_load = g_parameters[i].video_ids.length;
 			
 			for (var j=0;j<g_parameters[i].video_ids.length;j++){
+				var video_data = {};
+				var video_id = g_parameters[i].video_ids[j];
+				video_data.kind ='youtube';
+				video_data.video_id = video_id;
+				g_parameters[i].slides.push(video_data);
 				lightgallery_load_yt_data(i,j);
 			}
 		}
@@ -131,10 +136,6 @@ jQuery( document ).ready(function( $ ) {
 	function lightgallery_load_yt_data(album_index,index){
 		var video_id = g_parameters[album_index].video_ids[index];
 		if (g_youtube_apikey==''){
-			var video_data = {};
-			video_data.kind ='youtube';
-			video_data.video_id = video_id;
-			g_parameters[album_index].slides.push(video_data);
 			
 			g_parameters[album_index].num_video_to_load--;
 			if (g_parameters[album_index].num_video_to_load==0){
@@ -152,15 +153,10 @@ jQuery( document ).ready(function( $ ) {
 				  dataType: "jsonp",
 				  success: function(data){
 					  
-					var video_data = {};
-					video_data.kind ='youtube';
-					video_data.video_id = video_id;
 					if (data && data.items.length>0){
-						video_data.title = data.items[0].snippet.title;
-						video_data.description = data.items[0].snippet.description;
+						g_parameters[album_index].slides[index].title = data.items[0].snippet.title;
+						g_parameters[album_index].slides[index].description = data.items[0].snippet.description;
 					}
-
-					g_parameters[album_index].slides.push(video_data);
 					
 					g_parameters[album_index].num_video_to_load--;
 					if (g_parameters[album_index].num_video_to_load==0){
@@ -174,11 +170,7 @@ jQuery( document ).ready(function( $ ) {
 					  
 				  },
 				  error: function(jqXHR, textStatus, errorThrown) {
-					var video_data = {};
-					video_data.kind ='youtube';
-					video_data.video_id = video_id;
-					g_parameters[album_index].slides.push(video_data);
-
+					g_parameters[album_index].num_video_to_load--;
 					if (g_parameters[album_index].num_video_to_load==0){
 						num_album_to_load--;
 						
@@ -321,9 +313,9 @@ jQuery( document ).ready(function( $ ) {
 					//youtube
 					
 					var large="https://www.youtube.com/watch?v="+c_slide.video_id;
-					var poster ="http://img.youtube.com/vi/"+c_slide.video_id+"/0.jpg";
+					var poster ="https://img.youtube.com/vi/"+c_slide.video_id+"/0.jpg";
 					
-					var thumb='http://img.youtube.com/vi/'+c_slide.video_id+'/default.jpg';
+					var thumb='https://img.youtube.com/vi/'+c_slide.video_id+'/default.jpg';
 
 					var li = $('<li class="ozio-lg-video"></li>');
 					li.attr('data-src',large);
