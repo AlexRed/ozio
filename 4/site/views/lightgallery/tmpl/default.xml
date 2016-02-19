@@ -9,12 +9,12 @@
 			<field type="ossheader" default="COM_OZIOGALLERY3_LIGHTGALLERY_INFORMATION" icon="information.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
 
-			<field type="list" name="source_kind" label="COM_OZIOGALLERY3_SOURCE_LBL" description="COM_OZIOGALLERY3_SOURCE_DSC" default="photo" onchange="OnLightGallerySourceKindChange()">
+			<field type="list" name="source_kind" label="COM_OZIOGALLERY3_SOURCE_LBL" description="COM_OZIOGALLERY3_SOURCE_DSC" default="video" onchange="OnLightGallerySourceKindChange()">
 				<option value="video">COM_OZIOGALLERY3_SOURCE_VIDEO</option>
 				<option value="photo">COM_OZIOGALLERY3_SOURCE_PHOTO</option>
 			</field>
 			
-			<field name="video_list" type="textarea" default="" label="COM_OZIOGALLERY3_VIDEO_LIST_LBL" description="COM_OZIOGALLERY3_VIDEO_LIST_DSC" rows="3" cols="10" filter="safehtml" />
+			<field name="video_list" type="textarea" default="lq6A8VMYmPk,RIL2rvnqZpI,RZcnAIuqdGg,yFsYFAUvFLQ,dokLOX9GHDk,epKhkerDeBk,h8VUqKsRtRY,F6u4EnAq0UY,evInoKrIeQg,-1XPjSxj6as,AmPNC_KpOSY,Y3tp4XEzuA0" label="COM_OZIOGALLERY3_VIDEO_LIST_LBL" description="COM_OZIOGALLERY3_VIDEO_LIST_DSC" rows="3" cols="10" filter="safehtml" />
 			
 			<field type="text" name="youtube_apikey" label="COM_OZIOGALLERY3_YOUTUBE_APIKEY_LBL" description="COM_OZIOGALLERY3_YOUTUBE_APIKEY_DSC" />
 			
@@ -42,16 +42,11 @@
 			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
-			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="200"/>
-			<field type="text" name="list_thumb_margin" label="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_DSC" size="6" default="20"/>
-			<field type="text" name="list_thumb_border" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_DSC" size="6" default="3"/>
-			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="3"/>
-		   <field name="list_thumb_border_color" type="oziocolor" default="#04070a"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
-			
-			<field type="list" name="pager" label="COM_OZIOGALLERY3_PAGER_LBL" description="COM_OZIOGALLERY3_PAGER_DSC" default="1">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
+			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="216"/>
+			<field type="text" name="list_thumb_margin" label="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_DSC" size="6" default="16"/>
+			<field type="text" name="list_thumb_border" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_DSC" size="6" default="2"/>
+			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="5"/>
+		   <field name="list_thumb_border_color" type="oziocolor" default="#b8b8b8"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_STYLE_SETTINGS" icon="effects.png"/>
 
@@ -170,14 +165,10 @@
 			<field type="text" name="max_num_rows_title" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_DSC" size="6" default="1"/>
 			<field type="text" name="max_num_rows_description" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_DESC_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_DESC_DSC" size="6" default="3"/>
 			
-			
-			
 			<field type="list" name="hide_thumbnails" label="COM_OZIOGALLERY3_HIDE_THUMBNAILS_LBL" description="COM_OZIOGALLERY3_HIDE_THUMBNAILS_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-
-
 			
 			<field type="selext" name="gallery_photo_width" label="COM_OZIOGALLERY3_PHOTO_WIDTH_LBL" description="COM_OZIOGALLERY3_PHOTO_WIDTH_DSC" size="4" default="100|%">
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
@@ -187,7 +178,10 @@
 				<option value="px">COM_OZIOGALLERY3_PIXELS</option>
 				<option value="%">COM_OZIOGALLERY3_PERCENT</option>
 			</field>
-			
+			<field type="list" name="pager" label="COM_OZIOGALLERY3_PAGER_LBL" description="COM_OZIOGALLERY3_PAGER_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_INFOBOX_SETTINGS" icon="information.png"/>
@@ -239,7 +233,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_DSC" default="0">
+			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
