@@ -23,12 +23,14 @@
 			
 			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
 
+			<!--
 			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public" onchange="OnAlbumVisibilityChange()">
 				<option value="public">COM_OZIOGALLERY3_VISIBILITY_PUBLIC</option>
 				<option value="limited">COM_OZIOGALLERY3_VISIBILITY_LIMITED</option>
 			</field>
 			<field type="text" name="limitedalbum" label="COM_OZIOGALLERY3_LIMITEDALBUM_LBL" description="COM_OZIOGALLERY3_LIMITEDALBUM_DSC" />
 			<field type="text" name="limitedpassword" label="COM_OZIOGALLERY3_LIMITEDPASSWORD_LBL" description="COM_OZIOGALLERY3_LIMITEDPASSWORD_DSC" />
+			-->
 			
 			<field type="text" name="gallery_date" label="COM_OZIOGALLERY3_GALLERY_DATE_LBL" description="COM_OZIOGALLERY3_GALLERY_DATE_DSC" />
 
@@ -57,7 +59,7 @@
 		   <field name="lg-toolbar-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_TOOLBAR_BG_LBL" description="COM_OZIOGALLERY3_LG_TOOLBAR_BG_DSC" />
 		   <field type="text" name="lg-border-radius-base" label="COM_OZIOGALLERY3_BORDER_RADIUS_BASE_LBL" description="COM_OZIOGALLERY3_BORDER_RADIUS_BASE_DSC" size="6" default="2"/>
 		   <field name="lg-theme-highlight" type="oziocolor" default="rgb(169, 7, 7)"	label="COM_OZIOGALLERY3_LG_THEME_HIGHLIGHT_LBL" description="COM_OZIOGALLERY3_LG_THEME_HIGHLIGHT_DSC" />
-		   <field name="lg-icon-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_ICON_BG_LBL" description="COM_OZIOGALLERY3_LG_ICON_BG_DSC" />
+		   <!--<field name="lg-icon-bg" type="oziocolor" alpha="true"  default="rgba(0, 0, 0, 0.45)"	label="COM_OZIOGALLERY3_LG_ICON_BG_LBL" description="COM_OZIOGALLERY3_LG_ICON_BG_DSC" />-->
 		   <field name="lg-icon-color" type="oziocolor" default="#999"	label="COM_OZIOGALLERY3_LG_ICON_COLOR_LBL" description="COM_OZIOGALLERY3_LG_ICON_COLOR_DSC" />
 		   <field name="lg-counter-color" type="oziocolor" default="#e6e6e6"	label="COM_OZIOGALLERY3_LG_COUNTER_COLOR_LBL" description="COM_OZIOGALLERY3_LG_COUNTER_COLOR_DSC" />
 		   <field type="text" name="lg-counter-font-size" label="COM_OZIOGALLERY3_LG_COUNTER_FONT_SIZE_LBL" description="COM_OZIOGALLERY3_LG_COUNTER_FONT_SIZE_DSC" size="6" default="16"/>
@@ -136,10 +138,17 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			
+			<field type="list" name="download_button" label="COM_OZIOGALLERY3_DOWNLOADBUTTON_LBL" description="COM_OZIOGALLERY3_DOWNLOADBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
 
 
-			<field type="text" name="thumbWidth" label="COM_OZIOGALLERY3_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_THUMB_WIDTH_DSC" size="6" default="100"/>
-			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="100"/>
+			<field type="text" name="thumbWidth" label="COM_OZIOGALLERY3_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_THUMB_WIDTH_DSC" size="6" default="80"/>
+			
+			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="60"/>
 
 			<field type="text" name="thumbMargin" label="COM_OZIOGALLERY3_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_THUMB_MARGIN_DSC" size="6" default="5"/>
 
@@ -156,6 +165,13 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			
+			<field type="text" name="max_num_rows_list_title" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_LIST_TITLE_DSC" size="6" default="1"/>
+			<field type="text" name="max_num_rows_title" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_DSC" size="6" default="1"/>
+			<field type="text" name="max_num_rows_description" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_DESC_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_DESC_DSC" size="6" default="3"/>
+			
+			
+			
 			<field type="list" name="hide_thumbnails" label="COM_OZIOGALLERY3_HIDE_THUMBNAILS_LBL" description="COM_OZIOGALLERY3_HIDE_THUMBNAILS_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>

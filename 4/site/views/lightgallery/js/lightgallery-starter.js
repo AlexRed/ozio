@@ -39,7 +39,7 @@ jQuery( document ).ready(function( $ ) {
 	}
 	$userid = $this->Params->get("userid", "110359559620842741677");
 	
-	$albumvisibility=$this->Params->get("albumvisibility", "public");
+	$albumvisibility='public';//$this->Params->get("albumvisibility", "public");
 	if ($source_kind == 'photo' ){
 		if ($albumvisibility=='limited'){
 			$p=array(
@@ -126,6 +126,9 @@ jQuery( document ).ready(function( $ ) {
 				var video_id = g_parameters[i].video_ids[j];
 				video_data.kind ='youtube';
 				video_data.video_id = video_id;
+				video_data.poster = "https://img.youtube.com/vi/"+video_id+"/0.jpg";
+				video_data.thumb =  "https://img.youtube.com/vi/"+video_id+"/0.jpg";
+				
 				g_parameters[i].slides.push(video_data);
 				lightgallery_load_yt_data(i,j);
 			}
@@ -149,13 +152,31 @@ jQuery( document ).ready(function( $ ) {
 		}else{
 			var api_key = g_youtube_apikey;
 			jQuery.ajax({
-				  url: "https://www.googleapis.com/youtube/v3/videos?id=" + video_id + "&key="+ api_key + "&fields=items(snippet(title,description))&part=snippet", 
+				  url: "https://www.googleapis.com/youtube/v3/videos?id=" + video_id + "&key="+ api_key + "&fields=items(snippet(thumbnails,title,description))&part=snippet", 
 				  dataType: "jsonp",
 				  success: function(data){
 					  
 					if (data && data.items.length>0){
 						g_parameters[album_index].slides[index].title = data.items[0].snippet.title;
 						g_parameters[album_index].slides[index].description = data.items[0].snippet.description;
+
+						var high_res = ["maxres","standard","high","medium","default"];
+						for (var l=0; l<high_res.length; l++){
+							if (data.items[0].snippet.thumbnails.hasOwnProperty(high_res[l])){
+								g_parameters[album_index].slides[index].poster = data.items[0].snippet.thumbnails[high_res[l]].url;
+								break;
+							}
+						}
+						//g_max_thumb_size
+						
+						for (var l=high_res.length-1; l>=0; l--){
+							if (data.items[0].snippet.thumbnails.hasOwnProperty(high_res[l])){
+								g_parameters[album_index].slides[index].thumb = data.items[0].snippet.thumbnails[high_res[l]].url;
+								if (parseInt(data.items[0].snippet.thumbnails[high_res[l]].width)>=g_max_thumb_size){
+									break;
+								}
+							}
+						}
 					}
 					
 					g_parameters[album_index].num_video_to_load--;
@@ -245,8 +266,7 @@ jQuery( document ).ready(function( $ ) {
 				
 					var large=c_slide.seed + actual_width;
 					
-					//var thumb=c_slide.seed + 's120-c/';
-					var thumb=c_slide.seed + 's'+g_max_thumb_size+'/';
+					var thumb=c_slide.seed + 's'+g_max_thumb_size+'-c/';
 					var alt=c_slide.photo;
 					if (alt == '-na-'){
 						alt = '';
@@ -258,6 +278,7 @@ jQuery( document ).ready(function( $ ) {
 					}
 					var li = $('<li></li>');
 					li.attr('data-src',large);
+					li.attr('data-download-url', c_slide.download);
 					
 					var himg=$('<img>');
 					himg.attr("src",thumb);
@@ -289,7 +310,7 @@ jQuery( document ).ready(function( $ ) {
 					
 					ha.append(himg);
 					li.append(ha);
-					if (show_list_title && alt){
+					if (show_list_title){
 						sub_html_p = $('<p class="ozio-thumb-list-sub-title"></p>');
 						sub_html_p.text(alt);
 						
@@ -313,16 +334,15 @@ jQuery( document ).ready(function( $ ) {
 					//youtube
 					
 					var large="https://www.youtube.com/watch?v="+c_slide.video_id;
-					var poster ="https://img.youtube.com/vi/"+c_slide.video_id+"/0.jpg";
-					
-					var thumb='https://img.youtube.com/vi/'+c_slide.video_id+'/default.jpg';
+					var poster =c_slide.poster;
+					var thumb=c_slide.thumb;
 
 					var li = $('<li class="ozio-lg-video"></li>');
 					li.attr('data-src',large);
 					li.attr("data-poster",poster);
 					
 					var himg=$('<img>');
-					himg.attr("src",poster);
+					himg.attr("src",thumb);
 
 					var ha=$('<a href="">');
 
@@ -361,7 +381,7 @@ jQuery( document ).ready(function( $ ) {
 					ha.append(himg);
 					li.append(ha);
 					
-					if (show_list_title && album_name){
+					if (show_list_title){
 						sub_html_p = $('<p class="ozio-thumb-list-sub-title"></p>');
 						sub_html_p.text(album_name);
 						
@@ -427,12 +447,15 @@ jQuery( document ).ready(function( $ ) {
 					
 					hash: <?php echo json_encode(intval($this->Params->get("disable_deeplink", "0"))==0); ?>,
 					
-					thumbWidth:<?php echo json_encode(intval($this->Params->get("thumbWidth", 100))); ?>,
-					thumbContHeight:<?php echo json_encode(intval($this->Params->get("thumbContHeight", 100))); ?>,
+					thumbWidth:<?php echo json_encode(intval($this->Params->get("thumbWidth", 80))); ?>,
+					thumbContHeight:<?php echo json_encode(  $source_kind == 'photo'? (intval($this->Params->get("thumbWidth", 80))+20) : (intval($this->Params->get("thumbContHeight", 60))+20)  ); ?>,
 					thumbMargin:<?php echo json_encode(intval($this->Params->get("thumbMargin", 5))); ?>,
 					pager: <?php echo json_encode(intval($this->Params->get("pager", "1"))==1); ?>,
 					
 					photoData: g_photo_data,
+					loadYoutubeThumbnail: false,
+					
+					download: <?php echo json_encode($source_kind == 'photo' && intval($this->Params->get("download_button", "1"))==1); ?>,
 					
 					infobtn: <?php echo json_encode($source_kind == 'photo' && intval($this->Params->get("info_button", "1"))==1); ?>,
 					zoom:<?php echo json_encode($source_kind == 'photo'); ?>,

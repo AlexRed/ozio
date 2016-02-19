@@ -26,7 +26,7 @@ $backdrop_opacity = $this->Params->get("backdrop-opacity","1");
 $lg_toolbar_bg = $this->Params->get("lg-toolbar-bg","rgba(0, 0, 0, 0.45)");
 $lg_border_radius_base = $this->Params->get("lg-border-radius-base","2").'px';
 $lg_theme_highlight = $this->Params->get("lg-theme-highlight","rgb(169, 7, 7)");
-$lg_icon_bg = $this->Params->get("lg-icon-bg","rgba(0, 0, 0, 0.45)");
+//$lg_icon_bg = $this->Params->get("lg-icon-bg","rgba(0, 0, 0, 0.45)");
 $lg_icon_color = $this->Params->get("lg-icon-color","#999");
 $lg_counter_color = $this->Params->get("lg-counter-color","#e6e6e6");
 $lg_counter_font_size = $this->Params->get("lg-counter-font-size","16").'px';
@@ -170,6 +170,64 @@ $css_custom_style = "
 	border: ${list_thumb_border} solid ${list_thumb_border_color};
     border-radius: ${list_thumb_border_radius};
 }
+";
+
+$this->document->addStyleDeclaration($css_custom_style);
+
+
+$max_num_rows_title = intval($this->Params->get("max_num_rows_title","1"));
+$max_num_rows_description = intval($this->Params->get("max_num_rows_description","3"));
+$max_num_rows_list_title = intval($this->Params->get("max_num_rows_list_title","1"));
+
+$title_max_height=($max_num_rows_title*16).'px';
+$desc_max_height = ($max_num_rows_description*15).'px';
+$list_title_max_height = ($max_num_rows_list_title*18).'px';
+
+$css_custom_style = "
+
+.lg-sub-html h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+	display: block; /* Fallback for non-webkit */
+	display: -webkit-box;
+	max-height: ${title_max_height}; /* Fallback for non-webkit */
+	line-height: 16px;
+	-webkit-line-clamp: ${max_num_rows_title};
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.lg-sub-html p {
+    font-size: 12px;
+    margin: 5px 0 0;
+	display: block; /* Fallback for non-webkit */
+	display: -webkit-box;
+	max-height: ${desc_max_height}; /* Fallback for non-webkit */
+	line-height: 15px;
+	-webkit-line-clamp: ${max_num_rows_description};
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ozio-thumb-list-sub-title {
+    text-align: center;
+	line-height: 18px;
+	font-size: 13px;
+
+	
+	display: block; /* Fallback for non-webkit */
+	display: -webkit-box;
+	height: ${list_title_max_height}; /* Fallback for non-webkit */
+	-webkit-line-clamp: ${max_num_rows_list_title};
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: ${list_thumb_width};	
+}
+
 ";
 
 $this->document->addStyleDeclaration($css_custom_style);
