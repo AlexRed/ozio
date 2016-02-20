@@ -47,6 +47,11 @@
 			<field type="text" name="list_thumb_border" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_DSC" size="6" default="2"/>
 			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="5"/>
 		   <field name="list_thumb_border_color" type="oziocolor" default="#b8b8b8"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
+
+		   <field type="list" name="show_list_title" label="COM_OZIOGALLERY3_SHOW_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_LIST_TITLE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_STYLE_SETTINGS" icon="effects.png"/>
 
@@ -146,17 +151,12 @@
 			<field type="text" name="thumbContHeight" label="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_LBL" description="COM_OZIOGALLERY3_THUMB_CONT_HEIGHT_DSC" size="6" default="60"/>
 
 			<field type="text" name="thumbMargin" label="COM_OZIOGALLERY3_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_THUMB_MARGIN_DSC" size="6" default="5"/>
-
-			<field type="list" name="show_list_title" label="COM_OZIOGALLERY3_SHOW_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_LIST_TITLE_DSC" default="0">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
 						
-			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOW_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_TITLE_DSC" default="0">
+			<field type="list" name="show_album" label="COM_OZIOGALLERY3_SHOW_TITLE_LIST_LBL" description="COM_OZIOGALLERY3_SHOW_TITLE_LIST_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="show_summary" label="COM_OZIOGALLERY3_SHOW_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_SHOW_DESCRIPTION_DSC" default="1">
+			<field type="list" name="show_summary" label="COM_OZIOGALLERY3_SHOW_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_SHOW_DESCRIPTION_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
