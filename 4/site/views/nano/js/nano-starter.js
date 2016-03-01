@@ -141,8 +141,16 @@ jQuery( document ).ready(function( $ ) {
 			//echo 'authkey:'.json_encode($this->Params->get("limitedpassword", "")).",\n";
 			
 		}else{
+
+			//Anpassung
+			if( isset($_GET['specialAlbum']) && $_GET['specialAlbum']) {
+				$albumList = array($_GET['specialAlbum']);
+			} else {
+				$albumList=$this->Params->get("ozio_nano_albumList", array());
+			}
 					
-			$albumList=$this->Params->get("ozio_nano_albumList", array());
+			// $albumList=$this->Params->get("ozio_nano_albumList", array());
+			
 			if (!empty($albumList) && is_array($albumList) ){
 				if (count($albumList)==1){
 					if (strpos($albumList[0],$non_printable_separator)!==FALSE){

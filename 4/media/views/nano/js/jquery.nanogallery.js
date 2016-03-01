@@ -1794,7 +1794,9 @@ nanoGALLERY v5.9.1 release notes.
         if( isAnimating ) { return; }
 
         if( G.O.paginationSwipe ) {
-          if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+          //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
 			if (G.O.paginationDisableSwipe){//GI
 				return;
 			}				  
@@ -1940,7 +1942,9 @@ nanoGALLERY v5.9.1 release notes.
         var differenceInX = initialTouchPos.x - lastTouchPos.x;
         var differenceInY = initialTouchPos.y - lastTouchPos.y;
         currentXPosition = currentXPosition - differenceInX;
-        if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+        //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
           // pagination
           // if( Math.abs(differenceInX) > 30) {
           if( G.O.paginationSwipe && (Math.abs(differenceInX) > 40 && Math.abs(initialViewport.t-getViewport().t) <= 10) ) {
@@ -1989,7 +1993,9 @@ nanoGALLERY v5.9.1 release notes.
       function onAnimFrame() {
         if(!isAnimating) { return; }
 
-        if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto'  ) {
+        //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto'  ) {
           var differenceInX = initialTouchPos.x - lastTouchPos.x;
           ElementTranslateX(elementToSwipe,currentXPosition - differenceInX);
         }
@@ -4534,123 +4540,148 @@ nanoGALLERY v5.9.1 release notes.
       });
     }
 
-
+    //Anpassung
     function manageGalleryToolbar( albumIdx ) {
-      var displayToolbar=false;
 
-      // Breadcrumb
-      if( G.O.displayBreadcrumb == true && !G.O.thumbnailAlbumDisplayImage ) {
-        if( G.$E.conBC.children().length == 0 ) {
-          G.$E.conNavBCon.css({opacity:0, 'max-height':'0px'});
-        }
 
-        displayToolbar=true;
-
-        // G.$E.conBC.children().not(':first').remove();
-        G.$E.conBC.children().remove();
-        breadcrumbAdd(0);
-        if( albumIdx != 0 ) {
-          var l=G.I.length,
-          parentID=0,
-          lstItems=[];
-
-          lstItems.push(albumIdx);
-          var curIdx=albumIdx;
-
-          while( G.I[curIdx].albumID != 0 && G.I[curIdx].albumID != -1) {
-            for(i=1; i < l; i++ ) {
-              if( G.I[i].GetID() == G.I[curIdx].albumID ) {
-                curIdx=i;
-                lstItems.push(curIdx);
-                break;
-              }
-            }
-          }
-
-          breadcrumbAddSeparator(0);
-          for( i=lstItems.length-1; i>=0 ; i-- ) {
-            breadcrumbAdd(lstItems[i]);
-            if( i > 0 ) {
-              breadcrumbAddSeparator(lstItems[i-1]);
-            }
-          }
-        }
-
-        var bcItems=G.$E.conBC.children(),
-        l1=bcItems.length;
-        if( l1 == 0 ) {
-          G.curNavLevel='l1';
-          if( G.O.breadcrumbAutoHideTopLevel ) {
-            G.$E.conNavBCon.css({opacity:0, 'max-height':'0px'});
-            displayToolbar=false;
-          }
-          //breadcrumbAdd(0);
-        }
-        else {
-          if( l1 == 1 ) {
-            G.curNavLevel='l1';
-          }
-          else {
-            G.curNavLevel='lN';
-          }
-          if( l1 == 1 && G.O.breadcrumbAutoHideTopLevel ) {
-            //G.$E.conNavBCon.animate({'opacity':'0','max-height':'0px'});
-            var tweenable = new NGTweenable();
-            tweenable.tween({
-              from: {'opacity':G.$E.conNavBCon.css('opacity'),'max-height':G.$E.conNavBCon.css('max-height')},
-              to: {'opacity':'0','max-height':'0px'},
-              attachment: { $e:G.$E.conNavBCon },
-              duration: 200,
-              step: function (state, att) {
-                att.$e.css(state);
-              },
-              finish: function (state, att) {
-                att.$e.css({'opacity':'0','max-height':'0px'});
-              }
-            });
-          }
-          else {
-            //G.$E.conNavBCon.animate({'opacity':'1','max-height':'50px'});
-            if( G.O.breadcrumbAutoHideTopLevel ) {
-              var tweenable = new NGTweenable();
-              tweenable.tween({
-                from: {'opacity':G.$E.conNavBCon.css('opacity'),'max-height':G.$E.conNavBCon.css('max-height')},
-                to: {'opacity':'1','max-height':'50px'},
-                attachment: { $e:G.$E.conNavBCon },
-                duration: 200,
-                step: function (state, att) {
-                  att.$e.css(state);
-                },
-                finish: function (state, att) {
-                  att.$e.css({'opacity':'1','max-height':'50px'});
-                }
-              });
-            }
-            else {
-              G.$E.conNavBCon.css({opacity:1, 'max-height':'50px'});
-            }
-            //G.$E.conBC.children().not(':first').remove();
-          }
-        }
-        G.pgMaxNbThumbnailsPerRow=NbThumbnailsPerRow();
-      }
-
-      // Tag-bar
-      if( G.O.useTags ) {
-        displayToolbar=true;
-        if( G.containerTags == null ) {
-          G.containerTags =jQuery('<div class="nanoGalleryTags"></div>').appendTo(G.$E.conNavB);
-        }
-      }
-
-      if( G.O.galleryFullpageButton ) { displayToolbar=true; }
-
-      if( !G.containerNavigationbarContDisplayed && displayToolbar ) {
-        G.containerNavigationbarContDisplayed=true;
-        G.$E.conNavBCon.show();
-      }
-
+    jQuery("ul.breadcrumb li.ozio").remove();
+    jQuery("ul.breadcrumb li:last").data('albumIdx',0);
+    jQuery("ul.breadcrumb li:last").addClass('active');
+    jQuery("ul.breadcrumb li:last span.divider").remove();
+    if( jQuery("ul.breadcrumb li:last span").length > 0 ) {
+      jQuery("ul.breadcrumb li:last").append("<a style='cursor:pointer;'>" + jQuery("ul.breadcrumb li:last span").text() +"</a>");
+      jQuery("ul.breadcrumb li:last span").remove();
     }
+    jQuery("ul.breadcrumb li:last").click(function() {
+      var cAlbumIdx=jQuery(this).data('albumIdx');
+      jQuery(this).nextAll().remove();
+      OpenAlbum(cAlbumIdx, false, -1, true);
+      return;
+    });
+
+    if(albumIdx > 0) {
+      jQuery("ul.breadcrumb li:last").removeClass('active');
+      jQuery('<span class="divider">\\\\</span>').appendTo("ul.breadcrumb li:last");
+      var newDiv =jQuery('<li class="active ozio ozio_' + albumIdx + '">'+G.I[albumIdx].title+'</li>').appendTo("ul.breadcrumb");
+    }
+      
+    }
+    // function manageGalleryToolbar( albumIdx ) {
+    //   var displayToolbar=false;
+
+    //   // Breadcrumb
+    //   if( G.O.displayBreadcrumb == true && !G.O.thumbnailAlbumDisplayImage ) {
+    //     if( G.$E.conBC.children().length == 0 ) {
+    //       G.$E.conNavBCon.css({opacity:0, 'max-height':'0px'});
+    //     }
+
+    //     displayToolbar=true;
+
+    //     // G.$E.conBC.children().not(':first').remove();
+    //     G.$E.conBC.children().remove();
+    //     breadcrumbAdd(0);
+    //     if( albumIdx != 0 ) {
+    //       var l=G.I.length,
+    //       parentID=0,
+    //       lstItems=[];
+
+    //       lstItems.push(albumIdx);
+    //       var curIdx=albumIdx;
+
+    //       while( G.I[curIdx].albumID != 0 && G.I[curIdx].albumID != -1) {
+    //         for(i=1; i < l; i++ ) {
+    //           if( G.I[i].GetID() == G.I[curIdx].albumID ) {
+    //             curIdx=i;
+    //             lstItems.push(curIdx);
+    //             break;
+    //           }
+    //         }
+    //       }
+
+    //       breadcrumbAddSeparator(0);
+    //       for( i=lstItems.length-1; i>=0 ; i-- ) {
+    //         breadcrumbAdd(lstItems[i]);
+    //         if( i > 0 ) {
+    //           breadcrumbAddSeparator(lstItems[i-1]);
+    //         }
+    //       }
+    //     }
+
+    //     var bcItems=G.$E.conBC.children(),
+    //     l1=bcItems.length;
+    //     if( l1 == 0 ) {
+    //       G.curNavLevel='l1';
+    //       if( G.O.breadcrumbAutoHideTopLevel ) {
+    //         G.$E.conNavBCon.css({opacity:0, 'max-height':'0px'});
+    //         displayToolbar=false;
+    //       }
+    //       //breadcrumbAdd(0);
+    //     }
+    //     else {
+    //       if( l1 == 1 ) {
+    //         G.curNavLevel='l1';
+    //       }
+    //       else {
+    //         G.curNavLevel='lN';
+    //       }
+    //       if( l1 == 1 && G.O.breadcrumbAutoHideTopLevel ) {
+    //         //G.$E.conNavBCon.animate({'opacity':'0','max-height':'0px'});
+    //         var tweenable = new NGTweenable();
+    //         tweenable.tween({
+    //           from: {'opacity':G.$E.conNavBCon.css('opacity'),'max-height':G.$E.conNavBCon.css('max-height')},
+    //           to: {'opacity':'0','max-height':'0px'},
+    //           attachment: { $e:G.$E.conNavBCon },
+    //           duration: 200,
+    //           step: function (state, att) {
+    //             att.$e.css(state);
+    //           },
+    //           finish: function (state, att) {
+    //             att.$e.css({'opacity':'0','max-height':'0px'});
+    //           }
+    //         });
+    //       }
+    //       else {
+    //         //G.$E.conNavBCon.animate({'opacity':'1','max-height':'50px'});
+    //         if( G.O.breadcrumbAutoHideTopLevel ) {
+    //           var tweenable = new NGTweenable();
+    //           tweenable.tween({
+    //             from: {'opacity':G.$E.conNavBCon.css('opacity'),'max-height':G.$E.conNavBCon.css('max-height')},
+    //             to: {'opacity':'1','max-height':'50px'},
+    //             attachment: { $e:G.$E.conNavBCon },
+    //             duration: 200,
+    //             step: function (state, att) {
+    //               att.$e.css(state);
+    //             },
+    //             finish: function (state, att) {
+    //               att.$e.css({'opacity':'1','max-height':'50px'});
+    //             }
+    //           });
+    //         }
+    //         else {
+    //           G.$E.conNavBCon.css({opacity:1, 'max-height':'50px'});
+    //         }
+    //         //G.$E.conBC.children().not(':first').remove();
+    //       }
+    //     }
+    //     G.pgMaxNbThumbnailsPerRow=NbThumbnailsPerRow();
+    //   }
+
+    //   // Tag-bar
+    //   if( G.O.useTags ) {
+    //     displayToolbar=true;
+    //     if( G.containerTags == null ) {
+    //       G.containerTags =jQuery('<div class="nanoGalleryTags"></div>').appendTo(G.$E.conNavB);
+    //     }
+    //   }
+
+    //   if( G.O.galleryFullpageButton ) { displayToolbar=true; }
+
+    //   if( !G.containerNavigationbarContDisplayed && displayToolbar ) {
+    //     G.containerNavigationbarContDisplayed=true;
+    //     G.$E.conNavBCon.show();
+    //   }
+
+    // }
 
     function PreloaderShow() {
       //if( G.O.displayBreadcrumb == true ) { G.$E.conBC.find('.oneFolder').last().addClass('loading'); }
@@ -5273,7 +5304,9 @@ nanoGALLERY v5.9.1 release notes.
 
       var firstPage=0;
       // pagination - max lines per page mode
-      if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+      //Anpassung
+      if( G.pgMaxLinesPerPage > 0) {
+      //if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
         n2=Math.ceil(G.I[albumIdx].contentLength/(G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow));
       }
 
@@ -5513,7 +5546,9 @@ nanoGALLERY v5.9.1 release notes.
       firstCounter=0,
       lastCounter=0;
 
-      if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+      //Anpassung
+      if( G.pgMaxLinesPerPage > 0 ) {
+      // if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
         firstCounter=pageNumber*G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow;
         lastCounter=firstCounter+G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow;
       }
@@ -5536,7 +5571,9 @@ nanoGALLERY v5.9.1 release notes.
             currentCounter++;
 
             // pagination - max lines per page mode
-            if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
+            //Anpassung
+      if( G.pgMaxLinesPerPage > 0 ) {
+      // if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
               if( (G.galleryItemsCount+1) > (G.pgMaxLinesPerPage*G.pgMaxNbThumbnailsPerRow) ) {
                 onComplete(albumIdx, pageNumber);
                 return;
