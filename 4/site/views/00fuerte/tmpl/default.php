@@ -74,15 +74,15 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 		<div id="controls">
 			<!--Thumb Tray button-->
 			<?php if (!$this->Params->get("hide_thumbnails", 0)) { ?>
-			 <a id="tray-button"><img id="tray-arrow" src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/button-tray-up.png"/></a> 
+			 <a id="tray-button"><img id="tray-arrow" src="<?php echo JUri::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/button-tray-up.png"/></a> 
 			 <?php } ?>
 
-			<a id="play-button" class="oziobutton" <?php echo $this->play_button_style; ?>><img id="pauseplay" src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/pause.png" alt="stop" /></a>
+			<a id="play-button" class="oziobutton" <?php echo $this->play_button_style; ?>><img id="pauseplay" src="<?php echo JUri::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/pause.png" alt="stop" /></a>
 			<?php if ($this->Params->get("fullsize_button", true)) { ?>
-				<a id="view-button" class="oziobutton" data-loading-gif="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/progress.gif" ><img src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/view.png" alt="view" /></a>
+				<a id="view-button" class="oziobutton" data-loading-gif="<?php echo JUri::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/progress.gif" ><img src="<?php echo JUri::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/view.png" alt="view" /></a>
 			<?php } ?>
 			<?php if ($this->Params->get("info_button", false)) { ?>
-			<a id="info-button" class="oziobutton"><img src="<?php echo JUri::base(true); ?>/components/com_oziogallery3/views/00fuerte/img/info.png" alt="Info" /></a>
+			<a id="info-button" class="oziobutton"><img src="<?php echo JUri::base(true); ?>/media/com_oziogallery3/views/00fuerte/img/info.png" alt="Info" /></a>
 			<?php } ?>
 
 			<!--Slide counter-->

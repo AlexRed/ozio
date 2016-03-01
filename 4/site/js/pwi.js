@@ -82,7 +82,7 @@ jQuery(document).ready(function ($)
 	{
 		$item = $menu->getItem($i);
 		// Skip album list menu items
-		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false) continue;
+		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=lightgallery") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false) continue;
 
 		$album = new stdClass();
 		$link = "";
@@ -97,7 +97,53 @@ jQuery(document).ready(function ($)
 			$link = $item->link . '&Itemid='.$item->id;
 		}
 		
-		if (strpos($item->link, "&view=00fuerte") !== false){
+		$is_video = false;
+		if (strpos($item->link, "&view=lightgallery") !== false){
+			if ($item->params->get("source_kind", "photo")!=='photo'){
+				$is_video = true;
+			}
+		}
+		
+		if ($is_video){
+			$video_ids = array();
+			$video_list = explode(',',$item->params->get("video_list", ""));
+			foreach ($video_list as $video){
+				$video = trim($video);
+				if (!empty($video)){
+					$video_ids[] = $video;
+				}
+			}
+			?>
+			
+			
+			var video_album ={
+				album_local_url:'<?php echo JRoute::_($link); ?>',
+				title: <?php echo json_encode($item->title); ?>,
+				thumb_url: <?php echo json_encode("https://img.youtube.com/vi/".$video_ids[0]."/0.jpg"); ?>,
+				thumb_height: '<?php echo $this->Params->get("images_size", 180); ?>',
+				thumb_width: '<?php echo $this->Params->get("images_size", 180); ?>',
+				album_local_title: <?php echo json_encode($item->title); ?>,
+				numphotos: <?php echo count($video_ids); ?>,
+				manual_date: <?php echo json_encode($item->params->get("gallery_date", "")); ?>,
+			};
+			
+			jQuery("#container_pwi_list").append(
+				authorVideo = jQuery("<div/>", {'id':'ozio-author<?php echo $item->id; ?>', 'class':'ozio-author'})
+			);
+			
+			authorVideo.data('ozio-data',{
+				album_local_title:<?php echo json_encode($item->title); ?>,
+				album_id:'<?php echo $item->id; ?>',
+				album_orig_sort:'<?php echo $item->orig_sort; ?>'
+			});
+			
+			
+			addAlbum(video_album,authorVideo);
+			
+			<?php
+			
+			
+		}else if (strpos($item->link, "&view=00fuerte") !== false || strpos($item->link, "&view=lightgallery") !== false){
 			
 //?>
 
@@ -379,7 +425,6 @@ jQuery(document).ready(function ($)
 			}
 		}		
 		
-
 		
 		function addAlbum(album,jquery_ozio_author){
 			
@@ -433,7 +478,7 @@ jQuery(document).ready(function ($)
 			}
 			else
 			{
-				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format("d mmm yyyy") + '</span>');
+				date.append('<span class="ozio-indicator ozio-og-calendar" ' + 'title="<?php echo JText::_("JDATE"); ?>">' + new Date(Number(album.timestamp))._format(gi_php_date_format_to_mask('<?php echo JText::_("DATE_FORMAT_LC3"); ?>')) + '</span>');
 			}
 
 			scAlbum.append(date);

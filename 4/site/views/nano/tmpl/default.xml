@@ -342,9 +342,15 @@
 			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
+		  <field type="ossheader" default="COM_OZIOGALLERY3_FULLSCREEN_SETTINGS" icon="information.png"/>
+				<field name="closelink"  type="text" default=""
+					label="COM_OZIOGALLERY3_FIELD_CLOSELINK_LABEL"
+					description="COM_OZIOGALLERY3_FIELD_CLOSELINK_DESC"
+					size="48"
+					 />
 			
 			<field type="ossheader" default="COM_OZIOGALLERY3_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
-			<field name="markers_icon" type="filelist" label="COM_OZIOGALLERY3_MAP_MARKERS_ICON_LBL" description="COM_OZIOGALLERY3_MAP_MARKERS_ICON_DSC" default="" hide_none="true" directory="components/com_oziogallery3/views/map/img/markers/icons" filter="\.png$" exclude="" stripext=""  onchange="OnMarkersIconChange()"/>
+			<field name="markers_icon" type="filelist" label="COM_OZIOGALLERY3_MAP_MARKERS_ICON_LBL" description="COM_OZIOGALLERY3_MAP_MARKERS_ICON_DSC" default="" hide_none="true" directory="media/com_oziogallery3/views/map/img/markers/icons" filter="\.png$" exclude="" stripext=""  onchange="OnMarkersIconChange()"/>
 	        <field name="markers_preview" type="markerpreview" label="COM_OZIOGALLERY3_MAP_MARKERS_PREVIEW"/>
 			
 		</fieldset>			
@@ -414,7 +420,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_DSC" default="0">
+			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY3_HIDE_INFOBOX_FLASH_DSC" default="1">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>

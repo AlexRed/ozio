@@ -50,7 +50,7 @@ class OzioGalleryViewlist extends JViewLegacy
 			JHtmlBootstrap::loadCSS();
 		}
 
-		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
 
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
@@ -58,20 +58,20 @@ class OzioGalleryViewlist extends JViewLegacy
 		if ($style=='hovereffect'){
 			//he
 			$this->document->addScript($prefix . "&amp;filename=pwi_hovereffect&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
-        	$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/modernizr.custom.js");
-        	$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/toucheffects.js");
+        	$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/modernizr.custom.js");
+        	$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/toucheffects.js");
 		}else {
 			$this->document->addScript($prefix . "&amp;filename=pwi&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 		}
 		$this->document->addScript($prefix . "&amp;filename=dateformat&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 
 		// per la compatibilità con Internet Explorer
-        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
 		if ($style=='hovereffect'){
-			$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list_hovereffect.css");
+			$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/list/css/list_hovereffect.css");
 		}else{
-        	$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/list/css/list.css");
+        	$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/list/css/list.css");
 		}
 
 		parent::display($tpl);

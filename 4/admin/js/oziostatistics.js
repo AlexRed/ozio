@@ -88,7 +88,7 @@ jQuery(document).ready(function ($)
 			a.text(photos[i].title);
 			
 			var img=$('<img>');
-			img.attr('src','../components/com_oziogallery3/views/00fuerte/img/progress.gif');
+			img.attr('src','../media/com_oziogallery3/views/00fuerte/img/progress.gif');
 			
 			var a_album=$('<a target="_blank"></a>');
 			a_album.attr('href','../'+photos[i].album_link);
@@ -253,6 +253,8 @@ jQuery(document).ready(function ($)
 			
 			if (g_parameters[this.album_index].skin=='00fuerte'){
 				photodata.link=g_parameters[this.album_index].link+'#'+(this.photo_index+1);
+			}else if (g_parameters[this.album_index].skin=='lightgallery'){
+				photodata.link=g_parameters[this.album_index].link+'#lg=1&slide='+this.photo_index;
 			}else if (g_parameters[this.album_index].skin=='jgallery'){
 				photodata.link=g_parameters[this.album_index].link+'/'+result.entry.gphoto$id.$t;
 			}else{

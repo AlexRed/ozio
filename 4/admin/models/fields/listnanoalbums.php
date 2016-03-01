@@ -44,7 +44,7 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 		{
 			$resources = false;
 			$document = JFactory::getDocument();
-			$document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/listnanoalbums.js");
+			$document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/listnanoalbums.js");
 			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
 			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
 			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
@@ -66,6 +66,8 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 		$html[] ='		<h3>Ozio Gallery</h3>';
 		$html[] ='	</div>';
 		$html[] ='	<div class="modal-body" style="overflow-y:auto;">';
+		$html[] ='			<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button> ';
+		$html[] ='			<p><strong>'.JText::_("COM_OZIOGALLERY3_WAIT_GDATA_MSG").'</strong></p></div> ';
 		$html[] ='	<table class="table table-striped">';
 		$html[] ='	</table>';
 		$html[] ='	</div>';

@@ -35,20 +35,29 @@ jQuery(document).ready(function ($)
 	{
 		$item = $menu->getItem($i);
 		// Skip album list menu items
-		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false) continue;
+		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=lightgallery") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false) continue;
+		
+		
+		if (strpos($item->link, "&view=lightgallery") !== false){
+			if ($item->params->get("source_kind", "photo")!=='photo'){
+				continue;
+			}
+		}
 
 		$link = JRoute::_( 'index.php?Itemid='.$item->id, false ); //aggiunto il false
 		$icon='';
 		$legend_icon='';
 		$markers_icon=trim($item->params->get('markers_icon',''));
 		if (!empty($markers_icon)){
-			$icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
-			$legend_icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
+			$icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
+			$legend_icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . $markers_icon;
 		}else{
-			$legend_icon=JURI::base(true) . '/components/com_oziogallery3/views/map/img/markers/icons/' . 'default.png';
+			$legend_icon=JURI::base(true) . '/media/com_oziogallery3/views/map/img/markers/icons/' . 'default.png';
 		}
 		if (strpos($item->link, "&view=00fuerte") !== false){
 			$g_parameters[]=array('skin'=>'00fuerte','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
+		}else if (strpos($item->link, "&view=lightgallery") !== false){
+			$g_parameters[]=array('skin'=>'lightgallery','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
 		}else{
 			$kind=$item->params->get("ozio_nano_kind", "picasa");
 			$albumvisibility=$item->params->get("albumvisibility", "public");
@@ -558,6 +567,8 @@ jQuery(document).ready(function ($)
 				var photolink='';
 				if (g_parameters[obj.album_index].skin=='00fuerte'){
 					photolink=g_parameters[obj.album_index].link+'#'+(obj.photo_index+1);
+				}else if (g_parameters[obj.album_index].skin=='lightgallery'){
+					photolink=g_parameters[obj.album_index].link+'#lg=1&slide='+obj.photo_index;
 				}else if (g_parameters[obj.album_index].skin=='jgallery'){
 					photolink=g_parameters[obj.album_index].link+'/'+entry.gphoto$id.$t;
 				}else{

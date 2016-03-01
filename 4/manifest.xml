@@ -7,7 +7,7 @@
 	<authorUrl>http://www.joomla.it</authorUrl>
 	<copyright>(C) 2008 - 2015 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>4.5.0</version>
+	<version>4.6.0</version>
 	<description>Ozio Gallery for Joomla! 3</description>
 
 	<scriptfile>file.script.php</scriptfile>
@@ -18,13 +18,19 @@
 		<filename>oziogallery.zip</filename>
 		<filename>pclzip.lib.php</filename>
 		<filename>controller.php</filename>
-		<folder>assets</folder>
 		<folder>js</folder>
 		<folder>language</folder>
 		<folder>lib</folder>
 		<folder>skin</folder>
 		<folder>views</folder>
 	</files>
+	<media folder="media" destination="com_oziogallery3">
+		<folder>assets</folder>
+		<folder>js</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+	</media>	
+	
 	<administration>
 		<menu img="components/com_oziogallery3/assets/images/oziogallery3.png">com_oziogallery3</menu>
 		<files folder="admin">
@@ -35,6 +41,7 @@
 			<folder>assets</folder>
 			<folder>css</folder>
 			<folder>js</folder>
+			<folder>img</folder>
 			<folder>models</folder>
 			<folder>views</folder>
 			<folder>language</folder>

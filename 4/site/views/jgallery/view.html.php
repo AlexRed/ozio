@@ -46,10 +46,10 @@ class OzioGalleryViewJGallery extends JViewLegacy
 		if ($this->Params->get("load_css_bootstrap", 0)==1){
 			JHtmlBootstrap::loadCSS();
 		}
-		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
 
-		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/jgallery/css/jgallery.min.css?v=1.5.2");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/css/jgallery.min.css?v=1.5.2");
 
 		$current_uri = JFactory::getURI();
 		if ($this->Params->get("info_button", false)) {
@@ -59,14 +59,14 @@ class OzioGalleryViewJGallery extends JViewLegacy
 				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
 			}
 		}
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
 
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/jgallery/js/tinycolor-0.9.16.min.js");
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/jgallery/js/touchswipe.min.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/js/tinycolor-0.9.16.min.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/js/touchswipe.min.js");
 
-		$this->document->addScript(JUri::base(true) . "/components/com_oziogallery3/views/jgallery/js/jgallery.js?v=1.5.2");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/js/jgallery.js?v=1.5.2");
 
-		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
 		
 		
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
@@ -74,7 +74,7 @@ class OzioGalleryViewJGallery extends JViewLegacy
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id;
 
-		$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/jgallery/css/ozio-jgallery.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/css/ozio-jgallery.css");
 		$this->document->addScript($prefix . "&amp;v=jgallery&amp;filename=jgallery-starter&amp;type=js" .$postfix );
 
 		parent::display($tpl);

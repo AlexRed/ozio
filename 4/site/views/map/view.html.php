@@ -47,7 +47,7 @@ class OzioGalleryViewmap extends JViewLegacy
 		}
 
 		
-		//$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jquery-pwi.js");
+		//$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
 
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
@@ -55,9 +55,9 @@ class OzioGalleryViewmap extends JViewLegacy
 		$this->document->addScript($prefix . "&amp;filename=map&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 
 		// per la compatibilità con Internet Explorer
-        $this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/jQuery.XDomainRequest.js");
+        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
 
-       	$this->document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/views/map/css/map.css");
+       	$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/map/css/map.css");
 
 
 		// Api key parameter for Google map
@@ -79,9 +79,9 @@ class OzioGalleryViewmap extends JViewLegacy
 
 		if ($this->Params->get("cluster", "1"))
 		{
-			$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/markerclusterer_compiled.js");
+			$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/markerclusterer_compiled.js");
 		}
-		$this->document->addScript(JUri::root(true) . "/components/com_oziogallery3/js/oms.min.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/oms.min.js");
 		
 		parent::display($tpl);
 	}
