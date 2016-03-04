@@ -23,7 +23,7 @@ function TrigAllSelextChange()
 
 function OnUseridExit()
 {
-	var input = $('jform_params_userid');
+	//var input = $('jform_params_userid');
 	LoadAlbums();
 }
 
@@ -31,7 +31,7 @@ function OnUseridExit()
 function OnUseridChange(value)
 {
 	// Dalla DomReady arriva senza il parametro value
-	if (!value) value = $('jform_params_userid').value;
+	if (!value) value = jQuery('#jform_params_userid').val();
 
 	LoadAlbums();
 }
@@ -64,6 +64,14 @@ function OnUseridCut(value)
 
 function addoption(select, value, text)
 {
+	
+	
+	select.append(jQuery('<option>', {
+		value: value,
+		text: text
+	}));
+	
+	/*
 	var option = document.createElement('option');
 	option.value = value;
 	option.text = text;
@@ -77,6 +85,7 @@ function addoption(select, value, text)
 		// IE only
 		select.add(option);
 	}
+	*/
 }
 
 
@@ -106,17 +115,17 @@ function LoadAlbums()
 function OnBeforeSend(jqXHR, settings)
 {
 	// Hide the select
-	$('jform_params_gallery_id').hide();
+	jQuery('#jform_params_gallery_id').hide();
 	// Hide the warning
-	$('jform_params_gallery_id_warning').hide();
+	jQuery('#jform_params_gallery_id_warning').hide();
 	// Show the loader
-	$('jform_params_gallery_id_loader').show();
+	jQuery('#jform_params_gallery_id_loader').show();
 }
 
 function ozio_addalbums(albums){
-	var select = $('jform_params_gallery_id');
+	var select = jQuery('#jform_params_gallery_id');
 	// Clear previous options
-	select.options.length = 0;
+	select.empty();
 	
 	// Show the select
 	select.show();
@@ -166,9 +175,9 @@ function ozio_addalbums(albums){
 
 function OnLoadSuccess(result, textStatus, jqXHR)
 {
-	var select = $('jform_params_gallery_id');
+	var select = jQuery('#jform_params_gallery_id');
 	// Clear previous options
-	select.options.length = 0;
+	select.empty();
 
 	// Show the select
 	select.show();
@@ -229,30 +238,22 @@ function OnLoadSuccess(result, textStatus, jqXHR)
 
 function OnLoadError(jqXHR, textStatus, error)
 {
-	var input = $('jform_params_userid');
-	$('jform_params_gallery_id_warning').show();
+	//var input = jQuery('#jform_params_userid');
+	jQuery('#jform_params_gallery_id_warning').show();
 }
 
 function OnLoadComplete(jqXHR, textStatus)
 {
 	// Hide the loader
-	$('jform_params_gallery_id_loader').hide();
+	jQuery('#jform_params_gallery_id_loader').hide();
 }
 
 
 function SelectCurrentAlbum()
 {
-	var select = $('jform_params_gallery_id');
-	var spia = $('jform_params_gallery_id_selected');
-	var options = select.options;
-
-	for (var i = 0; i < options.length; ++i)
-	{
-		if (options[i].value == spia.innerHTML)
-		{
-			options[i].selected = true;
-		}
-	}
+	var select = jQuery('#jform_params_gallery_id');
+	var spia = jQuery('#jform_params_gallery_id_selected');
+	select.val( spia.html());
 
 }
 
@@ -333,37 +334,37 @@ function SelectCurrentAlbum()
 
 function OnAlbumVisibilityChange()
 {
-	var select = $('jform_params_albumvisibility');
-	if (select){
-		var value = select.options[select.selectedIndex].value;
+	var select = jQuery('#jform_params_albumvisibility');
+	if (select.length>0){
+		var value = select.val();
 		if (value == 'public')
 		{
-			$('jform_params_gallery_id-lbl').style.display = 'inline';
-			$('album_selection').style.display = 'inline';
+			jQuery('#jform_params_gallery_id-lbl').show();
+			jQuery('#album_selection').show();
 
-			$('jform_params_limitedalbum-lbl').style.display = 'none';
-			$('jform_params_limitedalbum').style.display = 'none';
-			$('jform_params_limitedpassword-lbl').style.display = 'none';
-			$('jform_params_limitedpassword').style.display = 'none';
+			jQuery('#jform_params_limitedalbum-lbl').hide();
+			jQuery('#jform_params_limitedalbum').hide();
+			jQuery('#jform_params_limitedpassword-lbl').hide();
+			jQuery('#jform_params_limitedpassword').hide();
 		}
 		else
 		{
-			$('jform_params_limitedalbum-lbl').style.display = 'inline';
-			$('jform_params_limitedalbum').style.display = 'inline';
-			$('jform_params_limitedpassword-lbl').style.display = 'inline';
-			$('jform_params_limitedpassword').style.display = 'inline';
+			jQuery('#jform_params_limitedalbum-lbl').show();
+			jQuery('#jform_params_limitedalbum').show();
+			jQuery('#jform_params_limitedpassword-lbl').show();
+			jQuery('#jform_params_limitedpassword').show();
 
-			$('jform_params_gallery_id-lbl').style.display = 'none';
-			$('album_selection').style.display = 'none';
+			jQuery('#jform_params_gallery_id-lbl').hide();
+			jQuery('#album_selection').hide();
 		}
 	}
 }
 
 function OnLightGallerySourceKindChange()
 {
-	var select = $('jform_params_source_kind');
-	if (select){
-		var value = select.options[select.selectedIndex].value;
+	var select = jQuery('#jform_params_source_kind');
+	if (select.length>0){
+		var value = select.val();
 		if (value == 'photo')
 		{
 			
@@ -402,26 +403,26 @@ function OnLightGallerySourceKindChange()
 
 function OnFixedHeightChange()
 {
-	var select = $('jform_params_fixedheight');
-	if (select){
-		var value = select.options[select.selectedIndex].value;
+	var select = jQuery('#jform_params_fixedheight');
+	if (select.length>0){
+		var value = select.val();
 		if (value == '0')
 		{
-			$('jform_params_galleryheight-lbl').style.display = 'none';
-			$('jform_params_galleryheight').style.display = 'none';
+			jQuery('#jform_params_galleryheight-lbl').hide();
+			jQuery('#jform_params_galleryheight').hide();
 		}
 		else
 		{
-			$('jform_params_galleryheight-lbl').style.display = 'inline';
-			$('jform_params_galleryheight').style.display = 'inline';
+			jQuery('#jform_params_galleryheight-lbl').show();
+			jQuery('#jform_params_galleryheight').show();
 		}
 	}
 }
 
 function OnMarkersIconChange()
 {
-	var select = $('jform_params_markers_icon');
-	var value = select.options[select.selectedIndex].value;
+	var select = jQuery('#jform_params_markers_icon');
+	var value = select.val();
 	if (value==''){
 		value='default.png';
 	}

@@ -1,7 +1,7 @@
 function OnMarkersIconChange()
 {
-	var select = $('jform_params_markers_icon');
-	var value = select.options[select.selectedIndex].value;
+	var select = jQuery('#jform_params_markers_icon');
+	var value = select.val();
 	if (value==''){
 		value='default.png';
 	}
