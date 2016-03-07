@@ -255,6 +255,9 @@
 			</field>
 			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY3_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY3_INFOBOX_BG_URL_DSC" />
 			
+			<field type="text" name="big" label="COM_OZIOGALLERY3_BIG_LBL" description="COM_OZIOGALLERY3_BIG_DSC" size="6" default="0"/>
+			
+			
 		  <field type="ossheader" default="COM_OZIOGALLERY3_FULLSCREEN_SETTINGS" icon="information.png"/>
 				<field name="closelink"  type="text" default=""
 					label="COM_OZIOGALLERY3_FIELD_CLOSELINK_LABEL"

@@ -6,6 +6,9 @@ $lang->load('com_oziogallery3',JPATH_ROOT . "/administrator/components/com_oziog
 
 
 ?>
+
+gi_ozio_intenseViewer=false;
+
 jQuery( document ).ready(function( $ ) {
 	
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
@@ -458,7 +461,11 @@ jQuery( document ).ready(function( $ ) {
 					download: <?php echo json_encode($source_kind == 'photo' && intval($this->Params->get("download_button", "1"))==1); ?>,
 					
 					infobtn: <?php echo json_encode($source_kind == 'photo' && intval($this->Params->get("info_button", "1"))==1); ?>,
-					zoom:<?php echo json_encode($source_kind == 'photo'); ?>,
+					intense:<?php echo json_encode($source_kind == 'photo'); ?>,
+					zoom:false,
+					
+					intense_big: '<?php echo $this->Params->get("big", ""); ?>',
+					data_loading_gif: <?php echo json_encode(JUri::base(true).'/media/com_oziogallery3/views/00fuerte/img/progress.gif'); ?>,
 					
 					
 					showInfoBoxAlbum: <?php echo json_encode(!intval($this->Params->get("hide_infobox_album", "0"))); ?>,

@@ -92,6 +92,7 @@
 						$result->loadString($row->params);
 						if ($result->get("source_kind", "photo")=='photo'){
 							$row->params=json_decode($row->params,true);
+							$row->params['albumvisibility']='public';
 							$row->skin='lightgallery';
 							$row->link='index.php?option=com_oziogallery3&view=lightgallery&Itemid='.$row->id;
 							$g_parameters[]=$row;

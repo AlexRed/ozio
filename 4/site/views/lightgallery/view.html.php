@@ -65,9 +65,13 @@ class OzioGalleryViewLightGallery extends JViewLegacy
 				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
 			}
 		}
+		
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js");
+		
 		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
 
 		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/lightgallery-all.js?v=1.2.14");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-intense.js?v=1.0");
 		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-infobtn.js?v=1.0");
 
 		//$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
