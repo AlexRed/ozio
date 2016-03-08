@@ -46,106 +46,111 @@ eventer(messageEvent,function(e) {
 			element.fireEvent("onchange");
 		}
 
-	}else if (e.data && e.data.substring(0, 6) == 'album:'){
-		var json = e.data.substring(6);
+	}else if (e.data && e.data.substring(0, 11) == 'album_data:'){
+		var json = e.data.substring(11);
 		var obj = JSON.parse(json);
 		if (obj.status){
-			var $table= jQuery('#oziogallery-modal table');
-			$table.empty();
-			for (var i=0; i< obj.entries.length; i++){
-				var entry=obj.entries[i];
-				$table.append('<tr data-entryidx="'+i+'"><td>'+gi_escape_html(entry.title)+'</td><td class="ozio_album_rights">'+gi_escape_html(g_ozio_admin_buttons[entry.rights])+'</td><td><div class="btn-group"><button class="btn btn-small btn-success ozio-to-public" type="button"><span class="icon-save icon-white"></span>'+g_ozio_admin_buttons.topublic+'</button><button class="btn btn-small ozio-to-protected" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprotected+'</button><button class="btn btn-small ozio-to-private" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprivate+'</button></div></td></tr>');
-			}
-			$table.find('button.ozio-to-private').on('click',function(){
-				var $tr = jQuery(this).closest('tr');
-				ozio_new_access(obj,$tr,'private');
-			});
-			$table.find('button.ozio-to-public').on('click',function(){
-				var $tr = jQuery(this).closest('tr');
-				ozio_new_access(obj,$tr,'public');
-			});
-			$table.find('button.ozio-to-protected').on('click',function(){
-				var $tr = jQuery(this).closest('tr');
-				ozio_new_access(obj,$tr,'protected');
-			});
-			
-			
-			jQuery('#oziogallery-modal').modal({keyboard: false});
-			jQuery('#oziogallery-modal').on('hidden', function () {
-				
-					var userID=0;
-					var kind='picasa';
-					var albumvisibility='public';
+			//chiamata ajax per avere l'elenco degli album!
 					
-					if (jQuery('#jform_params_ozio_nano_userID').length>0){
-						userID=jQuery('#jform_params_ozio_nano_userID').val();
-						var nano_kind=jQuery('#jform_params_ozio_nano_kind');
-						if (nano_kind.length>0){
-							kind=nano_kind.val();
-						}	
-						if (kind=='picasa'){
-							albumvisibility=jQuery('#jform_params_albumvisibility').val();
-						}
-					}else if (jQuery('#jform_params_userid').length>0){
-						//jform_params_albumvisibility
-						userID=jQuery('#jform_params_userid').val();
-						albumvisibility=jQuery('#jform_params_albumvisibility').val();
+			jQuery.ajax({
+				dataType: 'json',
+				method: 'POST',
+				success: function (data, textStatus, jqXHR) {
+					if (data && data.response && data.response.status){
+						ozio_album_list_handle_response(data.response);
 					}
-					
-					if (albumvisibility=='public' && userID == obj.user_id){
-						
-						if (jQuery('#jform_params_ozio_nano_userID').length>0){
-							var albums = [];
-							for (var i=0;i<obj.entries.length;i++){
-								if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
-									albums.push({
-										'id':obj.entries[i].id,
-										'title':obj.entries[i].title
-									});
-								}
-							}
-							gi_update_listnanoalbums_callback(albums);
-						}else if (jQuery('#jform_params_userid').length>0){
-							//
-							var albums = [];
-							for (var i=0;i<obj.entries.length;i++){
-								if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
-									albums.push({
-										'id':obj.entries[i].id,
-										'title':obj.entries[i].title,
-										'numphotos':obj.entries[i].num_photos
-									});
-								}
-							}
-							ozio_addalbums(albums);
-						}
-				
-					}
-				/*
-				
-				//Sul close del modale aggiorno gli album!
-					var element = document.getElementById('jform_params_userid');
-					if (element == null){
-						element = document.getElementById('jform_params_ozio_nano_userID');
-					}
-					if ("createEvent" in document) {
-						var evt = document.createEvent("HTMLEvents");
-						evt.initEvent("change", false, true);
-						element.dispatchEvent(evt);
-					}
-					else{
-						element.fireEvent("onchange");
-					}
-					*/
-			});
-			
-			
-			
+				},
+				error: function (jqXHR, textStatus, errorThrown) {						
+				},
+				url: "index.php?option=com_oziogallery3&view=rights&format=raw",
+				data:{
+					action: 'get_albums',
+					user_id: obj.user_id,
+					access_token: obj.access_token					
+				}
+			});			
 		}
 		
 	}
 	
 },false);
+
+
+function ozio_album_list_handle_response(obj){
+	
+	var $table= jQuery('#oziogallery-modal table');
+	$table.empty();
+	for (var i=0; i< obj.entries.length; i++){
+		var entry=obj.entries[i];
+		$table.append('<tr data-entryidx="'+i+'"><td>'+gi_escape_html(entry.title)+'</td><td class="ozio_album_rights">'+gi_escape_html(g_ozio_admin_buttons[entry.rights])+'</td><td><div class="btn-group"><button class="btn btn-small btn-success ozio-to-public" type="button"><span class="icon-save icon-white"></span>'+g_ozio_admin_buttons.topublic+'</button><button class="btn btn-small ozio-to-protected" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprotected+'</button><button class="btn btn-small ozio-to-private" type="button"><span class="icon-cancel"></span>'+g_ozio_admin_buttons.toprivate+'</button></div></td></tr>');
+	}
+	$table.find('button.ozio-to-private').on('click',function(){
+		var $tr = jQuery(this).closest('tr');
+		ozio_new_access(obj,$tr,'private');
+	});
+	$table.find('button.ozio-to-public').on('click',function(){
+		var $tr = jQuery(this).closest('tr');
+		ozio_new_access(obj,$tr,'public');
+	});
+	$table.find('button.ozio-to-protected').on('click',function(){
+		var $tr = jQuery(this).closest('tr');
+		ozio_new_access(obj,$tr,'protected');
+	});
+	
+	
+	jQuery('#oziogallery-modal').modal({keyboard: false});
+	jQuery('#oziogallery-modal').on('hidden', function () {
+		
+			var userID=0;
+			var kind='picasa';
+			var albumvisibility='public';
+			
+			if (jQuery('#jform_params_ozio_nano_userID').length>0){
+				userID=jQuery('#jform_params_ozio_nano_userID').val();
+				var nano_kind=jQuery('#jform_params_ozio_nano_kind');
+				if (nano_kind.length>0){
+					kind=nano_kind.val();
+				}	
+				if (kind=='picasa'){
+					albumvisibility=jQuery('#jform_params_albumvisibility').val();
+				}
+			}else if (jQuery('#jform_params_userid').length>0){
+				//jform_params_albumvisibility
+				userID=jQuery('#jform_params_userid').val();
+				albumvisibility=jQuery('#jform_params_albumvisibility').val();
+			}
+			
+			if (albumvisibility=='public' && userID == obj.user_id){
+				
+				if (jQuery('#jform_params_ozio_nano_userID').length>0){
+					var albums = [];
+					for (var i=0;i<obj.entries.length;i++){
+						if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
+							albums.push({
+								'id':obj.entries[i].id,
+								'title':obj.entries[i].title
+							});
+						}
+					}
+					gi_update_listnanoalbums_callback(albums);
+				}else if (jQuery('#jform_params_userid').length>0){
+					//
+					var albums = [];
+					for (var i=0;i<obj.entries.length;i++){
+						if (obj.entries[i].rights=='public' && obj.entries[i].num_photos>0){
+							albums.push({
+								'id':obj.entries[i].id,
+								'title':obj.entries[i].title,
+								'numphotos':obj.entries[i].num_photos
+							});
+						}
+					}
+					ozio_addalbums(albums);
+				}
+		
+			}
+	});
+}
 
 function ozio_new_access(obj,$tr,new_access){
 	var idx = parseInt($tr.attr('data-entryidx'),10);
@@ -180,6 +185,7 @@ function ozio_new_access(obj,$tr,new_access){
 		},
 		url: "index.php?option=com_oziogallery3&view=rights&format=raw",
 		data:{
+			action: 'change_rights',
 			new_access: new_access,
 			url:entry.link,
 			access_token:obj.access_token
