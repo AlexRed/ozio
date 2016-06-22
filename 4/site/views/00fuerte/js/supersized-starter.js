@@ -8,6 +8,7 @@ jQuery(document).ready(function ($)
 	var slides = [];
 	var ss = jQuery("#supersized");
 	var userid='<?php echo $this->Params->get("userid", ""); ?>';
+	<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
 		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
 		jQuery('a.close_fullscreen').attr('href',closelink);
@@ -26,7 +27,7 @@ jQuery(document).ready(function ($)
 			{
 				mode: 'album_data',
 				username: '<?php echo $this->Params->get("userid", ""); ?>',
-				album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+				album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 				authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 				StartIndex: start_slide,
 				//MaxResults: length,
@@ -181,7 +182,7 @@ jQuery(document).ready(function ($)
 		{
 			mode: 'album_data',
 			username: '<?php echo $this->Params->get("userid", ""); ?>',
-			album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+			album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 			authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 			StartIndex: start_slide2,
 			MaxResults: length,
@@ -222,6 +223,7 @@ jQuery(document).ready(function ($)
 		});
 */
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
+			if (ozmaxres>0)slides=slides.slice(0,ozmaxres);
 			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
 			if (photoSorting=='random'){
 				slides=shuffle(slides);
@@ -264,7 +266,7 @@ jQuery(document).ready(function ($)
 					photowall_show: typeof ozio_fullscreen != 'undefined'?0:parseInt('<?php echo $this->Params->get("show_photowall", 0); ?>'),
 	
 					slides: slides,
-					slide_total: result.feed.openSearch$totalResults.$t,
+					slide_total: slides.length,
 	
 					// Theme Options
 					progress_bar: parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
@@ -273,7 +275,7 @@ jQuery(document).ready(function ($)
 					mouse_scrub: 0,
 	
 					username: '<?php echo $this->Params->get("userid", ""); ?>',
-					album: '<?php echo ($this->Params->get("albumvisibility") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
+					album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
 					authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
 					square: '<?php echo $this->Params->get("square", ""); ?>',
 					big: '<?php echo $this->Params->get("big", ""); ?>',

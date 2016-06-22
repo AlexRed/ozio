@@ -1,7 +1,11 @@
+<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
+
 jQuery(document).ready(function ($)
 {
 	g_flickrThumbSizeStr='sq';
 	g_list_nano_options=[];
+	
+	
 //<?php
 
 
@@ -448,7 +452,7 @@ jQuery(document).ready(function ($)
 		GetAlbumData({
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
-				album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+				album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
 				authKey: g_parameters[i]['params']['limitedpassword'],
 				StartIndex: start_index,
 				beforeSend: OnBeforeSend,
@@ -670,13 +674,15 @@ jQuery(document).ready(function ($)
 		update_remainingphotos();
 		for (var i = 0; i < result.feed.entry.length; ++i)
 		{
-			var obj={
-					'album_index':this.album_index,
-					'photo_index':i-1+result.feed.openSearch$startIndex.$t
-			};
 			remainingphotos-=1;
 			update_remainingphotos();
-			OnLoadedEntry(result.feed.entry[i],obj);
+			if ( (result.feed.openSearch$startIndex.$t+i) <= ozmaxres || ozmaxres<=0){
+				var obj={
+						'album_index':this.album_index,
+						'photo_index':i-1+result.feed.openSearch$startIndex.$t
+				};
+				OnLoadedEntry(result.feed.entry[i],obj);
+			}
 			/*
 			if (typeof result.feed.entry[i].link !== "undefined"){
 				for (var j=0;j<result.feed.entry[i].link.length;j++){

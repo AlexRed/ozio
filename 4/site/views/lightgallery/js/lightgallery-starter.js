@@ -6,6 +6,7 @@ $lang->load('com_oziogallery3',JPATH_ROOT . "/administrator/components/com_oziog
 
 
 ?>
+<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
 
 gi_ozio_intenseViewer=false;
 
@@ -101,7 +102,7 @@ jQuery( document ).ready(function( $ ) {
 			LightGalleryGetAlbumData({
 					//mode: 'album_data',
 					username: g_parameters[i]['params']['userid'],
-					album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+					album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
 					authKey: g_parameters[i]['params']['limitedpassword'],
 					StartIndex: start_index,
 					beforeSend: OnLightGalleryBeforeSend,
@@ -231,6 +232,7 @@ jQuery( document ).ready(function( $ ) {
 			album_index = 0;
 			
 			//aggiungo il nuovo album!
+			if (ozmaxres>0)g_parameters[album_index].slides=g_parameters[album_index].slides.slice(0,ozmaxres);
 			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
 			if (photoSorting=='random'){
 				g_parameters[album_index].slides=shuffle(g_parameters[album_index].slides);

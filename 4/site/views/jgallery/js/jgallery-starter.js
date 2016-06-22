@@ -6,6 +6,8 @@ $lang->load('com_oziogallery3',JPATH_ROOT . "/administrator/components/com_oziog
 
 
 ?>
+<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
+
 jQuery( document ).ready(function( $ ) {
 	
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
@@ -469,6 +471,7 @@ jQuery( document ).ready(function( $ ) {
 			//ho finito!
 			
 			//aggiungo il nuovo album!
+			if (ozmaxres>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,ozmaxres);
 			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
 			if (photoSorting=='random'){
 				g_parameters[this.album_index].slides=shuffle(g_parameters[this.album_index].slides);
@@ -707,6 +710,9 @@ jQuery( document ).ready(function( $ ) {
 					tooltipToggleThumbnails: <?php echo json_encode(JText::_('COM_OZIOGALLERY3_JGALLERY_TOGGLETHUMBNAILS_LBL'));?>,//toggle thumbnails
 					tooltipZoom:  <?php echo json_encode(JText::_('COM_OZIOGALLERY3_JGALLERY_ZOOM_LBL'));?>,//Zoom
 					
+					thumbnails: <?php echo json_encode(intval($this->Params->get("hide_thumbnails", "0"))==0); ?>,
+					//canMinimalizeThumbnails:<?php echo json_encode(intval($this->Params->get("hide_thumbnails", "0"))==0); ?>,
+					//hideThumbnailsOnInit:<?php echo json_encode(intval($this->Params->get("hide_thumbnails", "0"))==1); ?>,
 					
 					thumbnailsPosition: <?php echo json_encode($this->Params->get("thumbnailsPosition", "bottom")); ?>,
 					backgroundColor: <?php echo json_encode($this->Params->get("backgroundColor", "#fff")); ?>,

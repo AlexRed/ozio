@@ -2,6 +2,9 @@
 $non_printable_separator="\x16";
 $new_non_printable_separator="|!|";
 ?>
+
+<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
+
 jQuery( document ).ready(function( $ ) {
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
 		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
@@ -127,6 +130,7 @@ jQuery( document ).ready(function( $ ) {
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
 		photoSorting: <?php echo json_encode($this->Params->get("ozio_nano_photoSorting", "standard")); ?>,
 		albumSorting: <?php echo json_encode($this->Params->get("ozio_nano_albumSorting", "standard")); ?>,
+		ozmaxres: ozmaxres,
 		
 		thumbnailLabelL2_display: <?php echo json_encode(intval($this->Params->get("ozio_nano_thumbnailLabelL2_display", "1"))); ?>,
 		//paginationDisableSwipe: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationDisableSwipe", "0"))); ?>,

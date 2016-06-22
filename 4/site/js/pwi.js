@@ -171,7 +171,7 @@ jQuery(document).ready(function ($)
 				username:'<?php echo $item->params->get("userid"); ?>',
 				
 				<?php
-					if ($item->params->get("albumvisibility") != "public"){
+					if ($item->params->get("albumvisibility", "public") != "public"){
 						echo 'album: "'.$item->params->get("limitedalbum")."\",\n";
 					}else if (is_numeric($item->params->get("gallery_id",""))){
 						echo 'gallery_id: "'.$item->params->get("gallery_id","")."\",\n";

@@ -2985,7 +2985,7 @@ var JGallery = ( function( outerHtml, historyPushState, isInternetExplorer, isIn
             this.options.slideshow && this.options.slideshowCanRandom && this.options.slideshowRandom ? this.zoom.$random.addClass( 'active' ) : this.zoom.$random.removeClass( 'active' );
 
             this.options.thumbnailsFullScreen && this.options.thumbnails ? this.zoom.$container.find( '.full-screen' ).show() : this.zoom.$container.find( '.full-screen' ).hide();
-            this.options.hideThumbnailsOnInit && this.options.thumbnails ? this.thumbnails.hide() : this.thumbnails.show();
+            (this.options.hideThumbnailsOnInit && this.options.thumbnails) || !this.options.thumbnails ? this.thumbnails.hide() : this.thumbnails.show();
             this.options.titleExpanded ? this.zoom.$title.addClass( 'expanded' ) : this.zoom.$title.removeClass( 'expanded' );
             this.setColours( {
                 strBg: this.options.backgroundColor,

@@ -1,4 +1,4 @@
-/*! lightgallery - v1.2.14 - 2016-01-18
+/*! lightgallery - v1.2.19 - 2016-05-17
 * http://sachinchoolur.github.io/lightGallery/
 * Copyright (c) 2016 Sachin N; Licensed Apache 2.0 */
 (function($, window, document, undefined) {
@@ -32,6 +32,8 @@
         slideEndAnimatoin: true,
         hideControlOnEnd: false,
         mousewheel: true,
+
+        getCaptionFromTitleOrAlt: true,
 
         // .lg-item || '.lg-sub-html'
         appendSubHtmlTo: '.lg-sub-html',
@@ -414,6 +416,7 @@
         var youtube = src.match(/\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=|embed\/)?([a-z0-9\-\_\%]+)/i);
         var vimeo = src.match(/\/\/(?:www\.)?vimeo.com\/([0-9a-z\-_]+)/i);
         var dailymotion = src.match(/\/\/(?:www\.)?dai.ly\/([0-9a-z\-_]+)/i);
+        var vk = src.match(/\/\/(?:www\.)?(?:vk\.com|vkontakte\.ru)\/(?:video_ext\.php\?)(.*)/i);
 
         if (youtube) {
             return {
@@ -426,6 +429,10 @@
         } else if (dailymotion) {
             return {
                 dailymotion: dailymotion
+            };
+        } else if (vk) {
+            return {
+                vk: vk
             };
         }
     };
@@ -457,7 +464,11 @@
             if (this.$items.eq(index).attr('data-sub-html-url')) {
                 subHtmlUrl = this.$items.eq(index).attr('data-sub-html-url');
             } else {
+
                 subHtml = this.$items.eq(index).attr('data-sub-html');
+                if (this.s.getCaptionFromTitleOrAlt && !subHtml) {
+                    subHtml = this.$items.eq(index).attr('title') || this.$items.eq(index).find('img').first().attr('alt');
+                }
             }
         }
 
@@ -469,8 +480,6 @@
                 var fL = subHtml.substring(0, 1);
                 if (fL === '.' || fL === '#') {
                     subHtml = $(subHtml).html();
-                } else {
-                    subHtml = subHtml;
                 }
             } else {
                 subHtml = '';
@@ -1853,7 +1862,7 @@
             var vimeoVideoId = $this.attr('data-vimeo-id');
 
             if (vimeoVideoId) {
-                $.getJSON('http://www.vimeo.com/api/v2/video/' + vimeoVideoId + '.json?callback=?', {
+                $.getJSON('//www.vimeo.com/api/v2/video/' + vimeoVideoId + '.json?callback=?', {
                     format: 'json'
                 }, function(data) {
                     $this.find('img').attr('src', data[0][_this.core.s.vimeoThumbSize]);
@@ -2128,7 +2137,9 @@
         youtubePlayerParams: false,
         vimeoPlayerParams: false,
         dailymotionPlayerParams: false,
-        videojs: false
+        vkPlayerParams: false,
+        videojs: false,
+        videojsOptions: {}
     };
 
     var Video = function(element) {
@@ -2153,7 +2164,7 @@
             if (html) {
                 if (_this.core.s.videojs) {
                     try {
-                        videojs(_this.core.$slide.eq(index).find('.lg-html5').get(0), {}, function() {
+                        videojs(_this.core.$slide.eq(index).find('.lg-html5').get(0), _this.core.s.videojsOptions, function() {
                             if (!_this.videoLoaded) {
                                 this.play();
                             }
@@ -2177,10 +2188,10 @@
             // check slide has poster
             if ($el.find('.lg-object').hasClass('lg-has-poster') && $el.find('.lg-object').is(':visible')) {
 
-                // chack already video element present
+                // check already video element present
                 if (!$el.hasClass('lg-has-video')) {
 
-                    $el.addClass('lg-video-palying lg-has-video');
+                    $el.addClass('lg-video-playing lg-has-video');
 
                     var _src;
                     var _html;
@@ -2191,7 +2202,7 @@
                         if (_html) {
                             if (_this.core.s.videojs) {
                                 try {
-                                    videojs(_this.core.$slide.eq(_this.core.index).find('.lg-html5').get(0), {}, function() {
+                                    videojs(_this.core.$slide.eq(_this.core.index).find('.lg-html5').get(0), _this.core.s.videojsOptions, function() {
                                         this.play();
                                     });
                                 } catch (e) {
@@ -2261,7 +2272,7 @@
                         }
                     }
 
-                    $el.addClass('lg-video-palying');
+                    $el.addClass('lg-video-playing');
 
                 }
             }
@@ -2286,6 +2297,7 @@
             var youtubePlayer = $videoSlide.find('.lg-youtube').get(0);
             var vimeoPlayer = $videoSlide.find('.lg-vimeo').get(0);
             var dailymotionPlayer = $videoSlide.find('.lg-dailymotion').get(0);
+            var vkPlayer = $videoSlide.find('.lg-vk').get(0);
             var html5Player = $videoSlide.find('.lg-html5').get(0);
             if (youtubePlayer) {
                 youtubePlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
@@ -2308,6 +2320,8 @@
                 } else {
                     html5Player.pause();
                 }
+            } if (vkPlayer) {
+                $(vkPlayer).attr('src', $(vkPlayer).attr('src').replace('&autoplay', '&noplay'));
             }
 
             var _src;
@@ -2319,7 +2333,7 @@
             }
 
             var _isVideo = _this.core.isVideo(_src, index) || {};
-            if (_isVideo.youtube || _isVideo.vimeo || _isVideo.dailymotion) {
+            if (_isVideo.youtube || _isVideo.vimeo || _isVideo.dailymotion || _isVideo.vk) {
                 _this.core.$outer.addClass('lg-hide-download');
             }
 
@@ -2328,7 +2342,7 @@
         });
 
         _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex) {
-            _this.core.$slide.eq(prevIndex).removeClass('lg-video-palying');
+            _this.core.$slide.eq(prevIndex).removeClass('lg-video-playing');
         });
     };
 
@@ -2363,7 +2377,7 @@
                 a = a + '&' + $.param(this.core.s.vimeoPlayerParams);
             }
 
-            video = '<iframe class="lg-video-object lg-vimeo ' + addClass + '" width="560" height="315"  src="http://player.vimeo.com/video/' + isVideo.vimeo[1] + a + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+            video = '<iframe class="lg-video-object lg-vimeo ' + addClass + '" width="560" height="315"  src="//player.vimeo.com/video/' + isVideo.vimeo[1] + a + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
         } else if (isVideo.dailymotion) {
 
@@ -2381,6 +2395,16 @@
             }
 
             video = html;
+
+        } else if (isVideo.vk) {
+
+            a = '&autoplay=' + autoplay;
+            if (this.core.s.vkPlayerParams) {
+                a = a + '&' + $.param(this.core.s.vkPlayerParams);
+            }
+
+            video = '<iframe class="lg-video-object lg-vk ' + addClass + '" width="560" height="315" src="http://vk.com/video_ext.php?' + isVideo.vk[1] + a + '" frameborder="0" allowfullscreen></iframe>';
+
         }
 
         return video;
@@ -2401,6 +2425,7 @@
     var defaults = {
         scale: 1,
         zoom: true,
+        actualSize: true,
         enableZoomAfter: 300
     };
 
@@ -2428,6 +2453,10 @@
 
         var _this = this;
         var zoomIcons = '<span id="lg-zoom-in" class="lg-icon"></span><span id="lg-zoom-out" class="lg-icon"></span>';
+
+        if (_this.core.s.actualSize) {
+            zoomIcons += '<span id="lg-actual-size" class="lg-icon"></span>';
+        }
 
         this.core.$outer.find('.lg-toolbar').append(zoomIcons);
 
@@ -2478,7 +2507,10 @@
 
             $image.css('transform', 'scale3d(' + scaleVal + ', ' + scaleVal + ', 1)').attr('data-scale', scaleVal);
 
-            $image.parent().css('transform', 'translate3d(-' + x + 'px, -' + y + 'px, 0)').attr('data-x', x).attr('data-y', y);
+            $image.parent().css({
+                left: -x + 'px',
+                top: -y + 'px'
+            }).attr('data-x', x).attr('data-y', y);
         };
 
         var callScale = function() {
@@ -2495,7 +2527,7 @@
             zoom(scale);
         };
 
-        var actualSize = function(event, $image, index) {
+        var actualSize = function(event, $image, index, fromIcon) {
             var w = $image.width();
             var nw;
             if (_this.core.s.dynamic) {
@@ -2515,8 +2547,14 @@
                 }
             }
 
-            _this.pageX = event.pageX || event.originalEvent.targetTouches[0].pageX;
-            _this.pageY = event.pageY || event.originalEvent.targetTouches[0].pageY;
+            if (fromIcon) {
+                _this.pageX = $(window).width() / 2;
+                _this.pageY = ($(window).height() / 2) + $(window).scrollTop();
+            } else {
+                _this.pageX = event.pageX || event.originalEvent.targetTouches[0].pageX;
+                _this.pageY = event.pageY || event.originalEvent.targetTouches[0].pageY;
+            }
+
             callScale();
             setTimeout(function() {
                 _this.core.$outer.removeClass('lg-grabbing').addClass('lg-grab');
@@ -2570,6 +2608,10 @@
                 scale += _this.core.s.scale;
                 callScale();
             }
+        });
+
+        $('#lg-actual-size').on('click.lg', function(event) {
+            actualSize(event, _this.core.$slide.eq(_this.core.index).find('.lg-image'), _this.core.index, true);
         });
 
         // Reset zoom on slide change
@@ -2662,7 +2704,10 @@
                 }
 
                 if ((Math.abs(endCoords.x - startCoords.x) > 15) || (Math.abs(endCoords.y - startCoords.y) > 15)) {
-                    _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+                    _$el.css({
+                        left: distanceX + 'px',
+                        top: distanceY + 'px'
+                    });
                 }
 
             }
@@ -2750,7 +2795,10 @@
                     distanceX = -Math.abs(_$el.attr('data-x'));
                 }
 
-                _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+                _$el.css({
+                    left: distanceX + 'px',
+                    top: distanceY + 'px'
+                });
             }
         });
 
@@ -2819,7 +2867,11 @@
                 distanceX = -Math.abs(_$el.attr('data-x'));
             }
 
-            _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+            _$el.css({
+                left: distanceX + 'px',
+                top: distanceY + 'px'
+            });
+
         }
     };
 
@@ -2840,7 +2892,6 @@
     $.fn.lightGallery.modules.zoom = Zoom;
 
 })(jQuery, window, document);
-
 (function($, window, document, undefined) {
 
     'use strict';
@@ -2873,13 +2924,13 @@
         });
 
         // Listen hash change and change the slide according to slide value
-        $(window).on('hashchange', function() {
+        $(window).on('hashchange.lg.hash', function() {
             _hash = window.location.hash;
             var _idx = parseInt(_hash.split('&slide=')[1], 10);
 
             // it galleryId doesn't exist in the url close the gallery
             if ((_hash.indexOf('lg=' + _this.core.s.galleryId) > -1)) {
-                _this.core.slide(_idx);
+                _this.core.slide(_idx, false, false);
             } else if (_this.core.lGalleryOn) {
                 _this.core.destroy();
             }
@@ -2888,6 +2939,10 @@
     };
 
     Hash.prototype.destroy = function() {
+
+        if (!this.core.s.hash) {
+            return;
+        }
 
         // Reset to old hash value
         if (this.oldHash && this.oldHash.indexOf('lg=' + this.core.s.galleryId) < 0) {
@@ -2899,6 +2954,8 @@
                 window.location.hash = '';
             }
         }
+
+        this.core.$el.off('.lg.hash');
 
     };
 

@@ -40,6 +40,11 @@
 				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
 			</field>
 			
+			<field type="list" name="description_pos" label="COM_OZIOGALLERY3_DESCRIPTION_POS_LBL" description="COM_OZIOGALLERY3_DESCRIPTION_POS_DSC" default="under">
+				<option value="above">COM_OZIOGALLERY3_DESCRIPTION_POS_ABOVE</option>
+				<option value="under">COM_OZIOGALLERY3_DESCRIPTION_POS_UNDER</option>
+			</field>
+			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
 			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="216"/>

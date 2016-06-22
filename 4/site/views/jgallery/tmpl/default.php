@@ -26,6 +26,16 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 <h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
 <?php } ?>
 
+<?php 
+
+$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='above') {  ?>
+	<div class="ozio_jgallery_bottom_description">
+	<?php echo $testo_sotto_mappa; ?>
+	</div>
+<?php }?>
+
+
 <div id="jgallery" class="ozio-jgallery-container<?php echo $this->Params->get("pageclass_sfx", ""); ?>">
 	<div class="ozio_jgallery_loading" style="width: 100%; overflow: hidden; position: relative; height: 5px;">
 	<noscript><?php echo "javascript required" ?></noscript>
@@ -36,7 +46,7 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 <?php 
 
 $testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
-if (!empty($testo_sotto_mappa)) {  ?>
+if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='under') {  ?>
 	<div class="ozio_jgallery_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
 	</div>

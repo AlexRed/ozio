@@ -49,7 +49,7 @@ jQuery(document).ready(function ($)
 		GetAlbumData({
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
-				album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+				album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
 				authKey: g_parameters[i]['params']['limitedpassword'],
 				StartIndex: start_index,
 				beforeSend: OnBeforeSend,

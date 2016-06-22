@@ -3916,6 +3916,10 @@ nanoGALLERY v5.9.1 release notes.
       var source = data.feed.entry;
       var sortOrder=G.O.albumSorting;
       if (kind =='image'){
+		  
+			if (G.O.ozmaxres>0)source=source.slice(0,G.O.ozmaxres);
+		  
+		  
         sortOrder=G.O.photoSorting;
       }
 
@@ -4049,7 +4053,7 @@ nanoGALLERY v5.9.1 release notes.
           newItem.imageNumber=nb;
           if( kind == 'album' ) {
             newItem.author=data.author[0].name.$t;
-            newItem.contentLength=data.gphoto$numphotos.$t;
+            newItem.contentLength=G.O.ozmaxres>0?Math.min(G.O.ozmaxres,data.gphoto$numphotos.$t):data.gphoto$numphotos.$t;
           }
 		if( kind == 'image' ) {
           newItem.infobox={};

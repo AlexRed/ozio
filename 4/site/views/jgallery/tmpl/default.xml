@@ -65,6 +65,11 @@
 			</field>
 			
 			
+			<field type="list" name="description_pos" label="COM_OZIOGALLERY3_DESCRIPTION_POS_LBL" description="COM_OZIOGALLERY3_DESCRIPTION_POS_DSC" default="under">
+				<option value="above">COM_OZIOGALLERY3_DESCRIPTION_POS_ABOVE</option>
+				<option value="under">COM_OZIOGALLERY3_DESCRIPTION_POS_UNDER</option>
+			</field>
+
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
 			
 			<field type="list" name="albumvisibility" label="COM_OZIOGALLERY3_ALBUMVISIBILITY_LBL" description="COM_OZIOGALLERY3_ALBUMVISIBILITY_DSC" default="public">
@@ -159,6 +164,12 @@
 			<field type="text" name="transitionRows" label="COM_OZIOGALLERY3_TRANSITIONROWS_LBL" description="COM_OZIOGALLERY3_TRANSITIONROWS_DSC" size="6" default="1"/>
 
 			<field type="list" name="square" label="COM_OZIOGALLERY3_SQUARE_LBL" description="COM_OZIOGALLERY3_SQUARE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			
+			<field type="list" name="hide_thumbnails" label="COM_OZIOGALLERY3_HIDE_THUMBNAILS_LBL" description="COM_OZIOGALLERY3_HIDE_THUMBNAILS_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
