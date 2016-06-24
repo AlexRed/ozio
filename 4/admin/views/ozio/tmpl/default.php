@@ -56,7 +56,7 @@
 											<tr>
 												<td align="left" valign="bottom">
 
-												    <a href="http://forum.joomla.it/index.php/board,73.0.html" target="blank" class="btn btn-large btn-warning"><i class="icon-users"></i>  FORUM</a>
+												    <a href="https://plus.google.com/communities/100238813770552981452" target="blank" class="btn btn-large btn-warning"><i class="icon-users"></i>  COMMUNITY</a>
 												    <a href="https://github.com/AlexRed/ozio" target="blank" class="btn btn-large btn-inverse"><i class="icon-cogs"></i>  GitHub</a>
 												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" class="btn btn-large btn-success"><i class="icon-download"></i>  INFO & DOWNLOAD</a>
 												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" class="btn btn-large btn-info"><i class="icon-eye"></i>  DEMO</a>
