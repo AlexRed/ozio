@@ -364,7 +364,7 @@ class Com_OzioGallery3InstallerScript
 			<img src="' . JUri::base(true) . '/components/com_oziogallery3/assets/images/buy_now.jpg" border="0" alt="Buy now">
 			</a>
 			</div>
-			<p><strong>This is a non-commercial version of Ozio Gallery. Remove the signature below each gallery by purchasing a paid version. There aren`t other limitations in functionality, but by purchasing a license code you help us continue development and support.</strong></p>
+			<p><strong>This is a non-commercial version of Ozio Gallery. You can continue to use this free version with limitations max 30 photos for album. Remove the signature below the maps and the limitations max 30 photos for album, buying the paid version.</strong></p>
 			' . "</p>";
 		}
 	}
