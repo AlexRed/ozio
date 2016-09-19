@@ -90,7 +90,7 @@ class OzioGalleryView00fuerte extends JViewLegacy
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
 			}
 		}
 		

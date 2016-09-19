@@ -56,7 +56,7 @@ class OzioGalleryViewJGallery extends JViewLegacy
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
 			}
 		}
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");

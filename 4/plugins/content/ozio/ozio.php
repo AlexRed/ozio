@@ -137,7 +137,7 @@ class plgContentOzio extends JPlugin
 		if ($cparams->get("info_button", false)) {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
-				$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
 				$GLOBALS["contentmap"]["gapi"] = true;
 			}
 		}
