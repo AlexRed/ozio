@@ -45,7 +45,7 @@
 				<option value="under">COM_OZIOGALLERY3_DESCRIPTION_POS_UNDER</option>
 			</field>
 			
-			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="safehtml" />
+			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="raw" />
 			
 			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="216"/>
 			<field type="text" name="list_thumb_margin" label="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_DSC" size="6" default="16"/>
