@@ -53,7 +53,19 @@
 				<option value="normal">COM_OZIOGALLERY3_PHOTOSORTING_NORMAL</option>
 				<option value="random">COM_OZIOGALLERY3_PHOTOSORTING_RANDOM</option>
 				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
+				
+				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
+				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
+				<option value="fileAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEASC</option>
+				<option value="fileDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEDESC</option>
+				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_ASC</option>
+				<option value="idDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
+				
+				
 			</field>
+			
+			<field type="text" name="oz_max_num_photo" label="COM_OZIOGALLERY3_MAX_NUM_PHOTO_LBL" description="COM_OZIOGALLERY3_MAX_NUM_PHOTO_DSC" size="6" default="0"/>			
+			
 			
 			<field type="list" name="ozio_nano_albumSorting" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_DSC" default="standard">
 				<option value="standard">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
@@ -62,6 +74,7 @@
 				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
 				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
 				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID</option>
+				<option value="idDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
 			</field>
 			
 			

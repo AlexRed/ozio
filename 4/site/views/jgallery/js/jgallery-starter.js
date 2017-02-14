@@ -386,6 +386,12 @@ jQuery( document ).ready(function( $ ) {
 				if (typeof data.title !== "undefined" && typeof data.title.$t !== "undefined"){
 					photo_data.filename=data.title.$t;
 				}
+
+				photo_data.title = '';
+				if (typeof data.media$group !== "undefined"  && typeof data.media$group.media$description !== "undefined" && typeof data.media$group.media$description.$t !== "undefined"){
+					photo_data.title = data.media$group.media$description.$t;
+				}
+								
 			  
 				photo_data.filesize='-na-';
 				if (typeof data.gphoto$size !== "undefined" && typeof data.gphoto$size.$t !== "undefined"){
@@ -411,8 +417,12 @@ jQuery( document ).ready(function( $ ) {
 						photo_data.camera=data.exif$tags.exif$model.$t;
 					}
 					if (typeof data.exif$tags.exif$exposure !== "undefined" && typeof data.exif$tags.exif$exposure.$t !== "undefined"){
-						var photo_exposure_d=Math.round(1/data.exif$tags.exif$exposure.$t);
-						photo_data.exposure='1/'+photo_exposure_d+" sec";
+						if (data.exif$tags.exif$exposure.$t<1){
+							var photo_exposure_d=Math.round(1/data.exif$tags.exif$exposure.$t);
+							photo_data.exposure='1/'+photo_exposure_d+" sec";
+						}else{
+							photo_data.exposure=data.exif$tags.exif$exposure.$t+" sec";
+						}
 					}
 					if (typeof data.exif$tags.exif$focallength !== "undefined" && typeof data.exif$tags.exif$focallength.$t !== "undefined"){
 						photo_data.focallength=data.exif$tags.exif$focallength.$t+" mm";
@@ -471,14 +481,57 @@ jQuery( document ).ready(function( $ ) {
 			//ho finito!
 			
 			//aggiungo il nuovo album!
-			if (ozmaxres>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,ozmaxres);
+
 			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
 			if (photoSorting=='random'){
 				g_parameters[this.album_index].slides=shuffle(g_parameters[this.album_index].slides);
 			}else if (photoSorting=='inverse'){
 				g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.reverse();
+			}else if (photoSorting=='titleAsc'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.title.toUpperCase();
+					var y = b.title.toUpperCase();
+					if (x==''){  x = '§§§§§§§§§§§§§'+ a.filename;  }
+					if (y==''){  y = '§§§§§§§§§§§§§'+ b.filename;  }
+					return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+				});
+			}else if (photoSorting=='titleDesc'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.title.toUpperCase();
+					var y = b.title.toUpperCase();
+					if (x==''){  x = '             '+ a.filename;  }
+					if (y==''){  y = '             '+ b.filename;  }
+					return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+				});
+			}else if (photoSorting=='fileAsc'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.filename;
+					var y = b.filename;
+					return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+				});
+			}else if (photoSorting=='fileDesc'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.filename;
+					var y = b.filename;
+					return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+				});
+			}else if (photoSorting=='id'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.photo_id;
+					var y = b.photo_id;
+					return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
+				});
+			}else if (photoSorting=='idDesc'){
+				g_parameters[this.album_index].slides.sort(function (a, b) {
+					var x = a.photo_id;
+					var y = b.photo_id;
+					return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+				});
 			}
 	
+			if (ozmaxres>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,ozmaxres);
+			var oz_max_num_photo = parseInt('<?php echo $this->Params->get("oz_max_num_photo", 0); ?>');
+			if (oz_max_num_photo>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,oz_max_num_photo);
 			
 			var container_width=document.getElementById('jgallery').offsetWidth;
 			if (viewer_mode!='slider'){
@@ -617,6 +670,13 @@ jQuery( document ).ready(function( $ ) {
 						}
 						return (parseInt(jQuery(a).data('ozio-jgallery-data').album_id) < parseInt(jQuery(b).data('ozio-jgallery-data').album_id)) ? -1 : 1;
 					}
+					function listsort_id_desc(a, b)
+					{
+						if (parseInt(jQuery(a).data('ozio-jgallery-data').album_id)==parseInt(jQuery(b).data('ozio-jgallery-data').album_id)){
+							return 0;
+						}
+						return (parseInt(jQuery(a).data('ozio-jgallery-data').album_id) > parseInt(jQuery(b).data('ozio-jgallery-data').album_id)) ? -1 : 1;
+					}
 
 					function listsort_orig_sort_asc(a, b)
 					{
@@ -643,6 +703,8 @@ jQuery( document ).ready(function( $ ) {
 					var fsort=listsort_orig_sort_asc;
 					if (order_by=='id'){
 						fsort=listsort_id_asc;
+					}else if (order_by=='idDesc'){
+						fsort=listsort_id_desc;
 					}else if (order_by=='titleAsc'){
 						fsort=listsort_title_asc;
 					}else if (order_by=='titleAsc'){
@@ -721,7 +783,10 @@ jQuery( document ).ready(function( $ ) {
 					width: <?php echo json_encode($gallerywidth["text"] . $gallerywidth["select"]); ?>,
 					height: galleryheight,
 					transition: <?php echo json_encode($this->Params->get("transition", "rotateCubeRightOut_rotateCubeRightIn")); ?>,
-					transitionDuration: <?php echo json_encode(intval($this->Params->get("transition_speed", 700))/1000.0); ?>,
+					transitionDuration: <?php 
+						$transitionDuration = intval($this->Params->get("transition_speed", 700))/1000.0;
+						echo json_encode( "${transitionDuration}s"   ); 
+					?>,
 					mode: viewer_mode,
 					
 					transitionCols: <?php echo json_encode(intval($this->Params->get("transitionCols", 1))); ?>,

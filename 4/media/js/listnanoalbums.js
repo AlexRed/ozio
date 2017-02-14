@@ -148,7 +148,11 @@ jQuery( document ).ready(function( $ ) {
   }
 
   function PicasaRetrieveItems( userID ) {
-	url = 'https://photos.googleapis.com/data/feed/api/user/'+userID+'?v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize;
+	//url = 'https://photos.googleapis.com/data/feed/api/user/'+userID+'?v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize;
+	
+	
+	url = g_ozio_picasa_url+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(userID)+'&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize);
+	
 	jQuery.support.cors = true;
 	url = url ;
 	jQuery.ajaxSetup({ cache: false });

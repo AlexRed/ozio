@@ -755,7 +755,8 @@ nanoGALLERY v5.9.1 release notes.
     G.picasa = {
       url: function() {
         // return (location.protocol=='https:' ? 'https://picasaweb.google.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
-        return ( G.O.picasaUseUrlCrossDomain ? 'https://photos.googleapis.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
+        //return ( G.O.picasaUseUrlCrossDomain ? 'https://photos.googleapis.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
+		return G.O.picasaUrl;
       },
       thumbSize:64,
       thumbAvailableSizes : new Array(32, 48, 64, 72, 94, 104, 110, 128, 144, 150, 160, 200, 220, 288, 320, 400, 512, 576, 640, 720, 800, 912, 1024, 1152, 1280, 1440, 1600),
@@ -989,6 +990,7 @@ nanoGALLERY v5.9.1 release notes.
     	}
 
     	var imgUrl=this.src;
+		
     	if (typeof this.albumSource!=='undefined'){
     		if (this.albumSource=='picasa'){
     			
@@ -3493,6 +3495,13 @@ nanoGALLERY v5.9.1 release notes.
 			  return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
 			});
 			break;
+		case 'idDesc':
+			source.sort(function (a, b) {
+			  var x =  a.id;
+			  var y =  b.id;
+			  return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+			});
+			break;
         }
 
         jQuery.each(source, function(i,item){
@@ -3654,7 +3663,15 @@ nanoGALLERY v5.9.1 release notes.
 			  var y =  b.id;
 			  return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
 			});
-			break;		  
+			break;
+		case 'idDesc':
+			source.sort(function (a, b) {
+			  var x =  a.id;
+			  var y =  b.id;
+			  return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+			});
+			break;			
+			
       }
 
       var albumID=G.I[albumIdx].GetID(),
@@ -3795,14 +3812,19 @@ nanoGALLERY v5.9.1 release notes.
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&imgmax=d&thumbsize=320';
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+thumbSizes;
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime());
-        url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime());
+		
+		url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime()) );
+		
       }
       else {
         // photos
         var opt='';
         if( typeof G.I[albumIdx].customData.authkey !== 'undefined' ) { opt=G.I[albumIdx].customData.authkey; }
         // url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+G.picasa.thumbSize+'&imgmax=d';
-        url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d';
+        //url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d';
+		
+        url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&album_id='+encodeURIComponent(G.I[albumIdx].GetID())+'&alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d');
+
         // url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize=320&imgmax=d';
         kind='image';
       }
@@ -3850,7 +3872,7 @@ nanoGALLERY v5.9.1 release notes.
       var gi_data_loaded = null;
 
       var gi_loadJSON = function(url,start_index){
-      jQuery.getJSON(url+"&start-index="+start_index, 'callback=?', function(data) {
+      jQuery.getJSON(url+"&ozio-picasa-start-index="+start_index, 'ozio-picasa-callback=?', function(data) {
 
 				if (gi_data_loaded===null){
 					gi_data_loaded = data;
@@ -3916,13 +3938,9 @@ nanoGALLERY v5.9.1 release notes.
       var source = data.feed.entry;
       var sortOrder=G.O.albumSorting;
       if (kind =='image'){
-		  
-			if (G.O.ozmaxres>0)source=source.slice(0,G.O.ozmaxres);
-		  
-		  
         sortOrder=G.O.photoSorting;
       }
-
+	  
       switch( sortOrder ) {
         case 'random':
           source = AreaShuffle(source);
@@ -4021,7 +4039,21 @@ nanoGALLERY v5.9.1 release notes.
           return( (x < y) ? -1 : ((x > y) ? 1 : 0) );
         });
         break;
+      case 'idDesc':
+        source.sort(function (a, b) {
+          var x =  a.gphoto$id.$t;
+          var y =  b.gphoto$id.$t;
+          return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
+        });
+        break;
 	}
+	
+      if (kind =='image'){
+		  
+			if (G.O.ozmaxres>0)source=source.slice(0,G.O.ozmaxres);
+			if (G.O.oz_max_num_photo>0)source=source.slice(0,G.O.oz_max_num_photo);
+	  }
+	
 
       jQuery.each(source, function(i,data){
 
@@ -4041,6 +4073,7 @@ nanoGALLERY v5.9.1 release notes.
         }
 
         var imgUrl=data.media$group.media$content[0].url;
+		
 	  var picasaSpecificData={
 				'seed':'',
 				'img_orig_width':0,
@@ -4057,7 +4090,9 @@ nanoGALLERY v5.9.1 release notes.
         if( kind == 'album' ) {
           if( !CheckAlbumName(itemTitle, itemID)|| data.gphoto$numphotos.$t==0 ) { ok=false; }
 		}else{
-			var seed = data.content.src.substring(0, data.content.src.lastIndexOf("/"));
+		
+			//var seed = data.content.src.substring(0, data.content.src.lastIndexOf("/"));
+			var seed = itemThumbURL.substring(0, itemThumbURL.lastIndexOf("/"));
 			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 			picasaSpecificData.img_orig_width=data.gphoto$width.$t;
 			picasaSpecificData.img_orig_height=data.gphoto$height.$t;
@@ -4078,7 +4113,7 @@ nanoGALLERY v5.9.1 release notes.
           }
           else {
             src=imgUrl;
-            var s=imgUrl.substring(0, imgUrl.lastIndexOf('/'));
+            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
             s=s.substring(0, s.lastIndexOf('/')) + '/';
 
             if( window.screen.width >  window.screen.height ) {
@@ -4094,6 +4129,8 @@ nanoGALLERY v5.9.1 release notes.
           if( kind == 'album' ) {
             newItem.author=data.author[0].name.$t;
             newItem.contentLength=G.O.ozmaxres>0?Math.min(G.O.ozmaxres,data.gphoto$numphotos.$t):data.gphoto$numphotos.$t;
+            newItem.contentLength=G.O.oz_max_num_photo>0?Math.min(G.O.oz_max_num_photo,newItem.contentLength):newItem.contentLength;
+
           }
 		if( kind == 'image' ) {
           newItem.infobox={};
@@ -4148,8 +4185,12 @@ nanoGALLERY v5.9.1 release notes.
 					newItem.infobox.camera=data.exif$tags.exif$model.$t;
 				}
 				if (typeof data.exif$tags.exif$exposure !== "undefined" && typeof data.exif$tags.exif$exposure.$t !== "undefined"){
-					var photo_exposure_d=Math.round(1/data.exif$tags.exif$exposure.$t);
-					newItem.infobox.exposure='1/'+photo_exposure_d+" sec";
+					if (data.exif$tags.exif$exposure.$t<1){
+						var photo_exposure_d=Math.round(1/data.exif$tags.exif$exposure.$t);
+						newItem.infobox.exposure='1/'+photo_exposure_d+" sec";
+					}else{
+						newItem.infobox.exposure=data.exif$tags.exif$exposure.$t+" sec";
+					}
 				}
 				if (typeof data.exif$tags.exif$focallength !== "undefined" && typeof data.exif$tags.exif$focallength.$t !== "undefined"){
 					newItem.infobox.focallength=data.exif$tags.exif$focallength.$t+" mm";
@@ -5830,9 +5871,15 @@ nanoGALLERY v5.9.1 release notes.
           if( G.i18nTranslations.thumbnailImageDescription != '' ) {
             sDesc=G.i18nTranslations.thumbnailImageDescription;
           }
-          else {
+          else if ( G.O.thumbnailLabel.get('oz_title_kind') == 'filename'){
+            sDesc='';
+			if (item.hasOwnProperty('infobox') && item.infobox.hasOwnProperty('filename')){
+				sDesc=item.infobox.filename.replace(/\.[^/.]+$/, "");
+			}
+			
+          }else{
             sDesc=item.description;
-          }
+		  }
         }
         if( G.O.thumbnailLabel.get('descriptionMaxLength') > 3 && sDesc.length > G.O.thumbnailLabel.get('descriptionMaxLength') ){
           sDesc=sDesc.substring(0,G.O.thumbnailLabel.get('descriptionMaxLength'))+'...';

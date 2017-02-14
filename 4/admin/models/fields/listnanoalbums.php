@@ -44,6 +44,7 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 		{
 			$resources = false;
 			$document = JFactory::getDocument();
+			$document->addScriptDeclaration("var g_ozio_picasa_url=".json_encode('index.php?option=com_oziogallery3&view=picasa&format=raw').";");
 			$document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/listnanoalbums.js");
 			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
 			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
@@ -54,9 +55,9 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 		
 		
 		$buttons = '';
-		$buttons .= '<div class="ozio-buttons-frame">';
-		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish_v2.html"></iframe>';
-		$buttons .= '</div>';
+		//$buttons .= '<div class="ozio-buttons-frame">';
+		//$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish_v2.html"></iframe>';
+		//$buttons .= '</div>';
 
 		$html=array();
 		$html[] ='<div id="oziogallery-modal" class="modal hide fade" >';

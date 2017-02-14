@@ -382,8 +382,12 @@ gi_ozio_intenseViewer=false;
 			if (photo_exposure==''){
 				$('#photo-info .pi-exposure').text(na);
 			}else{
-				photo_exposure_d=Math.round(1/photo_exposure);
-				$('#photo-info .pi-exposure').text('1/'+photo_exposure_d+" sec");
+				if (photo_exposure<1){
+					var photo_exposure_d=Math.round(1/photo_exposure);
+					$('#photo-info .pi-exposure').text('1/'+photo_exposure_d+" sec");
+				}else{
+					$('#photo-info .pi-exposure').text(photo_exposure+" sec");
+				}
 			}
 			
 			$('#photo-info .pi-focallength').text(api.getField('exif_focallength')==''?na:api.getField('exif_focallength')+" mm");

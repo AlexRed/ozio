@@ -70,9 +70,9 @@ class JFormFieldListGalleries extends JFormFieldList
 		
 
 		$buttons = '';
-		$buttons .= '<div class="ozio-buttons-frame">';
-		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish_v2.html"></iframe>';
-		$buttons .= '</div>';
+		//$buttons .= '<div class="ozio-buttons-frame">';
+		//$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/album_publish_v2.html"></iframe>';
+		//$buttons .= '</div>';
 
 		$html=array();
 		$html[] ='<div id="oziogallery-modal" class="modal hide fade" >';

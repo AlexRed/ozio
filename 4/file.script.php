@@ -311,6 +311,8 @@ class Com_OzioGallery3InstallerScript
 		}
 		$html[] ='	</div>';
 		$html[] ='	<div class="modal-footer">';
+		$html[] ='		<a href="index.php?option=com_oziogallery3&amp;view=setup" class="btn btn-success">'.JText::_("COM_OZIOGALLERY3_SETUP_LINK").'</a>';
+
 		$html[] ='		<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>';
 		$html[] ='	</div>';
 		$html[] ='</div>';

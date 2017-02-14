@@ -17,6 +17,8 @@ jQuery( document ).ready(function( $ ) {
 	var infobox_bg_url = <?php echo json_encode($this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200")); ?>;
 
 	$("#nanoGallery").nanoGallery({
+		picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.JFactory::getApplication()->input->get('id')); ?>,
+		
 		locationHash: <?php echo json_encode(intval($this->Params->get("ozio_nano_locationHash", "1"))); ?>,
 		viewerDisplayLogo: false,
 		//thumbnailHeight può essere anche auto
@@ -49,6 +51,9 @@ jQuery( document ).ready(function( $ ) {
 		thumbnailLabel: <?php echo json_encode(
 							array(
 									'position'=>$this->Params->get("ozio_nano_thumbnailLabel_position", "overImageOnBottom"),
+									
+									'oz_title_kind' => $this->Params->get("ozio_thumbnailTitle_kind", "description"),
+									
 									'display'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'displayDescription'=>intval($this->Params->get("ozio_nano_thumbnailLabel_display", "1")),
 									'titleMaxLength'=>intval($this->Params->get("ozio_nano_thumbnailLabel_maxTitle", "25")),
@@ -136,6 +141,8 @@ jQuery( document ).ready(function( $ ) {
 		//paginationDisableSwipe: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationDisableSwipe", "0"))); ?>,
 		paginationDisableSwipe: false,
 		paginationNumSelectable: <?php echo json_encode(intval($this->Params->get("ozio_nano_paginationNumSelectable", "10"))); ?>,
+		
+		oz_max_num_photo: <?php echo json_encode(intval($this->Params->get("oz_max_num_photo", "0"))); ?>,
 		
 		<?php
 		$kind=$this->Params->get("ozio_nano_kind", "picasa");

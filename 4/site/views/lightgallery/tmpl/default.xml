@@ -38,7 +38,18 @@
 				<option value="normal">COM_OZIOGALLERY3_PHOTOSORTING_NORMAL</option>
 				<option value="random">COM_OZIOGALLERY3_PHOTOSORTING_RANDOM</option>
 				<option value="inverse">COM_OZIOGALLERY3_PHOTOSORTING_INVERSE</option>
+				
+				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
+				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
+				<option value="fileAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEASC</option>
+				<option value="fileDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEDESC</option>
+				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_ASC</option>
+				<option value="idDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
+				
 			</field>
+			
+			<field type="text" name="oz_max_num_photo" label="COM_OZIOGALLERY3_MAX_NUM_PHOTO_LBL" description="COM_OZIOGALLERY3_MAX_NUM_PHOTO_DSC" size="6" default="0"/>			
+			
 			
 			<field type="list" name="description_pos" label="COM_OZIOGALLERY3_DESCRIPTION_POS_LBL" description="COM_OZIOGALLERY3_DESCRIPTION_POS_DSC" default="under">
 				<option value="above">COM_OZIOGALLERY3_DESCRIPTION_POS_ABOVE</option>
@@ -47,12 +58,20 @@
 			
 			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY3_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="raw" />
 			
+			
+			
+			
 			<field type="text" name="list_thumb_width" label="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_WIDTH_DSC" size="6" default="216"/>
 			<field type="text" name="list_thumb_margin" label="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_MARGIN_DSC" size="6" default="16"/>
 			<field type="text" name="list_thumb_border" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_DSC" size="6" default="2"/>
 			<field type="text" name="list_thumb_border_radius" label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_RADIUS_DSC" size="6" default="5"/>
 		   <field name="list_thumb_border_color" type="oziocolor" default="#b8b8b8"	label="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_LBL" description="COM_OZIOGALLERY3_LIST_THUMB_BORDER_COLOR_DSC" />
 
+			<field type="list" name="ozio_thumbnailTitle_kind" label="COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_DSC" default="description">
+				<option value="description">COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_DESCRIPTION</option>
+				<option value="filename">COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_FILENAME</option>
+			</field>
+		   
 		   <field type="list" name="show_list_title" label="COM_OZIOGALLERY3_SHOW_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_SHOW_LIST_TITLE_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -165,6 +184,8 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			
+			
 			
 			<field type="text" name="max_num_rows_list_title" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_LIST_TITLE_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_LIST_TITLE_DSC" size="6" default="1"/>
 			<field type="text" name="max_num_rows_title" label="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_LBL" description="COM_OZIOGALLERY3_MAX_NUM_ROWS_TITLE_DSC" size="6" default="1"/>

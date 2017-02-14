@@ -33,8 +33,12 @@
 				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
 				<option value="fileAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEASC</option>
 				<option value="fileDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_FILEDESC</option>
-				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID</option>
+				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_ASC</option>
+				<option value="idDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
 			</field>
+			
+			<field type="text" name="oz_max_num_photo" label="COM_OZIOGALLERY3_MAX_NUM_PHOTO_LBL" description="COM_OZIOGALLERY3_MAX_NUM_PHOTO_DSC" size="6" default="0"/>			
+			
 
 			<field type="list" name="ozio_nano_albumSorting" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMSORTING_DSC" default="standard">
 				<option value="standard">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_NORMAL</option>
@@ -42,7 +46,8 @@
 				<option value="reversed">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_INVERSE</option>
 				<option value="titleAsc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
 				<option value="titleDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
-				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID</option>
+				<option value="id">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_ASC</option>
+				<option value="idDesc">COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
 			</field>
 
 			<field type="radio" name="ozio_nano_displayBreadcrumb" default="1"
@@ -155,6 +160,11 @@
 				<option value="overImageOnTop">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_OVERIMAGEONTOP</option>
 				<option value="onBottom">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_ONBOTTOM</option>
 				<option value="overImageOnMiddle">COM_OZIOGALLERY3_OZIO_NANO_THUMBNAILLABEL_POSITION_OVERIMAGEONMIDDLE</option>
+			</field>
+
+			<field type="list" name="ozio_thumbnailTitle_kind" label="COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_LBL" description="COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_DSC" default="description">
+				<option value="description">COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_DESCRIPTION</option>
+				<option value="filename">COM_OZIOGALLERY3_OZIO_THUMBNAIL_TITLE_KIND_FILENAME</option>
 			</field>
 			
 			<field type="radio" name="ozio_nano_thumbnailLabel_display" default="1"

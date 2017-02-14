@@ -7,10 +7,24 @@
 	<authorUrl>http://www.opensourcesolutions.es</authorUrl>
 	<copyright>(C) 2008 - 2015 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>4.7.0</version>
+	<version>4.8.0</version>
 	<description>Ozio Gallery for Joomla! 3</description>
 
 	<scriptfile>file.script.php</scriptfile>
+	
+
+	<install>
+		<sql><file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file></sql>
+	</install>
+
+	<uninstall>
+		<sql><file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file></sql>
+	</uninstall>
+	
+	<update>
+		<schemas><schemapath type="mysql">sql/updates/mysql</schemapath></schemas>
+	</update>	
+	
 	<files folder="site">
 		<filename>index.html</filename>
 		<filename>oziogallery3.php</filename>
@@ -45,6 +59,7 @@
 			<folder>models</folder>
 			<folder>views</folder>
 			<folder>language</folder>
+			<folder>sql</folder>
 		</files>
 
 	</administration>

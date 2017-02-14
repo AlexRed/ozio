@@ -34,6 +34,15 @@
 								<tr>
 									<td valign="top">
 										<table class="adminlist">
+										
+											<tr>
+												<td align="left" valign="bottom">
+												    <a href="index.php?option=com_oziogallery3&amp;view=setup" class="btn btn-large btn-success"><?php echo JText::_("COM_OZIOGALLERY3_SETUP_LINK"); ?></a>
+												    <br /><br />
+												</td>
+											</tr>
+										
+										
 											<?php if (!$GLOBALS["oziogallery3"]["registered"]) { ?>
 												<tr><td><div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>
 														<div style="float:left;margin-right:16px;margin-left:10px;">
