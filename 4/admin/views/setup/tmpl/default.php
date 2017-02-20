@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <tbody>
 </tbody>
 </table>
-
+ <?php echo JText::_('COM_OZIOGALLERY3_SETUP_INSTRUCTIONS_BOTTOM');?>
 
 
 <div id="ozio_cerentials_modal" class="modal hide fade">

@@ -6,7 +6,7 @@
 
 	<fields name="params" addfieldpath="administrator/components/com_oziogallery3/models/fields">
 		<fieldset name="basic">
-			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION" icon="information.png"/>
+			<field type="ossheader" default="COM_OZIOGALLERY3_INFORMATION_FUERTE" icon="information.png"/>
 			<field type="ossheader" default="COM_OZIOGALLERY3_REQUIRED_SETTINGS" icon="main.png"/>
 			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" required="true" autocomplete="off" default="110359559620842741677"/>
 			
