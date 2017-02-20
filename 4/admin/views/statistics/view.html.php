@@ -21,35 +21,57 @@
 
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
 jimport( 'joomla.application.component.view');
 
-class OzioViewSetup extends JViewLegacy
+
+class OzioViewStatistics extends JViewLegacy
 {
+
+	protected $pubblicate;
+	protected $nonpubblicate;
+	protected $cestinate;
 
 	public function display($tpl = null)
 	{
+		jimport('joomla.html.pane');
+
+		$pubblicate		= $this->get( 'Pubblicate' );
+		$nonpubblicate	= $this->get( 'Nonpubblicate' );
+		$cestinate		= $this->get( 'Cestinate' );
+
+		$this->assignRef('pubblicate'			, $pubblicate);
+		$this->assignRef('nonpubblicate'		, $nonpubblicate);
+		$this->assignRef('cestinate'			, $cestinate);
+
 		$this->addToolbar();
-		
 		$document = JFactory::getDocument();
+		//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
+		//$document->addScript(JURI::root(true) . "/components/com_oziogallery3/js/jquery-noconflict.js");
+		//$document->addScript(JURI::base(true) . "/media/jui/js/jquery.min.js");
+		//$document->addScript(JURI::base(true) . "/media/jui/js/jquery-noconflict.js");
+		//JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.framework');
+
+		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
+		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziostatistics.js");
 		
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziosetup.js");
 		parent::display($tpl);
-	}	
-	
-	
+	}
+
+
 	protected function addToolbar()
 	{
 		$document	= JFactory::getDocument();
 		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
+
+		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_STATISTICS' ),'camera' );
 		
-		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_SETUP' ),'camera' );
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3');
-		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_SETUP' ), 'index.php?option=com_oziogallery3&amp;view=setup', true);
-		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_STATISTICS' ), 'index.php?option=com_oziogallery3&amp;view=statistics');
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_SETUP' ), 'index.php?option=com_oziogallery3&amp;view=setup');
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_STATISTICS' ), 'index.php?option=com_oziogallery3&amp;view=statistics',true);
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq');
 
 	}
 }
-
-?>

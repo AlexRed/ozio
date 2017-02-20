@@ -52,13 +52,16 @@ class OzioGalleryViewJGallery extends JViewLegacy
 		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/css/jgallery.min.css?v=1.5.2");
 
 		$current_uri = JFactory::getURI();
-		if ($this->Params->get("info_button", false)) {
+		
+		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')));
 			}
 		}
+		
+		
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
 
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/js/tinycolor-0.9.16.min.js");

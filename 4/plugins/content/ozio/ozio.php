@@ -134,13 +134,17 @@ class plgContentOzio extends JPlugin
 		$document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
 		
 		$current_uri = JFactory::getURI();
-		if ($cparams->get("info_button", false)) {
+		
+		
+		if ($cparams->get("info_button", false) && $cparams->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
-				$document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
 				$GLOBALS["contentmap"]["gapi"] = true;
+				$document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($cparams->get('api_key', '')));
 			}
 		}
+		
+		
 		
 		$this->gallerywidth = $cparams->get("gallerywidth", array("text" => "100", "select" => "%"));
 		if (is_object($this->gallerywidth)) $this->gallerywidth = (array)$this->gallerywidth;
@@ -178,13 +182,16 @@ class plgContentOzio extends JPlugin
 		//$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5");
 
 		$current_uri = JFactory::getURI();
-		if ($cparams->get("info_button", false)) {
+			
+
+		if ($cparams->get("info_button", false) && $cparams->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($cparams->get('api_key', '')));
 			}
-		}
+		}		
+		
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
 
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.js");
@@ -238,11 +245,12 @@ class plgContentOzio extends JPlugin
 		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/jgallery/css/jgallery.min.css?v=1.5.2");
 
 		$current_uri = JFactory::getURI();
-		if ($this->Params->get("info_button", false)) {
+		
+		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')));
 			}
 		}
 		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
@@ -296,13 +304,14 @@ class plgContentOzio extends JPlugin
 		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/ozio-lg.css?v=1.0");
 
 		$current_uri = JFactory::getURI();
-		if ($this->Params->get("info_button", false)) {
+		
+		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')));
 			}
-		}
+		}		
 		
 		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js");
 		
@@ -410,11 +419,13 @@ class plgContentOzio extends JPlugin
 		$language = $language ? "&amp;language=" . $language : "";
 
 		$current_uri = JFactory::getURI();
+		
 		if (empty($GLOBALS["contentmap"]["gapi"]))
 		{
 			$GLOBALS["contentmap"]["gapi"] = true;
-			$document->addScript(($current_uri->isSSL()?'https':'http')."://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
-		}
+			$document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')) . $language);
+		}		
+		
 
 		if ($this->Params->get("cluster", "1"))
 		{

@@ -60,9 +60,6 @@ class OzioGalleryViewmap extends JViewLegacy
        	$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/map/css/map.css");
 
 
-		// Api key parameter for Google map
-		$api_key = $this->Params->get('api_key', NULL);
-		$api_key = $api_key ? "&amp;key=" . $api_key : "";
 
 		// Language parameter for Google map
 		// See Google maps Language coverage at https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
@@ -74,7 +71,7 @@ class OzioGalleryViewmap extends JViewLegacy
 		if (empty($GLOBALS["contentmap"]["gapi"]))
 		{
 			$GLOBALS["contentmap"]["gapi"] = true;
-			$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false" . $language . $api_key);
+			$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')) . $language);
 		}
 
 		if ($this->Params->get("cluster", "1"))

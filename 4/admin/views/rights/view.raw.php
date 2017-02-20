@@ -7,6 +7,9 @@ class OzioViewRights extends JViewLegacy
 {
     function display($tpl = null)
     {
+		
+		return;//NON fa più nulla.
+		
 		$app = JFactory::getApplication();
 
 		$document = JFactory::getDocument();
@@ -35,7 +38,7 @@ class OzioViewRights extends JViewLegacy
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_VERBOSE, true);
+			//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 			// Make the REST call, returning the result
 			$response = curl_exec($curl);
@@ -102,7 +105,7 @@ class OzioViewRights extends JViewLegacy
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_VERBOSE, true);
+			//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 			// Make the REST call, returning the result
 			$response = curl_exec($curl);

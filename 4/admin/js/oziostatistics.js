@@ -10,7 +10,7 @@ jQuery(document).ready(function ($)
  	var remainingphotos=0;
  	var max_remainingphotos=1;
  	var strings = {
- 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//photos.googleapis.com/data/feed/api/user/"
+ 			picasaUrl: 'index.php?option=com_oziogallery3&view=picasa&format=raw'
  		}; 	
 	for (var i=0;i<g_parameters.length;i++){
 		g_parameters[i].views=0;
@@ -20,7 +20,8 @@ jQuery(document).ready(function ($)
 	for (var i=0;i<g_list_nano_options.length;i++){
 		var url='';
 		if (g_list_nano_options[i].kind=='picasa'){
-			url = 'https://photos.googleapis.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
+			url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(g_list_nano_options[i].userID)+
+			'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize);
 		}else{
 			url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 		}
@@ -192,15 +193,20 @@ jQuery(document).ready(function ($)
 		if (numeric) album_type = 'albumid';
 		else album_type = 'album';
 
-		var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
-			'?imgmax=d' +
+		var url = strings.picasaUrl + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				'&imgmax=d' +
+		
+		
 			// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 			'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
 			((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 			((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 			'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 			((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
 
 
 		// http://api.jquery.com/jQuery.ajax/
@@ -229,43 +235,50 @@ jQuery(document).ready(function ($)
 	
 	function OnLoadViewsAndCommentsSuccess(result, textStatus, jqXHR)
 	{	
-		if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
-			//$('#photo_info_box .pi-views').text(result.entry.gphoto$viewCount.$t);
-			//ho le viste in result.entry.gphoto$viewCount.$t
-			//alert(JSON.stringify(result.entry));
-			g_parameters[this.album_index].views+=parseInt(result.entry.gphoto$viewCount.$t);
-			//alert(this.album_index);
-			//alert(this.photo_index);
-			
-			var seed = result.entry.content.src.substring(0, result.entry.content.src.lastIndexOf("/"))+ "/";
-			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
-			
-			var photodata={
-					'views':parseInt(result.entry.gphoto$viewCount.$t),
-					'summary':result.entry.summary.$t,
-					'title':result.entry.title.$t,
-					'link':'#',
-					'thumb':seed+'h50/',
-					'album_title':g_parameters[this.album_index].title,
-					'album_link':g_parameters[this.album_index].link
-					//'album_link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
-				};
-			
-			if (g_parameters[this.album_index].skin=='00fuerte'){
-				photodata.link=g_parameters[this.album_index].link+'#'+(this.photo_index+1);
-			}else if (g_parameters[this.album_index].skin=='lightgallery'){
-				photodata.link=g_parameters[this.album_index].link+'#lg=1&slide='+this.photo_index;
-			}else if (g_parameters[this.album_index].skin=='jgallery'){
-				photodata.link=g_parameters[this.album_index].link+'/'+result.entry.gphoto$id.$t;
-			}else{
-				//nano
-				photodata.link=g_parameters[this.album_index].link+'/'+result.entry.gphoto$id.$t;
-			}
-			
-			photos.push(photodata);			
-			update_photos_stats();
-			update_albums_stats();
+	//console.log(JSON.stringify(result));
+		
+		if (typeof result.feed !== "undefined" && typeof result.feed.gphoto$viewCount !== "undefined" && typeof result.feed.gphoto$viewCount.$t !== "undefined"){
+		}else{
+			result.feed.gphoto$viewCount = { $t: 0 };
 		}
+	
+		//$('#photo_info_box .pi-views').text(result.feed.gphoto$viewCount.$t);
+		//ho le viste in result.feed.gphoto$viewCount.$t
+		//alert(JSON.stringify(result.feed));
+		g_parameters[this.album_index].views+=parseInt(result.feed.gphoto$viewCount.$t);
+		//alert(this.album_index);
+		//alert(this.photo_index);
+		var oz_gi_thumb_url = result.feed.media$group.media$thumbnail[0].url;
+		var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
+		seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+		
+		
+		var photodata={
+				'views':parseInt(result.feed.gphoto$viewCount.$t),
+				'summary':result.feed.media$group.media$description.$t,
+				'title':result.feed.title.$t,
+				'link':'#',
+				'thumb':seed+'h50/',
+				'album_title':g_parameters[this.album_index].title,
+				'album_link':g_parameters[this.album_index].link
+				//'album_link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
+			};
+		
+		if (g_parameters[this.album_index].skin=='00fuerte'){
+			photodata.link=g_parameters[this.album_index].link+'#'+(this.photo_index+1);
+		}else if (g_parameters[this.album_index].skin=='lightgallery'){
+			photodata.link=g_parameters[this.album_index].link+'#lg=1&slide='+this.photo_index;
+		}else if (g_parameters[this.album_index].skin=='jgallery'){
+			photodata.link=g_parameters[this.album_index].link+'/'+result.feed.gphoto$id.$t;
+		}else{
+			//nano
+			photodata.link=g_parameters[this.album_index].link+'/'+result.feed.gphoto$id.$t;
+		}
+		
+		photos.push(photodata);			
+		update_photos_stats();
+		update_albums_stats();
+		
 	}
 	function OnLoadViewsAndCommentsError(jqXHR, textStatus, error)
 	{	
@@ -292,8 +305,30 @@ jQuery(document).ready(function ($)
 								'album_index':this.album_index,
 								'photo_index':i-1+result.feed.openSearch$startIndex.$t
 						};
+						//https://picasaweb.google.com/data/entry/api/user/114390094116699707674/albumid/6386889168349962385/photoid/6386889168751437810?alt=json
+						var parti=result.feed.entry[i].link[j].href.split('/');
+						
+						var obj_parti = {};
+						
+						for (var p=0;p<parti.length;p++){
+							if (parti[p]=='user'){
+								obj_parti.user = parti[p+1];
+								p++;
+							}else if (parti[p]=='albumid'){
+								obj_parti.albumid = parti[p+1];
+								p++;
+							}else if (parti[p]=='photoid'){
+								var photoid = parti[p+1].split('?');
+								obj_parti.photoid = photoid[0];
+								p++;
+							}
+						}
+						
+						
+						
+						
 						$.ajax({
-							'url':result.feed.entry[i].link[j].href,
+							'url':strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
 							'dataType': 'json',
 							'success': OnLoadViewsAndCommentsSuccess,
 							'error': OnLoadViewsAndCommentsError,

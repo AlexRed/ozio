@@ -97,7 +97,7 @@ class OzioViewSetup_Ajax extends JViewLegacy
 			curl_setopt($curl, CURLOPT_URL,"https://accounts.google.com/o/oauth2/revoke?token=".urlencode($credentials['access_token']));
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_VERBOSE, true);
+			//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 			$response = curl_exec ($curl);
 
@@ -169,7 +169,7 @@ class OzioViewSetup_Ajax extends JViewLegacy
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_VERBOSE, true);
+			//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
 			

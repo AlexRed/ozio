@@ -142,7 +142,7 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="api_key" type="text" label="COM_OZIOGALLERY3_MAP_API_KEY_LBL" description="COM_OZIOGALLERY3_MAP_API_KEY_DSC" size="26"/>
+				<field name="api_key" type="text" label="COM_OZIOGALLERY3_MAP_API_KEY_LBL" description="COM_OZIOGALLERY3_MAP_API_KEY_DSC"/>
 
 			</fieldset>
 		

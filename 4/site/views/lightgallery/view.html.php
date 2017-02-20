@@ -58,13 +58,15 @@ class OzioGalleryViewLightGallery extends JViewLegacy
 		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/ozio-lg.css?v=1.0");
 
 		$current_uri = JFactory::getURI();
-		if ($this->Params->get("info_button", false)) {
+	
+		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')));
 			}
 		}
+		
 		
 		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js");
 		

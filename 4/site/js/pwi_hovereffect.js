@@ -163,6 +163,7 @@ jQuery(document).ready(function ($)
 		// Imposta i parametri e innesca il caricamento
 		author.pwi(
 			{
+				picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.$item->id); ?>,
 				// Destinazione del link
 				album_local_url:'<?php echo JRoute::_($link); ?>',
 				album_local_title:<?php echo json_encode($item->title); ?>,
@@ -241,6 +242,7 @@ jQuery(document).ready(function ($)
 			// Imposta i parametri e innesca il caricamento
 			author.pwi(
 				{
+					picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.$item->id); ?>,
 					// Destinazione del link
 					album_local_url:'<?php echo JRoute::_($link); ?>',
 					album_local_title:<?php echo json_encode($item->title); ?>,
@@ -342,7 +344,11 @@ jQuery(document).ready(function ($)
 			};
 			var url='';
 			if (album_nano_options.kind=='picasa'){
-				url = 'https://photos.googleapis.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize;
+				//url = 'https://photos.googleapis.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize;
+				
+				url = <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw'); ?> + '&ozio-menu-id='+album_nano_options.album_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(album_nano_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize);
+				
+				
 			}else{
 				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + album_nano_options.g_flickrApiKey + "&user_id="+album_nano_options.userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 			}

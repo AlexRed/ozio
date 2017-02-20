@@ -932,9 +932,9 @@
 			{
 				show(true, '');
 
-				var $u = strings.picasaUrl + settings.username +
-					'?kind=album&access=' + settings.albumTypes + '&alt=json&thumbsize=' +
-					settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
+				var $u = settings.picasaUrl +'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+					'&kind=album&access=' + settings.albumTypes + '&alt=json&thumbsize=' +
+					settings.albumThumbSize + (settings.albumCrop ? "c" : "u"));
 
 				$.ajax({
 					url:$u,
@@ -984,14 +984,18 @@
 				if (numeric) album_type = 'albumid';
 				else album_type = 'album';
 
-				var $u = strings.picasaUrl + settings.username +
-					((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") + '?kind=photo&alt=json' +
+				var $u = settings.picasaUrl +'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+					((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+					
+					
+					'&kind=photo&alt=json' +
 					((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 					'&imgmax=d&thumbsize=' + settings.thumbSize +
-					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
+					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize));
 				show(true, '');
-				$.getJSON($u, 'callback=?', album);
+				$.getJSON($u, 'ozio-picasa-callback=?', album);
 			}
 			return $self;
 		}
@@ -1009,15 +1013,18 @@
 			if (numeric) album_type = 'albumid';
 			else album_type = 'album';
 
-			var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
-				'?imgmax=d' +
+			var url = settings.picasaUrl +'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
@@ -1049,15 +1056,18 @@
 			if (numeric) album_type = 'albumid';
 			else album_type = 'album';
 
-			var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
-				'?imgmax=d' +
+			var url = settings.picasaUrl +'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
 
 
 			// http://api.jquery.com/jQuery.ajax/
@@ -1076,12 +1086,12 @@
 
 		function GetUserAlbums()
 		{
-			var url = strings.picasaUrl + settings.username +
+			var url = settings.picasaUrl + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+ 
 				// alt can be 'json', 'rss' or 'atom' (https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats), but we need it as json to work with cross domain
-				'?alt=json' +
+				'&alt=json' +
 				// '&kind=album' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&access=' + settings.albumTypes +
-				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u");
+				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u"));
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
@@ -1100,14 +1110,18 @@
 		function getLatest()
 		{
 			show(true, '');
-			var $u = strings.picasaUrl + settings.username +
-				(settings.album !== "" ? '/album/' + settings.album : '') +
+			
+
+			
+			var $u = settings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
 				'?kind=photo&max-results=' + settings.maxResults + '&alt=json&q=' +
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&imgmax=d&thumbsize=' + settings.thumbSize +
-				((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize);
-			$.getJSON($u, 'callback=?', latest);
+				((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize));
+			$.getJSON($u, 'ozio-picasa-callback=?', latest);
 			return $self;
 		}
 
@@ -1295,7 +1309,7 @@
 	};
 	$.fn.pwi.strings = {
 		clearDiv:"<div style='clear: both;height:0px;'/>",
-		picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//photos.googleapis.com/data/feed/api/user/"
+		//picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//photos.googleapis.com/data/feed/api/user/"
 	};
 
 

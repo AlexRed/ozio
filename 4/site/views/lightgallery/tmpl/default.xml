@@ -297,6 +297,7 @@
 			
 		</fieldset>
 		<fieldset name="advanced">
+			<field name="api_key" type="text" label="COM_OZIOGALLERY3_MAP_API_KEY_LBL" description="COM_OZIOGALLERY3_MAP_API_KEY_DSC"/>
 			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_DSC" default="0">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>

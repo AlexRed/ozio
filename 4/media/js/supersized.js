@@ -1541,7 +1541,11 @@ window.antiloop = 1;
 				{
 					// Todo: di default prende il /d nell'URL che serve per il download
 					// Removes the file.ext part of the URL
-					var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+					//var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+					//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+					
+					var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
+					var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
 					seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
 					// Avoids divisions by 0

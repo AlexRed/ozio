@@ -18,7 +18,7 @@ jQuery( document ).ready(function( $ ) {
 	}
 	
  	var strings = {
- 			picasaUrl:"https://photos.googleapis.com/data/feed/api/user/"
+ 			picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.JFactory::getApplication()->input->get('id')); ?>,
  		}; 	
 	var viewer_mode=<?php echo json_encode($this->Params->get("mode", "standard")); ?>;
 	
@@ -91,7 +91,10 @@ jQuery( document ).ready(function( $ ) {
 	
 	
 	
-				url = 'https://photos.googleapis.com/data/feed/api/user/'+jgallery_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize;
+				//url = strings.picasaUrl+jgallery_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize;
+				
+				url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(jgallery_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize);
+				
 				jQuery.ajax({
 					'url':url,
 					'dataType': 'json', // Esplicita il tipo perche' il riconoscimento automatico non funziona con Firefox
@@ -289,7 +292,7 @@ jQuery( document ).ready(function( $ ) {
 		var album_type;
 		if (numeric) album_type = 'albumid';
 		else album_type = 'album';
-
+		/*
 		var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
 			'?imgmax=d' +
 			// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
@@ -299,6 +302,23 @@ jQuery( document ).ready(function( $ ) {
 			'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + JGalleryCheckPhotoSize(settings.photoSize) +
 			((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
 			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+		*/
+		
+		
+		var url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				'&imgmax=d' +
+				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
+				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
+				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
+				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + JGalleryCheckPhotoSize(settings.photoSize) +
+				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "")
+		
+		);		
 
 
 		// http://api.jquery.com/jQuery.ajax/
@@ -341,7 +361,11 @@ jQuery( document ).ready(function( $ ) {
 			//if (i==0){alert(JSON.stringify(result.feed.entry[i]));}
 			// Todo: di default prende il /d nell'URL che serve per il download
 			// Removes the file.ext part of the URL
-			var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+			//var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			
+			var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
+			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
 			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
 			var width = result.feed.entry[i].gphoto$width.$t;
@@ -762,6 +786,7 @@ jQuery( document ).ready(function( $ ) {
 
 				
 				jgallery.jGallery({
+					picasaUrl: strings.picasaUrl,
 					
 					tooltipClose: <?php echo json_encode(JText::_('JLIB_HTML_BEHAVIOR_CLOSE'));?>,//Close
 					tooltipFullScreen: <?php echo json_encode(JText::_('COM_OZIOGALLERY3_JGALLERY_MODE_FULLSCREEN'));?>,//Full screen

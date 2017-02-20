@@ -35,7 +35,7 @@ class OzioViewOzio extends JViewLegacy
 	public function display($tpl = null)
 	{
 		jimport('joomla.html.pane');
-
+/*
 		$pubblicate		= $this->get( 'Pubblicate' );
 		$nonpubblicate	= $this->get( 'Nonpubblicate' );
 		$cestinate		= $this->get( 'Cestinate' );
@@ -43,7 +43,7 @@ class OzioViewOzio extends JViewLegacy
 		$this->assignRef('pubblicate'			, $pubblicate);
 		$this->assignRef('nonpubblicate'		, $nonpubblicate);
 		$this->assignRef('cestinate'			, $cestinate);
-
+*/
 		$this->addToolbar();
 		$document = JFactory::getDocument();
 		//$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js");
@@ -74,6 +74,7 @@ class OzioViewOzio extends JViewLegacy
 		}
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3', true);
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_SETUP' ), 'index.php?option=com_oziogallery3&amp;view=setup');
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_STATISTICS' ), 'index.php?option=com_oziogallery3&amp;view=statistics');
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq');
 
 	}

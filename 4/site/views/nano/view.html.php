@@ -59,11 +59,11 @@ class OzioGalleryViewNano extends JViewLegacy
 		//$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.css?v=2.1.4");
 		//$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5");
 		$current_uri = JFactory::getURI();
-		if ($this->Params->get("info_button", false)) {
+		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {
 			if (empty($GLOBALS["contentmap"]["gapi"]))
 			{
 				$GLOBALS["contentmap"]["gapi"] = true;
-				$this->document->addScript(($current_uri->isSSL()?'https':'https')."://maps.google.com/maps/api/js?sensor=false");
+				$this->document->addScript("https://maps.googleapis.com/maps/api/js?key=" . urlencode($this->Params->get('api_key', '')));
 			}
 		}
 

@@ -89,6 +89,7 @@ jQuery(document).ready(function ($)
 			?>
 			//nano
 			g_list_nano_options[g_list_nano_options.length]={
+					menu_id: <?php echo json_encode($item->id); ?>,
 					thumbSize:64,
 					album_local_url:'<?php echo $link; ?>',
 					icon:<?php echo json_encode($icon); ?>,
@@ -259,8 +260,9 @@ jQuery(document).ready(function ($)
  	var remainingphotos=0;
  	var max_remainingphotos=1;
  	var strings = {
- 			picasaUrl:(location.protocol=='https:'?'https:':'http:')+"//photos.googleapis.com/data/feed/api/user/"
+ 			picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw'); ?>,
  		}; 	
+		
 	var markerCluster;
 	var oms;
 	var googlemap;
@@ -425,7 +427,10 @@ jQuery(document).ready(function ($)
 		for (var i=0;i<g_list_nano_options.length;i++){
 			var url='';
 			if (g_list_nano_options[i].kind=='picasa'){
-				url = 'https://photos.googleapis.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
+				//url = 'https://photos.googleapis.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
+				
+				url = strings.picasaUrl+  '&ozio-menu-id='+ g_list_nano_options[i].menu_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(g_list_nano_options[i].userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize);
+				
 			}else{
 				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 			}
@@ -448,8 +453,8 @@ jQuery(document).ready(function ($)
 		var obj={'album_index':i};
 		remainingphotos+=photos_per_album;
 		update_remainingphotos();
-		
 		GetAlbumData({
+				menu_id: g_parameters[i].hasOwnProperty('menu_id')?g_parameters[i]['menu_id']:g_parameters[i]['id'],
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
 				album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
@@ -515,7 +520,7 @@ jQuery(document).ready(function ($)
 		var album_type;
 		if (numeric) album_type = 'albumid';
 		else album_type = 'album';
-
+/*
 		var url = strings.picasaUrl + settings.username + ((settings.album !== "") ? '/' + album_type + '/' + settings.album : "") +
 			'?imgmax=d' +
 			// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
@@ -525,6 +530,23 @@ jQuery(document).ready(function ($)
 			'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 			((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
 			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "");
+*/
+
+
+		var url = strings.picasaUrl + '&ozio-menu-id='+settings.menu_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
+		
+				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				'&imgmax=d' +
+				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
+				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
+				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
+				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
+				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
+				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "")
+		
+		);	
 
 
 		// http://api.jquery.com/jQuery.ajax/
@@ -555,8 +577,14 @@ jQuery(document).ready(function ($)
 				typeof entry.georss$where.gml$Point.gml$pos !== "undefined" && typeof entry.georss$where.gml$Point.gml$pos.$t !== "undefined"){
 
 				//var seed = entry.content.src.substring(0, entry.content.src.lastIndexOf("/"))+ "/";
-				var seed = entry.content.src.substring(0, entry.content.src.lastIndexOf("/"));
+				//var seed = entry.content.src.substring(0, entry.content.src.lastIndexOf("/"));
+				//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+				
+				
+				var oz_gi_thumb_url = entry.media$group.media$thumbnail[0].url;
+				var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
 				seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+				
 				var thumb=seed+'h100/';
 
 				//preload

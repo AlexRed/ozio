@@ -16,7 +16,7 @@ class OzioViewPicasa extends JViewLegacy
 		$jinput = $app->input;
 		
 		
-		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey');
+		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey','tag','start-index','max-results');
 		
 		$ozio_payload = $jinput->get('ozio_payload', '', 'RAW');
 		//user_id=5&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize
@@ -62,7 +62,14 @@ class OzioViewPicasa extends JViewLegacy
 		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
 		}else{
 			$url = $url.'/albumid/'.$input_params['album_id'];
+			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
+			}else{
+				$url = $url.'/photoid/'.$input_params['photo_id'];
+			}
+		
 		}
+
+		
 		
 		$picasa_params['v'] = 2;
 		$picasa_params['alt'] = 'json';
@@ -88,7 +95,7 @@ class OzioViewPicasa extends JViewLegacy
 		//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array("GData-Version: 3"));
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_VERBOSE, true);
+		//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 		// Make the REST call, returning the result
 		$response = curl_exec($curl);
@@ -105,8 +112,12 @@ class OzioViewPicasa extends JViewLegacy
 
 			
 			$response = curl_exec($curl);
+			$json_resp = $this->response_parse($response,isset($picasa_params['callback']));
 		}
-		
+		if ($json_resp!==NULL){
+		}else{
+			header('HTTP/1.0 403 Forbidden');
+		}
 
 		echo $response;		
 
@@ -151,7 +162,7 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_VERBOSE, true);
+		//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
 		

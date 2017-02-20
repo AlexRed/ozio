@@ -99,6 +99,7 @@ function LoadAlbums()
 		// Set our parameters and trig the loading
 		jQuery("#album_selection").pwi(
 			{
+				picasaUrl: 'index.php?option=com_oziogallery3&view=picasa&format=raw',
 				mode:'user_albums',
 				username:input.value,
 				beforeSend:OnBeforeSend,
@@ -198,9 +199,11 @@ function OnLoadSuccess(result, textStatus, jqXHR)
 		// Album unique name (see below)
 		// var name = album.gphoto$name.$t;
 		var numphotos = album.gphoto$numphotos.$t;
+		
+		
 
 		var title;
-		if (album.hasOwnProperty('gphoto$albumType'))
+		/*if (album.hasOwnProperty('gphoto$albumType'))
 		// Equivalent code
 		// if ('gphoto$albumType' in album)
 		{
@@ -208,10 +211,10 @@ function OnLoadSuccess(result, textStatus, jqXHR)
 			title = tabella[album.gphoto$albumType.$t.toUpperCase()];
 		}
 		else
-		{
+		{*/
 			// Standard album
 			title = album.title.$t;
-		}
+		//}
 
 		if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
 		{

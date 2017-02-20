@@ -25,6 +25,9 @@ jQuery(document).ready(function ($)
 	function load_google_json(start_slide){
 		ss.pwi(
 			{
+				picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.JFactory::getApplication()->input->get('id')); ?>,
+				
+				
 				mode: 'album_data',
 				username: '<?php echo $this->Params->get("userid", ""); ?>',
 				album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
@@ -54,7 +57,11 @@ jQuery(document).ready(function ($)
 			// Todo: di default prende il /d nell'URL che serve per il download
 			// Removes the file.ext part of the URL
 			
-			var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+			//var seed = result.feed.entry[i].content.src.substring(0, result.feed.entry[i].content.src.lastIndexOf("/"));
+			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			
+			var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
+			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
 			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
 			var width = result.feed.entry[i].gphoto$width.$t;
@@ -290,6 +297,9 @@ jQuery(document).ready(function ($)
 			jQuery(function ($)
 			{
 				$.supersized({
+					
+					picasaUrl:<?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.JFactory::getApplication()->input->get('id')); ?>,
+					
 					// Functionality
 					slideshow: 1, // Slideshow on/off
 					autoplay: parseInt('<?php echo $this->Params->get("autoplay", 0); ?>'), // Slideshow starts playing automatically

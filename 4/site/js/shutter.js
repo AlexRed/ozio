@@ -455,7 +455,7 @@ gi_ozio_intenseViewer=false;
 					if (lat=='' || long==''){
 						//non metto nulla
 						$('#photo-info .map-container').html('');
-					}else{
+					}else if (typeof google === 'object' && typeof google.maps === 'object'){
 						$('#photo-info .map-container').html('<span id="ozio_gmap" style="width:100%; height:400px;"></span>');
 						var latLng = new google.maps.LatLng(lat,long);
 
@@ -475,10 +475,31 @@ gi_ozio_intenseViewer=false;
 					var na='- na -';
 					var json_details_url=api.getField('json_details');
 					if (json_details_url!=''){
+						
+
+						var parti=json_details_url.split('/');
+						
+						var obj_parti = {};
+						
+						for (var p=0;p<parti.length;p++){
+							if (parti[p]=='user'){
+								obj_parti.user = parti[p+1];
+								p++;
+							}else if (parti[p]=='albumid'){
+								obj_parti.albumid = parti[p+1];
+								p++;
+							}else if (parti[p]=='photoid'){
+								var photoid = parti[p+1].split('?');
+								obj_parti.photoid = photoid[0];
+								p++;
+							}
+						}							
+						
+						
 						$('#photo-info .pi-views').text('...');
 						$('#photo-info .pi-comments').text('...');
 						$.ajax({
-							'url':json_details_url,
+							'url':api.options.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
 							'dataType': 'json',
 							'success': theme.OnLoadViewsAndCommentsSuccess,
 							'error': theme.OnLoadViewsAndCommentsError
@@ -498,14 +519,14 @@ gi_ozio_intenseViewer=false;
 		OnLoadViewsAndCommentsSuccess: function (result, textStatus, jqXHR)
 		{
 			var na='- na -';
-			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$commentCount !== "undefined" && typeof result.entry.gphoto$commentCount.$t !== "undefined"){
-				$('#photo-info .pi-comments').text(result.entry.gphoto$commentCount.$t);
+			if (typeof result.feed !== "undefined" && typeof result.feed.gphoto$commentCount !== "undefined" && typeof result.feed.gphoto$commentCount.$t !== "undefined"){
+				$('#photo-info .pi-comments').text(result.feed.gphoto$commentCount.$t);
 			}else{
 				$('#photo-info .pi-comments').text(na);
 			}
 
-			if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
-				$('#photo-info .pi-views').text(result.entry.gphoto$viewCount.$t);
+			if (typeof result.feed !== "undefined" && typeof result.feed.gphoto$viewCount !== "undefined" && typeof result.feed.gphoto$viewCount.$t !== "undefined"){
+				$('#photo-info .pi-views').text(result.feed.gphoto$viewCount.$t);
 			}else{
 				$('#photo-info .pi-views').text(na);
 			}

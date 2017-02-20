@@ -51,6 +51,7 @@ class OzioViewFaq extends JViewLegacy
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_FAQ' ),'faq' );
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3');
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_SETUP' ), 'index.php?option=com_oziogallery3&amp;view=setup');
+		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_STATISTICS' ), 'index.php?option=com_oziogallery3&amp;view=statistics');
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_FAQ' ), 'index.php?option=com_oziogallery3&amp;view=faq', true);
 
 	}

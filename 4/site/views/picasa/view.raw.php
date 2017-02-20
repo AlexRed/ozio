@@ -17,7 +17,8 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		$jinput = $app->input;
 		
 		
-		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey');
+		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey','tag','start-index','max-results');
+		
 		
 		$ozio_payload = $jinput->get('ozio_payload', '', 'RAW');
 		//user_id=5&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize
@@ -59,12 +60,18 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		
 		$url = 'https://picasaweb.google.com/data/feed/api/user/'.$input_params['user_id'];
 		
+		
 		$single_album = true;
 		///albumid/
 		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
 			$single_album = false;
 		}else{
+			
 			$url = $url.'/albumid/'.$input_params['album_id'];
+			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
+			}else{
+				$url = $url.'/photoid/'.$input_params['photo_id'];
+			}
 		}
 		
 		$picasa_params['v'] = 2;
@@ -91,7 +98,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array("GData-Version: 3"));
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_VERBOSE, true);
+		//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 		// Make the REST call, returning the result
 		$response = curl_exec($curl);
@@ -112,15 +119,22 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
 		}
 		
+		//error_log(var_export($json_resp,true));
 		if ($json_resp!==NULL){
 			$menu_id = $jinput->get('ozio-menu-id', 0, 'INT');
 			$allowed_albums = $this->get_allowed_albums($menu_id);
 			
 			if ($single_album){
-				if (in_array($input_params['album_id'],$allowed_albums)){
+				if (in_array($input_params['album_id'],$allowed_albums) || 
+					(isset($json_resp['feed']) && isset($json_resp['feed']['rights']) && $json_resp['feed']['rights']['$t']=='public' ) ||
+					(isset($json_resp['feed']) && isset($json_resp['feed']['gphoto$access']) && $json_resp['feed']['gphoto$access']['$t']=='public'  )
+					
+					
+					){
 					//ok
 					echo $response;
 				}else{
+					header('HTTP/1.0 403 Forbidden');
 					echo "Album id not allowed";
 				}
 				
@@ -153,8 +167,11 @@ class OzioGalleryViewPicasa extends JViewLegacy
 					echo $callback_name."(".json_encode($json_resp).");";
 				}
 			}
+		}else{
+			header('HTTP/1.0 403 Forbidden');
+			echo $response;
+
 		}
-		
 		
 
 		
@@ -170,6 +187,10 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		
 		
 		$item = $menu->getItem($menu_id);
+		if ($item===null){
+			return $allowed_albums;
+		}
+		
 		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=lightgallery") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false){
 			//invalid id
 		}else if (strpos($item->link, "&view=lightgallery") !== false && $item->params->get("source_kind", "photo")!=='photo'){
@@ -257,7 +278,7 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_VERBOSE, true);
+		//curl_setopt($curl, CURLOPT_VERBOSE, true);
 
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
 		

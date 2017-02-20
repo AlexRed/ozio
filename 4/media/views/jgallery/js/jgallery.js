@@ -1995,7 +1995,7 @@ var Zoom = ( function( jLoader, overlay, historyPushState, jGalleryTransitions, 
 						var lng=photoData.lng;
 						if (lat=='' || lng==''){
 							$gE.conInfoBox.find('.pi-map-container').html('');
-						}else{
+						}else if (typeof google === 'object' && typeof google.maps === 'object'){
 							$gE.conInfoBox.find('.pi-map-container').html('<span id="nano-gmap-viewer" style="width:100%; height:400px;"></span>');
 							var latLng = new google.maps.LatLng(lat,lng);
 
@@ -2013,21 +2013,42 @@ var Zoom = ( function( jLoader, overlay, historyPushState, jGalleryTransitions, 
 						}	
 						var json_details_url=photoData.json_details;
 						if (json_details_url!=''){
+							
+							
+							var parti=json_details_url.split('/');
+							
+							var obj_parti = {};
+							
+							for (var p=0;p<parti.length;p++){
+								if (parti[p]=='user'){
+									obj_parti.user = parti[p+1];
+									p++;
+								}else if (parti[p]=='albumid'){
+									obj_parti.albumid = parti[p+1];
+									p++;
+								}else if (parti[p]=='photoid'){
+									var photoid = parti[p+1].split('?');
+									obj_parti.photoid = photoid[0];
+									p++;
+								}
+							}
+													
+							
 							$gE.conInfoBox.find('.pi-views').text('...');
 							$gE.conInfoBox.find('.pi-comments').text('...');
 							jQuery.ajax({
-								'url':json_details_url,
+								'url':gO.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
 								'dataType': 'json',
 								'success': function (result, textStatus, jqXHR){
 									if ($gE.conInfoBox!=null){
-										if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$commentCount !== "undefined" && typeof result.entry.gphoto$commentCount.$t !== "undefined"){
-											$gE.conInfoBox.find('.pi-comments').text(result.entry.gphoto$commentCount.$t);
+										if (typeof result.feed !== "undefined" && typeof result.feed.gphoto$commentCount !== "undefined" && typeof result.feed.gphoto$commentCount.$t !== "undefined"){
+											$gE.conInfoBox.find('.pi-comments').text(result.feed.gphoto$commentCount.$t);
 										}else{
 											$gE.conInfoBox.find('.pi-comments').text('-na-');
 										}
 			
-										if (typeof result.entry !== "undefined" && typeof result.entry.gphoto$viewCount !== "undefined" && typeof result.entry.gphoto$viewCount.$t !== "undefined"){
-											$gE.conInfoBox.find('.pi-views').text(result.entry.gphoto$viewCount.$t);
+										if (typeof result.feed !== "undefined" && typeof result.feed.gphoto$viewCount !== "undefined" && typeof result.feed.gphoto$viewCount.$t !== "undefined"){
+											$gE.conInfoBox.find('.pi-views').text(result.feed.gphoto$viewCount.$t);
 										}else{
 											$gE.conInfoBox.find('.pi-views').text('-na-');
 										}

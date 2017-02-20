@@ -29,7 +29,7 @@ class OzioGalleryController extends JControllerLegacy
 		return parent::display($cachable);
 	}
 
-
+/*
 	public function proxy()
 	{
 		$uri = JFactory::getURI();
@@ -44,6 +44,7 @@ class OzioGalleryController extends JControllerLegacy
 		echo $data;
 		jexit();
 	}
+*/
 
 }
 
