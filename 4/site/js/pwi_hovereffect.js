@@ -346,7 +346,7 @@ jQuery(document).ready(function ($)
 			if (album_nano_options.kind=='picasa'){
 				//url = 'https://photos.googleapis.com/data/feed/api/user/'+album_nano_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize;
 				
-				url = <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw'); ?> + '&ozio-menu-id='+album_nano_options.album_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(album_nano_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize);
+				url = <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw'); ?> + '&ozio-menu-id='+album_nano_options.album_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(album_nano_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+album_nano_options.thumbSize)+'&ozrand='+(new Date().getTime());
 				
 				
 			}else{

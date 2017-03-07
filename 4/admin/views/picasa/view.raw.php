@@ -16,7 +16,7 @@ class OzioViewPicasa extends JViewLegacy
 		$jinput = $app->input;
 		
 		
-		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey','tag','start-index','max-results');
+		$copy_params = array('kind','thumbsize','rnd','imgmax',/*'authkey',*/'tag','start-index','max-results');
 		
 		$ozio_payload = $jinput->get('ozio_payload', '', 'RAW');
 		//user_id=5&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize
@@ -58,12 +58,14 @@ class OzioViewPicasa extends JViewLegacy
 		
 		$url = 'https://picasaweb.google.com/data/feed/api/user/'.$input_params['user_id'];
 		
+		$single_photo = false;
 		///albumid/
 		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
 		}else{
 			$url = $url.'/albumid/'.$input_params['album_id'];
 			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
 			}else{
+				$single_photo = true;
 				$url = $url.'/photoid/'.$input_params['photo_id'];
 			}
 		
@@ -85,22 +87,17 @@ class OzioViewPicasa extends JViewLegacy
 			$picasa_params['callback'] = $callback;
 		}		
 		
+		if ($single_photo){
+			$http_header = array();
+		}else{
+			$http_header = array("GData-Version"=>"3");
+		}
+		
+		$resp_obj = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header);		
+		$response = $resp_obj->body;
 		
 		
-		
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url."?".http_build_query($picasa_params));
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array("GData-Version: 3"));
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-		// Make the REST call, returning the result
-		$response = curl_exec($curl);
-		
-		$json_resp = $this->response_parse($response,isset($picasa_params['callback']));
+		$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
 		
 		
 		
@@ -108,24 +105,35 @@ class OzioViewPicasa extends JViewLegacy
 			//Nuovo access token
 			$credentials = $this->refresh_token($credentials);
 			$picasa_params['access_token'] = $credentials['access_token'];
-			curl_setopt($curl, CURLOPT_URL, $url."?".http_build_query($picasa_params));
 
-			
-			$response = curl_exec($curl);
-			$json_resp = $this->response_parse($response,isset($picasa_params['callback']));
+			$resp_obj = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header);		
+			$response = $resp_obj->body;
+
+			$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
 		}
 		if ($json_resp!==NULL){
+			
+			if (!isset($json_resp['feed']['entry'])){
+				$json_resp['feed']['entry'] = array();
+			}
+			if (empty($callback_name)){
+				echo json_encode($json_resp);
+			}else{
+				echo $callback_name."(".json_encode($json_resp).");";
+			}
 		}else{
 			header('HTTP/1.0 403 Forbidden');
+			echo $response;	
 		}
 
-		echo $response;		
+			
 
 		die();
         //parent::display($tpl);
     }
 	
-	function response_parse($response,$callback){
+	function response_parse($response,$callback,&$callback_name){
+		$callback_name= '';
 		if ($callback){
 			$parti = explode("\n",$response);
 			foreach($parti as $p){
@@ -137,8 +145,9 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 
 				*/
 				$matches = array();
-				if (preg_match ('/^ *jQuery[^(]+\((.*)\); *$/i',$p,$matches)){
-					$response = $matches[1];
+				if (preg_match ('/^ *(jQuery[^(]+)\((.*)\); *$/i',$p,$matches)){
+					$callback_name = $matches[1];
+					$response = $matches[2];
 				}
 				
 			}
@@ -146,7 +155,8 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 			
 		}
 		return json_decode($response,true);
-	}	
+	}
+	
 	function refresh_token($credentials){
 		$postfields = array(
 			'client_id' => $credentials['client_id'],
@@ -155,23 +165,11 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 			'refresh_token' => $credentials['refresh_token'],
 		
 		);
-		$curl = curl_init();
-
-		curl_setopt($curl, CURLOPT_URL,"https://www.googleapis.com/oauth2/v4/token");
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
 		
+		$resp_obj = $this->gi_post_form("https://www.googleapis.com/oauth2/v4/token",$postfields);
+		
+		$response = $resp_obj->body;
 
-		// receive server response ...
-
-		$response = curl_exec ($curl);
-
-		curl_close ($curl);
 		
 		$resp=json_decode($response,true);
 		if (isset($resp['access_token'])){
@@ -199,11 +197,83 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 			
 			return $credentials;
 		}else{
-			JError::raiseError(500, "Unable to refresh token");
+			JError::raiseError(500, "Unable to refresh token. ".$response);
 			die();
 		}		
 		
 		
 	}
+		
+		
+	function gi_post_form($url,$postfields,$headers=array()){
+
+		$timeout = null;
+
+		$headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
+		
+		$data = http_build_query($postfields,'','&');
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->post($url, $data, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not send data to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}
+
+	function gi_get($url,$headers=array()){
+
+		$timeout = null;
+
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->get($url, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not get data from remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}	
 	
 }

@@ -21,7 +21,7 @@ jQuery(document).ready(function ($)
 		var url='';
 		if (g_list_nano_options[i].kind=='picasa'){
 			url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(g_list_nano_options[i].userID)+
-			'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize);
+			'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize)+'&ozrand='+(new Date().getTime());
 		}else{
 			url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
 		}
@@ -206,7 +206,7 @@ jQuery(document).ready(function ($)
 			((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 			'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 			((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
+			((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""))+'&ozrand='+(new Date().getTime());
 
 
 		// http://api.jquery.com/jQuery.ajax/
@@ -328,7 +328,7 @@ jQuery(document).ready(function ($)
 						
 						
 						$.ajax({
-							'url':strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
+							'url':strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid))+'&ozrand='+(new Date().getTime()),
 							'dataType': 'json',
 							'success': OnLoadViewsAndCommentsSuccess,
 							'error': OnLoadViewsAndCommentsError,

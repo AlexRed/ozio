@@ -429,7 +429,7 @@ jQuery(document).ready(function ($)
 			if (g_list_nano_options[i].kind=='picasa'){
 				//url = 'https://photos.googleapis.com/data/feed/api/user/'+g_list_nano_options[i].userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize;
 				
-				url = strings.picasaUrl+  '&ozio-menu-id='+ g_list_nano_options[i].menu_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(g_list_nano_options[i].userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize);
+				url = strings.picasaUrl+  '&ozio-menu-id='+ g_list_nano_options[i].menu_id+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(g_list_nano_options[i].userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+g_list_nano_options[i].thumbSize)+'&ozrand='+(new Date().getTime());
 				
 			}else{
 				url="https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_list_nano_options[i].g_flickrApiKey + "&user_id="+g_list_nano_options[i].userID+"&primary_photo_extras=url_"+g_flickrThumbSizeStr+"&format=json&jsoncallback=?";
@@ -546,7 +546,7 @@ jQuery(document).ready(function ($)
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
 				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "")
 		
-		);	
+		)+'&ozrand='+(new Date().getTime());	
 
 
 		// http://api.jquery.com/jQuery.ajax/
@@ -696,7 +696,6 @@ jQuery(document).ready(function ($)
 			//altra chiamata per il rimanente
 			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
 		}
-		
 		
 		remainingphotos+=result.feed.entry.length;
 		update_remainingphotos();

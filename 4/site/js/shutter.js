@@ -499,7 +499,7 @@ gi_ozio_intenseViewer=false;
 						$('#photo-info .pi-views').text('...');
 						$('#photo-info .pi-comments').text('...');
 						$.ajax({
-							'url':api.options.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
+							'url':api.options.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid))+'&ozrand='+(new Date().getTime()),
 							'dataType': 'json',
 							'success': theme.OnLoadViewsAndCommentsSuccess,
 							'error': theme.OnLoadViewsAndCommentsError

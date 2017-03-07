@@ -17,7 +17,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		$jinput = $app->input;
 		
 		
-		$copy_params = array('kind','thumbsize','rnd','imgmax','authkey','tag','start-index','max-results');
+		$copy_params = array('kind','thumbsize','rnd','imgmax',/*'authkey',*/'tag','start-index','max-results');
 		
 		
 		$ozio_payload = $jinput->get('ozio_payload', '', 'RAW');
@@ -60,7 +60,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		
 		$url = 'https://picasaweb.google.com/data/feed/api/user/'.$input_params['user_id'];
 		
-		
+		$single_photo = false;
 		$single_album = true;
 		///albumid/
 		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
@@ -71,6 +71,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
 			}else{
 				$url = $url.'/photoid/'.$input_params['photo_id'];
+				$single_photo = true;
 			}
 		}
 		
@@ -86,23 +87,13 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		if ($callback!==''){
 			$picasa_params['callback'] = $callback;
 		}
-		
-		
-		
-		
-		
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url."?".http_build_query($picasa_params));
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml',"GData-Version: 2","If-Match: *"));
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array("GData-Version: 3"));
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-		// Make the REST call, returning the result
-		$response = curl_exec($curl);
-		//'Token invalid - Invalid token: Token expired.'
+		if ($single_photo){
+			$http_header = array();
+		}else{
+			$http_header = array("GData-Version"=>"3");
+		}
+		$obj_resp = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header );
+		$response = $obj_resp->body;
 		
 		
 		$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
@@ -112,50 +103,100 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			//Nuovo access token
 			$credentials = $this->refresh_token($credentials);
 			$picasa_params['access_token'] = $credentials['access_token'];
-			curl_setopt($curl, CURLOPT_URL, $url."?".http_build_query($picasa_params));
-
-			$response = curl_exec($curl);
-
+			
+			$obj_resp = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header );
+			$response = $obj_resp->body;
+			
 			$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
 		}
 		
 		//error_log(var_export($json_resp,true));
 		if ($json_resp!==NULL){
 			$menu_id = $jinput->get('ozio-menu-id', 0, 'INT');
-			$allowed_albums = $this->get_allowed_albums($menu_id);
+			$array_allowed = $this->get_allowed_albums($menu_id);
+			
+			
 			
 			if ($single_album){
-				if (in_array($input_params['album_id'],$allowed_albums) || 
-					(isset($json_resp['feed']) && isset($json_resp['feed']['rights']) && $json_resp['feed']['rights']['$t']=='public' ) ||
-					(isset($json_resp['feed']) && isset($json_resp['feed']['gphoto$access']) && $json_resp['feed']['gphoto$access']['$t']=='public'  )
-					
-					
-					){
-					//ok
+				
+				if ($single_photo){
 					echo $response;
 				}else{
+					if (!isset($json_resp['feed']['entry'])){
+						$json_resp['feed']['entry'] = array();
+					}
+					if ($array_allowed['black_list']!==false && $this->album_match($json_resp['feed'],$array_allowed['black_list'])){
+						header('HTTP/1.0 403 Forbidden');
+						echo "Album id not allowed";
+						die();
+					}
+					
+					if ($json_resp['feed']["rights"]['$t']=='public' || in_array($input_params['album_id'],$array_allowed['allowed_albums'])){
+						if (empty($callback_name)){
+							echo json_encode($json_resp);
+						}else{
+							echo $callback_name."(".json_encode($json_resp).");";
+						}
+						die();
+					}
+					
+					
+					//se è nella whitelist o è vuota la white list
+					if ($array_allowed['white_list']===false){
+						header('HTTP/1.0 403 Forbidden');
+						echo "Album id not allowed";
+						die();
+					}
+					
+					if (empty($array_allowed['white_list']) || $this->album_match($json_resp['feed'],$array_allowed['white_list'])){
+						if (empty($callback_name)){
+							echo json_encode($json_resp);
+						}else{
+							echo $callback_name."(".json_encode($json_resp).");";
+						}
+						die();
+					}
 					header('HTTP/1.0 403 Forbidden');
 					echo "Album id not allowed";
+					die();
+					
+				
 				}
 				
 			}else{
 				//filter albums allowed
+				if (!isset($json_resp['feed']['entry'])){
+					$json_resp['feed']['entry'] = array();
+				}
 				
 				$albums_in = $json_resp['feed']['entry'];
 				$albums_out = array();
 				
 				foreach ($albums_in as $album){
+					
+					if ($array_allowed['black_list']!==false && $this->album_match($album,$array_allowed['black_list'])){
+						continue;
+					}
+					
 					if ($album["rights"]['$t']=='public'){
 						$albums_out[] = $album;
 						continue;
 					}
 					$parti = explode('/',$album["id"]['$t']);
 					$album_id = array_pop($parti);
-					if (in_array($album_id,$allowed_albums)){
+					if (in_array($album_id,$array_allowed['allowed_albums'])){
 						$albums_out[] = $album;
 						continue;
 					}
+					if ($array_allowed['white_list']===false){
+						continue;
+					}
 					
+					//se è nella whitelist o è vuota la white list
+					if (empty($array_allowed['white_list']) || $this->album_match($album,$array_allowed['white_list'])){
+						$albums_out[] = $album;
+						continue;
+					}
 				}
 				
 				
@@ -180,8 +221,24 @@ class OzioGalleryViewPicasa extends JViewLegacy
         //parent::display($tpl);
     }
 	
+	function album_match($album,$allowed){
+		
+		$name= mb_strtolower($album['title']['$t']);
+		
+		foreach ($allowed as $a){
+			$a = mb_strtolower($a);
+			if (mb_strstr($name,$a)!==FALSE){
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	function get_allowed_albums($menu_id){
 		$allowed_albums = array();
+		$white_list = false;
+		$black_list = false;
 		$application = JFactory::getApplication("site");
 		$menu = $application->getMenu();
 		
@@ -190,6 +247,8 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		if ($item===null){
 			return $allowed_albums;
 		}
+		
+		
 		
 		if (strpos($item->link, "&view=00fuerte") === false && strpos($item->link, "&view=lightgallery") === false && strpos($item->link, "&view=nano") === false && strpos($item->link, "&view=jgallery") === false){
 			//invalid id
@@ -202,6 +261,24 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			$allowed_albums[] = !isset($params['albumvisibility']) || $params['albumvisibility']=='public'?$params['gallery_id']:$params['limitedalbum'];
 			
 		}else{
+			$white_list = array();
+			$black_list = array();
+			$wlist = explode('|',$item->params->get("ozio_nano_whiteList", ""));
+			$blist = explode('|',$item->params->get("ozio_nano_blackList", ""));
+			foreach ($wlist as $k){
+				$k = trim($k);
+				if (!empty($k)){
+					$white_list[] = $k;
+				}
+			}
+			foreach ($blist as $k){
+				$k = trim($k);
+				if (!empty($k)){
+					$black_list[] = $k;
+				}
+			}
+			
+			//nano e jgallery
 			$kind=$item->params->get("ozio_nano_kind", "picasa");
 			$albumvisibility=$item->params->get("albumvisibility", "public");
 			if ($kind=='picasa' && $albumvisibility=='limited'){
@@ -235,7 +312,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		}
 				
 	
-		return $allowed_albums;
+		return array('allowed_albums'=>$allowed_albums,'white_list'=>$white_list,'black_list'=>$black_list);
 	}
 	
 	function response_parse($response,$callback,&$callback_name){
@@ -263,6 +340,7 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 		return json_decode($response,true);
 	}
 	
+	
 	function refresh_token($credentials){
 		$postfields = array(
 			'client_id' => $credentials['client_id'],
@@ -271,23 +349,10 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 			'refresh_token' => $credentials['refresh_token'],
 		
 		);
-		$curl = curl_init();
-
-		curl_setopt($curl, CURLOPT_URL,"https://www.googleapis.com/oauth2/v4/token");
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
 		
+		$obj_resp = $this->gi_post_form("https://www.googleapis.com/oauth2/v4/token",$postfields);
+		$response = $obj_resp->body;
 
-		// receive server response ...
-
-		$response = curl_exec ($curl);
-
-		curl_close ($curl);
 		
 		$resp=json_decode($response,true);
 		if (isset($resp['access_token'])){
@@ -315,11 +380,84 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 			
 			return $credentials;
 		}else{
-			JError::raiseError(500, "Unable to refresh token");
+			JError::raiseError(500, "Unable to refresh token ".$response);
 			die();
 		}		
 		
 		
 	}
+		
+		
+	function gi_post_form($url,$postfields,$headers=array()){
+
+		$timeout = null;
+
+		$headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
+		
+		$data = http_build_query($postfields,'','&');
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->post($url, $data, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not send data to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}
+
+	function gi_get($url,$headers=array()){
+
+		
+		$timeout = null;
+
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->get($url, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not get data from remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}	
 	
 }

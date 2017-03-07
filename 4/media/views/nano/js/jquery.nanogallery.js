@@ -1,5 +1,5 @@
 /**!
- * @preserve nanoGALLERY v5.9.1
+ * @preserve nanoGALLERY v5.10.3
  * Plugin for jQuery by Christophe Brisbois
  * Demo: http://nanogallery.brisbois.fr
  * Sources: https://github.com/Kris-B/nanoGALLERY
@@ -22,10 +22,10 @@
 
 /*
 
-nanoGALLERY v5.9.1 release notes.
+nanoGALLERY v5.10.3 release notes.
 
-- bugfix: issue #97 - ThumbnailL1 issue  
-- bugfix: images incorrectly displayed in some cases
+- nanoPhotosProvider : underscores are replaced with spaces in title an description  
+- nanoPhotosProvider : remove leading @@NNNN in title  
 
 
 **Visit nanoGALLERY homepage for usage details: [http://nanogallery.brisbois.fr](http://www.nanogallery.brisbois.fr/)**
@@ -39,8 +39,8 @@ nanoGALLERY v5.9.1 release notes.
 
 // NG BUILD:
 //
-// replace "Tweenable" with "NGTweenable"
-// replace "define.amd" with "define.amdDISABLED"
+// rename "Tweenable" in "NGTweenable"
+// rename "define.amd" in "define.amdDISABLED"
 /*! shifty - v1.5.0 - 2015-05-31 - http://jeremyckahn.github.io/shifty */
 (function(){var t=this,n=function(){"use strict";function n(){}function e(t,n){var e;for(e in t)Object.hasOwnProperty.call(t,e)&&n(e)}function i(t,n){return e(n,function(e){t[e]=n[e]}),t}function r(t,n){e(n,function(e){t[e]===void 0&&(t[e]=n[e])})}function o(t,n,e,i,r,o,u){var s,c,h,p=o>t?0:(t-o)/r;for(s in n)n.hasOwnProperty(s)&&(c=u[s],h="function"==typeof c?c:f[c],n[s]=a(e[s],i[s],h,p));return n}function a(t,n,e,i){return t+(n-t)*e(i)}function u(t,n){var i=h.prototype.filter,r=t._filterArgs;e(i,function(e){i[e][n]!==void 0&&i[e][n].apply(t,r)})}function s(t,n,e,i,r,a,s,c,h,f,p){g=n+e+i,y=Math.min(p||d(),g),v=y>=g,M=i-(g-y),t.isPlaying()&&!v?(t._scheduleId=f(t._timeoutHandler,m),u(t,"beforeTween"),n+e>y?o(1,r,a,s,1,1,c):o(y,r,a,s,i,n+e,c),u(t,"afterTween"),h(r,t._attachment,M)):t.isPlaying()&&v&&(h(s,t._attachment,M),t.stop(!0))}function c(t,n){var i={},r=typeof n;return"string"===r||"function"===r?e(t,function(t){i[t]=n}):e(t,function(t){i[t]||(i[t]=n[t]||l)}),i}function h(t,n){this._currentState=t||{},this._configured=!1,this._scheduleFunction=p,n!==void 0&&this.setConfig(n)}var f,p,l="linear",_=500,m=1e3/60,w=Date.now?Date.now:function(){return+new Date},d="undefined"!=typeof SHIFTY_DEBUG_NOW?SHIFTY_DEBUG_NOW:w;p="undefined"!=typeof window?window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||window.mozCancelRequestAnimationFrame&&window.mozRequestAnimationFrame||setTimeout:setTimeout;var g,y,v,M;return h.prototype.tween=function(t){return this._isTweening?this:(void 0===t&&this._configured||this.setConfig(t),this._timestamp=d(),this._start(this.get(),this._attachment),this.resume())},h.prototype.setConfig=function(t){t=t||{},this._configured=!0,this._attachment=t.attachment,this._pausedAtTime=null,this._scheduleId=null,this._delay=t.delay||0,this._start=t.start||n,this._step=t.step||n,this._finish=t.finish||n,this._duration=t.duration||_,this._currentState=i({},t.from)||this.get(),this._originalState=this.get(),this._targetState=i({},t.to)||this.get();var e=this;this._timeoutHandler=function(){s(e,e._timestamp,e._delay,e._duration,e._currentState,e._originalState,e._targetState,e._easing,e._step,e._scheduleFunction)};var o=this._currentState,a=this._targetState;return r(a,o),this._easing=c(o,t.easing||l),this._filterArgs=[o,this._originalState,a,this._easing],u(this,"tweenCreated"),this},h.prototype.get=function(){return i({},this._currentState)},h.prototype.set=function(t){this._currentState=t},h.prototype.pause=function(){return this._pausedAtTime=d(),this._isPaused=!0,this},h.prototype.resume=function(){return this._isPaused&&(this._timestamp+=d()-this._pausedAtTime),this._isPaused=!1,this._isTweening=!0,this._timeoutHandler(),this},h.prototype.seek=function(t){t=Math.max(t,0);var n=d();return 0===this._timestamp+t?this:(this._timestamp=n-t,this.isPlaying()||(this._isTweening=!0,this._isPaused=!1,s(this,this._timestamp,this._delay,this._duration,this._currentState,this._originalState,this._targetState,this._easing,this._step,this._scheduleFunction,n),this.pause()),this)},h.prototype.stop=function(e){return this._isTweening=!1,this._isPaused=!1,this._timeoutHandler=n,(t.cancelAnimationFrame||t.webkitCancelAnimationFrame||t.oCancelAnimationFrame||t.msCancelAnimationFrame||t.mozCancelRequestAnimationFrame||t.clearTimeout)(this._scheduleId),e&&(u(this,"beforeTween"),o(1,this._currentState,this._originalState,this._targetState,1,0,this._easing),u(this,"afterTween"),u(this,"afterTweenEnd"),this._finish.call(this,this._currentState,this._attachment)),this},h.prototype.isPlaying=function(){return this._isTweening&&!this._isPaused},h.prototype.setScheduleFunction=function(t){this._scheduleFunction=t},h.prototype.dispose=function(){var t;for(t in this)this.hasOwnProperty(t)&&delete this[t]},h.prototype.filter={},h.prototype.formula={linear:function(t){return t}},f=h.prototype.formula,i(h,{now:d,each:e,tweenProps:o,tweenProp:a,applyFilter:u,shallowCopy:i,defaults:r,composeEasingObject:c}),"function"==typeof SHIFTY_DEBUG_NOW&&(t.timeoutHandler=s),"object"==typeof exports?module.exports=h:"function"==typeof define&&define.amd?define('ngTweenable', function(){return h}):t.NGTweenable===void 0&&(t.NGTweenable=h),h}();(function(){n.shallowCopy(n.prototype.formula,{easeInQuad:function(t){return Math.pow(t,2)},easeOutQuad:function(t){return-(Math.pow(t-1,2)-1)},easeInOutQuad:function(t){return 1>(t/=.5)?.5*Math.pow(t,2):-.5*((t-=2)*t-2)},easeInCubic:function(t){return Math.pow(t,3)},easeOutCubic:function(t){return Math.pow(t-1,3)+1},easeInOutCubic:function(t){return 1>(t/=.5)?.5*Math.pow(t,3):.5*(Math.pow(t-2,3)+2)},easeInQuart:function(t){return Math.pow(t,4)},easeOutQuart:function(t){return-(Math.pow(t-1,4)-1)},easeInOutQuart:function(t){return 1>(t/=.5)?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},easeInQuint:function(t){return Math.pow(t,5)},easeOutQuint:function(t){return Math.pow(t-1,5)+1},easeInOutQuint:function(t){return 1>(t/=.5)?.5*Math.pow(t,5):.5*(Math.pow(t-2,5)+2)},easeInSine:function(t){return-Math.cos(t*(Math.PI/2))+1},easeOutSine:function(t){return Math.sin(t*(Math.PI/2))},easeInOutSine:function(t){return-.5*(Math.cos(Math.PI*t)-1)},easeInExpo:function(t){return 0===t?0:Math.pow(2,10*(t-1))},easeOutExpo:function(t){return 1===t?1:-Math.pow(2,-10*t)+1},easeInOutExpo:function(t){return 0===t?0:1===t?1:1>(t/=.5)?.5*Math.pow(2,10*(t-1)):.5*(-Math.pow(2,-10*--t)+2)},easeInCirc:function(t){return-(Math.sqrt(1-t*t)-1)},easeOutCirc:function(t){return Math.sqrt(1-Math.pow(t-1,2))},easeInOutCirc:function(t){return 1>(t/=.5)?-.5*(Math.sqrt(1-t*t)-1):.5*(Math.sqrt(1-(t-=2)*t)+1)},easeOutBounce:function(t){return 1/2.75>t?7.5625*t*t:2/2.75>t?7.5625*(t-=1.5/2.75)*t+.75:2.5/2.75>t?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},easeInBack:function(t){var n=1.70158;return t*t*((n+1)*t-n)},easeOutBack:function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},easeInOutBack:function(t){var n=1.70158;return 1>(t/=.5)?.5*t*t*(((n*=1.525)+1)*t-n):.5*((t-=2)*t*(((n*=1.525)+1)*t+n)+2)},elastic:function(t){return-1*Math.pow(4,-8*t)*Math.sin((6*t-1)*2*Math.PI/2)+1},swingFromTo:function(t){var n=1.70158;return 1>(t/=.5)?.5*t*t*(((n*=1.525)+1)*t-n):.5*((t-=2)*t*(((n*=1.525)+1)*t+n)+2)},swingFrom:function(t){var n=1.70158;return t*t*((n+1)*t-n)},swingTo:function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},bounce:function(t){return 1/2.75>t?7.5625*t*t:2/2.75>t?7.5625*(t-=1.5/2.75)*t+.75:2.5/2.75>t?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},bouncePast:function(t){return 1/2.75>t?7.5625*t*t:2/2.75>t?2-(7.5625*(t-=1.5/2.75)*t+.75):2.5/2.75>t?2-(7.5625*(t-=2.25/2.75)*t+.9375):2-(7.5625*(t-=2.625/2.75)*t+.984375)},easeFromTo:function(t){return 1>(t/=.5)?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},easeFrom:function(t){return Math.pow(t,4)},easeTo:function(t){return Math.pow(t,.25)}})})(),function(){function t(t,n,e,i,r,o){function a(t){return((l*t+_)*t+m)*t}function u(t){return((w*t+d)*t+g)*t}function s(t){return(3*l*t+2*_)*t+m}function c(t){return 1/(200*t)}function h(t,n){return u(p(t,n))}function f(t){return t>=0?t:0-t}function p(t,n){var e,i,r,o,u,c;for(r=t,c=0;8>c;c++){if(o=a(r)-t,n>f(o))return r;if(u=s(r),1e-6>f(u))break;r-=o/u}if(e=0,i=1,r=t,e>r)return e;if(r>i)return i;for(;i>e;){if(o=a(r),n>f(o-t))return r;t>o?e=r:i=r,r=.5*(i-e)+e}return r}var l=0,_=0,m=0,w=0,d=0,g=0;return m=3*n,_=3*(i-n)-m,l=1-m-_,g=3*e,d=3*(r-e)-g,w=1-g-d,h(t,c(o))}function e(n,e,i,r){return function(o){return t(o,n,e,i,r,1)}}n.setBezierFunction=function(t,i,r,o,a){var u=e(i,r,o,a);return u.displayName=t,u.x1=i,u.y1=r,u.x2=o,u.y2=a,n.prototype.formula[t]=u},n.unsetBezierFunction=function(t){delete n.prototype.formula[t]}}(),function(){function t(t,e,i,r,o,a){return n.tweenProps(r,e,t,i,1,a,o)}var e=new n;e._filterArgs=[],n.interpolate=function(i,r,o,a,u){var s=n.shallowCopy({},i),c=u||0,h=n.composeEasingObject(i,a||"linear");e.set({});var f=e._filterArgs;f.length=0,f[0]=s,f[1]=i,f[2]=r,f[3]=h,n.applyFilter(e,"tweenCreated"),n.applyFilter(e,"beforeTween");var p=t(i,s,r,o,h,c);return n.applyFilter(e,"afterTween"),p}}(),function(t){function n(t,n){var e,i=[],r=t.length;for(e=0;r>e;e++)i.push("_"+n+"_"+e);return i}function e(t){var n=t.match(M);return n?(1===n.length||t[0].match(v))&&n.unshift(""):n=["",""],n.join(O)}function i(n){t.each(n,function(t){var e=n[t];"string"==typeof e&&e.match(S)&&(n[t]=r(e))})}function r(t){return s(S,t,o)}function o(t){var n=a(t);return"rgb("+n[0]+","+n[1]+","+n[2]+")"}function a(t){return t=t.replace(/#/,""),3===t.length&&(t=t.split(""),t=t[0]+t[0]+t[1]+t[1]+t[2]+t[2]),b[0]=u(t.substr(0,2)),b[1]=u(t.substr(2,2)),b[2]=u(t.substr(4,2)),b}function u(t){return parseInt(t,16)}function s(t,n,e){var i=n.match(t),r=n.replace(t,O);if(i)for(var o,a=i.length,u=0;a>u;u++)o=i.shift(),r=r.replace(O,e(o));return r}function c(t){return s(T,t,h)}function h(t){for(var n=t.match(F),e=n.length,i=t.match(I)[0],r=0;e>r;r++)i+=parseInt(n[r],10)+",";return i=i.slice(0,-1)+")"}function f(i){var r={};return t.each(i,function(t){var o=i[t];if("string"==typeof o){var a=d(o);r[t]={formatString:e(o),chunkNames:n(a,t)}}}),r}function p(n,e){t.each(e,function(t){for(var i=n[t],r=d(i),o=r.length,a=0;o>a;a++)n[e[t].chunkNames[a]]=+r[a];delete n[t]})}function l(n,e){t.each(e,function(t){var i=n[t],r=_(n,e[t].chunkNames),o=m(r,e[t].chunkNames);i=w(e[t].formatString,o),n[t]=c(i)})}function _(t,n){for(var e,i={},r=n.length,o=0;r>o;o++)e=n[o],i[e]=t[e],delete t[e];return i}function m(t,n){k.length=0;for(var e=n.length,i=0;e>i;i++)k.push(t[n[i]]);return k}function w(t,n){for(var e=t,i=n.length,r=0;i>r;r++)e=e.replace(O,+n[r].toFixed(4));return e}function d(t){return t.match(F)}function g(n,e){t.each(e,function(t){var i,r=e[t],o=r.chunkNames,a=o.length,u=n[t];if("string"==typeof u){var s=u.split(" "),c=s[s.length-1];for(i=0;a>i;i++)n[o[i]]=s[i]||c}else for(i=0;a>i;i++)n[o[i]]=u;delete n[t]})}function y(n,e){t.each(e,function(t){var i=e[t],r=i.chunkNames,o=r.length,a=n[r[0]],u=typeof a;if("string"===u){for(var s="",c=0;o>c;c++)s+=" "+n[r[c]],delete n[r[c]];n[t]=s.substr(1)}else n[t]=a})}var v=/(\d|\-|\.)/,M=/([^\-0-9\.]+)/g,F=/[0-9.\-]+/g,T=RegExp("rgb\\("+F.source+/,\s*/.source+F.source+/,\s*/.source+F.source+"\\)","g"),I=/^.*\(/,S=/#([0-9]|[a-f]){3,6}/gi,O="VAL",b=[],k=[];t.prototype.filter.token={tweenCreated:function(t,n,e){i(t),i(n),i(e),this._tokenData=f(t)},beforeTween:function(t,n,e,i){g(i,this._tokenData),p(t,this._tokenData),p(n,this._tokenData),p(e,this._tokenData)},afterTween:function(t,n,e,i){l(t,this._tokenData),l(n,this._tokenData),l(e,this._tokenData),y(i,this._tokenData)}}}(n)}).call(null);
 
@@ -66,14 +66,14 @@ nanoGALLERY v5.9.1 release notes.
     var _this = this;
 
     // Access to jQuery and DOM versions of element
-    _this.$e = $(elt);
+    _this.$e = jQuery(elt);
     _this.e = elt;
 
     // Add a reverse reference to the DOM object
     _this.$e.data('nanoGallery', _this);
 
     _this.init = function(){
-      _this.options = $.extend(true, {},$.nanoGallery.defaultOptions, options);
+      _this.options = jQuery.extend(true, {},jQuery.nanoGallery.defaultOptions, options);
       // Initialization code
       _this.nG= new nanoGALLERY();
       _this.nG.Initiate(_this.e, _this.options );
@@ -115,6 +115,7 @@ nanoGALLERY v5.9.1 release notes.
     keepSelection: false,
     jsonCharset: 'Latin', jsonProvider: '',
     paginationMaxLinesPerPage : 0, paginationDots : false, paginationSwipe : true,
+    paginationVisiblePages : 10,
     maxWidth : 0,
     viewer : 'internal',
     viewerFullscreen: false,
@@ -159,23 +160,24 @@ nanoGALLERY v5.9.1 release notes.
     lazyBuild : 'none', lazyBuildTreshold : 150,
     debugMode: false,
     i18n : {
-      'breadcrumbHome' : '', 'breadcrumbHome_FR' : '',
-      'paginationPrevious' : 'Previous', 'paginationPrevious_FR' : 'Pr&eacute;c&eacute;dent', 'paginationPrevious_DE' : 'Zur&uuml;ck', 'paginationPrevious_IT' : 'Indietro',
-      'paginationNext' : 'Next', 'paginationNext_FR' : 'Suivant', 'paginationNext_DE' : 'Weiter', 'paginationNext_IT' : 'Avanti',
+      'breadcrumbHome' : '', 'breadcrumbHome_FR' : '', 'breadcrumbHome_ES' : '',
+      'paginationPrevious' : 'Previous', 'paginationPrevious_FR' : 'Pr&eacute;c&eacute;dent', 'paginationPrevious_DE' : 'Zur&uuml;ck', 'paginationPrevious_IT' : 'Indietro',' paginationPrevious_ES' : 'Anterior',
+      'paginationNext' : 'Next', 'paginationNext_FR' : 'Suivant', 'paginationNext_DE' : 'Weiter', 'paginationNext_IT' : 'Avanti', 'paginationNext_ES' : 'Siguiente',
       'thumbnailLabelItemsCountPart1' : '', //'| ',
       'thumbnailLabelItemsCountPart2' : '', //' photos', 'thumbnailLabelItemsCountPart2_DE' : ' Fotos',
       'thumbnailImageTitle' : '', 'thumbnailAlbumTitle' : '',
       'thumbnailImageDescription' : '', 'thumbnailAlbumDescription' : '',
-      'infoBoxPhoto' : 'Photo', 'infoBoxDate' : 'Date', 'infoBoxAlbum' : 'Album', 'infoBoxDimensions' : 'Dimensions', 'infoBoxFilename' : 'Filename', 'infoBoxFileSize' : 'File size', 'infoBoxCamera' : 'Camera', 'infoBoxFocalLength' : 'Focal length', 'infoBoxExposure' : 'Exposure', 'infoBoxFNumber' : 'F Number', 'infoBoxISO' : 'ISO', 'infoBoxMake' : 'Make', 'infoBoxFlash' : 'Flash', 'infoBoxViews' : 'Views', 'infoBoxComments' : 'Comments'
+      'infoBoxPhoto' : 'Photo', 'infoBoxDate' : 'Date', 'infoBoxAlbum' : 'Album', 'infoBoxDimensions' : 'Dimensions', 'infoBoxFilename' : 'Filename', 'infoBoxFileSize' : 'File size', 'infoBoxCamera' : 'Camera', 'infoBoxFocalLength' : 'Focal length', 'infoBoxExposure' : 'Exposure', 'infoBoxFNumber' : 'F Number', 'infoBoxISO' : 'ISO', 'infoBoxMake' : 'Make', 'infoBoxFlash' : 'Flash', 'infoBoxViews' : 'Views', 'infoBoxComments' : 'Comments',
+      'infoBoxPhoto_ES' : 'Foto',	'infoBoxDate_ES' : 'Fecha',	'infoBoxAlbum_ES' : 'Album',	'infoBoxDimensions_ES' : 'Dimensiones',	'infoBoxFilename_ES' : 'Nombre', 'infoBoxFileSize_ES' : 'Tama&ntilde;o', 'infoBoxCamera_ES' : 'C&aacute;mara', 'infoBoxFocalLength_ES' : 'Longitud focal', 'infoBoxExposure_ES' : 'Exposici&oacute;n', 'infoBoxFNumber_ES' : 'N&uacute;mero F', 'infoBoxISO_ES' : 'ISO', 'infoBoxMake_ES' : 'Hacer', 'infoBoxFlash_ES' : 'Flash', 'infoBoxViews_ES' : 'Vistas', 'infoBoxComments_ES' : 'Comentarios'
     }
   };
 
   jQuery.fn.nanoGallery = function (args, option, value) {
     // jQuery.fn.nanoGallery = function(options){
     // if( typeof(options) !== 'undefined'){
-    if( typeof $(this).data('nanoGallery') === 'undefined'){
+    if( typeof jQuery(this).data('nanoGallery') === 'undefined'){
       return this.each( function(){
-        (new $.nanoGallery(this, args));
+        (new jQuery.nanoGallery(this, args));
       });
     }
     else {
@@ -184,95 +186,95 @@ nanoGALLERY v5.9.1 release notes.
 
       switch(args){
         case 'reload':
-          $(this).data('nanoGallery').nG.ReloadAlbum();
-          return $(this);
+          jQuery(this).data('nanoGallery').nG.ReloadAlbum();
+          return jQuery(this);
           break;
         case 'refreshSize':
-          $(this).data('nanoGallery').nG.RefreshSize();
-          return $(this);
+          jQuery(this).data('nanoGallery').nG.RefreshSize();
+          return jQuery(this);
           break;
         case 'getSelectedItems':
-          return $(this).data('nanoGallery').nG.GetSelectedItems();
+          return jQuery(this).data('nanoGallery').nG.GetSelectedItems();
           break;
         case 'selectItems':
-          $(this).data('nanoGallery').nG.SetSelectedItems(option);
+          jQuery(this).data('nanoGallery').nG.SetSelectedItems(option);
           break;
         case 'unselectItems':
-          $(this).data('nanoGallery').nG.SetUnselectedItems(option);
+          jQuery(this).data('nanoGallery').nG.SetUnselectedItems(option);
           break;
         case 'setSelectMode':
           if(option === true || option === false || option === 'image' || option === 'album'){
-            $(this).data('nanoGallery').nG.SetSelectMode(option);
+            jQuery(this).data('nanoGallery').nG.SetSelectMode(option);
           }
           break;
         case 'getSelectMode':
-          return $(this).data('nanoGallery').nG.GetSelectMode();
+          return jQuery(this).data('nanoGallery').nG.GetSelectMode();
           break;
         case 'getItem':
-          return $(this).data('nanoGallery').nG.GetItem(option);
+          return jQuery(this).data('nanoGallery').nG.GetItem(option);
           break;
         case 'getItems':
-          return $(this).data('nanoGallery').nG.GetItems();
+          return jQuery(this).data('nanoGallery').nG.GetItems();
           break;
         case 'getItemsIndex':
-          return $(this).data('nanoGallery').nG.GetItemsIndex(option);
+          return jQuery(this).data('nanoGallery').nG.GetItemsIndex(option);
           break;
         case 'option':
           if(typeof value === 'undefined'){
-            return $(this).data('nanoGallery').nG.Get(option);
+            return jQuery(this).data('nanoGallery').nG.Get(option);
           }else{
-            $(this).data('nanoGallery').nG.Set(option,value);
+            jQuery(this).data('nanoGallery').nG.Set(option,value);
             if( option == 'demoViewportWidth' ) {
               // force resize event -> for demo purposes
-              $(window).trigger('resize');
+              jQuery(window).trigger('resize');
             }
           }
           break;
         case 'destroy':
-          $(this).data('nanoGallery').nG.$E.base.text('');
-          $(this).removeData();
+          jQuery(this).data('nanoGallery').nG.$E.base.text('');
+          jQuery(this).removeData();
           break;
         case 'closeViewer':
-          $(this).data('nanoGallery').nG.closeViewer();
+          jQuery(this).data('nanoGallery').nG.closeViewer();
           break;
         case 'minimizeToolbar':
-          $(this).data('nanoGallery').nG.minimizeToolbar();
+          jQuery(this).data('nanoGallery').nG.minimizeToolbar();
           break;
         case 'maximizeToolbar':
-          $(this).data('nanoGallery').nG.maximizeToolbar();
+          jQuery(this).data('nanoGallery').nG.maximizeToolbar();
           break;
         case 'displayItem':
-          $(this).data('nanoGallery').nG.displayItem(option);
+          jQuery(this).data('nanoGallery').nG.displayItem(option);
           break;
         case 'paginationPreviousPage':
-          $(this).data('nanoGallery').nG.paginationPreviousPage();
+          jQuery(this).data('nanoGallery').nG.paginationPreviousPage();
           break;
         case 'paginationNextPage':
-          $(this).data('nanoGallery').nG.paginationNextPage();
+          jQuery(this).data('nanoGallery').nG.paginationNextPage();
           break;
         case 'paginationGotoPage':
-          $(this).data('nanoGallery').nG.paginationGotoPage(option);
+          jQuery(this).data('nanoGallery').nG.paginationGotoPage(option);
           break;
         case 'paginationCountPages':
-          return $(this).data('nanoGallery').nG.paginationCountPages();
+          return jQuery(this).data('nanoGallery').nG.paginationCountPages();
           break;
         case 'getCurrentViewedItem':
-          return $(this).data('nanoGallery').nG.GetCurrentViewedItem();
+          return jQuery(this).data('nanoGallery').nG.GetCurrentViewedItem();
           break;
         case 'getCurrentViewedItemIdx':
-          return $(this).data('nanoGallery').nG.GetCurrentViewedItemIdx();
+          return jQuery(this).data('nanoGallery').nG.GetCurrentViewedItemIdx();
           break;
         case 'moveToNextAlbum':
-          return $(this).data('nanoGallery').nG.moveToNextAlbum();
+          return jQuery(this).data('nanoGallery').nG.moveToNextAlbum();
           break;
         case 'moveToPreviousAlbum':
-          return $(this).data('nanoGallery').nG.moveToPreviousAlbum();
+          return jQuery(this).data('nanoGallery').nG.moveToPreviousAlbum();
           break;
         case 'galleryCountImages':
-          return $(this).data('nanoGallery').nG.galleryCountImages();
+          return jQuery(this).data('nanoGallery').nG.galleryCountImages();
           break;
       }
-      return $(this);
+      return jQuery(this);
 
     }
   };
@@ -402,7 +404,7 @@ nanoGALLERY v5.9.1 release notes.
     this.paginationGotoPage = function ( page ) {
       var aIdx=G.$E.conPagin.data('galleryIdx');
       if( !inViewportVert(G.$E.base, 0) ) {
-        $('html, body').animate({scrollTop: G.$E.base.offset().top}, 200);
+        jQuery('html, body').animate({scrollTop: G.$E.base.offset().top}, 200);
       }
       if( page > 1 ) { page--; }
       renderGallery(aIdx, page);
@@ -556,11 +558,11 @@ nanoGALLERY v5.9.1 release notes.
         G.selectMode = value;
         if(value === 'album' || value == 'image'){
           G.$E.base.find('.nanoGalleryThumbnailContainer').each(function(){
-            if(($(this).hasClass('album') && value === 'image') ||
-                (!$(this).hasClass('album') && value === 'album')){
-              $(this).addClass('unselectable');
+            if((jQuery(this).hasClass('album') && value === 'image') ||
+                (!jQuery(this).hasClass('album') && value === 'album')){
+              jQuery(this).addClass('unselectable');
             }else{
-              $(this).removeClass('unselectable');
+              jQuery(this).removeClass('unselectable');
             }
           });
         }else{
@@ -596,6 +598,7 @@ nanoGALLERY v5.9.1 release notes.
       conNavBCon: null,       // $g_containerNavigationbarCont
       conNavBFullpage: null,  // breadcrumb fullpage button
       conVwCon: null,         // $g_containerViewerContainer
+
 
 	  conInfoBox: null,			//GI $g_containerInfoBox	  
 	  conHideShare: null,
@@ -736,12 +739,12 @@ nanoGALLERY v5.9.1 release notes.
       }
       return undefined;
     })();
-    G.IOSversion = (function() {
-      if (/iP(hone|od|ad)/.test(navigator.platform)) {
-          var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-          return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
-      }
-    })();
+    // G.IOSversion = (function() {
+    //  if (/iP(hone|od|ad)/.test(navigator.platform)) {
+    //      var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+    //      return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+    //  }
+    // })();
 
     G.isIOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
     G.isGingerbread= /Android 2\.3\.[3-7]/i.test(navigator.userAgent),
@@ -755,7 +758,7 @@ nanoGALLERY v5.9.1 release notes.
     G.picasa = {
       url: function() {
         // return (location.protocol=='https:' ? 'https://picasaweb.google.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
-        //return ( G.O.picasaUseUrlCrossDomain ? 'https://photos.googleapis.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
+        // return ( G.O.picasaUseUrlCrossDomain ? 'https://photos.googleapis.com/data/feed/api/' : 'https://picasaweb.google.com/data/feed/api/');
 		return G.O.picasaUrl;
       },
       thumbSize:64,
@@ -936,12 +939,13 @@ nanoGALLERY v5.9.1 release notes.
         thumbSetImgHeight: function(h) {
           var lst=['xs','sm','me','la','xl'];
           for( var i=0; i< lst.length; i++ ) {
+            // check if settings are same
             if( G.tn.settings.height.l1[lst[i]] == G.tn.settings.getH() && G.tn.settings.width.l1[lst[i]] == G.tn.settings.getW() ) {
               this.thumbs.height.l1[lst[i]]=h;
             }
           }
           for( var i=0; i< lst.length; i++ ) {
-            if( G.tn.settings.height.lN[lst[i]] == G.tn.settings.getH() && G.tn.settings.width.l1[lst[i]] == G.tn.settings.getW() ) {
+            if( G.tn.settings.height.lN[lst[i]] == G.tn.settings.getH() && G.tn.settings.width.lN[lst[i]] == G.tn.settings.getW() ) {
               this.thumbs.height.lN[lst[i]]=h;
             }
           }
@@ -956,7 +960,7 @@ nanoGALLERY v5.9.1 release notes.
             }
           }
           for( var i=0; i< lst.length; i++ ) {
-            if( G.tn.settings.height.lN[lst[i]] == G.tn.settings.getH() && G.tn.settings.width.l1[lst[i]] == G.tn.settings.getW() ) {
+            if( G.tn.settings.height.lN[lst[i]] == G.tn.settings.getH() && G.tn.settings.width.lN[lst[i]] == G.tn.settings.getW() ) {
               this.thumbs.width.lN[lst[i]]=w;
             }
           }
@@ -1028,7 +1032,8 @@ nanoGALLERY v5.9.1 release notes.
     	}
     	return imgUrl;    	  
     	  
-    	  //vecchio	  	
+    	  //vecchio	  			
+			
           var url = '';
           switch(G.O.kind) {
             case '':
@@ -1459,7 +1464,7 @@ nanoGALLERY v5.9.1 release notes.
 
         // CUSTOM STORAGE
         case 'json':
-          NGAddItem(G.i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', '0', '-1' );
+          NGAddItem(G.i18nTranslations.breadcrumbHome, '', '', '', '', 'album', '', G.O.album.length > 0 ? encodeURIComponent(G.O.album) : '0', '-1' );
           JsonProcessItems(0,true,-1,false);
           break;
 
@@ -1657,6 +1662,7 @@ nanoGALLERY v5.9.1 release notes.
         // open URL
         if( G.I[n].destinationURL !== undefined && G.I[n].destinationURL.length >0 ) {
           window.location = G.I[n].destinationURL;
+          //window.open(G.I[n].destinationURL, '_blank');
           return;
         }
 
@@ -1701,9 +1707,9 @@ nanoGALLERY v5.9.1 release notes.
 
       // Handle the start of gestures
       this.handleGestureStart = function(e) {
-		G.O.paginationDisableSwipe=jQuery(window).width()<=768;//GI
-
-		var eType=(jQuery(e.target).get(0).tagName).toUpperCase();
+		  G.O.paginationDisableSwipe=jQuery(window).width()<=768;//GI
+		  
+        var eType=(jQuery(e.target).get(0).tagName).toUpperCase();
         // class customEventHandler --> disable standard event handler
         if( G.containerViewerDisplayed || eType == 'A' || eType == 'INPUT' || jQuery(e.target).hasClass('customEventHandler') ) {     // detect click on custom element
           e.stopPropagation();
@@ -1797,9 +1803,9 @@ nanoGALLERY v5.9.1 release notes.
 
         if( G.O.paginationSwipe ) {
           if( G.pgMaxLinesPerPage > 0 && G.tn.settings.getH() != 'auto' && G.tn.settings.getW() != 'auto' ) {
-			if (G.O.paginationDisableSwipe){//GI
+			  if (G.O.paginationDisableSwipe){//GI
 				return;
-			}				  
+			}	
             if( Math.abs(initialTouchPos.x - lastTouchPos.x) > 15 || onlyX ) {
               e.preventDefault(); // if swipe horizontaly the gallery, avoid moving page also
               onlyX=true;
@@ -1953,7 +1959,7 @@ nanoGALLERY v5.9.1 release notes.
             ThumbnailHoverOutAll();
 			if (G.O.paginationDisableSwipe==1){//GI
 				return;
-			}				
+			}	
             if( differenceInX < -40 ) {
               paginationPreviousPage();
             }
@@ -2097,11 +2103,10 @@ nanoGALLERY v5.9.1 release notes.
       if( G.O.whiteList != '' ) { G.whiteList=G.O.whiteList.toUpperCase().split('|'); }
       if( G.O.albumList != '' ) { G.albumList=G.O.albumList.toUpperCase().split('|'); }
 
-      if( G.O.kind == 'picasa' || G.O.kind == 'flickr' ) {
-		  
-		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+      if( G.O.kind == 'picasa' || G.O.kind == 'flickr' || G.O.kind == 'json' ) {
+		  if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
 			G.O.displayBreadcrumb=true;
-		}
+		  }
       }
       // flickr
       if( G.O.photoset !== undefined ) {
@@ -3023,9 +3028,9 @@ nanoGALLERY v5.9.1 release notes.
       });
 
       if( foundAlbumID ) {
-		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+		  if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
 			G.O.displayBreadcrumb=true;
-		}
+		  }
       }
 
       // get the number of images per album for all the items
@@ -3190,9 +3195,9 @@ nanoGALLERY v5.9.1 release notes.
       jQuery.each(elements, function(i,item){ jQuery(item).remove(); });
 
       if( foundAlbumID ) {
-		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
+		   if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
 			G.O.displayBreadcrumb=true;
-		}
+		   }
       }
 
       // get the number of images per album for all the items
@@ -3313,55 +3318,71 @@ nanoGALLERY v5.9.1 release notes.
           title=GetImageTitle((item.src));
         }
 
+        // replace underscores qith spaces
+        title=title.replaceAll('_',' ');
+        // remove leading @@NNNN (used to sort manually the albums)
+        if( title.search(/@@\d\d\d\d/) == 0 ) {
+          title=title.substring(6);
+          // Trim trailing/leading whitespace
+          title = title.replace(/^\s*|\s*$/, '');
+        }
+        
         var description='';     //'&nbsp;';
         description=GetI18nItem(item,'description');
         if( description === undefined ) { description=''; }
+        description=description.replaceAll('_',' ');
 
         var destinationURL='';
-
-        var albumID=0;
-        if( item.albumID !== undefined  ) {
-          albumID=(item.albumID);
-          foundAlbumID=true;
-        }
-        var ID=null;
-        if( item.ID !== undefined ) {
-          ID=(item.ID);
-        }
-
+        
         var kind='image';
         if( item.kind !== undefined && item.kind.length>0 ) {
           kind=item.kind;
         }
 
-        var newItem=NGAddItem(title, thumbsrc, src, description, destinationURL, kind, '', ID, albumID );
-        // thumbnail image size
-        var tw=item.imgtWidth;
-        var th=item.imgtHeight;
-
-        newItem.thumbs = {
-          url: { l1 : { xs:thumbsrc, sm:thumbsrc, me:thumbsrc, la:thumbsrc, xl:thumbsrc }, lN : { xs:thumbsrc, sm:thumbsrc, me:thumbsrc, la:thumbsrc, xl:thumbsrc } },
-          width: { l1 : { xs:tw, sm:tw, me:tw, la:tw, xl:tw }, lN : { xs:tw, sm:tw, me:tw, la:tw, xl:tw } },
-          height: { l1 : { xs:th, sm:th, me:th, la:th, xl:th }, lN : { xs:th, sm:th, me:th, la:th, xl:th } }
-        };
-
-        if( typeof G.O.fnProcessData == 'function' ) {
-          G.O.fnProcessData(newItem, 'api', null);
+        var ID=null;
+        if( item.ID !== undefined ) {
+          ID=(item.ID);
         }
 
-        if( kind == 'image' ) {
-          newItem.imageNumber=nb;
-          nb++;
-          if( nb >= G.maxAlbums ) {
-            return false;
+        var ok=true;
+        if( kind == 'album' ) {
+          if( !CheckAlbumName(title, ID) ) { ok=false; }
+        }
+
+        if( ok ) {
+          var albumID=0;
+          if( item.albumID !== undefined  ) {
+            albumID=(item.albumID);
+            foundAlbumID=true;
+          }
+
+          var newItem=NGAddItem(title, thumbsrc, src, description, destinationURL, kind, '', ID, albumID );
+          // thumbnail image size
+          var tw=item.imgtWidth;
+          var th=item.imgtHeight;
+
+          newItem.thumbs = {
+            url: { l1 : { xs:thumbsrc, sm:thumbsrc, me:thumbsrc, la:thumbsrc, xl:thumbsrc }, lN : { xs:thumbsrc, sm:thumbsrc, me:thumbsrc, la:thumbsrc, xl:thumbsrc } },
+            width: { l1 : { xs:tw, sm:tw, me:tw, la:tw, xl:tw }, lN : { xs:tw, sm:tw, me:tw, la:tw, xl:tw } },
+            height: { l1 : { xs:th, sm:th, me:th, la:th, xl:th }, lN : { xs:th, sm:th, me:th, la:th, xl:th } }
+          };
+
+          if( typeof G.O.fnProcessData == 'function' ) {
+            G.O.fnProcessData(newItem, 'api', null);
+          }
+
+          if( kind == 'image' ) {
+            newItem.imageNumber=nb;
+            nb++;
+            if( nb >= G.maxAlbums ) {
+              return false;
+            }
           }
         }
       });
 
       if( foundAlbumID ) {
-		if (!G.O.hasOwnProperty('displayBreadcrumb')){//GI
-			G.O.displayBreadcrumb=true;
-		}
+       // G.O.displayBreadcrumb=true;
       }
 
       G.I[albumIdx].contentIsLoaded=true;
@@ -3487,6 +3508,7 @@ nanoGALLERY v5.9.1 release notes.
               var y =  b.title._content.toUpperCase();
               return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
             });
+			
 			break;
 		case 'id':
 			source.sort(function (a, b) {
@@ -3501,7 +3523,8 @@ nanoGALLERY v5.9.1 release notes.
 			  var y =  b.id;
 			  return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
 			});
-			break;
+			break;			
+			
         }
 
         jQuery.each(source, function(i,item){
@@ -3657,6 +3680,7 @@ nanoGALLERY v5.9.1 release notes.
             return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
           });
           break;
+		  
 		case 'id':
 			source.sort(function (a, b) {
 			  var x =  a.id;
@@ -3670,8 +3694,7 @@ nanoGALLERY v5.9.1 release notes.
 			  var y =  b.id;
 			  return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
 			});
-			break;			
-			
+			break;				  
       }
 
       var albumID=G.I[albumIdx].GetID(),
@@ -3700,7 +3723,6 @@ nanoGALLERY v5.9.1 release notes.
         if( G.O.thumbnailLabel.get('title') != '' ) {
           itemTitle=GetImageTitle(imgUrl);
         }
-		
 		var flickrSpecificData={
 				'seed':(location.protocol=='https:'?'https:':'http:')+"//farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.id + "_" + item.secret + "_",
 				'img_orig_width':0,	
@@ -3717,10 +3739,8 @@ nanoGALLERY v5.9.1 release notes.
 			  
 		  
 		  var newItem=NGAddItem(itemTitle, '', imgUrl, itemDescription, '', 'image', '', itemID, albumID,'flickr', flickrSpecificData );
-		
-		
 
-        //var newItem=NGAddItem(itemTitle, '', imgUrl, itemDescription, '', 'image', '', itemID, albumID );
+       // var newItem=NGAddItem(itemTitle, '', imgUrl, itemDescription, '', 'image', '', itemID, albumID );
         newItem.imageNumber=nb;
         if( item.url_o !== undefined ) {
           newItem.width=item.width_o;
@@ -3812,8 +3832,9 @@ nanoGALLERY v5.9.1 release notes.
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&imgmax=d&thumbsize=320';
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&imgmax=d&thumbsize='+thumbSizes;
         // url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime());
+        //url = G.picasa.url() + 'user/'+G.O.userID+'?alt=json&kind=album&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime());
 		
-		url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime()) );
+		url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&alt=json&kind=album&access=public&thumbsize='+thumbSizes+'&rnd=' + (new Date().getTime()) )+'&ozrand='+(new Date().getTime());
 		
       }
       else {
@@ -3822,10 +3843,11 @@ nanoGALLERY v5.9.1 release notes.
         if( typeof G.I[albumIdx].customData.authkey !== 'undefined' ) { opt=G.I[albumIdx].customData.authkey; }
         // url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+G.picasa.thumbSize+'&imgmax=d';
         //url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d';
-		
-        url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&album_id='+encodeURIComponent(G.I[albumIdx].GetID())+'&alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d');
-
         // url = G.picasa.url() + 'user/'+G.O.userID+'/albumid/'+G.I[albumIdx].GetID()+'?alt=json&kind=photo'+opt+'&thumbsize=320&imgmax=d';
+		
+		
+		 url = G.picasa.url() + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(G.O.userID)+'&album_id='+encodeURIComponent(G.I[albumIdx].GetID())+'&alt=json&kind=photo'+opt+'&thumbsize='+thumbSizes+'&imgmax=d')+'&ozrand='+(new Date().getTime());
+		
         kind='image';
       }
       //A    url = url + "&callback=?";
@@ -3940,7 +3962,7 @@ nanoGALLERY v5.9.1 release notes.
       if (kind =='image'){
         sortOrder=G.O.photoSorting;
       }
-	  
+
       switch( sortOrder ) {
         case 'random':
           source = AreaShuffle(source);
@@ -4046,15 +4068,14 @@ nanoGALLERY v5.9.1 release notes.
           return( (x > y) ? -1 : ((x < y) ? 1 : 0) );
         });
         break;
-	}
-	
+      }
+
       if (kind =='image'){
 		  
 			if (G.O.ozmaxres>0)source=source.slice(0,G.O.ozmaxres);
 			if (G.O.oz_max_num_photo>0)source=source.slice(0,G.O.oz_max_num_photo);
 	  }
-	
-
+	  
       jQuery.each(source, function(i,data){
 
         //Get the title
@@ -4074,7 +4095,7 @@ nanoGALLERY v5.9.1 release notes.
 
         var imgUrl=data.media$group.media$content[0].url;
 		
-	  var picasaSpecificData={
+		var picasaSpecificData={
 				'seed':'',
 				'img_orig_width':0,
 				'img_orig_height':0
@@ -4088,8 +4109,8 @@ nanoGALLERY v5.9.1 release notes.
 
         var ok=true;
         if( kind == 'album' ) {
-          if( !CheckAlbumName(itemTitle, itemID)|| data.gphoto$numphotos.$t==0 ) { ok=false; }
-		}else{
+          if( !CheckAlbumName(itemTitle, itemID)|| data.gphoto$numphotos.$t==0  ) { ok=false; }
+        }else{
 		
 			//var seed = data.content.src.substring(0, data.content.src.lastIndexOf("/"));
 			var seed = itemThumbURL.substring(0, itemThumbURL.lastIndexOf("/"));
@@ -4098,6 +4119,7 @@ nanoGALLERY v5.9.1 release notes.
 			picasaSpecificData.img_orig_height=data.gphoto$height.$t;
 			picasaSpecificData.seed=seed;			  
         }
+
 
         var tags='';
 
@@ -4130,7 +4152,6 @@ nanoGALLERY v5.9.1 release notes.
             newItem.author=data.author[0].name.$t;
             newItem.contentLength=G.O.ozmaxres>0?Math.min(G.O.ozmaxres,data.gphoto$numphotos.$t):data.gphoto$numphotos.$t;
             newItem.contentLength=G.O.oz_max_num_photo>0?Math.min(G.O.oz_max_num_photo,newItem.contentLength):newItem.contentLength;
-
           }
 		if( kind == 'image' ) {
           newItem.infobox={};
@@ -4395,6 +4416,7 @@ nanoGALLERY v5.9.1 release notes.
       item.albumID=albumID;
 		item.albumSource=albumSource;
 		item.imgSpecificData=imgSpecificData;
+		item.ID = ID;
       if( tags.length == 0 ) {
         item.tags=null;
       }
@@ -5013,14 +5035,14 @@ nanoGALLERY v5.9.1 release notes.
       lastPosX=0;
       cnt=0;
       $thumbnails.each(function() {
-        var $this=jQuery(this),
+
+      var $this=jQuery(this),
         n=$this.data("index");
         if( n !== undefined && G.I[n] != undefined ) {
           if( G.I[n].thumbImg().width > 0 && G.I[n].thumbImg().height > 0 ) {
             var item=G.I[n],
             // w=Math.ceil(item.thumbImgWidth/item.thumbImg().height*rowHeight[rowNum]);//+G.tn.borderWidth+G.tn.imgContBorderWidth;
             w=Math.floor(item.thumbImg().width/item.thumbImg().height*rowHeight[rowNum]);//+G.tn.borderWidth+G.tn.imgContBorderWidth;
-
             if( cnt == 0 && G.O.thumbnailFeatured ) {
               w=w*2;
               if( rowHeight.length == 1 ) {
@@ -5329,6 +5351,7 @@ nanoGALLERY v5.9.1 release notes.
     // ###################
 
     // Display pagination
+    // Display pagination
     function managePagination( albumIdx, pageNumber ) {
       if( G.$E.conPagin == undefined ) return;
 
@@ -5442,6 +5465,8 @@ nanoGALLERY v5.9.1 release notes.
       G.$E.conPagin.width(w);
 
     }
+
+    function isOdd(num) { return (num % 2) == 1;}
 
     function paginationNextPage() {
       var aIdx=G.$E.conPagin.data('galleryIdx'),
@@ -5616,6 +5641,7 @@ nanoGALLERY v5.9.1 release notes.
             onComplete(albumIdx, pageNumber);
             return;
           }
+
           var item=G.I[idx];
           if( item.albumID == G.I[albumIdx].GetID() ) {
             currentCounter++;
@@ -5709,7 +5735,7 @@ nanoGALLERY v5.9.1 release notes.
         pos='top:0px;left:0px;';
 //        ch='';
       }
-      newElt[newEltIdx++]='<div class="nanoGalleryThumbnailContainer'+ch+' nGEvent" style="display:block;opacity:0;'+pos+'" ><div class="subcontainer nGEvent" style="display:block;">';
+      newElt[newEltIdx++]='<div class="nanoGalleryThumbnailContainer'+ch+' nGEvent" style="display:block;opacity:0;'+pos+'" data-originalid="' + item.ID + '" ><div class="subcontainer nGEvent" style="display:block;">';
 
       var checkImageSize=false,
       src=G.emptyGif;
@@ -5717,6 +5743,7 @@ nanoGALLERY v5.9.1 release notes.
       if( !G.O.thumbnailLazyLoad || checkImageSize) {
         src=item.thumbImg().src;
       }
+
       var sTitle=getThumbnailTitle(item),
       sDesc=getTumbnailDescription(item);
 
@@ -5739,10 +5766,12 @@ nanoGALLERY v5.9.1 release notes.
             switch( G.O.thumbnailLabel.get('itemsCount') ) {
               case 'title':
                 //sTitle +=  ' ' + G.i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="nGEvent">' +item.contentLength + '</span>' +G.i18nTranslations.thumbnailLabelItemsCountPart2;
-				sTitle += ' ' + G.i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelNumPhotoTitle"></span>' + item.contentLength;
+				
+				sTitle +=  ' ' + G.i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelNumPhotoTitle"></span>' + item.contentLength;
                 break;
               case 'description':
                 //sDesc += ' ' + G.i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="nGEvent">' + item.contentLength + '</span>' + G.i18nTranslations.thumbnailLabelItemsCountPart2;
+				
 				sDesc += ' ' + G.i18nTranslations.thumbnailLabelItemsCountPart1 + '<span class="labelNumPhotoTitle"></span>' + item.contentLength;
                 break;
             }
@@ -5752,7 +5781,7 @@ nanoGALLERY v5.9.1 release notes.
       }
       else {
         // IMAGE
-        if( G.O.thumbnailLabelL2_display == true && G.O.thumbnailLabel.get('display') == true ) {
+        if(  G.O.thumbnailLabelL2_display == true && G.O.thumbnailLabel.get('display') == true ) {
           if( foundDesc && sDesc.length == 0 && G.O.thumbnailLabel.get('position') == 'onBottom' ) { sDesc='&nbsp;'; }
           newElt[newEltIdx++]='<div class="labelImage nGEvent" style="width:'+G.tn.settings.getW()+'px;'+(G.O.RTL ? "direction:RTL;" :"")+(G.curNavLevel == 'l1' ? G.tn.styleL1LabelImage:G.tn.styleLabelImage)+'"><div class="labelImageTitle labelTitle nGEvent" style="'+(G.curNavLevel == 'l1' ? G.tn.styleL1ITitle:G.tn.styleITitle)+'">'+sTitle+'</div><div class="labelDescription nGEvent" style="'+(G.curNavLevel == 'l1' ? G.tn.styleL1Desc:G.tn.styleDesc)+'">'+sDesc+'</div></div>';
         }
@@ -5801,7 +5830,6 @@ nanoGALLERY v5.9.1 release notes.
       $p.appendTo( G.$E.conTn );
 
 
-
       if( checkImageSize ) {
         // ThumbnailOverInit($newDiv);     // init hover effects
         var gi_imgLoad = ngimagesLoaded( $newDiv );
@@ -5820,7 +5848,6 @@ nanoGALLERY v5.9.1 release notes.
             item.thumbSetImgWidth(instance.images[0].img.naturalWidth);
             b=true;
           }
-
           if( b ) {
             ThumbnailOverInit(item.$elt);     // init hover effects
             setThumbnailSize(item.$elt, item);
@@ -5871,7 +5898,7 @@ nanoGALLERY v5.9.1 release notes.
           if( G.i18nTranslations.thumbnailImageDescription != '' ) {
             sDesc=G.i18nTranslations.thumbnailImageDescription;
           }
-          else if ( G.O.thumbnailLabel.get('oz_title_kind') == 'filename'){
+          else  if ( G.O.thumbnailLabel.get('oz_title_kind') == 'filename'){
             sDesc='';
 			if (item.hasOwnProperty('infobox') && item.infobox.hasOwnProperty('filename')){
 				sDesc=item.infobox.filename.replace(/\.[^/.]+$/, "");
@@ -5879,7 +5906,7 @@ nanoGALLERY v5.9.1 release notes.
 			
           }else{
             sDesc=item.description;
-		  }
+          }
         }
         if( G.O.thumbnailLabel.get('descriptionMaxLength') > 3 && sDesc.length > G.O.thumbnailLabel.get('descriptionMaxLength') ){
           sDesc=sDesc.substring(0,G.O.thumbnailLabel.get('descriptionMaxLength'))+'...';
@@ -7663,7 +7690,7 @@ nanoGALLERY v5.9.1 release notes.
 
             case 'imageScale150':
             case 'imageScale150Outside':
-			  $e.css('z-index','auto');//GIeot
+				$e.css('z-index','auto');//GIeot
               TnAniO(item.$getElt('img'), j, { scale: 100/dscale }, item, 'img0');
               break;
 
@@ -7714,7 +7741,7 @@ nanoGALLERY v5.9.1 release notes.
 
 
             case 'scale120':
-				$e.css('z-index','auto');//GIeot
+			$e.css('z-index','auto');//GIeot
               TnAniO($e, j, { scale: 100/dscale }, item, 'base' );
               break;
 
@@ -7792,9 +7819,8 @@ nanoGALLERY v5.9.1 release notes.
         }
       }
     };
-
 	
-  
+
 	function nano_gi_linkify(inputText) {
 	    var replacedText, replacePattern1, replacePattern2, replacePattern3;
 
@@ -8056,7 +8082,8 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
 	  });	  
 	  
   }    	
-	
+		
+
     function OpenInternalViewer( imageIdx ) {
 
       //if( !G.O.locationHash ) {
@@ -8171,7 +8198,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
         ViewerFullscreenToggle();
       });
 
-      G.$E.conVwTb.find('.infoButton').on("touchstart click",function(e){
+       G.$E.conVwTb.find('.infoButton').on("touchstart click",function(e){
         e.stopPropagation();
 		OpenInfoBox();
         //if( typeof G.O.fnViewerInfo == 'function' ) {
@@ -8183,7 +8210,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
           position: (G.O.viewerToolbar.position=="top"?'bottom':'top')
       });
 	
-	G.$E.conHideShare=jQuery(".shareButton");	  
+	G.$E.conHideShare=jQuery(".shareButton");	 
 
       // custom button click
       G.$E.conVwTb.find('.ngCustomBtn').on("touchstart click",function(e){
@@ -8276,7 +8303,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
             r='<div class="ngbt setFullscreenButton fullscreenButton nGEvent"></div>';
           }
           break;
-        case 'infoButton':
+         case 'infoButton':
 			if (G.O.kind=='picasa' && G.O.showInfoBoxButton){
 					r='<div class="ngbt infoButton nGEvent"></div>';
 			}
@@ -8287,6 +8314,11 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
       case 'shareButton':
 		r='<div class="ngbt shareButton nGEvent"></div>';	
 		break;
+        case 'linkOriginalButton':
+          if( G.O.kind == 'flickr' || G.O.kind == 'picasa' ) {
+            r='<div class="ngbt linkOriginalButton nGEvent"></div>';
+          }
+          break;
         case 'linkOriginalButton':
           if( G.O.kind == 'flickr' || G.O.kind == 'picasa' ) {
             r='<div class="ngbt linkOriginalButton nGEvent"></div>';
@@ -8407,9 +8439,9 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
         initialTouchPos=null;
         lastTouchPos=null;
 
-        //if(Math.abs(differenceInX) < 50) {//GI
+     //   if(Math.abs(differenceInX) < 50) {
           ImageSwipeTranslateX(currentXPosition);
-        //}
+       // }
         return;
       }
 
@@ -8937,10 +8969,11 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
         //G.$E.conVwTb.find('.title').html(G.I[imageIdx].title);
         //setTxt=true;
 		
-		  G.$E.conVwTb.find('.title').html(nano_gi_linkify(G.I[imageIdx].title));
+		
+		G.$E.conVwTb.find('.title').html(nano_gi_linkify(G.I[imageIdx].title));
 		  setTxt=true;
 		  
-		  G.$E.conHideShare.data('title',G.I[imageIdx].title);
+		  G.$E.conHideShare.data('title',G.I[imageIdx].title);		
       }
       else {
         G.$E.conVwTb.find('.title').html('');
@@ -8955,10 +8988,9 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
         G.$E.conVwTb.find('.description').html('');
 		G.$E.conHideShare.data('description','');
       }
-
-      G.$E.conHideShare.data('link',document.URL);
+	   G.$E.conHideShare.data('link',document.URL);
 	  G.$E.conHideShare.data('media',G.I[imageIdx].src);
-	  
+
       // custom elements
       var $cu=G.$E.conVwTb.find('.ngCustomBtn');
       if( $cu.length > 0 && typeof G.O.fnImgToolbarCustDisplay == 'function' ) {
@@ -9449,6 +9481,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
       }
     }
 
+
   function getHighestZIndex( start ) {
     var highest_index = 0;
     if( start=='' ) { start= '*'; }
@@ -9458,6 +9491,7 @@ button.mfp-close, button.mfp-arrow -> z-index: 100046;
     });
     return highest_index;
   };  
+  
     // set z-index to display element on top of all others
     function setElementOnTop( start, elt ) {
       var highest_index = 0;
@@ -10279,596 +10313,159 @@ colors = jQuery.Color.names = {
 
 
 
+// #########################################################################################################
+// ##### imagesLoaded
+// #####
+// ##### rename 'imagesLoaded' to 'ngimagesLoaded'
+// ##### rename 'ImagesLoaded' to 'ngImagesLoaded'
+// ##### rename 'EvEmitter' to 'ngEvEmitter'
+// #########################################################################################################
+
 /*!
- * imagesLoaded PACKAGED v3.1.8
+ * imagesLoaded PACKAGED v4.1.0
  * JavaScript is all like "You images are done yet or what?"
  * MIT License
  */
 
-
-/*!
- * EventEmitter v4.2.6 - git.io/ee
- * Oliver Caldwell
- * MIT license
- * @preserve
+/**
+ * ngEvEmitter v1.0.1
+ * Lil' event emitter
+ * MIT License
  */
 
-(function () {
+/* jshint unused: true, undef: true, strict: true */
 
+( function( global, factory ) {
+  // universal module definition
+  /* jshint strict: false */ /* globals define, module */
+  if ( typeof define == 'function' && define.amd ) {
+    // AMD - RequireJS
+    define( 'ev-emitter/ev-emitter',factory );
+  } else if ( typeof module == 'object' && module.exports ) {
+    // CommonJS - Browserify, Webpack
+    module.exports = factory();
+  } else {
+    // Browser globals
+    global.ngEvEmitter = factory();
+  }
 
-	/**
-	 * Class for managing events.
-	 * Can be extended to provide event functionality in other classes.
-	 *
-	 * @class ngEventEmitter Manages event registering and emitting.
-	 */
-	function ngEventEmitter() {}
-
-	// Shortcuts to improve speed and size
-	var proto = ngEventEmitter.prototype;
-	var exports = this;
-	var originalGlobalValue = exports.ngEventEmitter;
-
-	/**
-	 * Finds the index of the listener for the event in it's storage array.
-	 *
-	 * @param {Function[]} listeners Array of listeners to search through.
-	 * @param {Function} listener Method to look for.
-	 * @return {Number} Index of the specified listener, -1 if not found
-	 * @api private
-	 */
-	function indexOfListener(listeners, listener) {
-		var i = listeners.length;
-		while (i--) {
-			if (listeners[i].listener === listener) {
-				return i;
-			}
-		}
-
-		return -1;
-	}
-
-	/**
-	 * Alias a method while keeping the context correct, to allow for overwriting of target method.
-	 *
-	 * @param {String} name The name of the target method.
-	 * @return {Function} The aliased method
-	 * @api private
-	 */
-	function alias(name) {
-		return function aliasClosure() {
-			return this[name].apply(this, arguments);
-		};
-	}
-
-	/**
-	 * Returns the listener array for the specified event.
-	 * Will initialise the event object and listener arrays if required.
-	 * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
-	 * Each property in the object response is an array of listener functions.
-	 *
-	 * @param {String|RegExp} evt Name of the event to return the listeners from.
-	 * @return {Function[]|Object} All listener functions for the event.
-	 */
-	proto.getListeners = function getListeners(evt) {
-		var events = this._getEvents();
-		var response;
-		var key;
-
-		// Return a concatenated array of all matching events if
-		// the selector is a regular expression.
-		if (typeof evt === 'object') {
-			response = {};
-			for (key in events) {
-				if (events.hasOwnProperty(key) && evt.test(key)) {
-					response[key] = events[key];
-				}
-			}
-		}
-		else {
-			response = events[evt] || (events[evt] = []);
-		}
-
-		return response;
-	};
-
-	/**
-	 * Takes a list of listener objects and flattens it into a list of listener functions.
-	 *
-	 * @param {Object[]} listeners Raw listener objects.
-	 * @return {Function[]} Just the listener functions.
-	 */
-	proto.flattenListeners = function flattenListeners(listeners) {
-		var flatListeners = [];
-		var i;
-
-		for (i = 0; i < listeners.length; i += 1) {
-			flatListeners.push(listeners[i].listener);
-		}
-
-		return flatListeners;
-	};
-
-	/**
-	 * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
-	 *
-	 * @param {String|RegExp} evt Name of the event to return the listeners from.
-	 * @return {Object} All listener functions for an event in an object.
-	 */
-	proto.getListenersAsObject = function getListenersAsObject(evt) {
-		var listeners = this.getListeners(evt);
-		var response;
-
-		if (listeners instanceof Array) {
-			response = {};
-			response[evt] = listeners;
-		}
-
-		return response || listeners;
-	};
-
-	/**
-	 * Adds a listener function to the specified event.
-	 * The listener will not be added if it is a duplicate.
-	 * If the listener returns true then it will be removed after it is called.
-	 * If you pass a regular expression as the event name then the listener will be added to all events that match it.
-	 *
-	 * @param {String|RegExp} evt Name of the event to attach the listener to.
-	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.addListener = function addListener(evt, listener) {
-		var listeners = this.getListenersAsObject(evt);
-		var listenerIsWrapped = typeof listener === 'object';
-		var key;
-
-		for (key in listeners) {
-			if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
-				listeners[key].push(listenerIsWrapped ? listener : {
-					listener: listener,
-					once: false
-				});
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Alias of addListener
-	 */
-	proto.on = alias('addListener');
-
-	/**
-	 * Semi-alias of addListener. It will add a listener that will be
-	 * automatically removed after it's first execution.
-	 *
-	 * @param {String|RegExp} evt Name of the event to attach the listener to.
-	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.addOnceListener = function addOnceListener(evt, listener) {
-		return this.addListener(evt, {
-			listener: listener,
-			once: true
-		});
-	};
-
-	/**
-	 * Alias of addOnceListener.
-	 */
-	proto.once = alias('addOnceListener');
-
-	/**
-	 * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
-	 * You need to tell it what event names should be matched by a regex.
-	 *
-	 * @param {String} evt Name of the event to create.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.defineEvent = function defineEvent(evt) {
-		this.getListeners(evt);
-		return this;
-	};
-
-	/**
-	 * Uses defineEvent to define multiple events.
-	 *
-	 * @param {String[]} evts An array of event names to define.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.defineEvents = function defineEvents(evts) {
-		for (var i = 0; i < evts.length; i += 1) {
-			this.defineEvent(evts[i]);
-		}
-		return this;
-	};
-
-	/**
-	 * Removes a listener function from the specified event.
-	 * When passed a regular expression as the event name, it will remove the listener from all events that match it.
-	 *
-	 * @param {String|RegExp} evt Name of the event to remove the listener from.
-	 * @param {Function} listener Method to remove from the event.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.removeListener = function removeListener(evt, listener) {
-		var listeners = this.getListenersAsObject(evt);
-		var index;
-		var key;
-
-		for (key in listeners) {
-			if (listeners.hasOwnProperty(key)) {
-				index = indexOfListener(listeners[key], listener);
-
-				if (index !== -1) {
-					listeners[key].splice(index, 1);
-				}
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Alias of removeListener
-	 */
-	proto.off = alias('removeListener');
-
-	/**
-	 * Adds listeners in bulk using the manipulateListeners method.
-	 * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
-	 * You can also pass it a regular expression to add the array of listeners to all events that match it.
-	 * Yeah, this function does quite a bit. That's probably a bad thing.
-	 *
-	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
-	 * @param {Function[]} [listeners] An optional array of listener functions to add.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.addListeners = function addListeners(evt, listeners) {
-		// Pass through to manipulateListeners
-		return this.manipulateListeners(false, evt, listeners);
-	};
-
-	/**
-	 * Removes listeners in bulk using the manipulateListeners method.
-	 * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
-	 * You can also pass it an event name and an array of listeners to be removed.
-	 * You can also pass it a regular expression to remove the listeners from all events that match it.
-	 *
-	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
-	 * @param {Function[]} [listeners] An optional array of listener functions to remove.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.removeListeners = function removeListeners(evt, listeners) {
-		// Pass through to manipulateListeners
-		return this.manipulateListeners(true, evt, listeners);
-	};
-
-	/**
-	 * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
-	 * The first argument will determine if the listeners are removed (true) or added (false).
-	 * If you pass an object as the second argument you can add/remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
-	 * You can also pass it an event name and an array of listeners to be added/removed.
-	 * You can also pass it a regular expression to manipulate the listeners of all events that match it.
-	 *
-	 * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
-	 * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
-	 * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
-		var i;
-		var value;
-		var single = remove ? this.removeListener : this.addListener;
-		var multiple = remove ? this.removeListeners : this.addListeners;
-
-		// If evt is an object then pass each of it's properties to this method
-		if (typeof evt === 'object' && !(evt instanceof RegExp)) {
-			for (i in evt) {
-				if (evt.hasOwnProperty(i) && (value = evt[i])) {
-					// Pass the single listener straight through to the singular method
-					if (typeof value === 'function') {
-						single.call(this, i, value);
-					}
-					else {
-						// Otherwise pass back to the multiple function
-						multiple.call(this, i, value);
-					}
-				}
-			}
-		}
-		else {
-			// So evt must be a string
-			// And listeners must be an array of listeners
-			// Loop over it and pass each one to the multiple method
-			i = listeners.length;
-			while (i--) {
-				single.call(this, evt, listeners[i]);
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Removes all listeners from a specified event.
-	 * If you do not specify an event then all listeners will be removed.
-	 * That means every event will be emptied.
-	 * You can also pass a regex to remove all events that match it.
-	 *
-	 * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.removeEvent = function removeEvent(evt) {
-		var type = typeof evt;
-		var events = this._getEvents();
-		var key;
-
-		// Remove different things depending on the state of evt
-		if (type === 'string') {
-			// Remove all listeners for the specified event
-			delete events[evt];
-		}
-		else if (type === 'object') {
-			// Remove all events matching the regex.
-			for (key in events) {
-				if (events.hasOwnProperty(key) && evt.test(key)) {
-					delete events[key];
-				}
-			}
-		}
-		else {
-			// Remove all listeners in all events
-			delete this._events;
-		}
-
-		return this;
-	};
-
-	/**
-	 * Alias of removeEvent.
-	 *
-	 * Added to mirror the node API.
-	 */
-	proto.removeAllListeners = alias('removeEvent');
-
-	/**
-	 * Emits an event of your choice.
-	 * When emitted, every listener attached to that event will be executed.
-	 * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
-	 * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
-	 * So they will not arrive within the array on the other side, they will be separate.
-	 * You can also pass a regular expression to emit to all events that match it.
-	 *
-	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
-	 * @param {Array} [args] Optional array of arguments to be passed to each listener.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.emitEvent = function emitEvent(evt, args) {
-		var listeners = this.getListenersAsObject(evt);
-		var listener;
-		var i;
-		var key;
-		var response;
-
-		for (key in listeners) {
-			if (listeners.hasOwnProperty(key)) {
-				i = listeners[key].length;
-
-				while (i--) {
-					// If the listener returns true then it shall be removed from the event
-					// The function is executed either with a basic call or an apply if there is an args array
-					listener = listeners[key][i];
-
-					if (listener.once === true) {
-						this.removeListener(evt, listener.listener);
-					}
-
-					response = listener.listener.apply(this, args || []);
-
-					if (response === this._getOnceReturnValue()) {
-						this.removeListener(evt, listener.listener);
-					}
-				}
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Alias of emitEvent
-	 */
-	proto.trigger = alias('emitEvent');
-
-	/**
-	 * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
-	 * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
-	 *
-	 * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
-	 * @param {...*} Optional additional arguments to be passed to each listener.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.emit = function emit(evt) {
-		var args = Array.prototype.slice.call(arguments, 1);
-		return this.emitEvent(evt, args);
-	};
-
-	/**
-	 * Sets the current value to check against when executing listeners. If a
-	 * listeners return value matches the one set here then it will be removed
-	 * after execution. This value defaults to true.
-	 *
-	 * @param {*} value The new value to check for when executing listeners.
-	 * @return {Object} Current instance of EventEmitter for chaining.
-	 */
-	proto.setOnceReturnValue = function setOnceReturnValue(value) {
-		this._onceReturnValue = value;
-		return this;
-	};
-
-	/**
-	 * Fetches the current value to check against when executing listeners. If
-	 * the listeners return value matches this one then it should be removed
-	 * automatically. It will return true by default.
-	 *
-	 * @return {*|Boolean} The current value to check for or the default, true.
-	 * @api private
-	 */
-	proto._getOnceReturnValue = function _getOnceReturnValue() {
-		if (this.hasOwnProperty('_onceReturnValue')) {
-			return this._onceReturnValue;
-		}
-		else {
-			return true;
-		}
-	};
-
-	/**
-	 * Fetches the events object and creates one if required.
-	 *
-	 * @return {Object} The events storage object.
-	 * @api private
-	 */
-	proto._getEvents = function _getEvents() {
-		return this._events || (this._events = {});
-	};
-
-	/**
-	 * Reverts the global {@link ngEventEmitter} to its previous value and returns a reference to this version.
-	 *
-	 * @return {Function} Non conflicting ngEventEmitter class.
-	 */
-	ngEventEmitter.noConflict = function noConflict() {
-		exports.ngEventEmitter = originalGlobalValue;
-		return ngEventEmitter;
-	};
-
-	// Expose the class either via AMD, CommonJS or the global object
-	if (typeof define === 'function' && define.amd) {
-		define('ngEventEmitter/ngEventEmitter',[],function () {
-			return ngEventEmitter;
-		});
-	}
-	else if (typeof module === 'object' && module.exports){
-		module.exports = ngEventEmitter;
-	}
-	else {
-		this.ngEventEmitter = ngEventEmitter;
-	}
-}.call(this));
-
-/*!
- * eventie v1.0.4
- * event binding helper
- *   eventie.bind( elem, 'click', myFn )
- *   eventie.unbind( elem, 'click', myFn )
- */
-
-/*jshint browser: true, undef: true, unused: true */
-/*global define: false */
-
-( function( window ) {
+}( this, function() {
 
 
 
-var docElem = document.documentElement;
+function ngEvEmitter() {}
 
-var bind = function() {};
+var proto = ngEvEmitter.prototype;
 
-function getIEEvent( obj ) {
-  var event = window.event;
-  // add event.target
-  event.target = event.target || event.srcElement || obj;
-  return event;
-}
+proto.on = function( eventName, listener ) {
+  if ( !eventName || !listener ) {
+    return;
+  }
+  // set events hash
+  var events = this._events = this._events || {};
+  // set listeners array
+  var listeners = events[ eventName ] = events[ eventName ] || [];
+  // only add once
+  if ( listeners.indexOf( listener ) == -1 ) {
+    listeners.push( listener );
+  }
 
-if ( docElem.addEventListener ) {
-  bind = function( obj, type, fn ) {
-    obj.addEventListener( type, fn, false );
-  };
-} else if ( docElem.attachEvent ) {
-  bind = function( obj, type, fn ) {
-    obj[ type + fn ] = fn.handleEvent ?
-      function() {
-        var event = getIEEvent( obj );
-        fn.handleEvent.call( fn, event );
-      } :
-      function() {
-        var event = getIEEvent( obj );
-        fn.call( obj, event );
-      };
-    obj.attachEvent( "on" + type, obj[ type + fn ] );
-  };
-}
-
-var unbind = function() {};
-
-if ( docElem.removeEventListener ) {
-  unbind = function( obj, type, fn ) {
-    obj.removeEventListener( type, fn, false );
-  };
-} else if ( docElem.detachEvent ) {
-  unbind = function( obj, type, fn ) {
-    obj.detachEvent( "on" + type, obj[ type + fn ] );
-    try {
-      delete obj[ type + fn ];
-    } catch ( err ) {
-      // can't delete window object properties
-      obj[ type + fn ] = undefined;
-    }
-  };
-}
-
-var eventie = {
-  bind: bind,
-  unbind: unbind
+  return this;
 };
 
-// transport
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( 'eventie/eventie',eventie );
-} else {
-  // browser global
-  window.eventie = eventie;
-}
+proto.once = function( eventName, listener ) {
+  if ( !eventName || !listener ) {
+    return;
+  }
+  // add event
+  this.on( eventName, listener );
+  // set once flag
+  // set onceEvents hash
+  var onceEvents = this._onceEvents = this._onceEvents || {};
+  // set onceListeners array
+  var onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || [];
+  // set flag
+  onceListeners[ listener ] = true;
 
-})( this );
+  return this;
+};
+
+proto.off = function( eventName, listener ) {
+  var listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) {
+    return;
+  }
+  var index = listeners.indexOf( listener );
+  if ( index != -1 ) {
+    listeners.splice( index, 1 );
+  }
+
+  return this;
+};
+
+proto.emitEvent = function( eventName, args ) {
+  var listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) {
+    return;
+  }
+  var i = 0;
+  var listener = listeners[i];
+  args = args || [];
+  // once stuff
+  var onceListeners = this._onceEvents && this._onceEvents[ eventName ];
+
+  while ( listener ) {
+    var isOnce = onceListeners && onceListeners[ listener ];
+    if ( isOnce ) {
+      // remove listener
+      // remove before trigger to prevent recursion
+      this.off( eventName, listener );
+      // unset once flag
+      delete onceListeners[ listener ];
+    }
+    // trigger listener
+    listener.apply( this, args );
+    // get next listener
+    i += isOnce ? 0 : 1;
+    listener = listeners[i];
+  }
+
+  return this;
+};
+
+return ngEvEmitter;
+
+}));
 
 /*!
- * imagesLoaded v3.1.8
+ * imagesLoaded v4.1.0
  * JavaScript is all like "You images are done yet or what?"
  * MIT License
  */
 
-( function( window, factory ) {
+( function( window, factory ) { 'use strict';
   // universal module definition
 
   /*global define: false, module: false, require: false */
 
-  if ( typeof define === 'function' && define.amd ) {
+  if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-      'ngEventEmitter/ngEventEmitter',
-      'eventie/eventie'
-    ], function( ngEventEmitter, eventie ) {
-      return factory( window, ngEventEmitter, eventie );
+      'ev-emitter/ev-emitter'
+    ], function( ngEvEmitter ) {
+      return factory( window, ngEvEmitter );
     });
-  } else if ( typeof exports === 'object' ) {
+  } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
       window,
-      require('wolfy87-eventemitter'),
-      require('eventie')
+      require('ev-emitter')
     );
   } else {
     // browser global
     window.ngimagesLoaded = factory(
       window,
-      window.ngEventEmitter,
-      window.eventie
+      window.ngEvEmitter
     );
   }
 
@@ -10876,13 +10473,12 @@ if ( typeof define === 'function' && define.amd ) {
 
 // --------------------------  factory -------------------------- //
 
-function factory( window, ngEventEmitter, eventie ) {
+function factory( window, ngEvEmitter ) {
 
 
 
-var $ = window.jQuery;
+//var $ = window.jQuery;
 var console = window.console;
-var hasConsole = typeof console !== 'undefined';
 
 // -------------------------- helpers -------------------------- //
 
@@ -10894,20 +10490,15 @@ function extend( a, b ) {
   return a;
 }
 
-var objToString = Object.prototype.toString;
-function isArray( obj ) {
-  return objToString.call( obj ) === '[object Array]';
-}
-
 // turn element or nodeList into an array
 function makeArray( obj ) {
   var ary = [];
-  if ( isArray( obj ) ) {
+  if ( Array.isArray( obj ) ) {
     // use object if already an array
     ary = obj;
-  } else if ( typeof obj.length === 'number' ) {
+  } else if ( typeof obj.length == 'number' ) {
     // convert nodeList to array
-    for ( var i=0, len = obj.length; i < len; i++ ) {
+    for ( var i=0; i < obj.length; i++ ) {
       ary.push( obj[i] );
     }
   } else {
@@ -10917,264 +10508,320 @@ function makeArray( obj ) {
   return ary;
 }
 
-  // -------------------------- imagesLoaded -------------------------- //
+// -------------------------- imagesLoaded -------------------------- //
 
-  /**
-   * @param {Array, Element, NodeList, String} elem
-   * @param {Object or Function} options - if function, use as callback
-   * @param {Function} onAlways - callback function
-   */
-  function ngImagesLoaded( elem, options, onAlways ) {
-    // coerce ImagesLoaded() without new, to be new ImagesLoaded()
-    if ( !( this instanceof ngImagesLoaded ) ) {
-      return new ngImagesLoaded( elem, options );
-    }
-    // use elem as selector string
-    if ( typeof elem === 'string' ) {
-      elem = document.querySelectorAll( elem );
-    }
-
-    this.elements = makeArray( elem );
-    this.options = extend( {}, this.options );
-
-    if ( typeof options === 'function' ) {
-      onAlways = options;
-    } else {
-      extend( this.options, options );
-    }
-
-    if ( onAlways ) {
-      this.on( 'always', onAlways );
-    }
-
-    this.getImages();
-
-    if ( jQuery ) {
-      // add jQuery Deferred object
-      this.jqDeferred = new jQuery.Deferred();
-    }
-
-    // HACK check async to allow time to bind listeners
-    var _this = this;
-    setTimeout( function() {
-      _this.check();
-    });
+/**
+ * @param {Array, Element, NodeList, String} elem
+ * @param {Object or Function} options - if function, use as callback
+ * @param {Function} onAlways - callback function
+ */
+function ngImagesLoaded( elem, options, onAlways ) {
+  // coerce ngImagesLoaded() without new, to be new ngImagesLoaded()
+  if ( !( this instanceof ngImagesLoaded ) ) {
+    return new ngImagesLoaded( elem, options, onAlways );
+  }
+  // use elem as selector string
+  if ( typeof elem == 'string' ) {
+    elem = document.querySelectorAll( elem );
   }
 
-  ngImagesLoaded.prototype = new ngEventEmitter();
+  this.elements = makeArray( elem );
+  this.options = extend( {}, this.options );
 
-  ngImagesLoaded.prototype.options = {};
+  if ( typeof options == 'function' ) {
+    onAlways = options;
+  } else {
+    extend( this.options, options );
+  }
 
-  ngImagesLoaded.prototype.getImages = function() {
-    this.images = [];
+  if ( onAlways ) {
+    this.on( 'always', onAlways );
+  }
 
-    // filter & find items if we have an item selector
-    for ( var i=0, len = this.elements.length; i < len; i++ ) {
-      var elem = this.elements[i];
-      // filter siblings
-      if ( elem.nodeName === 'IMG' ) {
-        this.addImage( elem );
-      }
-      // find children
-      // no non-element nodes, #143
-      var nodeType = elem.nodeType;
-      if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
-        continue;
-      }
-      var childElems = elem.querySelectorAll('img');
-      // concat childElems to filterFound array
-      for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
-        var img = childElems[j];
-        this.addImage( img );
-      }
-    }
-  };
-
-  /**
-   * @param {Image} img
-   */
-  ngImagesLoaded.prototype.addImage = function( img ) {
-    var loadingImage = new LoadingImage( img );
-    this.images.push( loadingImage );
-  };
-
-  ngImagesLoaded.prototype.check = function() {
-    var _this = this;
-    var checkedCount = 0;
-    var length = this.images.length;
-    this.hasAnyBroken = false;
-    // complete if no images
-    if ( !length ) {
-      this.complete();
-      return;
-    }
-
-    function onConfirm( image, message ) {
-      if ( _this.options.debug && hasConsole ) {
-        console.log( 'confirm', image, message );
-      }
-
-      _this.progress( image );
-      checkedCount++;
-      if ( checkedCount === length ) {
-        _this.complete();
-      }
-      return true; // bind once
-    }
-
-    for ( var i=0; i < length; i++ ) {
-      var loadingImage = this.images[i];
-      loadingImage.on( 'confirm', onConfirm );
-      loadingImage.check();
-    }
-  };
-
-  ngImagesLoaded.prototype.progress = function( image ) {
-    this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
-    // HACK - Chrome triggers event before object properties have changed. #83
-    var _this = this;
-    setTimeout( function() {
-      _this.emit( 'progress', _this, image );
-      if ( _this.jqDeferred && _this.jqDeferred.notify ) {
-        _this.jqDeferred.notify( _this, image );
-      }
-    });
-  };
-
-  ngImagesLoaded.prototype.complete = function() {
-    var eventName = this.hasAnyBroken ? 'fail' : 'done';
-    this.isComplete = true;
-    var _this = this;
-    // HACK - another setTimeout so that confirm happens after progress
-    setTimeout( function() {
-      _this.emit( eventName, _this );
-      _this.emit( 'always', _this );
-      if ( _this.jqDeferred ) {
-        var jqMethod = _this.hasAnyBroken ? 'reject' : 'resolve';
-        _this.jqDeferred[ jqMethod ]( _this );
-      }
-    });
-  };
-
-  // -------------------------- jquery -------------------------- //
+  this.getImages();
 
   if ( jQuery ) {
-    jQuery.fn.ngimagesLoaded = function( options, callback ) {
-      var instance = new ngImagesLoaded( this, options, callback );
-      return instance.jqDeferred.promise( jQuery(this) );
-    };
+    // add jQuery Deferred object
+    this.jqDeferred = new jQuery.Deferred();
   }
 
+  // HACK check async to allow time to bind listeners
+  setTimeout( function() {
+    this.check();
+  }.bind( this ));
+}
 
-  // --------------------------  -------------------------- //
+ngImagesLoaded.prototype = Object.create( ngEvEmitter.prototype );
 
-  function LoadingImage( img ) {
-    this.img = img;
+ngImagesLoaded.prototype.options = {};
+
+ngImagesLoaded.prototype.getImages = function() {
+  this.images = [];
+
+  // filter & find items if we have an item selector
+  this.elements.forEach( this.addElementImages, this );
+};
+
+/**
+ * @param {Node} element
+ */
+ngImagesLoaded.prototype.addElementImages = function( elem ) {
+  // filter siblings
+  if ( elem.nodeName == 'IMG' ) {
+    this.addImage( elem );
+  }
+  // get background image on element
+  if ( this.options.background === true ) {
+    this.addElementBackgroundImages( elem );
   }
 
-  LoadingImage.prototype = new ngEventEmitter();
+  // find children
+  // no non-element nodes, #143
+  var nodeType = elem.nodeType;
+  if ( !nodeType || !elementNodeTypes[ nodeType ] ) {
+    return;
+  }
+  var childImgs = elem.querySelectorAll('img');
+  // concat childElems to filterFound array
+  for ( var i=0; i < childImgs.length; i++ ) {
+    var img = childImgs[i];
+    this.addImage( img );
+  }
 
-  LoadingImage.prototype.check = function() {
-    // first check cached any previous images that have same src
-    var resource = cache[ this.img.src ] || new Resource( this.img.src );
-    if ( resource.isConfirmed ) {
-      this.confirm( resource.isLoaded, 'cached was confirmed' );
-      return;
+  // get child background images
+  if ( typeof this.options.background == 'string' ) {
+    var children = elem.querySelectorAll( this.options.background );
+    for ( i=0; i < children.length; i++ ) {
+      var child = children[i];
+      this.addElementBackgroundImages( child );
     }
+  }
+};
 
-    // If complete is true and browser supports natural sizes,
-    // try to check for image status manually.
-    if ( this.img.complete && this.img.naturalWidth !== undefined ) {
-      // report based on naturalWidth
-      this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
-      return;
+var elementNodeTypes = {
+  1: true,
+  9: true,
+  11: true
+};
+
+ngImagesLoaded.prototype.addElementBackgroundImages = function( elem ) {
+  var style = getComputedStyle( elem );
+  if ( !style ) {
+    // Firefox returns null if in a hidden iframe https://bugzil.la/548397
+    return;
+  }
+  // get url inside url("...")
+  var reURL = /url\((['"])?(.*?)\1\)/gi;
+  var matches = reURL.exec( style.backgroundImage );
+  while ( matches !== null ) {
+    var url = matches && matches[2];
+    if ( url ) {
+      this.addBackground( url, elem );
     }
+    matches = reURL.exec( style.backgroundImage );
+  }
+};
 
-    // If none of the checks above matched, simulate loading on detached element.
-    var _this = this;
-    resource.on( 'confirm', function( resrc, message ) {
-      _this.confirm( resrc.isLoaded, message );
-      return true;
+/**
+ * @param {Image} img
+ */
+ngImagesLoaded.prototype.addImage = function( img ) {
+  var loadingImage = new LoadingImage( img );
+  this.images.push( loadingImage );
+};
+
+ngImagesLoaded.prototype.addBackground = function( url, elem ) {
+  var background = new Background( url, elem );
+  this.images.push( background );
+};
+
+ngImagesLoaded.prototype.check = function() {
+  var _this = this;
+  this.progressedCount = 0;
+  this.hasAnyBroken = false;
+  // complete if no images
+  if ( !this.images.length ) {
+    this.complete();
+    return;
+  }
+
+  function onProgress( image, elem, message ) {
+    // HACK - Chrome triggers event before object properties have changed. #83
+    setTimeout( function() {
+      _this.progress( image, elem, message );
     });
-
-    resource.check();
-  };
-
-  LoadingImage.prototype.confirm = function( isLoaded, message ) {
-    this.isLoaded = isLoaded;
-    this.emit( 'confirm', this, message );
-  };
-
-  // -------------------------- Resource -------------------------- //
-
-  // Resource checks each src, only once
-  // separate class from LoadingImage to prevent memory leaks. See #115
-
-  var cache = {};
-
-  function Resource( src ) {
-    this.src = src;
-    // add to cache
-    cache[ src ] = this;
   }
 
-  Resource.prototype = new ngEventEmitter();
+  this.images.forEach( function( loadingImage ) {
+    loadingImage.once( 'progress', onProgress );
+    loadingImage.check();
+  });
+};
 
-  Resource.prototype.check = function() {
-    // only trigger checking once
-    if ( this.isChecked ) {
-      return;
-    }
-    // simulate loading on detached element
-    var proxyImage = new Image();
-    eventie.bind( proxyImage, 'load', this );
-    eventie.bind( proxyImage, 'error', this );
-    proxyImage.src = this.src;
-    // set flag
-    this.isChecked = true;
+ngImagesLoaded.prototype.progress = function( image, elem, message ) {
+  this.progressedCount++;
+  this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
+  // progress event
+  this.emitEvent( 'progress', [ this, image, elem ] );
+  if ( this.jqDeferred && this.jqDeferred.notify ) {
+    this.jqDeferred.notify( this, image );
+  }
+  // check if completed
+  if ( this.progressedCount == this.images.length ) {
+    this.complete();
+  }
+
+  if ( this.options.debug && console ) {
+    console.log( 'progress: ' + message, image, elem );
+  }
+};
+
+ngImagesLoaded.prototype.complete = function() {
+  var eventName = this.hasAnyBroken ? 'fail' : 'done';
+  this.isComplete = true;
+  this.emitEvent( eventName, [ this ] );
+  this.emitEvent( 'always', [ this ] );
+  if ( this.jqDeferred ) {
+    var jqMethod = this.hasAnyBroken ? 'reject' : 'resolve';
+    this.jqDeferred[ jqMethod ]( this );
+  }
+};
+
+// --------------------------  -------------------------- //
+
+function LoadingImage( img ) {
+  this.img = img;
+}
+
+LoadingImage.prototype = Object.create( ngEvEmitter.prototype );
+
+LoadingImage.prototype.check = function() {
+  // If complete is true and browser supports natural sizes,
+  // try to check for image status manually.
+  var isComplete = this.getIsImageComplete();
+  if ( isComplete ) {
+    // report based on naturalWidth
+    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
+    return;
+  }
+
+  // If none of the checks above matched, simulate loading on detached element.
+  this.proxyImage = new Image();
+  this.proxyImage.addEventListener( 'load', this );
+  this.proxyImage.addEventListener( 'error', this );
+  // bind to image as well for Firefox. #191
+  this.img.addEventListener( 'load', this );
+  this.img.addEventListener( 'error', this );
+  this.proxyImage.src = this.img.src;
+};
+
+LoadingImage.prototype.getIsImageComplete = function() {
+  return this.img.complete && this.img.naturalWidth !== undefined;
+};
+
+LoadingImage.prototype.confirm = function( isLoaded, message ) {
+  this.isLoaded = isLoaded;
+  this.emitEvent( 'progress', [ this, this.img, message ] );
+};
+
+// ----- events ----- //
+
+// trigger specified handler for event type
+LoadingImage.prototype.handleEvent = function( event ) {
+  var method = 'on' + event.type;
+  if ( this[ method ] ) {
+    this[ method ]( event );
+  }
+};
+
+LoadingImage.prototype.onload = function() {
+  this.confirm( true, 'onload' );
+  this.unbindEvents();
+};
+
+LoadingImage.prototype.onerror = function() {
+  this.confirm( false, 'onerror' );
+  this.unbindEvents();
+};
+
+LoadingImage.prototype.unbindEvents = function() {
+  this.proxyImage.removeEventListener( 'load', this );
+  this.proxyImage.removeEventListener( 'error', this );
+  this.img.removeEventListener( 'load', this );
+  this.img.removeEventListener( 'error', this );
+};
+
+// -------------------------- Background -------------------------- //
+
+function Background( url, element ) {
+  this.url = url;
+  this.element = element;
+  this.img = new Image();
+}
+
+// inherit LoadingImage prototype
+Background.prototype = Object.create( LoadingImage.prototype );
+
+Background.prototype.check = function() {
+  this.img.addEventListener( 'load', this );
+  this.img.addEventListener( 'error', this );
+  this.img.src = this.url;
+  // check if image is already complete
+  var isComplete = this.getIsImageComplete();
+  if ( isComplete ) {
+    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
+    this.unbindEvents();
+  }
+};
+
+Background.prototype.unbindEvents = function() {
+  this.img.removeEventListener( 'load', this );
+  this.img.removeEventListener( 'error', this );
+};
+
+Background.prototype.confirm = function( isLoaded, message ) {
+  this.isLoaded = isLoaded;
+  this.emitEvent( 'progress', [ this, this.element, message ] );
+};
+
+// -------------------------- jQuery -------------------------- //
+
+ngImagesLoaded.makeJQueryPlugin = function( jQuery ) {
+  jQuery = jQuery || window.jQuery;
+  if ( !jQuery ) {
+    return;
+  }
+  // set local variable
+  //$ = jQuery;
+  // $().ngimagesLoaded()
+  jQuery.fn.ngimagesLoaded = function( options, callback ) {
+    var instance = new ngImagesLoaded( this, options, callback );
+    return instance.jqDeferred.promise( jQuery(this) );
   };
+};
+// try making plugin
+ngImagesLoaded.makeJQueryPlugin();
 
-  // ----- events ----- //
+// --------------------------  -------------------------- //
 
-  // trigger specified handler for event type
-  Resource.prototype.handleEvent = function( event ) {
-    var method = 'on' + event.type;
-    if ( this[ method ] ) {
-      this[ method ]( event );
-    }
-  };
-
-  Resource.prototype.onload = function( event ) {
-    this.confirm( true, 'onload' );
-    this.unbindProxyEvents( event );
-  };
-
-  Resource.prototype.onerror = function( event ) {
-    this.confirm( false, 'onerror' );
-    this.unbindProxyEvents( event );
-  };
-
-  // ----- confirm ----- //
-
-  Resource.prototype.confirm = function( isLoaded, message ) {
-    this.isConfirmed = true;
-    this.isLoaded = isLoaded;
-    this.emit( 'confirm', this, message );
-  };
-
-  Resource.prototype.unbindProxyEvents = function( event ) {
-    eventie.unbind( event.target, 'load', this );
-    eventie.unbind( event.target, 'error', this );
-  };
-
-  // -----  ----- //
-
-  return ngImagesLoaded;
+return ngImagesLoaded;
 
 });
 
 
 
+// #########################################################################################################
+// ##### imagesLoaded - end
+// #########################################################################################################
+
+
+
+
+// #########################################################################################################
+// ##### screenfull
+// #####
+// ##### rename 'screenfull' to 'ngscreenfull'
+// #########################################################################################################
 
 
 // screenfull.js
@@ -11333,6 +10980,9 @@ function makeArray( obj ) {
 	}
 })();
 
+// #########################################################################################################
+// ##### screenfull - end
+// #########################################################################################################
 
 
 

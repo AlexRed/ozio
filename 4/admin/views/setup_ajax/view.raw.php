@@ -91,17 +91,9 @@ class OzioViewSetup_Ajax extends JViewLegacy
 				die();
 			}			
 			
-			
-			$curl = curl_init();
-
-			curl_setopt($curl, CURLOPT_URL,"https://accounts.google.com/o/oauth2/revoke?token=".urlencode($credentials['access_token']));
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-			$response = curl_exec ($curl);
-
-			curl_close ($curl);
+						
+			$resp_obj = $this->gi_get("https://accounts.google.com/o/oauth2/revoke?token=".urlencode($credentials['access_token']));
+			$response = $resp_obj->body;
 
 
 			$query = $db->getQuery(true);
@@ -161,25 +153,9 @@ class OzioViewSetup_Ajax extends JViewLegacy
 			);
 			
 			//If you need to re-prompt the user for consent, include the prompt parameter in the authorization code request, and set the value to consent.
-			
-			$curl = curl_init();
+			$resp_obj = $this->gi_post_form("https://www.googleapis.com/oauth2/v4/token",$postfields);
+			$response = $resp_obj->body;
 
-			curl_setopt($curl, CURLOPT_URL,"https://www.googleapis.com/oauth2/v4/token");
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			//curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postfields));
-			
-
-			// receive server response ...
-
-			$response = curl_exec ($curl);
-
-			curl_close ($curl);
-			
 			$resp=json_decode($response,true);
 			
 			/*
@@ -229,7 +205,7 @@ class OzioViewSetup_Ajax extends JViewLegacy
 				echo json_encode(array("status"=>true,"msg"=>JText::_('COM_OZIOGALLERY3_AUTH_OK_MESSAGE')));
 			}else{
 				
-				echo json_encode(array("status"=>false,"msg"=>"Error in getting refresh token"));
+				echo json_encode(array("status"=>false,"msg"=>"Error in getting refresh token. ".$response));
 			}
 
 		}else{
@@ -250,4 +226,76 @@ class OzioViewSetup_Ajax extends JViewLegacy
 		}
 		return $parts;
 	}
+	
+	
+	function gi_post_form($url,$postfields,$headers=array()){
+
+		$timeout = null;
+
+		$headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
+		
+		$data = http_build_query($postfields,'','&');
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->post($url, $data, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not send data to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}
+
+	function gi_get($url,$headers=array()){
+
+		$timeout = null;
+
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->get($url, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not get data from remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}	
 }

@@ -9,7 +9,7 @@ class OzioViewRights extends JViewLegacy
     {
 		
 		return;//NON fa più nulla.
-		
+		/*
 		$app = JFactory::getApplication();
 
 		$document = JFactory::getDocument();
@@ -30,7 +30,7 @@ class OzioViewRights extends JViewLegacy
 			}
 			
 			
-			$url = "https://picasaweb.google.com/data/feed/api/user/".$user_id."?".http_build_query(array('v'=>2,'kind'=>'album','access'=>'all','alt'=>'json','access_token'=>$access_token));
+			$url = "https://picasaweb.google.com/data/feed/api/user/".$user_id."?".http_build_query(array('v'=>2,'kind'=>'album','access'=>'all','alt'=>'json','access_token'=>$access_token),'','&');
 			
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
@@ -96,7 +96,7 @@ class OzioViewRights extends JViewLegacy
 			  <gphoto:access>".$new_access."</gphoto:access>
 			</entry>";
 
-			$url=$url."&".http_build_query(array('access_token'=>$access_token));
+			$url=$url."&".http_build_query(array('access_token'=>$access_token),'','&');
 
 			$curl = curl_init($url);
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
@@ -118,7 +118,7 @@ class OzioViewRights extends JViewLegacy
 			die();
 		}
 
-
+		*/
         //parent::display($tpl);
     }
 }

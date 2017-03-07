@@ -669,7 +669,7 @@ jQuery( document ).ready(function( $ ) {
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
 				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "")
 		
-		);			
+		)+'&ozrand='+(new Date().getTime());			
 		
 
 		// http://api.jquery.com/jQuery.ajax/

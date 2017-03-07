@@ -1,8 +1,24 @@
-/*! lightgallery - v1.2.19 - 2016-05-17
+/*! lightgallery - v1.3.9 - 2017-02-05
 * http://sachinchoolur.github.io/lightGallery/
-* Copyright (c) 2016 Sachin N; Licensed Apache 2.0 */
-(function($, window, document, undefined) {
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
 
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(root["jQuery"]);
+  }
+}(this, function ($) {
+
+(function() {
     'use strict';
 
     var defaults = {
@@ -37,6 +53,8 @@
 
         // .lg-item || '.lg-sub-html'
         appendSubHtmlTo: '.lg-sub-html',
+
+        subHtmlSelectorRelative: false,
 
         /**
          * @desc number of preload slides
@@ -154,8 +172,9 @@
             if (!$('body').hasClass('lg-on')) {
                 setTimeout(function() {
                     _this.build(_this.index);
-                    $('body').addClass('lg-on');
                 });
+
+                $('body').addClass('lg-on');
             }
         }
 
@@ -211,7 +230,7 @@
         });
 
         // initiate slide function
-        _this.slide(index, false, false);
+        _this.slide(index, false, false, false);
 
         if (_this.s.keyPress) {
             _this.keyPress();
@@ -251,6 +270,8 @@
 
         });
 
+        _this.$outer.trigger('mousemove.lg');
+
     };
 
     Plugin.prototype.structure = function() {
@@ -284,7 +305,7 @@
         template = '<div class="lg-outer ' + this.s.addClass + ' ' + this.s.startClass + '">' +
             '<div class="lg" style="width:' + this.s.width + '; height:' + this.s.height + '">' +
             '<div class="lg-inner">' + list + '</div>' +
-            '<div class="lg-toolbar group">' +
+            '<div class="lg-toolbar lg-group">' +
             '<span class="lg-close lg-icon"></span>' +
             '</div>' +
             controls +
@@ -342,7 +363,9 @@
             $inner.css('transition-duration', this.s.speed + 'ms');
         }
 
-        $('.lg-backdrop').addClass('in');
+        setTimeout(function() {
+            $('.lg-backdrop').addClass('in');
+        });
 
         setTimeout(function() {
             _this.$outer.addClass('lg-visible');
@@ -454,6 +477,7 @@
     Plugin.prototype.addHtml = function(index) {
         var subHtml = null;
         var subHtmlUrl;
+        var $currentEle;
         if (this.s.dynamic) {
             if (this.s.dynamicEl[index].subHtmlUrl) {
                 subHtmlUrl = this.s.dynamicEl[index].subHtmlUrl;
@@ -461,13 +485,13 @@
                 subHtml = this.s.dynamicEl[index].subHtml;
             }
         } else {
-            if (this.$items.eq(index).attr('data-sub-html-url')) {
-                subHtmlUrl = this.$items.eq(index).attr('data-sub-html-url');
+            $currentEle = this.$items.eq(index);
+            if ($currentEle.attr('data-sub-html-url')) {
+                subHtmlUrl = $currentEle.attr('data-sub-html-url');
             } else {
-
-                subHtml = this.$items.eq(index).attr('data-sub-html');
+                subHtml = $currentEle.attr('data-sub-html');
                 if (this.s.getCaptionFromTitleOrAlt && !subHtml) {
-                    subHtml = this.$items.eq(index).attr('title') || this.$items.eq(index).find('img').first().attr('alt');
+                    subHtml = $currentEle.attr('title') || $currentEle.find('img').first().attr('alt');
                 }
             }
         }
@@ -479,7 +503,11 @@
                 // if first letter starts with . or # get the html form the jQuery object
                 var fL = subHtml.substring(0, 1);
                 if (fL === '.' || fL === '#') {
-                    subHtml = $(subHtml).html();
+                    if (this.s.subHtmlSelectorRelative && !this.s.dynamic) {
+                        subHtml = $currentEle.find(subHtml).html();
+                    } else {
+                        subHtml = $(subHtml).html();
+                    }
                 }
             } else {
                 subHtml = '';
@@ -733,8 +761,9 @@
     *   @param {Number} index - index of the slide
     *   @param {Boolean} fromTouch - true if slide function called via touch event or mouse drag
     *   @param {Boolean} fromThumb - true if slide function called via thumbnail click
+    *   @param {String} direction - Direction of the slide(next/prev)
     */
-    Plugin.prototype.slide = function(index, fromTouch, fromThumb) {
+    Plugin.prototype.slide = function(index, fromTouch, fromThumb, direction) {
 
         var _prevIndex = this.$outer.find('.lg-current').index();
         var _this = this;
@@ -747,8 +776,6 @@
 
         var _length = this.$slide.length;
         var _time = _this.lGalleryOn ? this.s.speed : 0;
-        var _next = false;
-        var _prev = false;
 
         if (!_this.lgBusy) {
 
@@ -786,6 +813,14 @@
 
             this.arrowDisable(index);
 
+            if (!direction) {
+                if (index < _prevIndex) {
+                    direction = 'prev';
+                } else if (index > _prevIndex) {
+                    direction = 'next';
+                }
+            }
+
             if (!fromTouch) {
 
                 // remove all transitions
@@ -793,26 +828,12 @@
 
                 this.$slide.removeClass('lg-prev-slide lg-next-slide');
 
-                if (index < _prevIndex) {
-                    _prev = true;
-                    if ((index === 0) && (_prevIndex === _length - 1) && !fromThumb) {
-                        _prev = false;
-                        _next = true;
-                    }
-                } else if (index > _prevIndex) {
-                    _next = true;
-                    if ((index === _length - 1) && (_prevIndex === 0) && !fromThumb) {
-                        _prev = true;
-                        _next = false;
-                    }
-                }
-
-                if (_prev) {
+                if (direction === 'prev') {
 
                     //prevslide
                     this.$slide.eq(index).addClass('lg-prev-slide');
                     this.$slide.eq(_prevIndex).addClass('lg-next-slide');
-                } else if (_next) {
+                } else {
 
                     // next slide
                     this.$slide.eq(index).addClass('lg-next-slide');
@@ -831,24 +852,36 @@
                 }, 50);
             } else {
 
-                var touchPrev = index - 1;
-                var touchNext = index + 1;
+                this.$slide.removeClass('lg-prev-slide lg-current lg-next-slide');
+                var touchPrev;
+                var touchNext;
+                if (_length > 2) {
+                    touchPrev = index - 1;
+                    touchNext = index + 1;
 
-                if ((index === 0) && (_prevIndex === _length - 1)) {
+                    if ((index === 0) && (_prevIndex === _length - 1)) {
 
-                    // next slide
-                    touchNext = 0;
-                    touchPrev = _length - 1;
-                } else if ((index === _length - 1) && (_prevIndex === 0)) {
+                        // next slide
+                        touchNext = 0;
+                        touchPrev = _length - 1;
+                    } else if ((index === _length - 1) && (_prevIndex === 0)) {
 
-                    // prev slide
-                    touchNext = 0;
-                    touchPrev = _length - 1;
+                        // prev slide
+                        touchNext = 0;
+                        touchPrev = _length - 1;
+                    }
+
+                } else {
+                    touchPrev = 0;
+                    touchNext = 1;
                 }
 
-                this.$slide.removeClass('lg-prev-slide lg-current lg-next-slide');
-                _this.$slide.eq(touchPrev).addClass('lg-prev-slide');
-                _this.$slide.eq(touchNext).addClass('lg-next-slide');
+                if (direction === 'prev') {
+                    _this.$slide.eq(touchNext).addClass('lg-next-slide');
+                } else {
+                    _this.$slide.eq(touchPrev).addClass('lg-prev-slide');
+                }
+
                 _this.$slide.eq(index).addClass('lg-current');
             }
 
@@ -885,17 +918,22 @@
      */
     Plugin.prototype.goToNextSlide = function(fromTouch) {
         var _this = this;
+        var _loop = _this.s.loop;
+        if (fromTouch && _this.$slide.length < 3) {
+            _loop = false;
+        }
+
         if (!_this.lgBusy) {
             if ((_this.index + 1) < _this.$slide.length) {
                 _this.index++;
                 _this.$el.trigger('onBeforeNextSlide.lg', [_this.index]);
-                _this.slide(_this.index, fromTouch, false);
+                _this.slide(_this.index, fromTouch, false, 'next');
             } else {
-                if (_this.s.loop) {
+                if (_loop) {
                     _this.index = 0;
                     _this.$el.trigger('onBeforeNextSlide.lg', [_this.index]);
-                    _this.slide(_this.index, fromTouch, false);
-                } else if (_this.s.slideEndAnimatoin) {
+                    _this.slide(_this.index, fromTouch, false, 'next');
+                } else if (_this.s.slideEndAnimatoin && !fromTouch) {
                     _this.$outer.addClass('lg-right-end');
                     setTimeout(function() {
                         _this.$outer.removeClass('lg-right-end');
@@ -911,17 +949,22 @@
      */
     Plugin.prototype.goToPrevSlide = function(fromTouch) {
         var _this = this;
+        var _loop = _this.s.loop;
+        if (fromTouch && _this.$slide.length < 3) {
+            _loop = false;
+        }
+
         if (!_this.lgBusy) {
             if (_this.index > 0) {
                 _this.index--;
                 _this.$el.trigger('onBeforePrevSlide.lg', [_this.index, fromTouch]);
-                _this.slide(_this.index, fromTouch, false);
+                _this.slide(_this.index, fromTouch, false, 'prev');
             } else {
-                if (_this.s.loop) {
+                if (_loop) {
                     _this.index = _this.$items.length - 1;
                     _this.$el.trigger('onBeforePrevSlide.lg', [_this.index, fromTouch]);
-                    _this.slide(_this.index, fromTouch, false);
-                } else if (_this.s.slideEndAnimatoin) {
+                    _this.slide(_this.index, fromTouch, false, 'prev');
+                } else if (_this.s.slideEndAnimatoin && !fromTouch) {
                     _this.$outer.addClass('lg-left-end');
                     setTimeout(function() {
                         _this.$outer.removeClass('lg-left-end');
@@ -1154,23 +1197,22 @@
     };
 
     Plugin.prototype.manageSwipeClass = function() {
-        var touchNext = this.index + 1;
-        var touchPrev = this.index - 1;
-        var length = this.$slide.length;
-        if (this.s.loop) {
+        var _touchNext = this.index + 1;
+        var _touchPrev = this.index - 1;
+        if (this.s.loop && this.$slide.length > 2) {
             if (this.index === 0) {
-                touchPrev = length - 1;
-            } else if (this.index === length - 1) {
-                touchNext = 0;
+                _touchPrev = this.$slide.length - 1;
+            } else if (this.index === this.$slide.length - 1) {
+                _touchNext = 0;
             }
         }
 
         this.$slide.removeClass('lg-next-slide lg-prev-slide');
-        if (touchPrev > -1) {
-            this.$slide.eq(touchPrev).addClass('lg-prev-slide');
+        if (_touchPrev > -1) {
+            this.$slide.eq(_touchPrev).addClass('lg-prev-slide');
         }
 
-        this.$slide.eq(touchNext).addClass('lg-next-slide');
+        this.$slide.eq(_touchNext).addClass('lg-next-slide');
     };
 
     Plugin.prototype.mousewheel = function() {
@@ -1234,9 +1276,9 @@
 
         if (!d) {
             _this.$el.trigger('onBeforeClose.lg');
+            $(window).scrollTop(_this.prevScrollTop);
         }
 
-        $(window).scrollTop(_this.prevScrollTop);
 
         /**
          * if d is false or undefined destroy will only close the gallery
@@ -1307,16 +1349,32 @@
 
     $.fn.lightGallery.modules = {};
 
-})(jQuery, window, document);
+})();
 
-/**
- * Autoplay Plugin
- * @version 1.2.0
- * @author Sachin N - @sachinchoolur
- * @license MIT License (MIT)
- */
 
-(function($, window, document, undefined) {
+}));
+/*! lg-autoplay - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
+
+(function() {
 
     'use strict';
 
@@ -1468,14 +1526,13 @@
 
         _this.interval = setInterval(function() {
             if (_this.core.index + 1 < _this.core.$items.length) {
-                _this.core.index = _this.core.index;
+                _this.core.index++;
             } else {
-                _this.core.index = -1;
+                _this.core.index = 0;
             }
 
-            _this.core.index++;
             _this.fromAuto = true;
-            _this.core.slide(_this.core.index, false, false);
+            _this.core.slide(_this.core.index, false, false, 'next');
         }, _this.core.s.speed + _this.core.s.pause);
     };
 
@@ -1496,7 +1553,32 @@
 
     $.fn.lightGallery.modules.autoplay = Autoplay;
 
-})(jQuery, window, document);
+})();
+
+
+}));
+/*! lg-autoplay - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("jquery")):b(jQuery)}(this,function(a){!function(){"use strict";var b={autoplay:!1,pause:5e3,progressBar:!0,fourceAutoplay:!1,autoplayControls:!0,appendAutoplayControlsTo:".lg-toolbar"},c=function(c){return this.core=a(c).data("lightGallery"),this.$el=a(c),!(this.core.$items.length<2)&&(this.core.s=a.extend({},b,this.core.s),this.interval=!1,this.fromAuto=!0,this.canceledOnTouch=!1,this.fourceAutoplayTemp=this.core.s.fourceAutoplay,this.core.doCss()||(this.core.s.progressBar=!1),this.init(),this)};c.prototype.init=function(){var a=this;a.core.s.autoplayControls&&a.controls(),a.core.s.progressBar&&a.core.$outer.find(".lg").append('<div class="lg-progress-bar"><div class="lg-progress"></div></div>'),a.progress(),a.core.s.autoplay&&a.startlAuto(),a.$el.on("onDragstart.lg.tm touchstart.lg.tm",function(){a.interval&&(a.cancelAuto(),a.canceledOnTouch=!0)}),a.$el.on("onDragend.lg.tm touchend.lg.tm onSlideClick.lg.tm",function(){!a.interval&&a.canceledOnTouch&&(a.startlAuto(),a.canceledOnTouch=!1)})},c.prototype.progress=function(){var a,b,c=this;c.$el.on("onBeforeSlide.lg.tm",function(){c.core.s.progressBar&&c.fromAuto&&(a=c.core.$outer.find(".lg-progress-bar"),b=c.core.$outer.find(".lg-progress"),c.interval&&(b.removeAttr("style"),a.removeClass("lg-start"),setTimeout(function(){b.css("transition","width "+(c.core.s.speed+c.core.s.pause)+"ms ease 0s"),a.addClass("lg-start")},20))),c.fromAuto||c.core.s.fourceAutoplay||c.cancelAuto(),c.fromAuto=!1})},c.prototype.controls=function(){var b=this,c='<span class="lg-autoplay-button lg-icon"></span>';a(this.core.s.appendAutoplayControlsTo).append(c),b.core.$outer.find(".lg-autoplay-button").on("click.lg",function(){a(b.core.$outer).hasClass("lg-show-autoplay")?(b.cancelAuto(),b.core.s.fourceAutoplay=!1):b.interval||(b.startlAuto(),b.core.s.fourceAutoplay=b.fourceAutoplayTemp)})},c.prototype.startlAuto=function(){var a=this;a.core.$outer.find(".lg-progress").css("transition","width "+(a.core.s.speed+a.core.s.pause)+"ms ease 0s"),a.core.$outer.addClass("lg-show-autoplay"),a.core.$outer.find(".lg-progress-bar").addClass("lg-start"),a.interval=setInterval(function(){a.core.index+1<a.core.$items.length?a.core.index++:a.core.index=0,a.fromAuto=!0,a.core.slide(a.core.index,!1,!1,"next")},a.core.s.speed+a.core.s.pause)},c.prototype.cancelAuto=function(){clearInterval(this.interval),this.interval=!1,this.core.$outer.find(".lg-progress").removeAttr("style"),this.core.$outer.removeClass("lg-show-autoplay"),this.core.$outer.find(".lg-progress-bar").removeClass("lg-start")},c.prototype.destroy=function(){this.cancelAuto(),this.core.$outer.find(".lg-progress-bar").remove()},a.fn.lightGallery.modules.autoplay=c}()});/*! lg-fullscreen - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define([], function () {
+      return (factory());
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    factory();
+  }
+}(this, function () {
 
 (function($, window, document, undefined) {
 
@@ -1593,7 +1675,127 @@
 
 })(jQuery, window, document);
 
+}));
+/*! lg-fullscreen - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define([],function(){return b()}):"object"==typeof exports?module.exports=b():b()}(this,function(){!function(a,b,c,d){"use strict";var e={fullScreen:!0},f=function(b){return this.core=a(b).data("lightGallery"),this.$el=a(b),this.core.s=a.extend({},e,this.core.s),this.init(),this};f.prototype.init=function(){var a="";if(this.core.s.fullScreen){if(!(c.fullscreenEnabled||c.webkitFullscreenEnabled||c.mozFullScreenEnabled||c.msFullscreenEnabled))return;a='<span class="lg-fullscreen lg-icon"></span>',this.core.$outer.find(".lg-toolbar").append(a),this.fullScreen()}},f.prototype.requestFullscreen=function(){var a=c.documentElement;a.requestFullscreen?a.requestFullscreen():a.msRequestFullscreen?a.msRequestFullscreen():a.mozRequestFullScreen?a.mozRequestFullScreen():a.webkitRequestFullscreen&&a.webkitRequestFullscreen()},f.prototype.exitFullscreen=function(){c.exitFullscreen?c.exitFullscreen():c.msExitFullscreen?c.msExitFullscreen():c.mozCancelFullScreen?c.mozCancelFullScreen():c.webkitExitFullscreen&&c.webkitExitFullscreen()},f.prototype.fullScreen=function(){var b=this;a(c).on("fullscreenchange.lg webkitfullscreenchange.lg mozfullscreenchange.lg MSFullscreenChange.lg",function(){b.core.$outer.toggleClass("lg-fullscreen-on")}),this.core.$outer.find(".lg-fullscreen").on("click.lg",function(){c.fullscreenElement||c.mozFullScreenElement||c.webkitFullscreenElement||c.msFullscreenElement?b.exitFullscreen():b.requestFullscreen()})},f.prototype.destroy=function(){this.exitFullscreen(),a(c).off("fullscreenchange.lg webkitfullscreenchange.lg mozfullscreenchange.lg MSFullscreenChange.lg")},a.fn.lightGallery.modules.fullscreen=f}(jQuery,window,document)});/*! lg-hash - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define([], function () {
+      return (factory());
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    factory();
+  }
+}(this, function () {
+
 (function($, window, document, undefined) {
+
+    'use strict';
+
+    var defaults = {
+        hash: true
+    };
+
+    var Hash = function(element) {
+
+        this.core = $(element).data('lightGallery');
+
+        this.core.s = $.extend({}, defaults, this.core.s);
+
+        if (this.core.s.hash) {
+            this.oldHash = window.location.hash;
+            this.init();
+        }
+
+        return this;
+    };
+
+    Hash.prototype.init = function() {
+        var _this = this;
+        var _hash;
+
+        // Change hash value on after each slide transition
+        _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex, index) {
+            window.location.hash = 'lg=' + _this.core.s.galleryId + '&slide=' + index;
+        });
+
+        // Listen hash change and change the slide according to slide value
+        $(window).on('hashchange.lg.hash', function() {
+            _hash = window.location.hash;
+            var _idx = parseInt(_hash.split('&slide=')[1], 10);
+
+            // it galleryId doesn't exist in the url close the gallery
+            if ((_hash.indexOf('lg=' + _this.core.s.galleryId) > -1)) {
+                _this.core.slide(_idx, false, false);
+            } else if (_this.core.lGalleryOn) {
+                _this.core.destroy();
+            }
+
+        });
+    };
+
+    Hash.prototype.destroy = function() {
+
+        if (!this.core.s.hash) {
+            return;
+        }
+
+        // Reset to old hash value
+        if (this.oldHash && this.oldHash.indexOf('lg=' + this.core.s.galleryId) < 0) {
+            window.location.hash = this.oldHash;
+        } else {
+            if (history.pushState) {
+                history.pushState('', document.title, window.location.pathname + window.location.search);
+            } else {
+                window.location.hash = '';
+            }
+        }
+
+        this.core.$el.off('.lg.hash');
+
+    };
+
+    $.fn.lightGallery.modules.hash = Hash;
+
+})(jQuery, window, document);
+
+
+}));
+/*! lg-hash - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define([],function(){return b()}):"object"==typeof exports?module.exports=b():b()}(this,function(){!function(a,b,c,d){"use strict";var e={hash:!0},f=function(c){return this.core=a(c).data("lightGallery"),this.core.s=a.extend({},e,this.core.s),this.core.s.hash&&(this.oldHash=b.location.hash,this.init()),this};f.prototype.init=function(){var c,d=this;d.core.$el.on("onAfterSlide.lg.tm",function(a,c,e){b.location.hash="lg="+d.core.s.galleryId+"&slide="+e}),a(b).on("hashchange.lg.hash",function(){c=b.location.hash;var a=parseInt(c.split("&slide=")[1],10);c.indexOf("lg="+d.core.s.galleryId)>-1?d.core.slide(a,!1,!1):d.core.lGalleryOn&&d.core.destroy()})},f.prototype.destroy=function(){this.core.s.hash&&(this.oldHash&&this.oldHash.indexOf("lg="+this.core.s.galleryId)<0?b.location.hash=this.oldHash:history.pushState?history.pushState("",c.title,b.location.pathname+b.location.search):b.location.hash="",this.core.$el.off(".lg.hash"))},a.fn.lightGallery.modules.hash=f}(jQuery,window,document)});/*! lg-pager - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
+(function() {
 
     'use strict';
 
@@ -1647,7 +1849,7 @@
         $pagerCont.on('click.lg touchend.lg', function() {
             var _$this = $(this);
             _this.core.index = _$this.index();
-            _this.core.slide(_this.core.index, false, false);
+            _this.core.slide(_this.core.index, false, true, false);
         });
 
         $pagerOuter.on('mouseover.lg', function() {
@@ -1674,9 +1876,131 @@
 
     $.fn.lightGallery.modules.pager = Pager;
 
-})(jQuery, window, document);
+})();
 
-(function($, window, document, undefined) {
+
+}));
+/*! lg-pager - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("jquery")):b(jQuery)}(this,function(a){!function(){"use strict";var b={pager:!1},c=function(c){return this.core=a(c).data("lightGallery"),this.$el=a(c),this.core.s=a.extend({},b,this.core.s),this.core.s.pager&&this.core.$items.length>1&&this.init(),this};c.prototype.init=function(){var b,c,d,e=this,f="";if(e.core.$outer.find(".lg").append('<div class="lg-pager-outer"></div>'),e.core.s.dynamic)for(var g=0;g<e.core.s.dynamicEl.length;g++)f+='<span class="lg-pager-cont"> <span class="lg-pager"></span><div class="lg-pager-thumb-cont"><span class="lg-caret"></span> <img src="'+e.core.s.dynamicEl[g].thumb+'" /></div></span>';else e.core.$items.each(function(){f+=e.core.s.exThumbImage?'<span class="lg-pager-cont"> <span class="lg-pager"></span><div class="lg-pager-thumb-cont"><span class="lg-caret"></span> <img src="'+a(this).attr(e.core.s.exThumbImage)+'" /></div></span>':'<span class="lg-pager-cont"> <span class="lg-pager"></span><div class="lg-pager-thumb-cont"><span class="lg-caret"></span> <img src="'+a(this).find("img").attr("src")+'" /></div></span>'});c=e.core.$outer.find(".lg-pager-outer"),c.html(f),b=e.core.$outer.find(".lg-pager-cont"),b.on("click.lg touchend.lg",function(){var b=a(this);e.core.index=b.index(),e.core.slide(e.core.index,!1,!0,!1)}),c.on("mouseover.lg",function(){clearTimeout(d),c.addClass("lg-pager-hover")}),c.on("mouseout.lg",function(){d=setTimeout(function(){c.removeClass("lg-pager-hover")})}),e.core.$el.on("onBeforeSlide.lg.tm",function(a,c,d){b.removeClass("lg-pager-active"),b.eq(d).addClass("lg-pager-active")})},c.prototype.destroy=function(){},a.fn.lightGallery.modules.pager=c}()});/*! lg-share - v1.0.2 - 2016-11-26
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
+(function() {
+
+    'use strict';
+
+    var defaults = {
+        share: true,
+        facebook: true,
+        facebookDropdownText: 'Facebook',
+        twitter: true,
+        twitterDropdownText: 'Twitter',
+        googlePlus: true,
+        googlePlusDropdownText: 'GooglePlus',
+        pinterest: true,
+        pinterestDropdownText: 'Pinterest'
+    };
+
+    var Share = function(element) {
+
+        this.core = $(element).data('lightGallery');
+
+        this.core.s = $.extend({}, defaults, this.core.s);
+        if (this.core.s.share) {
+            this.init();
+        }
+
+        return this;
+    };
+
+    Share.prototype.init = function() {
+        var _this = this;
+        var shareHtml = '<span id="lg-share" class="lg-icon">' +
+            '<ul class="lg-dropdown" style="position: absolute;">';
+        shareHtml += _this.core.s.facebook ? '<li><a id="lg-share-facebook" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">' + this.core.s.facebookDropdownText + '</span></a></li>' : '';
+        shareHtml += _this.core.s.twitter ? '<li><a id="lg-share-twitter" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">' + this.core.s.twitterDropdownText + '</span></a></li>' : '';
+        shareHtml += _this.core.s.googlePlus ? '<li><a id="lg-share-googleplus" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">' + this.core.s.googlePlusDropdownText + '</span></a></li>' : '';
+        shareHtml += _this.core.s.pinterest ? '<li><a id="lg-share-pinterest" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">' + this.core.s.pinterestDropdownText + '</span></a></li>' : '';
+        shareHtml += '</ul></span>';
+
+        this.core.$outer.find('.lg-toolbar').append(shareHtml);
+        this.core.$outer.find('.lg').append('<div id="lg-dropdown-overlay"></div>');
+        $('#lg-share').on('click.lg', function(){
+            _this.core.$outer.toggleClass('lg-dropdown-active');
+        });
+
+        $('#lg-dropdown-overlay').on('click.lg', function(){
+            _this.core.$outer.removeClass('lg-dropdown-active');
+        });
+
+        _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex, index) {
+
+            setTimeout(function() { 
+                $('#lg-share-facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-facebook-share-url') || window.location.href)));
+
+                $('#lg-share-twitter').attr('href', 'https://twitter.com/intent/tweet?text=' + _this.core.$items.eq(index).attr('data-tweet-text') + '&url=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-twitter-share-url') || window.location.href)));
+
+                $('#lg-share-googleplus').attr('href', 'https://plus.google.com/share?url=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-googleplus-share-url') || window.location.href)));
+
+                $('#lg-share-pinterest').attr('href', 'http://www.pinterest.com/pin/create/button/?url=' + (encodeURIComponent(_this.core.$items.eq(index).attr('data-pinterest-share-url') || window.location.href)) + '&media=' + encodeURIComponent(_this.core.$items.eq(index).attr('href') || _this.core.$items.eq(index).attr('data-src')) + '&description=' + _this.core.$items.eq(index).attr('data-pinterest-text'));
+
+            }, 100);
+        });
+    };
+
+    Share.prototype.destroy = function() {
+
+    };
+
+    $.fn.lightGallery.modules.share = Share;
+
+})();
+
+
+
+}));
+/*! lg-share - v1.0.2 - 2016-11-26
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("jquery")):b(jQuery)}(this,function(a){!function(){"use strict";var b={share:!0,facebook:!0,facebookDropdownText:"Facebook",twitter:!0,twitterDropdownText:"Twitter",googlePlus:!0,googlePlusDropdownText:"GooglePlus",pinterest:!0,pinterestDropdownText:"Pinterest"},c=function(c){return this.core=a(c).data("lightGallery"),this.core.s=a.extend({},b,this.core.s),this.core.s.share&&this.init(),this};c.prototype.init=function(){var b=this,c='<span id="lg-share" class="lg-icon"><ul class="lg-dropdown" style="position: absolute;">';c+=b.core.s.facebook?'<li><a id="lg-share-facebook" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">'+this.core.s.facebookDropdownText+"</span></a></li>":"",c+=b.core.s.twitter?'<li><a id="lg-share-twitter" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">'+this.core.s.twitterDropdownText+"</span></a></li>":"",c+=b.core.s.googlePlus?'<li><a id="lg-share-googleplus" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">'+this.core.s.googlePlusDropdownText+"</span></a></li>":"",c+=b.core.s.pinterest?'<li><a id="lg-share-pinterest" target="_blank"><span class="lg-icon"></span><span class="lg-dropdown-text">'+this.core.s.pinterestDropdownText+"</span></a></li>":"",c+="</ul></span>",this.core.$outer.find(".lg-toolbar").append(c),this.core.$outer.find(".lg").append('<div id="lg-dropdown-overlay"></div>'),a("#lg-share").on("click.lg",function(){b.core.$outer.toggleClass("lg-dropdown-active")}),a("#lg-dropdown-overlay").on("click.lg",function(){b.core.$outer.removeClass("lg-dropdown-active")}),b.core.$el.on("onAfterSlide.lg.tm",function(c,d,e){setTimeout(function(){a("#lg-share-facebook").attr("href","https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(b.core.$items.eq(e).attr("data-facebook-share-url")||window.location.href)),a("#lg-share-twitter").attr("href","https://twitter.com/intent/tweet?text="+b.core.$items.eq(e).attr("data-tweet-text")+"&url="+encodeURIComponent(b.core.$items.eq(e).attr("data-twitter-share-url")||window.location.href)),a("#lg-share-googleplus").attr("href","https://plus.google.com/share?url="+encodeURIComponent(b.core.$items.eq(e).attr("data-googleplus-share-url")||window.location.href)),a("#lg-share-pinterest").attr("href","http://www.pinterest.com/pin/create/button/?url="+encodeURIComponent(b.core.$items.eq(e).attr("data-pinterest-share-url")||window.location.href)+"&media="+encodeURIComponent(b.core.$items.eq(e).attr("href")||b.core.$items.eq(e).attr("data-src"))+"&description="+b.core.$items.eq(e).attr("data-pinterest-text"))},100)})},c.prototype.destroy=function(){},a.fn.lightGallery.modules.share=c}()});/*! lg-thumbnail - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
+(function() {
 
     'use strict';
 
@@ -1885,7 +2209,7 @@
                 // Go to slide if browser does not support css transitions
                 if ((_this.thumbClickable && !_this.core.lgBusy) || !_this.core.doCss()) {
                     _this.core.index = _$this.index();
-                    _this.core.slide(_this.core.index, false, true);
+                    _this.core.slide(_this.core.index, false, true, false);
                 }
             }, 50);
         });
@@ -2126,7 +2450,31 @@
 
     $.fn.lightGallery.modules.Thumbnail = Thumbnail;
 
-})(jQuery, window, document);
+})();
+
+}));
+/*! lg-thumbnail - v1.0.2 - 2017-01-22
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("jquery")):b(jQuery)}(this,function(a){!function(){"use strict";var b={thumbnail:!0,animateThumb:!0,currentPagerPosition:"middle",thumbWidth:100,thumbContHeight:100,thumbMargin:5,exThumbImage:!1,showThumbByDefault:!0,toogleThumb:!0,pullCaptionUp:!0,enableThumbDrag:!0,enableThumbSwipe:!0,swipeThreshold:50,loadYoutubeThumbnail:!0,youtubeThumbSize:1,loadVimeoThumbnail:!0,vimeoThumbSize:"thumbnail_small",loadDailymotionThumbnail:!0},c=function(c){return this.core=a(c).data("lightGallery"),this.core.s=a.extend({},b,this.core.s),this.$el=a(c),this.$thumbOuter=null,this.thumbOuterWidth=0,this.thumbTotalWidth=this.core.$items.length*(this.core.s.thumbWidth+this.core.s.thumbMargin),this.thumbIndex=this.core.index,this.left=0,this.init(),this};c.prototype.init=function(){var a=this;this.core.s.thumbnail&&this.core.$items.length>1&&(this.core.s.showThumbByDefault&&setTimeout(function(){a.core.$outer.addClass("lg-thumb-open")},700),this.core.s.pullCaptionUp&&this.core.$outer.addClass("lg-pull-caption-up"),this.build(),this.core.s.animateThumb?(this.core.s.enableThumbDrag&&!this.core.isTouch&&this.core.doCss()&&this.enableThumbDrag(),this.core.s.enableThumbSwipe&&this.core.isTouch&&this.core.doCss()&&this.enableThumbSwipe(),this.thumbClickable=!1):this.thumbClickable=!0,this.toogle(),this.thumbkeyPress())},c.prototype.build=function(){function b(a,b,c){var g,h=d.core.isVideo(a,c)||{},i="";h.youtube||h.vimeo||h.dailymotion?h.youtube?g=d.core.s.loadYoutubeThumbnail?"//img.youtube.com/vi/"+h.youtube[1]+"/"+d.core.s.youtubeThumbSize+".jpg":b:h.vimeo?d.core.s.loadVimeoThumbnail?(g="//i.vimeocdn.com/video/error_"+f+".jpg",i=h.vimeo[1]):g=b:h.dailymotion&&(g=d.core.s.loadDailymotionThumbnail?"//www.dailymotion.com/thumbnail/video/"+h.dailymotion[1]:b):g=b,e+='<div data-vimeo-id="'+i+'" class="lg-thumb-item" style="width:'+d.core.s.thumbWidth+"px; margin-right: "+d.core.s.thumbMargin+'px"><img src="'+g+'" /></div>',i=""}var c,d=this,e="",f="",g='<div class="lg-thumb-outer"><div class="lg-thumb group"></div></div>';switch(this.core.s.vimeoThumbSize){case"thumbnail_large":f="640";break;case"thumbnail_medium":f="200x150";break;case"thumbnail_small":f="100x75"}if(d.core.$outer.addClass("lg-has-thumb"),d.core.$outer.find(".lg").append(g),d.$thumbOuter=d.core.$outer.find(".lg-thumb-outer"),d.thumbOuterWidth=d.$thumbOuter.width(),d.core.s.animateThumb&&d.core.$outer.find(".lg-thumb").css({width:d.thumbTotalWidth+"px",position:"relative"}),this.core.s.animateThumb&&d.$thumbOuter.css("height",d.core.s.thumbContHeight+"px"),d.core.s.dynamic)for(var h=0;h<d.core.s.dynamicEl.length;h++)b(d.core.s.dynamicEl[h].src,d.core.s.dynamicEl[h].thumb,h);else d.core.$items.each(function(c){d.core.s.exThumbImage?b(a(this).attr("href")||a(this).attr("data-src"),a(this).attr(d.core.s.exThumbImage),c):b(a(this).attr("href")||a(this).attr("data-src"),a(this).find("img").attr("src"),c)});d.core.$outer.find(".lg-thumb").html(e),c=d.core.$outer.find(".lg-thumb-item"),c.each(function(){var b=a(this),c=b.attr("data-vimeo-id");c&&a.getJSON("//www.vimeo.com/api/v2/video/"+c+".json?callback=?",{format:"json"},function(a){b.find("img").attr("src",a[0][d.core.s.vimeoThumbSize])})}),c.eq(d.core.index).addClass("active"),d.core.$el.on("onBeforeSlide.lg.tm",function(){c.removeClass("active"),c.eq(d.core.index).addClass("active")}),c.on("click.lg touchend.lg",function(){var b=a(this);setTimeout(function(){(d.thumbClickable&&!d.core.lgBusy||!d.core.doCss())&&(d.core.index=b.index(),d.core.slide(d.core.index,!1,!0,!1))},50)}),d.core.$el.on("onBeforeSlide.lg.tm",function(){d.animateThumb(d.core.index)}),a(window).on("resize.lg.thumb orientationchange.lg.thumb",function(){setTimeout(function(){d.animateThumb(d.core.index),d.thumbOuterWidth=d.$thumbOuter.width()},200)})},c.prototype.setTranslate=function(a){this.core.$outer.find(".lg-thumb").css({transform:"translate3d(-"+a+"px, 0px, 0px)"})},c.prototype.animateThumb=function(a){var b=this.core.$outer.find(".lg-thumb");if(this.core.s.animateThumb){var c;switch(this.core.s.currentPagerPosition){case"left":c=0;break;case"middle":c=this.thumbOuterWidth/2-this.core.s.thumbWidth/2;break;case"right":c=this.thumbOuterWidth-this.core.s.thumbWidth}this.left=(this.core.s.thumbWidth+this.core.s.thumbMargin)*a-1-c,this.left>this.thumbTotalWidth-this.thumbOuterWidth&&(this.left=this.thumbTotalWidth-this.thumbOuterWidth),this.left<0&&(this.left=0),this.core.lGalleryOn?(b.hasClass("on")||this.core.$outer.find(".lg-thumb").css("transition-duration",this.core.s.speed+"ms"),this.core.doCss()||b.animate({left:-this.left+"px"},this.core.s.speed)):this.core.doCss()||b.css("left",-this.left+"px"),this.setTranslate(this.left)}},c.prototype.enableThumbDrag=function(){var b=this,c=0,d=0,e=!1,f=!1,g=0;b.$thumbOuter.addClass("lg-grab"),b.core.$outer.find(".lg-thumb").on("mousedown.lg.thumb",function(a){b.thumbTotalWidth>b.thumbOuterWidth&&(a.preventDefault(),c=a.pageX,e=!0,b.core.$outer.scrollLeft+=1,b.core.$outer.scrollLeft-=1,b.thumbClickable=!1,b.$thumbOuter.removeClass("lg-grab").addClass("lg-grabbing"))}),a(window).on("mousemove.lg.thumb",function(a){e&&(g=b.left,f=!0,d=a.pageX,b.$thumbOuter.addClass("lg-dragging"),g-=d-c,g>b.thumbTotalWidth-b.thumbOuterWidth&&(g=b.thumbTotalWidth-b.thumbOuterWidth),g<0&&(g=0),b.setTranslate(g))}),a(window).on("mouseup.lg.thumb",function(){f?(f=!1,b.$thumbOuter.removeClass("lg-dragging"),b.left=g,Math.abs(d-c)<b.core.s.swipeThreshold&&(b.thumbClickable=!0)):b.thumbClickable=!0,e&&(e=!1,b.$thumbOuter.removeClass("lg-grabbing").addClass("lg-grab"))})},c.prototype.enableThumbSwipe=function(){var a=this,b=0,c=0,d=!1,e=0;a.core.$outer.find(".lg-thumb").on("touchstart.lg",function(c){a.thumbTotalWidth>a.thumbOuterWidth&&(c.preventDefault(),b=c.originalEvent.targetTouches[0].pageX,a.thumbClickable=!1)}),a.core.$outer.find(".lg-thumb").on("touchmove.lg",function(f){a.thumbTotalWidth>a.thumbOuterWidth&&(f.preventDefault(),c=f.originalEvent.targetTouches[0].pageX,d=!0,a.$thumbOuter.addClass("lg-dragging"),e=a.left,e-=c-b,e>a.thumbTotalWidth-a.thumbOuterWidth&&(e=a.thumbTotalWidth-a.thumbOuterWidth),e<0&&(e=0),a.setTranslate(e))}),a.core.$outer.find(".lg-thumb").on("touchend.lg",function(){a.thumbTotalWidth>a.thumbOuterWidth&&d?(d=!1,a.$thumbOuter.removeClass("lg-dragging"),Math.abs(c-b)<a.core.s.swipeThreshold&&(a.thumbClickable=!0),a.left=e):a.thumbClickable=!0})},c.prototype.toogle=function(){var a=this;a.core.s.toogleThumb&&(a.core.$outer.addClass("lg-can-toggle"),a.$thumbOuter.append('<span class="lg-toogle-thumb lg-icon"></span>'),a.core.$outer.find(".lg-toogle-thumb").on("click.lg",function(){a.core.$outer.toggleClass("lg-thumb-open")}))},c.prototype.thumbkeyPress=function(){var b=this;a(window).on("keydown.lg.thumb",function(a){38===a.keyCode?(a.preventDefault(),b.core.$outer.addClass("lg-thumb-open")):40===a.keyCode&&(a.preventDefault(),b.core.$outer.removeClass("lg-thumb-open"))})},c.prototype.destroy=function(){this.core.s.thumbnail&&this.core.$items.length>1&&(a(window).off("resize.lg.thumb orientationchange.lg.thumb keydown.lg.thumb"),this.$thumbOuter.remove(),this.core.$outer.removeClass("lg-has-thumb"))},a.fn.lightGallery.modules.Thumbnail=c}()});/*! lg-video - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define([], function () {
+      return (factory());
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    factory();
+  }
+}(this, function () {
 
 (function($, window, document, undefined) {
 
@@ -2418,15 +2766,51 @@
 
 })(jQuery, window, document);
 
-(function($, window, document, undefined) {
+
+}));
+/*! lg-video - v1.0.0 - 2016-09-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define([],function(){return b()}):"object"==typeof exports?module.exports=b():b()}(this,function(){!function(a,b,c,d){"use strict";var e={videoMaxWidth:"855px",youtubePlayerParams:!1,vimeoPlayerParams:!1,dailymotionPlayerParams:!1,vkPlayerParams:!1,videojs:!1,videojsOptions:{}},f=function(b){return this.core=a(b).data("lightGallery"),this.$el=a(b),this.core.s=a.extend({},e,this.core.s),this.videoLoaded=!1,this.init(),this};f.prototype.init=function(){var b=this;b.core.$el.on("hasVideo.lg.tm",function(a,c,d,e){if(b.core.$slide.eq(c).find(".lg-video").append(b.loadVideo(d,"lg-object",!0,c,e)),e)if(b.core.s.videojs)try{videojs(b.core.$slide.eq(c).find(".lg-html5").get(0),b.core.s.videojsOptions,function(){b.videoLoaded||this.play()})}catch(a){console.error("Make sure you have included videojs")}else b.core.$slide.eq(c).find(".lg-html5").get(0).play()}),b.core.$el.on("onAferAppendSlide.lg.tm",function(a,c){b.core.$slide.eq(c).find(".lg-video-cont").css("max-width",b.core.s.videoMaxWidth),b.videoLoaded=!0});var c=function(a){if(a.find(".lg-object").hasClass("lg-has-poster")&&a.find(".lg-object").is(":visible"))if(a.hasClass("lg-has-video")){var c=a.find(".lg-youtube").get(0),d=a.find(".lg-vimeo").get(0),e=a.find(".lg-dailymotion").get(0),f=a.find(".lg-html5").get(0);if(c)c.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}',"*");else if(d)try{$f(d).api("play")}catch(a){console.error("Make sure you have included froogaloop2 js")}else if(e)e.contentWindow.postMessage("play","*");else if(f)if(b.core.s.videojs)try{videojs(f).play()}catch(a){console.error("Make sure you have included videojs")}else f.play();a.addClass("lg-video-playing")}else{a.addClass("lg-video-playing lg-has-video");var g,h,i=function(c,d){if(a.find(".lg-video").append(b.loadVideo(c,"",!1,b.core.index,d)),d)if(b.core.s.videojs)try{videojs(b.core.$slide.eq(b.core.index).find(".lg-html5").get(0),b.core.s.videojsOptions,function(){this.play()})}catch(a){console.error("Make sure you have included videojs")}else b.core.$slide.eq(b.core.index).find(".lg-html5").get(0).play()};b.core.s.dynamic?(g=b.core.s.dynamicEl[b.core.index].src,h=b.core.s.dynamicEl[b.core.index].html,i(g,h)):(g=b.core.$items.eq(b.core.index).attr("href")||b.core.$items.eq(b.core.index).attr("data-src"),h=b.core.$items.eq(b.core.index).attr("data-html"),i(g,h));var j=a.find(".lg-object");a.find(".lg-video").append(j),a.find(".lg-video-object").hasClass("lg-html5")||(a.removeClass("lg-complete"),a.find(".lg-video-object").on("load.lg error.lg",function(){a.addClass("lg-complete")}))}};b.core.doCss()&&b.core.$items.length>1&&(b.core.s.enableSwipe&&b.core.isTouch||b.core.s.enableDrag&&!b.core.isTouch)?b.core.$el.on("onSlideClick.lg.tm",function(){var a=b.core.$slide.eq(b.core.index);c(a)}):b.core.$slide.on("click.lg",function(){c(a(this))}),b.core.$el.on("onBeforeSlide.lg.tm",function(c,d,e){var f=b.core.$slide.eq(d),g=f.find(".lg-youtube").get(0),h=f.find(".lg-vimeo").get(0),i=f.find(".lg-dailymotion").get(0),j=f.find(".lg-vk").get(0),k=f.find(".lg-html5").get(0);if(g)g.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}',"*");else if(h)try{$f(h).api("pause")}catch(a){console.error("Make sure you have included froogaloop2 js")}else if(i)i.contentWindow.postMessage("pause","*");else if(k)if(b.core.s.videojs)try{videojs(k).pause()}catch(a){console.error("Make sure you have included videojs")}else k.pause();j&&a(j).attr("src",a(j).attr("src").replace("&autoplay","&noplay"));var l;l=b.core.s.dynamic?b.core.s.dynamicEl[e].src:b.core.$items.eq(e).attr("href")||b.core.$items.eq(e).attr("data-src");var m=b.core.isVideo(l,e)||{};(m.youtube||m.vimeo||m.dailymotion||m.vk)&&b.core.$outer.addClass("lg-hide-download")}),b.core.$el.on("onAfterSlide.lg.tm",function(a,c){b.core.$slide.eq(c).removeClass("lg-video-playing")})},f.prototype.loadVideo=function(b,c,d,e,f){var g="",h=1,i="",j=this.core.isVideo(b,e)||{};if(d&&(h=this.videoLoaded?0:1),j.youtube)i="?wmode=opaque&autoplay="+h+"&enablejsapi=1",this.core.s.youtubePlayerParams&&(i=i+"&"+a.param(this.core.s.youtubePlayerParams)),g='<iframe class="lg-video-object lg-youtube '+c+'" width="560" height="315" src="//www.youtube.com/embed/'+j.youtube[1]+i+'" frameborder="0" allowfullscreen></iframe>';else if(j.vimeo)i="?autoplay="+h+"&api=1",this.core.s.vimeoPlayerParams&&(i=i+"&"+a.param(this.core.s.vimeoPlayerParams)),g='<iframe class="lg-video-object lg-vimeo '+c+'" width="560" height="315"  src="//player.vimeo.com/video/'+j.vimeo[1]+i+'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';else if(j.dailymotion)i="?wmode=opaque&autoplay="+h+"&api=postMessage",this.core.s.dailymotionPlayerParams&&(i=i+"&"+a.param(this.core.s.dailymotionPlayerParams)),g='<iframe class="lg-video-object lg-dailymotion '+c+'" width="560" height="315" src="//www.dailymotion.com/embed/video/'+j.dailymotion[1]+i+'" frameborder="0" allowfullscreen></iframe>';else if(j.html5){var k=f.substring(0,1);"."!==k&&"#"!==k||(f=a(f).html()),g=f}else j.vk&&(i="&autoplay="+h,this.core.s.vkPlayerParams&&(i=i+"&"+a.param(this.core.s.vkPlayerParams)),g='<iframe class="lg-video-object lg-vk '+c+'" width="560" height="315" src="http://vk.com/video_ext.php?'+j.vk[1]+i+'" frameborder="0" allowfullscreen></iframe>');return g},f.prototype.destroy=function(){this.videoLoaded=!1},a.fn.lightGallery.modules.video=f}(jQuery,window,document)});/*! lg-zoom - v1.0.4 - 2016-12-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
+(function() {
 
     'use strict';
+
+    var getUseLeft = function() {
+        var useLeft = false;
+        var isChrome = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+        if (isChrome && parseInt(isChrome[2], 10) < 54) {
+            useLeft = true;
+        }
+
+        return useLeft;
+    };
 
     var defaults = {
         scale: 1,
         zoom: true,
         actualSize: true,
-        enableZoomAfter: 300
+        enableZoomAfter: 300,
+        useLeftForZoom: getUseLeft()
     };
 
     var Zoom = function(element) {
@@ -2456,6 +2840,12 @@
 
         if (_this.core.s.actualSize) {
             zoomIcons += '<span id="lg-actual-size" class="lg-icon"></span>';
+        }
+
+        if (_this.core.s.useLeftForZoom) {
+            _this.core.$outer.addClass('lg-use-left-for-zoom');
+        } else {
+            _this.core.$outer.addClass('lg-use-transition-for-zoom');
         }
 
         this.core.$outer.find('.lg-toolbar').append(zoomIcons);
@@ -2496,8 +2886,8 @@
             var _y;
 
             // Find offset manually to avoid issue after zoom
-            var offsetX = ($(window).width() - $image.width()) / 2;
-            var offsetY = (($(window).height() - $image.height()) / 2) + $(window).scrollTop();
+            var offsetX = ($(window).width() - $image.prop('offsetWidth')) / 2;
+            var offsetY = (($(window).height() - $image.prop('offsetHeight')) / 2) + $(window).scrollTop();
 
             _x = _this.pageX - offsetX;
             _y = _this.pageY - offsetY;
@@ -2507,10 +2897,14 @@
 
             $image.css('transform', 'scale3d(' + scaleVal + ', ' + scaleVal + ', 1)').attr('data-scale', scaleVal);
 
-            $image.parent().css({
-                left: -x + 'px',
-                top: -y + 'px'
-            }).attr('data-x', x).attr('data-y', y);
+            if (_this.core.s.useLeftForZoom) {
+                $image.parent().css({
+                    left: -x + 'px',
+                    top: -y + 'px'
+                }).attr('data-x', x).attr('data-y', y);
+            } else {
+                $image.parent().css('transform', 'translate3d(-' + x + 'px, -' + y + 'px, 0)').attr('data-x', x).attr('data-y', y);
+            }
         };
 
         var callScale = function() {
@@ -2528,7 +2922,7 @@
         };
 
         var actualSize = function(event, $image, index, fromIcon) {
-            var w = $image.width();
+            var w = $image.prop('offsetWidth');
             var nw;
             if (_this.core.s.dynamic) {
                 nw = _this.core.s.dynamicEl[index].width || $image[0].naturalWidth || w;
@@ -2659,8 +3053,8 @@
             if (_this.core.$outer.hasClass('lg-zoomed')) {
                 var $image = _this.core.$slide.eq(_this.core.index).find('.lg-object');
 
-                allowY = $image.outerHeight() * $image.attr('data-scale') > _this.core.$outer.find('.lg').height();
-                allowX = $image.outerWidth() * $image.attr('data-scale') > _this.core.$outer.find('.lg').width();
+                allowY = $image.prop('offsetHeight') * $image.attr('data-scale') > _this.core.$outer.find('.lg').height();
+                allowX = $image.prop('offsetWidth') * $image.attr('data-scale') > _this.core.$outer.find('.lg').width();
                 if ((allowX || allowY)) {
                     e.preventDefault();
                     startCoords = {
@@ -2704,10 +3098,15 @@
                 }
 
                 if ((Math.abs(endCoords.x - startCoords.x) > 15) || (Math.abs(endCoords.y - startCoords.y) > 15)) {
-                    _$el.css({
-                        left: distanceX + 'px',
-                        top: distanceY + 'px'
-                    });
+
+                    if (_this.core.s.useLeftForZoom) {
+                        _$el.css({
+                            left: distanceX + 'px',
+                            top: distanceY + 'px'
+                        });
+                    } else {
+                        _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+                    }
                 }
 
             }
@@ -2746,8 +3145,8 @@
             // execute only on .lg-object
             var $image = _this.core.$slide.eq(_this.core.index).find('.lg-object');
 
-            allowY = $image.outerHeight() * $image.attr('data-scale') > _this.core.$outer.find('.lg').height();
-            allowX = $image.outerWidth() * $image.attr('data-scale') > _this.core.$outer.find('.lg').width();
+            allowY = $image.prop('offsetHeight') * $image.attr('data-scale') > _this.core.$outer.find('.lg').height();
+            allowX = $image.prop('offsetWidth') * $image.attr('data-scale') > _this.core.$outer.find('.lg').width();
 
             if (_this.core.$outer.hasClass('lg-zoomed')) {
                 if ($(e.target).hasClass('lg-object') && (allowX || allowY)) {
@@ -2795,10 +3194,14 @@
                     distanceX = -Math.abs(_$el.attr('data-x'));
                 }
 
-                _$el.css({
-                    left: distanceX + 'px',
-                    top: distanceY + 'px'
-                });
+                if (_this.core.s.useLeftForZoom) {
+                    _$el.css({
+                        left: distanceX + 'px',
+                        top: distanceY + 'px'
+                    });
+                } else {
+                    _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+                }
             }
         });
 
@@ -2833,10 +3236,10 @@
         var $image = _this.core.$slide.eq(_this.core.index).find('.lg-object');
         var distanceX = (-Math.abs(_$el.attr('data-x'))) + (endCoords.x - startCoords.x);
         var distanceY = (-Math.abs(_$el.attr('data-y'))) + (endCoords.y - startCoords.y);
-        var minY = (_this.core.$outer.find('.lg').height() - $image.outerHeight()) / 2;
-        var maxY = Math.abs(($image.outerHeight() * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').height() + minY);
-        var minX = (_this.core.$outer.find('.lg').width() - $image.outerWidth()) / 2;
-        var maxX = Math.abs(($image.outerWidth() * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').width() + minX);
+        var minY = (_this.core.$outer.find('.lg').height() - $image.prop('offsetHeight')) / 2;
+        var maxY = Math.abs(($image.prop('offsetHeight') * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').height() + minY);
+        var minX = (_this.core.$outer.find('.lg').width() - $image.prop('offsetWidth')) / 2;
+        var maxX = Math.abs(($image.prop('offsetWidth') * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').width() + minX);
 
         if ((Math.abs(endCoords.x - startCoords.x) > 15) || (Math.abs(endCoords.y - startCoords.y) > 15)) {
             if (allowY) {
@@ -2867,10 +3270,14 @@
                 distanceX = -Math.abs(_$el.attr('data-x'));
             }
 
-            _$el.css({
-                left: distanceX + 'px',
-                top: distanceY + 'px'
-            });
+            if (_this.core.s.useLeftForZoom) {
+                _$el.css({
+                    left: distanceX + 'px',
+                    top: distanceY + 'px'
+                });
+            } else {
+                _$el.css('transform', 'translate3d(' + distanceX + 'px, ' + distanceY + 'px, 0)');
+            }
 
         }
     };
@@ -2891,74 +3298,11 @@
 
     $.fn.lightGallery.modules.zoom = Zoom;
 
-})(jQuery, window, document);
-(function($, window, document, undefined) {
+})();
 
-    'use strict';
 
-    var defaults = {
-        hash: true
-    };
-
-    var Hash = function(element) {
-
-        this.core = $(element).data('lightGallery');
-
-        this.core.s = $.extend({}, defaults, this.core.s);
-
-        if (this.core.s.hash) {
-            this.oldHash = window.location.hash;
-            this.init();
-        }
-
-        return this;
-    };
-
-    Hash.prototype.init = function() {
-        var _this = this;
-        var _hash;
-
-        // Change hash value on after each slide transition
-        _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex, index) {
-            window.location.hash = 'lg=' + _this.core.s.galleryId + '&slide=' + index;
-        });
-
-        // Listen hash change and change the slide according to slide value
-        $(window).on('hashchange.lg.hash', function() {
-            _hash = window.location.hash;
-            var _idx = parseInt(_hash.split('&slide=')[1], 10);
-
-            // it galleryId doesn't exist in the url close the gallery
-            if ((_hash.indexOf('lg=' + _this.core.s.galleryId) > -1)) {
-                _this.core.slide(_idx, false, false);
-            } else if (_this.core.lGalleryOn) {
-                _this.core.destroy();
-            }
-
-        });
-    };
-
-    Hash.prototype.destroy = function() {
-
-        if (!this.core.s.hash) {
-            return;
-        }
-
-        // Reset to old hash value
-        if (this.oldHash && this.oldHash.indexOf('lg=' + this.core.s.galleryId) < 0) {
-            window.location.hash = this.oldHash;
-        } else {
-            if (history.pushState) {
-                history.pushState('', document.title, window.location.pathname + window.location.search);
-            } else {
-                window.location.hash = '';
-            }
-        }
-
-        this.core.$el.off('.lg.hash');
-
-    };
-
-    $.fn.lightGallery.modules.hash = Hash;
-
-})(jQuery, window, document);
+}));
+/*! lg-zoom - v1.0.4 - 2016-12-20
+* http://sachinchoolur.github.io/lightGallery
+* Copyright (c) 2016 Sachin N; Licensed GPLv3 */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("jquery")):b(jQuery)}(this,function(a){!function(){"use strict";var b=function(){var a=!1,b=navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);return b&&parseInt(b[2],10)<54&&(a=!0),a},c={scale:1,zoom:!0,actualSize:!0,enableZoomAfter:300,useLeftForZoom:b()},d=function(b){return this.core=a(b).data("lightGallery"),this.core.s=a.extend({},c,this.core.s),this.core.s.zoom&&this.core.doCss()&&(this.init(),this.zoomabletimeout=!1,this.pageX=a(window).width()/2,this.pageY=a(window).height()/2+a(window).scrollTop()),this};d.prototype.init=function(){var b=this,c='<span id="lg-zoom-in" class="lg-icon"></span><span id="lg-zoom-out" class="lg-icon"></span>';b.core.s.actualSize&&(c+='<span id="lg-actual-size" class="lg-icon"></span>'),b.core.s.useLeftForZoom?b.core.$outer.addClass("lg-use-left-for-zoom"):b.core.$outer.addClass("lg-use-transition-for-zoom"),this.core.$outer.find(".lg-toolbar").append(c),b.core.$el.on("onSlideItemLoad.lg.tm.zoom",function(c,d,e){var f=b.core.s.enableZoomAfter+e;a("body").hasClass("lg-from-hash")&&e?f=0:a("body").removeClass("lg-from-hash"),b.zoomabletimeout=setTimeout(function(){b.core.$slide.eq(d).addClass("lg-zoomable")},f+30)});var d=1,e=function(c){var d,e,f=b.core.$outer.find(".lg-current .lg-image"),g=(a(window).width()-f.prop("offsetWidth"))/2,h=(a(window).height()-f.prop("offsetHeight"))/2+a(window).scrollTop();d=b.pageX-g,e=b.pageY-h;var i=(c-1)*d,j=(c-1)*e;f.css("transform","scale3d("+c+", "+c+", 1)").attr("data-scale",c),b.core.s.useLeftForZoom?f.parent().css({left:-i+"px",top:-j+"px"}).attr("data-x",i).attr("data-y",j):f.parent().css("transform","translate3d(-"+i+"px, -"+j+"px, 0)").attr("data-x",i).attr("data-y",j)},f=function(){d>1?b.core.$outer.addClass("lg-zoomed"):b.resetZoom(),d<1&&(d=1),e(d)},g=function(c,e,g,h){var i,j=e.prop("offsetWidth");i=b.core.s.dynamic?b.core.s.dynamicEl[g].width||e[0].naturalWidth||j:b.core.$items.eq(g).attr("data-width")||e[0].naturalWidth||j;var k;b.core.$outer.hasClass("lg-zoomed")?d=1:i>j&&(k=i/j,d=k||2),h?(b.pageX=a(window).width()/2,b.pageY=a(window).height()/2+a(window).scrollTop()):(b.pageX=c.pageX||c.originalEvent.targetTouches[0].pageX,b.pageY=c.pageY||c.originalEvent.targetTouches[0].pageY),f(),setTimeout(function(){b.core.$outer.removeClass("lg-grabbing").addClass("lg-grab")},10)},h=!1;b.core.$el.on("onAferAppendSlide.lg.tm.zoom",function(a,c){var d=b.core.$slide.eq(c).find(".lg-image");d.on("dblclick",function(a){g(a,d,c)}),d.on("touchstart",function(a){h?(clearTimeout(h),h=null,g(a,d,c)):h=setTimeout(function(){h=null},300),a.preventDefault()})}),a(window).on("resize.lg.zoom scroll.lg.zoom orientationchange.lg.zoom",function(){b.pageX=a(window).width()/2,b.pageY=a(window).height()/2+a(window).scrollTop(),e(d)}),a("#lg-zoom-out").on("click.lg",function(){b.core.$outer.find(".lg-current .lg-image").length&&(d-=b.core.s.scale,f())}),a("#lg-zoom-in").on("click.lg",function(){b.core.$outer.find(".lg-current .lg-image").length&&(d+=b.core.s.scale,f())}),a("#lg-actual-size").on("click.lg",function(a){g(a,b.core.$slide.eq(b.core.index).find(".lg-image"),b.core.index,!0)}),b.core.$el.on("onBeforeSlide.lg.tm",function(){d=1,b.resetZoom()}),b.core.isTouch||b.zoomDrag(),b.core.isTouch&&b.zoomSwipe()},d.prototype.resetZoom=function(){this.core.$outer.removeClass("lg-zoomed"),this.core.$slide.find(".lg-img-wrap").removeAttr("style data-x data-y"),this.core.$slide.find(".lg-image").removeAttr("style data-scale"),this.pageX=a(window).width()/2,this.pageY=a(window).height()/2+a(window).scrollTop()},d.prototype.zoomSwipe=function(){var a=this,b={},c={},d=!1,e=!1,f=!1;a.core.$slide.on("touchstart.lg",function(c){if(a.core.$outer.hasClass("lg-zoomed")){var d=a.core.$slide.eq(a.core.index).find(".lg-object");f=d.prop("offsetHeight")*d.attr("data-scale")>a.core.$outer.find(".lg").height(),e=d.prop("offsetWidth")*d.attr("data-scale")>a.core.$outer.find(".lg").width(),(e||f)&&(c.preventDefault(),b={x:c.originalEvent.targetTouches[0].pageX,y:c.originalEvent.targetTouches[0].pageY})}}),a.core.$slide.on("touchmove.lg",function(g){if(a.core.$outer.hasClass("lg-zoomed")){var h,i,j=a.core.$slide.eq(a.core.index).find(".lg-img-wrap");g.preventDefault(),d=!0,c={x:g.originalEvent.targetTouches[0].pageX,y:g.originalEvent.targetTouches[0].pageY},a.core.$outer.addClass("lg-zoom-dragging"),i=f?-Math.abs(j.attr("data-y"))+(c.y-b.y):-Math.abs(j.attr("data-y")),h=e?-Math.abs(j.attr("data-x"))+(c.x-b.x):-Math.abs(j.attr("data-x")),(Math.abs(c.x-b.x)>15||Math.abs(c.y-b.y)>15)&&(a.core.s.useLeftForZoom?j.css({left:h+"px",top:i+"px"}):j.css("transform","translate3d("+h+"px, "+i+"px, 0)"))}}),a.core.$slide.on("touchend.lg",function(){a.core.$outer.hasClass("lg-zoomed")&&d&&(d=!1,a.core.$outer.removeClass("lg-zoom-dragging"),a.touchendZoom(b,c,e,f))})},d.prototype.zoomDrag=function(){var b=this,c={},d={},e=!1,f=!1,g=!1,h=!1;b.core.$slide.on("mousedown.lg.zoom",function(d){var f=b.core.$slide.eq(b.core.index).find(".lg-object");h=f.prop("offsetHeight")*f.attr("data-scale")>b.core.$outer.find(".lg").height(),g=f.prop("offsetWidth")*f.attr("data-scale")>b.core.$outer.find(".lg").width(),b.core.$outer.hasClass("lg-zoomed")&&a(d.target).hasClass("lg-object")&&(g||h)&&(d.preventDefault(),c={x:d.pageX,y:d.pageY},e=!0,b.core.$outer.scrollLeft+=1,b.core.$outer.scrollLeft-=1,b.core.$outer.removeClass("lg-grab").addClass("lg-grabbing"))}),a(window).on("mousemove.lg.zoom",function(a){if(e){var i,j,k=b.core.$slide.eq(b.core.index).find(".lg-img-wrap");f=!0,d={x:a.pageX,y:a.pageY},b.core.$outer.addClass("lg-zoom-dragging"),j=h?-Math.abs(k.attr("data-y"))+(d.y-c.y):-Math.abs(k.attr("data-y")),i=g?-Math.abs(k.attr("data-x"))+(d.x-c.x):-Math.abs(k.attr("data-x")),b.core.s.useLeftForZoom?k.css({left:i+"px",top:j+"px"}):k.css("transform","translate3d("+i+"px, "+j+"px, 0)")}}),a(window).on("mouseup.lg.zoom",function(a){e&&(e=!1,b.core.$outer.removeClass("lg-zoom-dragging"),!f||c.x===d.x&&c.y===d.y||(d={x:a.pageX,y:a.pageY},b.touchendZoom(c,d,g,h)),f=!1),b.core.$outer.removeClass("lg-grabbing").addClass("lg-grab")})},d.prototype.touchendZoom=function(a,b,c,d){var e=this,f=e.core.$slide.eq(e.core.index).find(".lg-img-wrap"),g=e.core.$slide.eq(e.core.index).find(".lg-object"),h=-Math.abs(f.attr("data-x"))+(b.x-a.x),i=-Math.abs(f.attr("data-y"))+(b.y-a.y),j=(e.core.$outer.find(".lg").height()-g.prop("offsetHeight"))/2,k=Math.abs(g.prop("offsetHeight")*Math.abs(g.attr("data-scale"))-e.core.$outer.find(".lg").height()+j),l=(e.core.$outer.find(".lg").width()-g.prop("offsetWidth"))/2,m=Math.abs(g.prop("offsetWidth")*Math.abs(g.attr("data-scale"))-e.core.$outer.find(".lg").width()+l);(Math.abs(b.x-a.x)>15||Math.abs(b.y-a.y)>15)&&(d&&(i<=-k?i=-k:i>=-j&&(i=-j)),c&&(h<=-m?h=-m:h>=-l&&(h=-l)),d?f.attr("data-y",Math.abs(i)):i=-Math.abs(f.attr("data-y")),c?f.attr("data-x",Math.abs(h)):h=-Math.abs(f.attr("data-x")),e.core.s.useLeftForZoom?f.css({left:h+"px",top:i+"px"}):f.css("transform","translate3d("+h+"px, "+i+"px, 0)"))},d.prototype.destroy=function(){var b=this;b.core.$el.off(".lg.zoom"),a(window).off(".lg.zoom"),b.core.$slide.off(".lg.zoom"),b.core.$el.off(".lg.tm.zoom"),b.resetZoom(),clearTimeout(b.zoomabletimeout),b.zoomabletimeout=!1},a.fn.lightGallery.modules.zoom=d}()});

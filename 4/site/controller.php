@@ -48,7 +48,7 @@ class OzioGalleryController extends JControllerLegacy
 
 }
 
-
+/*
 class UrlWrapper
 {
 	protected $method;
@@ -95,3 +95,5 @@ class UrlWrapper
 		return "";
 	}
 }
+
+*/

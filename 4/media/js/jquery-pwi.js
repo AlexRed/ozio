@@ -934,7 +934,7 @@
 
 				var $u = settings.picasaUrl +'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
 					'&kind=album&access=' + settings.albumTypes + '&alt=json&thumbsize=' +
-					settings.albumThumbSize + (settings.albumCrop ? "c" : "u"));
+					settings.albumThumbSize + (settings.albumCrop ? "c" : "u"))+'&ozrand='+(new Date().getTime());
 
 				$.ajax({
 					url:$u,
@@ -993,7 +993,7 @@
 					((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 					((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 					'&imgmax=d&thumbsize=' + settings.thumbSize +
-					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize));
+					((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize))+'&ozrand='+(new Date().getTime());
 				show(true, '');
 				$.getJSON($u, 'ozio-picasa-callback=?', album);
 			}
@@ -1024,7 +1024,7 @@
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""))+'&ozrand='+(new Date().getTime());
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
@@ -1067,7 +1067,7 @@
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&thumbsize=' + settings.thumbSize + ((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize) +
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
-				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""));
+				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : ""))+'&ozrand='+(new Date().getTime());
 
 
 			// http://api.jquery.com/jQuery.ajax/
@@ -1091,7 +1091,7 @@
 				'&alt=json' +
 				// '&kind=album' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&access=' + settings.albumTypes +
-				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u"));
+				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u"))+'&ozrand='+(new Date().getTime());
 
 			// http://api.jquery.com/jQuery.ajax/
 			$.ajax({
@@ -1120,7 +1120,7 @@
 				((settings.authKey !== "") ? "&authkey=Gv1sRg" + settings.authKey : "") +
 				((settings.keyword !== "") ? "&tag=" + settings.keyword : "") +
 				'&imgmax=d&thumbsize=' + settings.thumbSize +
-				((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize));
+				((settings.thumbCrop) ? "c" : "u") + "," + checkPhotoSize(settings.photoSize))+'&ozrand='+(new Date().getTime());
 			$.getJSON($u, 'ozio-picasa-callback=?', latest);
 			return $self;
 		}

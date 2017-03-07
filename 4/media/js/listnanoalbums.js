@@ -151,7 +151,7 @@ jQuery( document ).ready(function( $ ) {
 	//url = 'https://photos.googleapis.com/data/feed/api/user/'+userID+'?v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize;
 	
 	
-	url = g_ozio_picasa_url+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(userID)+'&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize);
+	url = g_ozio_picasa_url+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(userID)+'&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize)+'&ozrand='+(new Date().getTime());
 	
 	jQuery.support.cors = true;
 	url = url ;

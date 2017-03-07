@@ -93,7 +93,7 @@ jQuery( document ).ready(function( $ ) {
 	
 				//url = strings.picasaUrl+jgallery_options.userID+'?alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize;
 				
-				url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(jgallery_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize);
+				url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(jgallery_options.userID)+'&alt=json&kind=album&access=public&imgmax=d&thumbsize='+jgallery_options.thumbSize)+'&ozrand='+(new Date().getTime());
 				
 				jQuery.ajax({
 					'url':url,
@@ -318,7 +318,7 @@ jQuery( document ).ready(function( $ ) {
 				((settings.hasOwnProperty('StartIndex')) ? "&start-index=" + settings.StartIndex : "") +
 				((settings.hasOwnProperty('MaxResults')) ? "&max-results=" + settings.MaxResults : "")
 		
-		);		
+		)+'&ozrand='+(new Date().getTime());		
 
 
 		// http://api.jquery.com/jQuery.ajax/

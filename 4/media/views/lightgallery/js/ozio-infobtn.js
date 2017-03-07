@@ -257,7 +257,7 @@
 						$gE.conInfoBox.find('.pi-comments').text('...');
 						jQuery.ajax({
 							
-							'url':gO.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid)),
+							'url':gO.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(obj_parti.user)+'&album_id='+encodeURIComponent(obj_parti.albumid)+'&photo_id='+encodeURIComponent(obj_parti.photoid))+'&ozrand='+(new Date().getTime()),
 							
 							'dataType': 'json',
 							'success': function (result, textStatus, jqXHR){
