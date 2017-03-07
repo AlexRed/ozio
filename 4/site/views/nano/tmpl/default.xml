@@ -22,7 +22,7 @@
 			<field type="listnanoalbums" name="ozio_nano_albumList" label="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_ALBUMLIST_DSC" multiple="true" default="">
 			</field>
 
-			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|2013-" />
+			<field type="text" name="ozio_nano_blackList" label="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_BLACKLIST_DSC" default="Scrapbook|profil|Backup" />
 			<field type="text" name="ozio_nano_whiteList" label="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_WHITELIST_DSC" />
 
 			<field type="list" name="ozio_nano_photoSorting" label="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_PHOTOSORTING_DSC" default="standard">

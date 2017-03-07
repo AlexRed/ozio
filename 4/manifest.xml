@@ -7,7 +7,7 @@
 	<authorUrl>http://www.opensourcesolutions.es</authorUrl>
 	<copyright>(C) 2008 - 2015 - TOT The Ozio Team</copyright>
 	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
-	<version>4.8.0</version>
+	<version>4.8.1</version>
 	<description>Ozio Gallery for Joomla! 3</description>
 
 	<scriptfile>file.script.php</scriptfile>
