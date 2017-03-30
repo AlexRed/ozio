@@ -6,6 +6,8 @@ jQuery(document).ready(function ($)
 		});
 	
  	var photos=[];
+ 	var g_parameters=[];
+ 	var g_list_nano_options=[];
  	var photos_per_album=1000;
  	var remainingphotos=0;
  	var max_remainingphotos=1;
