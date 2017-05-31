@@ -46,7 +46,7 @@ class JFormFieldOSSHeader extends JFormField
 			$image .= '<img style="margin:0; float:' . $left . ';" src="' . JUri::base(true) . '/components/' . $name . '/models/images/' . $icon . '">';
 		}
 
-		$style = 'background:#f4f4f4; color:#025a8d; border:1px solid silver; padding:5px; margin:5px 0;';
+		$style = 'width:480px; background:#f4f4f4; color:#025a8d; border:1px solid silver; padding:5px; margin:5px 0;';
 		if ($this->element['default'])
 		{
 			return '<div style="' . $style . '">' .
