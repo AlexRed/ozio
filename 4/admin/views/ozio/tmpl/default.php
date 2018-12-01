@@ -65,10 +65,10 @@
 											<tr>
 												<td align="left" valign="bottom">
 
-												    <a href="https://plus.google.com/communities/100238813770552981452" target="blank" class="btn btn-large btn-warning"><i class="icon-users"></i>  COMMUNITY</a>
-												    <a href="https://github.com/AlexRed/ozio" target="blank" class="btn btn-large btn-inverse"><i class="icon-cogs"></i>  GitHub</a>
-												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" class="btn btn-large btn-success"><i class="icon-download"></i>  INFO & DOWNLOAD</a>
-												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" class="btn btn-large btn-info"><i class="icon-eye"></i>  DEMO</a>
+												    <a href="https://www.facebook.com/groups/oziogallery/" target="blank" rel="noopener noreferrer" class="btn btn-large btn-warning"><i class="icon-users"></i>  COMMUNITY</a>
+												    <a href="https://github.com/AlexRed/ozio" target="blank" rel="noopener noreferrer" class="btn btn-large btn-inverse"><i class="icon-cogs"></i>  GitHub</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery.html" target="blank" rel="noopener noreferrer" class="btn btn-large btn-success"><i class="icon-download"></i>  INFO & DOWNLOAD</a>
+												    <a href="http://www.opensourcesolutions.es/ext/ozio-gallery/demo.html" target="blank" rel="noopener noreferrer" class="btn btn-large btn-info"><i class="icon-eye"></i>  DEMO</a>
 												    <br /><br />
 												</td>
 											</tr>
@@ -119,9 +119,9 @@
 					<tr>
 						<td align="left">
 							Skin Fuerte is based on <a href="http://www.buildinternet.com/project/supersized/" target='blank'>Supersized</a> Design/Development by <a href="http://buildinternet.com/" target='blank'> Build Internet project by Sam Dunn of One Mighty Roar</a>.
-							<br />Skin Nano is based on <a href="http://nanogallery.brisbois.fr/" target="blank">nanoGALLERY</a> Design/Development by <a href="http://www.brisbois.fr/" target="blank">Christophe Brisbois</a>
-							<br />Skin jGallery is based on <a href="http://jgallery.jakubkowalczyk.pl/" target="blank">jGallery</a> Design/Development by Jakub Kowalczyk
-							<br />Skin lightGallery is based on <a href="http://sachinchoolur.github.io/lightGallery/" target="blank">lightGallery</a> Design/Development by Sachin N
+							<br />Skin Nano is based on <a href="http://nanogallery.brisbois.fr/" target="blank" rel="noopener noreferrer">nanoGALLERY</a> Design/Development by <a href="http://www.brisbois.fr/" target="blank" rel="noopener noreferrer">Christophe Brisbois</a>
+							<br />Skin jGallery is based on <a href="http://jgallery.jakubkowalczyk.pl/" target="blank" rel="noopener noreferrer">jGallery</a> Design/Development by Jakub Kowalczyk
+							<br />Skin lightGallery is based on <a href="http://sachinchoolur.github.io/lightGallery/" target="blank" rel="noopener noreferrer">lightGallery</a> Design/Development by Sachin N
 							<br />
 							Thanks to Vamba <a href="http://www.joomlaitalia.com" target='blank'> http://www.joomlaitalia.com</a><br />
 							Thanks to Gmassi <a href="http://sviluppare-in-rete.blogspot.com/" target='blank'> http://sviluppare-in-rete.blogspot.com</a><br />
