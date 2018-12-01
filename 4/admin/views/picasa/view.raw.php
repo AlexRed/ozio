@@ -92,7 +92,7 @@ class OzioViewPicasa extends JViewLegacy
 		}else{
 			$http_header = array("GData-Version"=>"3");
 		}
-		
+		$picasa_params['deprecation-extension'] = 'true';
 		$resp_obj = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header);		
 		$response = $resp_obj->body;
 		
