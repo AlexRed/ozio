@@ -14,7 +14,7 @@
 				<option value="photo">COM_OZIOGALLERY3_SOURCE_PHOTO</option>
 			</field>
 			
-			<field name="video_list" type="textarea" default="lq6A8VMYmPk,RIL2rvnqZpI,RZcnAIuqdGg,yFsYFAUvFLQ,dokLOX9GHDk,epKhkerDeBk,h8VUqKsRtRY,F6u4EnAq0UY,evInoKrIeQg,-1XPjSxj6as,AmPNC_KpOSY,Y3tp4XEzuA0" label="COM_OZIOGALLERY3_VIDEO_LIST_LBL" description="COM_OZIOGALLERY3_VIDEO_LIST_DSC" rows="3" cols="10" filter="safehtml" />
+			<field name="video_list" type="textarea" default="X4lvfXDE6Go,Yio6SqCEVXs,XwcVnv3MnhA,G793UronMIY,Fx0F2sgbC7M,3E-bSvr3hN8,x3eIKSXXncc" label="COM_OZIOGALLERY3_VIDEO_LIST_LBL" description="COM_OZIOGALLERY3_VIDEO_LIST_DSC" rows="3" cols="10" filter="safehtml" />
 			
 			<field type="text" name="youtube_apikey" label="COM_OZIOGALLERY3_YOUTUBE_APIKEY_LBL" description="COM_OZIOGALLERY3_YOUTUBE_APIKEY_DSC" />
 			
