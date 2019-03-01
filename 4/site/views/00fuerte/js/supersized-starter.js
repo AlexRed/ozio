@@ -22,7 +22,7 @@ jQuery(document).ready(function ($)
 	var length = Math.ceil(ss.width() / 150) * 2;
 	// Set our parameters and trig the loading
 	load_google_json(start_slide);
-	function load_google_json(start_slide){
+	function load_google_json(start_slide,next_token){
 		ss.pwi(
 			{
 				picasaUrl: <?php echo json_encode(JURI::base().'index.php?option=com_oziogallery3&view=picasa&format=raw&ozio-menu-id='.JFactory::getApplication()->input->get('id')); ?>,
@@ -30,14 +30,16 @@ jQuery(document).ready(function ($)
 				
 				mode: 'album_data',
 				username: '<?php echo $this->Params->get("userid", ""); ?>',
-				album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
-				authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
+				album: '<?php echo $this->Params->get("gallery_id", ""); ?>',
+				authKey: '<?php echo ""; ?>',
 				StartIndex: start_slide,
 				//MaxResults: length,
 				beforeSend: OnBeforeSend,
 				success: OnLoadSuccess,
 				error: OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
 				complete: OnLoadComplete,
+				
+				pageToken: next_token,
 	
 				// Tell the library to ignore parameters through GET ?par=...
 				useQueryParameters: false
@@ -61,8 +63,8 @@ jQuery(document).ready(function ($)
 			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 			
 			var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
-			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
-			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("="));
+			seed = seed + "=";
 
 			var width = result.feed.entry[i].gphoto$width.$t;
 			var height = result.feed.entry[i].gphoto$height.$t
@@ -341,8 +343,8 @@ jQuery(document).ready(function ($)
 					mouse_scrub: 0,
 	
 					username: '<?php echo $this->Params->get("userid", ""); ?>',
-					album: '<?php echo ($this->Params->get("albumvisibility", "public") == "public") ? $this->Params->get("gallery_id", "") : $this->Params->get("limitedalbum"); ?>',
-					authKey: '<?php echo $this->Params->get("limitedpassword", ""); ?>',
+					album: '<?php echo $this->Params->get("gallery_id", ""); ?>',
+					authKey: '<?php echo ""; ?>',
 					square: '<?php echo $this->Params->get("square", ""); ?>',
 					big: '<?php echo $this->Params->get("big", ""); ?>',
 					base_jurl: '<?php echo JURI::root(true); ?>',
@@ -355,7 +357,7 @@ jQuery(document).ready(function ($)
 				});
 			});
 		}else{
-			load_google_json(result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+			load_google_json(result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t, result.feed.openSearch$nextPageToken.$t);
 		}
 
 	}

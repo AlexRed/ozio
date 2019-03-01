@@ -38,7 +38,7 @@ class JFormFieldSelext extends JFormFieldList
 
 		if (!isset($GLOBALS[$this->ext_name . "_fields_js_loaded"]))
 		{
-			$this->document->addStyleSheet(JUri::base(true) . '/components/' . $this->com_name . "/models/fields/fields.css");
+			$this->document->addStyleSheet(JUri::base(true) . '/components/' . $this->com_name . "/models/fields/fields.css",array('version' => 'auto'));
 			$GLOBALS[$this->ext_name . "_fields_js_loaded"] = true;
 		}
 	}

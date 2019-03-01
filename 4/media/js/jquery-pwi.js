@@ -1060,6 +1060,8 @@
 		
 				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
 				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
+				
 				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
@@ -1089,6 +1091,9 @@
 			var url = settings.picasaUrl + '&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+ 
 				// alt can be 'json', 'rss' or 'atom' (https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats), but we need it as json to work with cross domain
 				'&alt=json' +
+				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
+				
 				// '&kind=album' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&access=' + settings.albumTypes +
 				'&thumbsize=' + settings.albumThumbSize + (settings.albumCrop ? "c" : "u"))+'&ozrand='+(new Date().getTime());

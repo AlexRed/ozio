@@ -45,10 +45,10 @@ class JFormFieldListNanoAlbums extends JFormFieldList
 			$resources = false;
 			$document = JFactory::getDocument();
 			$document->addScriptDeclaration("var g_ozio_picasa_url=".json_encode('index.php?option=com_oziogallery3&view=picasa&format=raw').";");
-			$document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/listnanoalbums.js");
-			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
+			$document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/listnanoalbums.js",array('version' => 'auto'));
+			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js",array('version' => 'auto'));
 			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
-			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css",array('version' => 'auto'));
 		}
 		
 		

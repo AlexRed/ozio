@@ -999,9 +999,9 @@ nanoGALLERY v5.10.3 release notes.
     		if (this.albumSource=='picasa'){
     			
     			var img_h=this.imgSpecificData.img_orig_height*container_width/this.imgSpecificData.img_orig_width;
-    			imgUrl=this.imgSpecificData.seed+"w"+container_width+"/";
+    			imgUrl=this.imgSpecificData.seed+"w"+container_width+"-h2048";
     			if (img_h>container_height){
-    				imgUrl=this.imgSpecificData.seed+"h"+container_height+"/";
+    				imgUrl=this.imgSpecificData.seed+"w2048-h"+container_height;
     			}
     		}else if (this.albumSource=='flickr'){
     			var img_w=container_width;
@@ -3893,8 +3893,8 @@ nanoGALLERY v5.10.3 release notes.
 
       var gi_data_loaded = null;
 
-      var gi_loadJSON = function(url,start_index){
-      jQuery.getJSON(url+"&ozio-picasa-start-index="+start_index, 'ozio-picasa-callback=?', function(data) {
+      var gi_loadJSON = function(url,start_index, nextToken){
+      jQuery.getJSON(url+"&ozio-picasa-start-index="+start_index+(nextToken?'&ozio-picasa-pageToken='+encodeURIComponent(nextToken):''), 'ozio-picasa-callback=?', function(data) {
 
 				if (gi_data_loaded===null){
 					gi_data_loaded = data;
@@ -3908,7 +3908,7 @@ nanoGALLERY v5.10.3 release notes.
 				}else{
 					//ce ne sono ancora da caricare
 					//altra chiamata per il rimanente
-					gi_loadJSON(url,data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t);
+					gi_loadJSON(url,data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t,data.feed.openSearch$nextPageToken.$t);
 				}
 
 			  })
@@ -4113,8 +4113,8 @@ nanoGALLERY v5.10.3 release notes.
         }else{
 		
 			//var seed = data.content.src.substring(0, data.content.src.lastIndexOf("/"));
-			var seed = itemThumbURL.substring(0, itemThumbURL.lastIndexOf("/"));
-			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			var seed = itemThumbURL.substring(0, itemThumbURL.lastIndexOf("="));
+			seed = seed + "=";
 			picasaSpecificData.img_orig_width=data.gphoto$width.$t;
 			picasaSpecificData.img_orig_height=data.gphoto$height.$t;
 			picasaSpecificData.seed=seed;			  
@@ -4135,14 +4135,14 @@ nanoGALLERY v5.10.3 release notes.
           }
           else {
             src=imgUrl;
-            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
-            s=s.substring(0, s.lastIndexOf('/')) + '/';
+            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('='));
+            s=s + '=';
 
             if( window.screen.width >  window.screen.height ) {
-              src=s+'w'+window.screen.width+'/'+filename;
+              src=s+'w'+window.screen.width+'-h2048';
             }
             else {
-              src=s+'h'+window.screen.height+'/'+filename;
+              src=s+'w2048-h'+window.screen.height;
               }
           }
           var newItem= NGAddItem(itemTitle, itemThumbURL, src, itemDescription, '', kind, tags, itemID, albumID,'picasa', picasaSpecificData );
@@ -4257,8 +4257,8 @@ nanoGALLERY v5.10.3 release notes.
   		  
   		
   		  newItem.infobox.link="https://plus.google.com/photos/"+G.O.userID+"/albums/"+albumID+"/"+itemID;
-  		  newItem.infobox.download=picasaSpecificData.seed+ 's0-d/';
-  		  newItem.infobox.image= picasaSpecificData.seed+ 's200/';
+  		  newItem.infobox.download=picasaSpecificData.seed+ 'd';
+  		  newItem.infobox.image= picasaSpecificData.seed+ 'w200-h200';
           
           
         }
@@ -4352,9 +4352,9 @@ nanoGALLERY v5.10.3 release notes.
               var ratio=gw/gh;
               tn.width[level][sizes[i]]=gw*ratio;
               tn.height[level][sizes[i]]=gh*ratio;
-              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
-              url=url.substring(0, url.lastIndexOf('/')) + '/';
-              tn.url[level][sizes[i]]=url+'h'+G.tn.settings.height[level][sizes[i]]+'/';
+              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('='));
+              url=url + '=';
+              tn.url[level][sizes[i]]=url+'w2048-h'+G.tn.settings.height[level][sizes[i]];
             }
           }
           if( G.tn.settings.height[level][sizes[i]] == 'auto' ) {
@@ -4363,9 +4363,9 @@ nanoGALLERY v5.10.3 release notes.
               var ratio=gh/gw;
               tn.height[level][sizes[i]]=gh*ratio;
               tn.width[level][sizes[i]]=gw*ratio;
-              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
-              url=url.substring(0, url.lastIndexOf('/')) + '/';
-              tn.url[level][sizes[i]]=url+'w'+G.tn.settings.width[level][sizes[i]]+'/';
+              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('='));
+              url=url + '=';
+              tn.url[level][sizes[i]]=url+'w'+G.tn.settings.width[level][sizes[i]]+'-h2048';
             }
           }
         }
@@ -4374,17 +4374,17 @@ nanoGALLERY v5.10.3 release notes.
             tn.width[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].width;
           }
           else {
-            var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
-            url=url.substring(0, url.lastIndexOf('/')) + '/';
-            tn.url[level][sizes[i]]=url+'h'+G.tn.settings.height[level][sizes[i]]+'/';
+            var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('='));
+            url=url + '=';
+            tn.url[level][sizes[i]]=url+'w2048-h'+G.tn.settings.height[level][sizes[i]];
           }
           if( G.tn.settings.height[level][sizes[i]] != 'auto' ) {
             tn.height[level][sizes[i]]=data.media$group.media$thumbnail[startI+i].height;
           }
           else {
-              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('/'));
-              url=url.substring(0, url.lastIndexOf('/')) + '/';
-              tn.url[level][sizes[i]]=url+'w'+G.tn.settings.width[level][sizes[i]]+'/';
+              var url=tn.url[level][sizes[i]].substring(0, tn.url[level][sizes[i]].lastIndexOf('='));
+              url=url + '=';
+              tn.url[level][sizes[i]]=url+'w'+G.tn.settings.width[level][sizes[i]]+'-h2048';
           }
         }
         // if( kind == 'image' || G.tn.settings.width.l1[sizes[i]] != 'auto' ) { tn.width.l1[sizes[i]]=data.media$group.media$thumbnail[i].width; }
@@ -10916,7 +10916,7 @@ return ngImagesLoaded;
 			if (/5\.1[\.\d]* Safari/.test(navigator.userAgent)) {
 				elem[request]();
 			} else {
-				elem[request](keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
+				elem[request]();//keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
 			}
 		},
 		exit: function () {

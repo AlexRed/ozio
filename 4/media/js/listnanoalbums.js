@@ -12,6 +12,7 @@ var g_picasaThumbSize=64;
 var non_printable_separator="\x16";
 var new_non_printable_separator="|!|";
 var ozio_nano_albumList_orig_values=[];
+var ozio_nano_albumList_orig_names=[];
 
 jQuery( document ).ready(function( $ ) {
 	
@@ -21,9 +22,9 @@ jQuery( document ).ready(function( $ ) {
 	jQuery('#jform_params_ozio_nano_kind').change(function() {
 		gi_update_listnanoalbums();
 	});
-	jQuery('#jform_params_albumvisibility').change(function() {
-		gi_update_listnanoalbums();
-	});
+	//jQuery('#jform_params_albumvisibility').change(function() {
+	//	gi_update_listnanoalbums();
+	//});
 	jQuery('#jform_params_ozio_nano_userID').change(function() {
 		gi_update_listnanoalbums();
 	});
@@ -49,17 +50,17 @@ jQuery( document ).ready(function( $ ) {
 		
 		albumvisibility='public';
 		if (kind=='picasa'){
-			jQuery('#jform_params_albumvisibility').closest('.control-group').show();
-			albumvisibility=jQuery('#jform_params_albumvisibility').val();
+			//jQuery('#jform_params_albumvisibility').closest('.control-group').show();
+			//albumvisibility=jQuery('#jform_params_albumvisibility').val();
 			jQuery('.ozio-buttons-frame').show();
 		}else{
-			jQuery('#jform_params_albumvisibility').closest('.control-group').hide();
+			//jQuery('#jform_params_albumvisibility').closest('.control-group').hide();
 			jQuery('.ozio-buttons-frame').hide();
 			
 		}
 		if (albumvisibility=='public'){
-			jQuery('#jform_params_limitedalbum').closest('.control-group').hide();
-			jQuery('#jform_params_limitedpassword').closest('.control-group').hide();
+			//jQuery('#jform_params_limitedalbum').closest('.control-group').hide();
+			//jQuery('#jform_params_limitedpassword').closest('.control-group').hide();
 			
 			jQuery('#jform_params_ozio_nano_albumList').closest('.control-group').show();
 			jQuery('#jform_params_ozio_nano_blackList').closest('.control-group').show();
@@ -68,11 +69,14 @@ jQuery( document ).ready(function( $ ) {
 			
 			gi_update_albumList_msg('...');
 			ozio_nano_albumList_orig_values=[];
+			ozio_nano_albumList_orig_names=[];
 			jQuery('#jform_params_ozio_nano_albumList').find('option:selected').each(function (){
 				if (jQuery(this).attr('value').indexOf(non_printable_separator)!=-1){
 					ozio_nano_albumList_orig_values.push(jQuery(this).attr('value').split(non_printable_separator)[0]);
+					ozio_nano_albumList_orig_names.push(jQuery(this).attr('value').split(non_printable_separator)[1]);
 				}else{
 					ozio_nano_albumList_orig_values.push(jQuery(this).attr('value').split(new_non_printable_separator)[0]);
+					ozio_nano_albumList_orig_names.push(jQuery(this).attr('value').split(new_non_printable_separator)[1]);
 				}
 			});
 			
@@ -89,8 +93,8 @@ jQuery( document ).ready(function( $ ) {
 			
 			
 		}else{
-			jQuery('#jform_params_limitedalbum').closest('.control-group').show();
-			jQuery('#jform_params_limitedpassword').closest('.control-group').show();
+			//jQuery('#jform_params_limitedalbum').closest('.control-group').show();
+			//jQuery('#jform_params_limitedpassword').closest('.control-group').show();
 			
 			jQuery('#jform_params_ozio_nano_albumList').closest('.control-group').hide();
 			jQuery('#jform_params_ozio_nano_blackList').closest('.control-group').hide();
@@ -103,7 +107,10 @@ jQuery( document ).ready(function( $ ) {
 		for (var i=0;i<albums.length;i++){
 			var opt=jQuery('<option></option>').text(albums[i].title);
 			opt.attr('value',albums[i].id+new_non_printable_separator+albums[i].title);
-			if ( ozio_nano_albumList_orig_values.indexOf(albums[i].id) > -1 ){
+			if ( ozio_nano_albumList_orig_values.indexOf(albums[i].id) > -1 || 
+				ozio_nano_albumList_orig_names.indexOf(albums[i].title) > -1
+			
+			){
 				opt.attr('selected','selected');
 			}
 			endappend.append(opt);
@@ -151,24 +158,46 @@ jQuery( document ).ready(function( $ ) {
 	//url = 'https://photos.googleapis.com/data/feed/api/user/'+userID+'?v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize;
 	
 	
-	url = g_ozio_picasa_url+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(userID)+'&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize)+'&ozrand='+(new Date().getTime());
+	url = g_ozio_picasa_url+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(userID)+'&v=2&alt=json&kind=album&access=public&thumbsize='+g_picasaThumbSize);
 	
 	jQuery.support.cors = true;
-	url = url ;
 	jQuery.ajaxSetup({ cache: false });
  
-      jQuery.getJSON(url, function(data) {
-        PicasaParseData(data);
+	var albums=[];
+	PicasaPagination(url, albums, 1, false, function(){
+		gi_update_listnanoalbums_callback(albums);	
+		gi_update_albumList_msg('');
+	}, function(err){
+        gi_update_albumList_msg("Could not retrieve Picasa/Google+ data (jQuery): " + err);
+		gi_update_listnanoalbums_callback([]);
+	});
+  }
+  
+  function PicasaPagination(url, albums, start_index, nextToken, callback_ok, callback_err){
+	  
+	  var newurl = url + "&ozio-picasa-start-index="+start_index+(nextToken?'&ozio-picasa-pageToken='+encodeURIComponent(nextToken):'')+'&ozrand='+(new Date().getTime());
+	  
+      jQuery.getJSON(newurl, function(data) {
+        PicasaParseData(data, albums);
+		
+		//Paginazione
+		if (data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t>=data.feed.openSearch$totalResults.$t){
+			callback_ok();
+		}else{
+			PicasaPagination(url, albums, data.feed.openSearch$startIndex.$t+data.feed.openSearch$itemsPerPage.$t, data.feed.openSearch$nextPageToken.$t, callback_ok, callback_err);
+		}
+		
+		
       })
       .fail( function(jqxhr, textStatus, error) {
         var err = textStatus + ', ' + error;
-        gi_update_albumList_msg("Could not retrieve Picasa/Google+ data (jQuery): " + err);
-		gi_update_listnanoalbums_callback([]);
+		callback_err(err);
       });
+	  
   }
 
-  function PicasaParseData( data ) {
-	var albums=[];
+  function PicasaParseData( data, albums) {
+	
     jQuery.each(data.feed.entry, function(i,data){
 		console.log(data.gphoto$numphotos.$t+" "+data.media$group.media$title.$t);
 		if (data.gphoto$numphotos.$t>0){
@@ -191,8 +220,8 @@ jQuery( document ).ready(function( $ ) {
 		}
       
     });
-	gi_update_listnanoalbums_callback(albums);	
-	gi_update_albumList_msg('');
+	
+	
 	return true;
   }  
   

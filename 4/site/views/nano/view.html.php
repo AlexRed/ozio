@@ -46,14 +46,14 @@ class OzioGalleryViewNano extends JViewLegacy
 		if ($this->Params->get("load_css_bootstrap", 0)==1){
 			JHtmlBootstrap::loadCSS();
 		}
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css",array('version' => 'auto'));
 
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/nanogallery.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/themes/clean/nanogallery_clean.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/themes/light/nanogallery_light.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/nanogallery.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/themes/clean/nanogallery_clean.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/themes/light/nanogallery_light.css",array('version' => 'auto'));
 
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.css",array('version' => 'auto'));
 
 		
 		//$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/jquery.fancybox.css?v=2.1.4");
@@ -67,9 +67,9 @@ class OzioGalleryViewNano extends JViewLegacy
 			}
 		}
 
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js",array('version' => 'auto'));
 
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hideshare/hideshare.js",array('version' => 'auto'));
 		
 		//$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/transit/jquery.transit.min.js");
 		//$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/hammer.js/hammer.min.js");
@@ -82,15 +82,15 @@ class OzioGalleryViewNano extends JViewLegacy
 		//$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5");
 		//$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/fancybox/helpers/jquery.fancybox-media.js?v=1.0.5");
 
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/jquery.nanogallery.js");//TODO release min
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/jquery.nanogallery.js",array('version' => 'auto'));
 
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 		$postfix= "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id;
 
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/ozio-nano.css");
-		$this->document->addScript($prefix . "&amp;v=nano&amp;filename=nano-starter&amp;type=js" .$postfix );
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/css/ozio-nano.css",array('version' => 'auto'));
+		$this->document->addScript($prefix . "&amp;v=nano&amp;filename=nano-starter&amp;type=js" .$postfix,array('version' => 'auto') );
 
 		parent::display($tpl);
 	}

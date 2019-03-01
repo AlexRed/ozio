@@ -33,7 +33,7 @@ class OzioViewSetup extends JViewLegacy
 		$document = JFactory::getDocument();
 		JHtml::_('bootstrap.framework');
 		
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziosetup.js");
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziosetup.js",array('version' => 'auto'));
 		parent::display($tpl);
 	}	
 	
@@ -41,7 +41,7 @@ class OzioViewSetup extends JViewLegacy
 	protected function addToolbar()
 	{
 		$document	= JFactory::getDocument();
-		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
+		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css',array('version' => 'auto'));
 		
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_SETUP' ),'camera' );
 		JSubMenuHelper::addEntry( JText::_( 'COM_OZIOGALLERY3_OZIOGALLERY_3_-_CPANEL' ), 'index.php?option=com_oziogallery3');

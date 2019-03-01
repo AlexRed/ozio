@@ -52,7 +52,7 @@ class OzioViewSetup_Auth extends JViewLegacy
 		
 		
 		
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziosetup_auth.js");
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziosetup_auth.js",array('version' => 'auto'));
 		$document->addScript("https://apis.google.com/js/client:platform.js?onload=ozio_setup_auth","text/javascript",true,true);// async defer
 		$document->addScriptDeclaration('var ozio_google_client_id='.json_encode($credentials['client_id']).';');
 		$document->addScriptDeclaration('var ozio_credentials_id='.json_encode($credentials['id']).';');

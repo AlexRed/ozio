@@ -41,9 +41,9 @@ class OzioGalleryView00fuerte extends JViewLegacy
 		if ($robots = $this->Params->get('robots'))
 			$this->document->setMetadata('robots', $robots);
 
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/css/supersized.css");
-		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css");
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/css/supersized.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/theme/supersized.shutter.css",array('version' => 'auto'));
 
 		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery.min.js");
 		//$this->document->addScript(JUri::base(true) . "/media/jui/js/jquery-noconflict.js");
@@ -53,37 +53,37 @@ class OzioGalleryView00fuerte extends JViewLegacy
 			JHtmlBootstrap::loadCSS();
 		}
 		
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.min.js",array('version' => 'auto'));
 		
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/js/supersized.js");
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/js/jquery.easing.min.js"); // Solo per l'effetto easeOutExpo
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/js/supersized.js",array('version' => 'auto'));
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/js/jquery.easing.min.js",array('version' => 'auto')); // Solo per l'effetto easeOutExpo
 					
 		// Kreatif - evento mobile - tablet touch
-		$this->document->addScript(JURI::base(true) . "/media/com_oziogallery3/js/jquery.touchwipe.1.1.1.js");
+		$this->document->addScript(JURI::base(true) . "/media/com_oziogallery3/js/jquery.touchwipe.1.1.1.js",array('version' => 'auto'));
 		
 		$prefix = JUri::base(true) . "/index.php?option=com_oziogallery3&amp;view=loader";
 		$menu = JFactory::getApplication()->getMenu();
 		$itemid = $menu->getActive() or $itemid = $menu->getDefault();
 		$this->document->addScript($prefix . "&amp;type=js&amp;filename=shutter" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
 		$this->document->addScript($prefix . "&amp;type=js&amp;filename=tinybox" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
-		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js");
+		$this->document->addScript(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/js/jquery.ba-bbq.js",array('version' => 'auto'));
 
 		$this->document->addScript($prefix . "&amp;v=00fuerte&amp;filename=supersized-starter&amp;type=js" . "&amp;Itemid=" . $itemid->id . "&amp;id=" . $itemid->id);
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js",array('version' => 'auto'));
 
 		if ($this->Params->get("show_photowall", 0)==1){
-			$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/modernizr.custom.js");
+			$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/modernizr.custom.js",array('version' => 'auto'));
 	        //$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/toucheffects.js");
-	        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery.nanoscroller.min.js");
-	        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery.lazyload.min.js");
-			$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/css/nanoscroller.css");
+	        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery.nanoscroller.min.js",array('version' => 'auto'));
+	        $this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery.lazyload.min.js",array('version' => 'auto'));
+			$this->document->addStyleSheet(JUri::base(true) . "/media/com_oziogallery3/views/00fuerte/css/nanoscroller.css",array('version' => 'auto'));
 		}
 
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js",array('version' => 'auto'));
 
 		
 		// per la compatibilità con Internet Explorer 
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js",array('version' => 'auto'));
 
 		$current_uri = JFactory::getURI();
 		if ($this->Params->get("info_button", false) && $this->Params->get('api_key', '')!='') {

@@ -97,21 +97,38 @@ function LoadAlbums()
 	if (input.value!=last_user_album_loaded){
 		last_user_album_loaded=input.value;
 		// Set our parameters and trig the loading
+		
+		var select = jQuery('#jform_params_gallery_id');
+		// Clear previous options
+		select.empty();
+
+		
+		loadpagination(input.value, 1);
+	}
+}
+
+function loadpagination(username, start_slide,next_token){
 		jQuery("#album_selection").pwi(
 			{
 				picasaUrl: 'index.php?option=com_oziogallery3&view=picasa&format=raw',
 				mode:'user_albums',
-				username:input.value,
+				username:username,
 				beforeSend:OnBeforeSend,
-				success:OnLoadSuccess,
+				success:function(result, textStatus, jqXHR){
+					OnLoadSuccess(result, textStatus, jqXHR,username, start_slide);
+				},
 				error:OnLoadError, /* "error" is deprecated in jQuery 1.8, superseded by "fail" */
 				complete:OnLoadComplete,
+				
+				StartIndex: start_slide,
+				pageToken: next_token,
 	
 				// Tell the library to ignore parameters through GET ?par=...
 				useQueryParameters:false
 			});
-	}
+	
 }
+
 
 function OnBeforeSend(jqXHR, settings)
 {
@@ -151,20 +168,20 @@ function ozio_addalbums(albums){
 		// Standard album
 		title = album.title;
 
-		if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
-		{
-			numbuzz += parseInt(numphotos);
-		}
-		else
-		{
+		//if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
+		//{
+		//	numbuzz += parseInt(numphotos);
+		//}
+		//else
+		//{
 			// Old identifier: the album number
 			addoption(select, id, title + ' (' + numphotos + ')');
 			// New identifier: the album unique name
 			//addoption(select, name, title + ' (' + numphotos + ')');
-		}
+		//}
 	}
 
-	addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
+	//addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
 
 	// Todo: Predisposto ma lasciato incompleto
 	// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
@@ -174,20 +191,11 @@ function ozio_addalbums(albums){
 	SelectCurrentAlbum();
 }
 
-function OnLoadSuccess(result, textStatus, jqXHR)
+function OnLoadSuccess(result, textStatus, jqXHR, username, start_slide)
 {
 	var select = jQuery('#jform_params_gallery_id');
-	// Clear previous options
-	select.empty();
-
 	// Show the select
 	select.show();
-
-	var tabella = new Array();
-	tabella['NONE'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_NONE"); ?>';
-	tabella['PROFILEPHOTOS'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_PROFILEPHOTOS"); ?>';
-	tabella['SCRAPBOOK'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_SCRAPBOOK"); ?>';
-	tabella['BUZZ'] = '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>';
 
 	var numbuzz = 0;
 
@@ -216,27 +224,28 @@ function OnLoadSuccess(result, textStatus, jqXHR)
 			title = album.title.$t;
 		//}
 
-		if (title == '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>')
-		{
-			numbuzz += parseInt(numphotos);
-		}
-		else
-		{
 			// Old identifier: the album number
 			addoption(select, id, title + ' (' + numphotos + ')');
 			// New identifier: the album unique name
 			//addoption(select, name, title + ' (' + numphotos + ')');
-		}
 	}
 
-	addoption(select, "posts", '<?php echo JText::_("COM_OZIOGALLERY3_ALBUMTYPE_BUZZ"); ?>' + ' (' + numbuzz + ')');
 
-	// Todo: Predisposto ma lasciato incompleto
-	// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
-	// come quella utilizzata dal selettore posizione modulo in Joomla 1.5
-	// ...
-	//addoption(select, 0, 'Selezione manuale');
-	SelectCurrentAlbum();
+	if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
+		//ok finito
+		// Todo: Predisposto ma lasciato incompleto
+		// Una soluzione migliore della voce "Altro..." con attivazione della casella di immisisone manuale, e' una SelectBox con funzioni di InputBox
+		// come quella utilizzata dal selettore posizione modulo in Joomla 1.5
+		// ...
+		//addoption(select, 0, 'Selezione manuale');
+		SelectCurrentAlbum();
+	}else{
+		//ce ne sono ancora da caricare
+		//altra chiamata per il rimanente
+		
+		loadpagination(username, result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t,result.feed.openSearch$nextPageToken.$t);
+	}	
+	
 }
 
 function OnLoadError(jqXHR, textStatus, error)
@@ -337,30 +346,30 @@ function SelectCurrentAlbum()
 
 function OnAlbumVisibilityChange()
 {
-	var select = jQuery('#jform_params_albumvisibility');
-	if (select.length>0){
-		var value = select.val();
-		if (value == 'public')
-		{
+	//var select = jQuery('#jform_params_albumvisibility');
+	//if (select.length>0){
+	//	var value = select.val();
+	//	if (value == 'public')
+	//	{
 			jQuery('#jform_params_gallery_id-lbl').show();
 			jQuery('#album_selection').show();
 
-			jQuery('#jform_params_limitedalbum-lbl').hide();
-			jQuery('#jform_params_limitedalbum').hide();
-			jQuery('#jform_params_limitedpassword-lbl').hide();
-			jQuery('#jform_params_limitedpassword').hide();
-		}
-		else
-		{
-			jQuery('#jform_params_limitedalbum-lbl').show();
-			jQuery('#jform_params_limitedalbum').show();
-			jQuery('#jform_params_limitedpassword-lbl').show();
-			jQuery('#jform_params_limitedpassword').show();
+			//jQuery('#jform_params_limitedalbum-lbl').hide();
+			//jQuery('#jform_params_limitedalbum').hide();
+			//jQuery('#jform_params_limitedpassword-lbl').hide();
+			//jQuery('#jform_params_limitedpassword').hide();
+	//	}
+	//	else
+	//	{
+	//		jQuery('#jform_params_limitedalbum-lbl').show();
+	//		jQuery('#jform_params_limitedalbum').show();
+	//		jQuery('#jform_params_limitedpassword-lbl').show();
+	//		jQuery('#jform_params_limitedpassword').show();
 
-			jQuery('#jform_params_gallery_id-lbl').hide();
-			jQuery('#album_selection').hide();
-		}
-	}
+	//		jQuery('#jform_params_gallery_id-lbl').hide();
+	//		jQuery('#album_selection').hide();
+	//	}
+	//}
 }
 
 function OnLightGallerySourceKindChange()

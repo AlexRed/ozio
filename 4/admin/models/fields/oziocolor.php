@@ -247,8 +247,8 @@ class JFormFieldOzioColor extends JFormField
 			$resources = false;
 		
 			$document = JFactory::getDocument();
-			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.ozio-minicolors.js");
-			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/css/jquery.ozio-minicolors.css");
+			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/jquery.ozio-minicolors.js",array('version' => 'auto'));
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/css/jquery.ozio-minicolors.css",array('version' => 'auto'));
 			
 			
 			JFactory::getDocument()->addScriptDeclaration("

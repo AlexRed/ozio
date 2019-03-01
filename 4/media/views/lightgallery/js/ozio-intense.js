@@ -73,9 +73,9 @@
 		_this.core.$outer.append(newdiv);
 		
 		if (bigdata == 0 || bigdata == ''){
-			newdiv.attr('data-image',link + 's0/');
+			newdiv.attr('data-image',link + 'd');
 		}else{
-			newdiv.attr('data-image',link + 's'+bigdata+'/');
+			newdiv.attr('data-image',link + 'w'+bigdata+'-h'+bigdata);
 		}
 		
 		newdiv.attr('data-title',photoData.album);

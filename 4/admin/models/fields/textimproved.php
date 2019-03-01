@@ -29,8 +29,8 @@ class JFormFieldTextImproved extends JFormField
 
 		if (!isset($GLOBALS["ozio_textimproved_fields_loaded"]))
 		{
-			JFactory::getDocument()->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
-			JFactory::getDocument()->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
+			JFactory::getDocument()->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css",array('version' => 'auto'));
+			JFactory::getDocument()->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js",array('version' => 'auto'));
 			$GLOBALS["ozio_textimproved_fields_loaded"] = true;
 		}
 	}

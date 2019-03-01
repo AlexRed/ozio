@@ -3,7 +3,7 @@ function ozio_setup_auth(){
 		auth2 = gapi.auth2.init({
 		client_id: ozio_google_client_id,
 		fetch_basic_profile: false,
-		scope: 'profile https://picasaweb.google.com/data/'
+		scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
 		});
 	});
 }

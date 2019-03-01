@@ -41,7 +41,7 @@ jQuery( document ).ready(function( $ ) {
 			}
 		}
 	}
-	$userid = $this->Params->get("userid", "110359559620842741677");
+	$userid = $this->Params->get("userid", "");
 	
 	$albumvisibility='public';//$this->Params->get("albumvisibility", "public");
 	if ($source_kind == 'photo' ){
@@ -87,7 +87,7 @@ jQuery( document ).ready(function( $ ) {
 	}
 	
 	
-	function lightgallery_load_album_data(i,start_index){
+	function lightgallery_load_album_data(i,start_index, next_token){
 		
 			
 		
@@ -102,7 +102,7 @@ jQuery( document ).ready(function( $ ) {
 			LightGalleryGetAlbumData({
 					//mode: 'album_data',
 					username: g_parameters[i]['params']['userid'],
-					album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+					album:  g_parameters[i]['params']['gallery_id'],
 					authKey: g_parameters[i]['params']['limitedpassword'],
 					StartIndex: start_index,
 					beforeSend: OnLightGalleryBeforeSend,
@@ -116,6 +116,8 @@ jQuery( document ).ready(function( $ ) {
 					thumbSize:72,
 					thumbCrop:false,
 					photoSize:"auto",
+					
+					pageToken:next_token,
 					
 					
 					context:obj
@@ -293,7 +295,7 @@ jQuery( document ).ready(function( $ ) {
 			
 			container_width=$(window).width();
 			
-			var actual_width = "w" + container_width + "/";
+			var actual_width = "w" + container_width + "-h2048";
 			
 			// Inserisco le slide
 			var lightgallery=$( '#lightgallery' );
@@ -322,7 +324,7 @@ jQuery( document ).ready(function( $ ) {
 				
 					var large=c_slide.seed + actual_width;
 					
-					var thumb=c_slide.seed + 's'+g_max_thumb_size+'-c/';
+					var thumb=c_slide.seed + 'w'+g_max_thumb_size+'-h'+g_max_thumb_size+'-c';
 					var alt=c_slide.photo;
 					if (alt == '-na-'){
 						alt = '';
@@ -660,6 +662,8 @@ jQuery( document ).ready(function( $ ) {
 		
 				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
 				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
+				
 				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
@@ -716,8 +720,8 @@ jQuery( document ).ready(function( $ ) {
 			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 
 			var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
-			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
-			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("="));
+			seed = seed + "=";
 			
 			var width = result.feed.entry[i].gphoto$width.$t;
 			var height = result.feed.entry[i].gphoto$height.$t
@@ -844,8 +848,8 @@ jQuery( document ).ready(function( $ ) {
 			  
 			
 			  photo_data.link="https://plus.google.com/photos/"+photo_data.userid+"/albums/"+photo_data.album_id+"/"+photo_data.photo_id;
-			  photo_data.download=photo_data.seed+ 's0-d/';
-			  photo_data.image= photo_data.seed+ 's200/';
+			  photo_data.download=photo_data.seed+ 'd';
+			  photo_data.image= photo_data.seed+ 'w200-h200';
 						
 			
 			
@@ -863,7 +867,7 @@ jQuery( document ).ready(function( $ ) {
 			
 		}else{
 			//altra chiamata per il rimanente
-			lightgallery_load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+			lightgallery_load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t, result.feed.openSearch$nextPageToken.$t);
 		}
 		
 		

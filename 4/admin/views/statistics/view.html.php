@@ -53,9 +53,9 @@ class OzioViewStatistics extends JViewLegacy
 		//JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.framework');
 
-		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
-		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js");
-		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziostatistics.js");
+		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js",array('version' => 'auto'));
+		$document->addScript(JURI::root(true) . "/media/com_oziogallery3/js/jQuery.XDomainRequest.js",array('version' => 'auto'));
+		$document->addScript(JURI::base(true) . "/components/com_oziogallery3/js/oziostatistics.js",array('version' => 'auto'));
 		
 		parent::display($tpl);
 	}
@@ -64,7 +64,7 @@ class OzioViewStatistics extends JViewLegacy
 	protected function addToolbar()
 	{
 		$document	= JFactory::getDocument();
-		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css');
+		$document->addStyleSheet('components/com_oziogallery3/assets/css/default.css',array('version' => 'auto'));
 
 		JToolBarHelper::title( JText::_( 'COM_OZIOGALLERY3_OZIO_GALLERY_3' ). ' - ' .JText::_( 'COM_OZIOGALLERY3_STATISTICS' ),'camera' );
 		

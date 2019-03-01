@@ -30,10 +30,10 @@ jQuery( document ).ready(function( $ ) {
 	
 			<?php
 			$g_parameters=array();
-			$albumvisibility=$this->Params->get("albumvisibility", "public");
+			$albumvisibility= "public";
 			if ($albumvisibility=='limited'){
 				$p=array(
-					'userid'=>$this->Params->get("ozio_nano_userID", "110359559620842741677"),
+					'userid'=>$this->Params->get("ozio_nano_userID", ""),
 					'albumvisibility'=>'limited',
 					'limitedalbum'=>$this->Params->get("limitedalbum", ""),
 					'limitedpassword'=>$this->Params->get("limitedpassword", ""),
@@ -53,7 +53,7 @@ jQuery( document ).ready(function( $ ) {
 			?>
 			jgallery_options={
 					thumbSize:64,
-					userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+					userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "")); ?>,
 					blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 					whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
 					<?php
@@ -226,7 +226,7 @@ jQuery( document ).ready(function( $ ) {
 			?>
 	
 	
-	function jgallery_load_album_data(i,start_index){
+	function jgallery_load_album_data(i,start_index, next_token){
 		
 		var obj={'album_index':i};
 		
@@ -238,7 +238,7 @@ jQuery( document ).ready(function( $ ) {
 		JGalleryGetAlbumData({
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
-				album:  (g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+				album: g_parameters[i]['params']['gallery_id'],
 				authKey: g_parameters[i]['params']['limitedpassword'],
 				StartIndex: start_index,
 				beforeSend: OnBeforeSend,
@@ -252,7 +252,7 @@ jQuery( document ).ready(function( $ ) {
 				thumbSize:72,
 				thumbCrop:false,
 				photoSize:"auto",
-				
+				pageToken: next_token,
 				
 				context:obj
 			});
@@ -308,6 +308,8 @@ jQuery( document ).ready(function( $ ) {
 		var url = strings.picasaUrl+'&ozio_payload='+encodeURIComponent('user_id='+encodeURIComponent(settings.username)+
 		
 				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
+				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
 				
 				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
@@ -365,8 +367,8 @@ jQuery( document ).ready(function( $ ) {
 			//seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
 			
 			var oz_gi_thumb_url = result.feed.entry[i].media$group.media$thumbnail[0].url;
-			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
-			seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+			var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("="));
+			seed = seed + "=";
 
 			var width = result.feed.entry[i].gphoto$width.$t;
 			var height = result.feed.entry[i].gphoto$height.$t
@@ -492,8 +494,8 @@ jQuery( document ).ready(function( $ ) {
 			  
 			
 			  photo_data.link="https://plus.google.com/photos/"+photo_data.userid+"/albums/"+photo_data.album_id+"/"+photo_data.photo_id;
-			  photo_data.download=photo_data.seed+ 's0-d/';
-			  photo_data.image= photo_data.seed+ 's200/';
+			  photo_data.download=photo_data.seed+ 'd';
+			  photo_data.image= photo_data.seed+ 'w200-h200';
 						
 			
 			
@@ -565,11 +567,11 @@ jQuery( document ).ready(function( $ ) {
 			var	square=<?php echo json_encode($this->Params->get("square", 0)); ?>;
 			if (square == 0)
 			{
-				var actual_width = "w" + container_width + "/";
+				var actual_width = "w" + container_width + "-h2048";
 			}
 			else
 			{
-				var actual_width = "s" + container_width + "-c/";
+				var actual_width = "w" + container_width + "-h" + container_width + "-c";
 			}
 			
 			// Inserisco le slide
@@ -612,7 +614,7 @@ jQuery( document ).ready(function( $ ) {
 				
 				var large=g_parameters[this.album_index].slides[i].seed + actual_width;
 				
-				var thumb=g_parameters[this.album_index].slides[i].seed + 's75-c/';
+				var thumb=g_parameters[this.album_index].slides[i].seed + 'w75-h75-c';
 				var alt=g_parameters[this.album_index].slides[i].photo;
 				if (alt == '-na-'){
 					alt = '';
@@ -879,7 +881,7 @@ jQuery( document ).ready(function( $ ) {
 			
 		}else{
 			//altra chiamata per il rimanente
-			jgallery_load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+			jgallery_load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t, result.feed.openSearch$nextPageToken.$t);
 		}
 		
 		

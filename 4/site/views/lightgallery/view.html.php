@@ -47,15 +47,15 @@ class OzioGalleryViewLightGallery extends JViewLegacy
 			JHtmlBootstrap::loadCSS();
 		}
 
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/magnific-popup.css",array('version' => 'auto'));
 
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/font-awesome/css/font-awesome.min.css",array('version' => 'auto'));
 
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lightgallery.css?v=1.2.14");
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-fb-comment-box.css?v=1.2.14");
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-transitions.css?v=1.2.14");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lightgallery.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-fb-comment-box.css",array('version' => 'auto'));
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/lg-transitions.css",array('version' => 'auto'));
 
-		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/ozio-lg.css?v=1.0");
+		$this->document->addStyleSheet(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/css/ozio-lg.css",array('version' => 'auto'));
 
 		$current_uri = JFactory::getURI();
 	
@@ -68,13 +68,13 @@ class OzioGalleryViewLightGallery extends JViewLegacy
 		}
 		
 		
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/intense.js",array('version' => 'auto'));
 		
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/nano/js/third.party/magnific-popup/jquery.magnific-popup.js",array('version' => 'auto'));
 
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/lightgallery-all.js?v=1.2.14");
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-intense.js?v=1.0");
-		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-infobtn.js?v=1.0");
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/lightgallery-all.js",array('version' => 'auto'));
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-intense.js",array('version' => 'auto'));
+		$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/views/lightgallery/js/ozio-infobtn.js",array('version' => 'auto'));
 
 		//$this->document->addScript(JUri::root(true) . "/media/com_oziogallery3/js/jquery-pwi.js");
 		

@@ -129,7 +129,7 @@ jQuery( document ).ready(function( $ ) {
 		imageTransition: <?php echo json_encode($this->Params->get("ozio_nano_imageTransition", "swipe")); ?>,
 
 		kind: <?php echo json_encode($this->Params->get("ozio_nano_kind", "picasa")); ?>,
-		userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+		userID: <?php echo json_encode($this->Params->get("ozio_nano_userID", "")); ?>,
 		displayBreadcrumb: <?php echo json_encode(intval($this->Params->get("ozio_nano_displayBreadcrumb", "1"))); ?>,
 		blackList: <?php echo json_encode($this->Params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 		whiteList: <?php echo json_encode($this->Params->get("ozio_nano_whiteList", "")); ?>,
@@ -146,7 +146,7 @@ jQuery( document ).ready(function( $ ) {
 		
 		<?php
 		$kind=$this->Params->get("ozio_nano_kind", "picasa");
-		$albumvisibility=$this->Params->get("albumvisibility", "public");
+		$albumvisibility= "public";
 		if ($kind=='picasa' && $albumvisibility=='limited'){
 			echo 'album:'.json_encode($this->Params->get("limitedalbum", "")."&authkey=".$this->Params->get("limitedpassword", "")).",\n";
 			//echo 'authkey:'.json_encode($this->Params->get("limitedpassword", "")).",\n";

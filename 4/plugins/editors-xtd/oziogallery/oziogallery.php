@@ -49,7 +49,7 @@ class plgButtonOziogallery extends JPlugin
 		}
 		$document = JFactory::getDocument();
 		$document->addScriptDeclaration($js);
-		$document->addStyleSheet(JUri::root(true) . "/plugins/" . $this->_type . "/" . $this->_name . "/css/style.css");
+		$document->addStyleSheet(JUri::root(true) . "/plugins/" . $this->_type . "/" . $this->_name . "/css/style.css",array('version' => 'auto'));
 		$document->addStyleDeclaration($style);
 		JHtml::_('behavior.modal');
 

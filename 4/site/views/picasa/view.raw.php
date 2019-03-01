@@ -3,6 +3,73 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
+
+if (!function_exists('http_response_code')) {
+	function http_response_code($code = NULL) {
+
+		if ($code !== NULL) {
+
+			switch ($code) {
+				case 100: $text = 'Continue'; break;
+				case 101: $text = 'Switching Protocols'; break;
+				case 200: $text = 'OK'; break;
+				case 201: $text = 'Created'; break;
+				case 202: $text = 'Accepted'; break;
+				case 203: $text = 'Non-Authoritative Information'; break;
+				case 204: $text = 'No Content'; break;
+				case 205: $text = 'Reset Content'; break;
+				case 206: $text = 'Partial Content'; break;
+				case 300: $text = 'Multiple Choices'; break;
+				case 301: $text = 'Moved Permanently'; break;
+				case 302: $text = 'Moved Temporarily'; break;
+				case 303: $text = 'See Other'; break;
+				case 304: $text = 'Not Modified'; break;
+				case 305: $text = 'Use Proxy'; break;
+				case 400: $text = 'Bad Request'; break;
+				case 401: $text = 'Unauthorized'; break;
+				case 402: $text = 'Payment Required'; break;
+				case 403: $text = 'Forbidden'; break;
+				case 404: $text = 'Not Found'; break;
+				case 405: $text = 'Method Not Allowed'; break;
+				case 406: $text = 'Not Acceptable'; break;
+				case 407: $text = 'Proxy Authentication Required'; break;
+				case 408: $text = 'Request Time-out'; break;
+				case 409: $text = 'Conflict'; break;
+				case 410: $text = 'Gone'; break;
+				case 411: $text = 'Length Required'; break;
+				case 412: $text = 'Precondition Failed'; break;
+				case 413: $text = 'Request Entity Too Large'; break;
+				case 414: $text = 'Request-URI Too Large'; break;
+				case 415: $text = 'Unsupported Media Type'; break;
+				case 500: $text = 'Internal Server Error'; break;
+				case 501: $text = 'Not Implemented'; break;
+				case 502: $text = 'Bad Gateway'; break;
+				case 503: $text = 'Service Unavailable'; break;
+				case 504: $text = 'Gateway Time-out'; break;
+				case 505: $text = 'HTTP Version not supported'; break;
+				default:
+					$code=500;
+					$text = 'Internal Server Error'; break;
+			}
+
+			$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
+
+			header($protocol . ' ' . $code . ' ' . $text);
+
+			$GLOBALS['http_response_code'] = $code;
+
+		} else {
+
+			$code = (isset($GLOBALS['http_response_code']) ? $GLOBALS['http_response_code'] : 200);
+
+		}
+
+		return $code;
+
+	}
+}
+
+
 //Cambia il nome rispetto admin
 class OzioGalleryViewPicasa extends JViewLegacy
 {
@@ -17,7 +84,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		$jinput = $app->input;
 		
 		
-		$copy_params = array('kind','thumbsize','rnd','imgmax',/*'authkey',*/'tag','start-index','max-results');
+		$copy_params = array('kind','thumbsize','rnd','imgmax',/*'authkey',*/'tag','start-index','max-results','pageToken');
 		
 		
 		$ozio_payload = $jinput->get('ozio_payload', '', 'RAW');
@@ -25,7 +92,6 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		$input_params = array();
 		parse_str($ozio_payload, $input_params);
 		
-		//error_log(var_export($input_params,true),3,'C:\workspace\php-errors.log');
 		
 		if (empty($input_params['user_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['user_id'])){
 			die();
@@ -45,182 +111,540 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		$picasa_params = array();
 		$credentials = $db->loadAssoc();
 		if (empty($credentials)){
-			//prendo solo quelli public
-			$picasa_params['access'] = 'public';
-		}else{
-			//uso le credenziali
-			$picasa_params['access'] = 'all';
-			$picasa_params['access_token'] = $credentials['access_token'];
+			header('HTTP/1.0 403 Forbidden');
+			echo "Empy credentials";
+			die();
 		}
 		foreach ($copy_params as $k){
 			if (isset($input_params[$k])){
 				$picasa_params[$k] = $input_params[$k];
 			}
 		}
-		
-		$url = 'https://picasaweb.google.com/data/feed/api/user/'.$input_params['user_id'];
-		
-		$single_photo = false;
-		$single_album = true;
-		///albumid/
-		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
-			$single_album = false;
-		}else{
-			
-			$url = $url.'/albumid/'.$input_params['album_id'];
-			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
-			}else{
-				$url = $url.'/photoid/'.$input_params['photo_id'];
-				$single_photo = true;
-			}
-		}
-		
-		$picasa_params['v'] = 2;
-		$picasa_params['alt'] = 'json';
-		
+
 		$start_index = $jinput->get('ozio-picasa-start-index', '', 'RAW');
 		$callback = $jinput->get('ozio-picasa-callback', '', 'RAW');
+		
+		$pageToken = $jinput->get('ozio-picasa-pageToken', '', 'RAW');
 		
 		if ($start_index!==''){
 			$picasa_params['start-index'] = $start_index;
 		}
 		if ($callback!==''){
 			$picasa_params['callback'] = $callback;
+			$callback_name = $callback;
 		}
-		if ($single_photo){
-			$http_header = array();
+		if ($pageToken!==''){
+			$picasa_params['pageToken'] = $pageToken;
+			$input_params['pageToken'] = $pageToken;
+		}
+
+		if (!isset($picasa_params['imgmax'])){
+			$picasa_params['imgmax'] = 'd';
+		}
+		if (!isset($picasa_params['thumbsize'])){
+			$picasa_params['thumbsize'] = '32,48,64,72,104,144,150,160';
+		}
+		
+		$url = NULL;
+		$single_photo = false;
+		$single_album = true;
+		///albumid/
+		
+		$http_header = array();
+		$library_params = array(
+			'access_token' => $credentials['access_token']
+		);
+		
+		$picasa_req_type = '';
+		
+		$library_body = array();
+		
+		if (empty($input_params['album_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['album_id'])){
+			$url = 'https://photoslibrary.googleapis.com/v1/albums';
+			$picasa_req_type = 'get_albums';
+
+			$library_params['pageSize'] = 50;
+			if (!empty($input_params['pageToken'])){
+				$library_params['pageToken'] = $input_params['pageToken'];
+			}
+			
+			
+			$single_album = false;
 		}else{
-			$http_header = array("GData-Version"=>"3");
-		}
-		$picasa_params['deprecation-extension'] = 'true';
-		$obj_resp = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header );
-		$response = $obj_resp->body;
-		
-		
-		$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
-		
-		
-		if ($json_resp===NULL && isset($picasa_params['access_token'])){
-			//Nuovo access token
-			$credentials = $this->refresh_token($credentials);
-			$picasa_params['access_token'] = $credentials['access_token'];
+			if (empty($input_params['photo_id']) || !preg_match('/^[a-zA-Z0-9\.\-@_]+$/',$input_params['photo_id'])){
+
+				$picasa_req_type = 'get_photos';
 			
-			$obj_resp = $this->gi_get($url."?".http_build_query($picasa_params,'','&'),$http_header );
-			$response = $obj_resp->body;
-			
-			$json_resp = $this->response_parse($response,isset($picasa_params['callback']),$callback_name);
-		}
-		
-		//error_log(var_export($json_resp,true));
-		if ($json_resp!==NULL){
-			$menu_id = $jinput->get('ozio-menu-id', 0, 'INT');
-			$array_allowed = $this->get_allowed_albums($menu_id);
-			
-			
-			
-			if ($single_album){
+				$url = 'https://photoslibrary.googleapis.com/v1/mediaItems:search';
 				
-				if ($single_photo){
-					echo $response;
-				}else{
-					if (!isset($json_resp['feed']['entry'])){
-						$json_resp['feed']['entry'] = array();
-					}
-					if ($array_allowed['black_list']!==false && $this->album_match($json_resp['feed'],$array_allowed['black_list'])){
-						header('HTTP/1.0 403 Forbidden');
-						echo "Album id not allowed";
-						die();
-					}
-					
-					if ($json_resp['feed']["rights"]['$t']=='public' || in_array($input_params['album_id'],$array_allowed['allowed_albums'])){
-						if (empty($callback_name)){
-							echo json_encode($json_resp);
-						}else{
-							echo $callback_name."(".json_encode($json_resp).");";
-						}
-						die();
-					}
-					
-					
-					//se è nella whitelist o è vuota la white list
-					if ($array_allowed['white_list']===false){
-						header('HTTP/1.0 403 Forbidden');
-						echo "Album id not allowed";
-						die();
-					}
-					
-					if (empty($array_allowed['white_list']) || $this->album_match($json_resp['feed'],$array_allowed['white_list'])){
-						if (empty($callback_name)){
-							echo json_encode($json_resp);
-						}else{
-							echo $callback_name."(".json_encode($json_resp).");";
-						}
-						die();
-					}
-					header('HTTP/1.0 403 Forbidden');
-					echo "Album id not allowed";
-					die();
-					
+				$library_body['pageSize'] = 100;
+				$library_body['albumId'] = $input_params['album_id'];
 				
+				if (!empty($input_params['pageToken'])){
+					$library_body['pageToken'] = $input_params['pageToken'];
 				}
 				
 			}else{
-				//filter albums allowed
-				if (!isset($json_resp['feed']['entry'])){
-					$json_resp['feed']['entry'] = array();
+				$single_photo = true;
+				
+				$picasa_req_type = 'get_photo';
+				
+				$url = 'https://photoslibrary.googleapis.com/v1/mediaItems/'.$input_params['photo_id'];
+			}
+		
+		}
+
+		$out = array(
+			'feed' => array( 
+				'entry' => array()
+			) 
+		);
+		
+		
+		for ($pagina=0;$pagina<10;$pagina++){
+			
+			if (empty($library_body)){
+				$resp_obj = $this->gi_get($url."?".http_build_query($library_params,'','&'),$http_header);
+			}else{
+				$resp_obj = $this->gi_post($url."?".http_build_query($library_params,'','&'),$library_body,$http_header);
+			}
+			$response = $resp_obj->body;
+			$json_resp = json_decode($response,true);
+			
+			
+			$already_refresh = false;
+			for ($ei = 0; $ei<5; $ei++){
+			
+				if ($json_resp===NULL){
+					http_response_code(500);
+					die();
 				}
 				
-				$albums_in = $json_resp['feed']['entry'];
-				$albums_out = array();
-				
-				foreach ($albums_in as $album){
+				if (isset($json_resp['error'])){
 					
-					if ($array_allowed['black_list']!==false && $this->album_match($album,$array_allowed['black_list'])){
-						continue;
+					if ($json_resp['error']['code']==401){
+						//Nuovo access token
+						if ($already_refresh){
+							http_response_code($json_resp['error']['code']);
+							echo $response;
+							die();
+						}
+						
+						
+						$already_refresh = true;
+						$credentials = $this->refresh_token($credentials);
+						
+						$library_params['access_token'] = $credentials['access_token'];
+						
+						if (empty($library_body)){
+							$resp_obj = $this->gi_get($url."?".http_build_query($library_params,'','&'),$http_header);
+						}else{
+							$resp_obj = $this->gi_post($url."?".http_build_query($library_params,'','&'),$library_body,$http_header);
+						}
+						
+						$response = $resp_obj->body;
+						
+						$json_resp = json_decode($response,true);
+						
+					}else if ($json_resp['error']['code']==500 || $json_resp['error']['code']==503){
+						//Exponential backoff
+						
+						$s_sleep = mt_rand(1, pow(2,$ei+1));
+						sleep($s_sleep);
+						
+					}else{
+						http_response_code($json_resp['error']['code']);
+						echo $response;
+						die();
 					}
 					
-					if ($album["rights"]['$t']=='public'){
-						$albums_out[] = $album;
-						continue;
-					}
-					$parti = explode('/',$album["id"]['$t']);
-					$album_id = array_pop($parti);
-					if (in_array($album_id,$array_allowed['allowed_albums'])){
-						$albums_out[] = $album;
-						continue;
-					}
-					if ($array_allowed['white_list']===false){
-						continue;
-					}
-					
-					//se è nella whitelist o è vuota la white list
-					if (empty($array_allowed['white_list']) || $this->album_match($album,$array_allowed['white_list'])){
-						$albums_out[] = $album;
-						continue;
-					}
-				}
-				
-				
-				$json_resp['feed']['entry'] = $albums_out;
-				
-				if (empty($callback_name)){
-					echo json_encode($json_resp);
 				}else{
-					echo $callback_name."(".json_encode($json_resp).");";
+					break;
 				}
 			}
-		}else{
-			header('HTTP/1.0 403 Forbidden');
-			echo $response;
+			
+			
+			if ($json_resp===NULL){
+				http_response_code(500);
+				die();
+			}
+			if (isset($json_resp['error'])){
+				http_response_code($json_resp['error']['code']);
+				echo $response;
+				die();
+			}
+			
+			if ($picasa_req_type=='get_albums'){
+					
+				foreach ($json_resp['albums'] as $a){
+					$o = array();
+					
+					$o['gphoto$numphotos']['$t'] = $a['mediaItemsCount'];
+					$o['media$group']['media$title']['$t'] = $a['title'];
+					$o['media$group']['media$description']['$t'] = '';
+					$o['title']['$t'] = $a['title'];
+					$o['summary']['$t'] = '';
+					$o['author']=array(array('name' =>array('$t'=>'')));
+					$o['id']['$t'] = 'https://picasaweb.google.com/data/entry/user/'.$input_params['user_id'].'/albumid/'.$a['id'];
+					
+					$o['gphoto$id']['$t'] = $a['id'];
+					$o['gphoto$timestamp']['$t'] = '';
+					$o['gphoto$albumType']['$t'] = '';
+					
+					
+					$o['media$group']['media$thumbnail'] = array();
+					
+					$thumbsizes = explode(',',$picasa_params['thumbsize']);
+					foreach ($thumbsizes as $ts){
+					
+						$ts=rtrim(trim($ts),'u');
+						
+						if (mb_substr($ts,-1)=='c'){
+							$ts = intval(mb_substr($ts,0,mb_strlen($ts)-1),10);
+							$o['media$group']['media$thumbnail'][] = array('url' => $a['coverPhotoBaseUrl'].'=w'.$ts.'-h'.$ts.'-c', 'width'=>$ts,'height'=>$ts );
+						}else{
+							$ts = intval($ts,10);
+							
+							$o['media$group']['media$thumbnail'][] = array('url' => $a['coverPhotoBaseUrl'].'=w'.$ts.'-h'.$ts, 'width'=>$ts,'height'=>$ts );
+						}
+					
+						
+					}
+					
+					$o['media$group']['media$content'] = array();
+					
+					$imgmax = $picasa_params['imgmax'];
+					$ts=rtrim(trim($imgmax),'u');
+					if (mb_substr($ts,-1)=='c'){
+						$ts = intval(mb_substr($ts,0,mb_strlen($ts)-1),10);
+						$o['media$group']['media$content'][] = array('url' => $a['coverPhotoBaseUrl'].'=w'.$ts.'-h'.$ts.'-c');
+					}else if ($ts=='d'){
+						$ts=2048;
+						$o['media$group']['media$content'][] = array('url' => $a['coverPhotoBaseUrl'].'=d');
+					}else{
+						$ts = intval($ts,10);
+						
+						$o['media$group']['media$content'][] = array('url' => $a['coverPhotoBaseUrl'].'=w'.$ts.'-h'.$ts);
+					}
+					
+					$out['feed']['entry'][] = $o;
+				}				
+				
+				if ($start_index!==''){
+					$out['feed']['openSearch$startIndex']['$t'] = intval($start_index,10);
+				}else{
+					$out['feed']['openSearch$startIndex']['$t'] = 1;
+				}
+				$out['feed']['openSearch$itemsPerPage']['$t'] = max(50,count($out['feed']['entry']));
+				$out['feed']['openSearch$totalResults']['$t'] = $out['feed']['openSearch$startIndex']['$t']+ count($out['feed']['entry']) -1;
+				
+				
+				unset($out['feed']['openSearch$nextPageToken']['$t']);
+				if (isset($json_resp['nextPageToken'])){
+					$out['feed']['openSearch$totalResults']['$t'] = $out['feed']['openSearch$totalResults']['$t'] + 50;
+					$out['feed']['openSearch$nextPageToken']['$t'] = $json_resp['nextPageToken'];
+				}
+				
+				
+				if (isset($json_resp['nextPageToken'])){
+					$library_params['pageToken'] = $json_resp['nextPageToken'];
+				}else{
+					break;
+				}
+			}else if ($picasa_req_type=='get_photos'){
+					
+				foreach ($json_resp['mediaItems'] as $a){
+					
+					$o = $this->media_item2entry($a,$picasa_params, $input_params);
+					
+					$out['feed']['entry'][] = $o;
+				}
+				
 
+				$out['feed']['title']['$t'] = 'Album';
+				
+				$out['feed']['id']['$t'] ='https://picasaweb.google.com/data/feed/user/'.$input_params['user_id'].'/albumid/'.$input_params['album_id'];
+				$out['feed']['subtitle']['$t']='';
+				$out['feed']['rights']['$t'] ='protected';
+				$out['feed']['author'] = array( array( 'name' => array('$t' => $input_params['user_id']), 'uri' => array('$t' => 'https://picasaweb.google.com/'.$input_params['user_id'])));
+				$out['feed']['gphoto$id']['$t'] = $input_params['album_id'];
+				$out['feed']['gphoto$name']['$t'] = $input_params['album_id'];
+				$out['feed']['gphoto$access']['$t'] = 'protected';
+				$out['feed']['gphoto$user']['$t'] = $input_params['user_id'];
+				$out['feed']['gphoto$nickname']['$t'] = $input_params['user_id'];
+				
+				//$out['feed']['updated']['$t'] = '2019-02-21T06:40:25.851Z';
+				//$out['feed']['gphoto$timestamp']['$t'] = '1550675725000';
+				//$out['feed']['gphoto$numphotos']['$t'] =  2;
+				
+				
+				if ($start_index!==''){
+					$out['feed']['openSearch$startIndex']['$t'] = intval($start_index,10);
+				}else{
+					$out['feed']['openSearch$startIndex']['$t'] = 1;
+				}
+				$out['feed']['openSearch$itemsPerPage']['$t'] = max(100,count($out['feed']['entry']));
+				$out['feed']['openSearch$totalResults']['$t'] = $out['feed']['openSearch$startIndex']['$t']+ count($out['feed']['entry']) -1;
+				unset($out['feed']['openSearch$nextPageToken']['$t']);
+				if (isset($json_resp['nextPageToken'])){
+					$out['feed']['openSearch$totalResults']['$t'] = $out['feed']['openSearch$totalResults']['$t'] + 100;
+					$out['feed']['openSearch$nextPageToken']['$t'] = $json_resp['nextPageToken'];
+				}
+				
+				
+				if (isset($json_resp['nextPageToken'])){
+					$library_body['pageToken'] = $json_resp['nextPageToken'];
+				}else{
+					break;
+				}
+			}else if ($picasa_req_type=='get_photo'){
+				$out['feed'] = $this->media_item2entry($json_resp,$picasa_params, $input_params);
+				break;
+			}
 		}
 		
-
+		if ($picasa_req_type=='get_albums'){
+			if (isset($picasa_params['max-results'])){
+				$out['feed']['entry'] = array_slice ($out['feed']['entry'],0,$picasa_params['max-results']);
+			}
+		}else if ($picasa_req_type=='get_photos'){
+			if (isset($picasa_params['max-results'])){
+				$out['feed']['entry'] = array_slice ($out['feed']['entry'],0,$picasa_params['max-results']);
+			}
+		}else if ($picasa_req_type=='get_photo'){
+		}
 		
-
-		die();
+		
+		$menu_id = $jinput->get('ozio-menu-id', 0, 'INT');
+		$array_allowed = $this->get_allowed_albums($menu_id);
+		
+		
+		
+		if ($single_album){
+			
+			if ($single_photo){
+				if (empty($callback_name)){
+					echo json_encode($out);
+				}else{
+					echo $callback_name."(".json_encode($out).");";
+				}
+			}else{
+				if (!isset($out['feed']['entry'])){
+					$out['feed']['entry'] = array();
+				}
+				if ($array_allowed['black_list']!==false && $this->album_match($out['feed'],$array_allowed['black_list'])){
+					header('HTTP/1.0 403 Forbidden');
+					echo "Album id not allowed";
+					die();
+				}
+				
+				if (in_array($input_params['album_id'],$array_allowed['allowed_albums'])){
+					if (empty($callback_name)){
+						echo json_encode($out);
+					}else{
+						echo $callback_name."(".json_encode($out).");";
+					}
+					return;
+				}
+				
+				
+				//se è nella whitelist o è vuota la white list
+				if ($array_allowed['white_list']===false){
+					header('HTTP/1.0 403 Forbidden');
+					echo "Album id not allowed";
+					die();
+				}
+				
+				if (empty($array_allowed['white_list']) || $this->album_match($out['feed'],$array_allowed['white_list'])){
+					if (empty($callback_name)){
+						echo json_encode($out);
+					}else{
+						echo $callback_name."(".json_encode($out).");";
+					}
+					return;
+				}
+				header('HTTP/1.0 403 Forbidden');
+				echo "Album id not allowed";
+				die();
+				
+			
+			}
+			
+		}else{
+			//filter albums allowed
+			if (!isset($out['feed']['entry'])){
+				$out['feed']['entry'] = array();
+			}
+			
+			$albums_in = $out['feed']['entry'];
+			$albums_out = array();
+			
+			foreach ($albums_in as $album){
+				
+				if ($array_allowed['black_list']!==false && $this->album_match($album,$array_allowed['black_list'])){
+					continue;
+				}
+				
+				$parti = explode('/',$album["id"]['$t']);
+				$album_id = array_pop($parti);
+				if (in_array($album_id,$array_allowed['allowed_albums'])){
+					$albums_out[] = $album;
+					continue;
+				}
+				if ($array_allowed['white_list']===false){
+					continue;
+				}
+				
+				//se è nella whitelist o è vuota la white list
+				if (empty($array_allowed['white_list']) || $this->album_match($album,$array_allowed['white_list'])){
+					$albums_out[] = $album;
+					continue;
+				}
+			}
+			
+			
+			$out['feed']['entry'] = $albums_out;
+			
+			if (empty($callback_name)){
+				echo json_encode($out);
+			}else{
+				echo $callback_name."(".json_encode($out).");";
+			}
+		}
+		//die();
+		return;
         //parent::display($tpl);
     }
+	
+	function media_item2entry($a,$picasa_params,$input_params){
+
+		$o = array();
+		
+		$o['link'] = array();
+		
+		$o['media$group']['media$thumbnail'] = array();
+		
+		$thumbsizes = explode(',',$picasa_params['thumbsize']);
+		foreach ($thumbsizes as $ts){
+		
+			$ts=rtrim(trim($ts),'u');
+			
+			if (mb_substr($ts,-1)=='c'){
+				$ts = intval(mb_substr($ts,0,mb_strlen($ts)-1),10);
+				$o['media$group']['media$thumbnail'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts.'-c', 'width'=>$ts,'height'=>$ts );
+			}else{
+				$ts = intval($ts,10);
+				
+				if ($a['mediaMetadata']['height']<$a['mediaMetadata']['width']){
+					$o['media$group']['media$thumbnail'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts, 'width'=>$ts,'height'=>round($a['mediaMetadata']['height']*$ts/max($a['mediaMetadata']['width'],1)) );
+				}else{
+					$o['media$group']['media$thumbnail'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts, 'width'=>round($a['mediaMetadata']['width']*$ts/max($a['mediaMetadata']['height'],1)),'height'=>$ts );
+				}
+				
+				
+			}
+		
+			
+		}
+		
+		$o['media$group']['media$content'] = array();
+		
+		$imgmax = $picasa_params['imgmax'];
+		$ts=rtrim(trim($imgmax),'u');
+		if (mb_substr($ts,-1)=='c'){
+			$ts = intval(mb_substr($ts,0,mb_strlen($ts)-1),10);
+			$o['media$group']['media$content'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts.'-c', 'width'=>$ts,'height'=>$ts, 'type' => $a['mimeType']  );
+			$o['content'] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts.'-c', 'type' => $a['mimeType']  );
+		}else if ($ts=='d'){
+			$o['media$group']['media$content'][] = array('url' => $a['baseUrl'].'=d','width'=>$a['mediaMetadata']['width'], 'height'=>$a['mediaMetadata']['height'], 'type' => $a['mimeType']);
+			$o['content']= array('url' => $a['baseUrl'].'=d','type' => $a['mimeType']);
+		}else{
+			$ts = intval($ts,10);
+			if ($a['mediaMetadata']['height']<$a['mediaMetadata']['width']){
+				$o['media$group']['media$content'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts, 'width'=>$ts,'height'=>round($a['mediaMetadata']['height']*$ts/max($a['mediaMetadata']['width'],1)), 'type' => $a['mimeType'] );
+			}else{
+				$o['media$group']['media$content'][] = array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts, 'width'=>round($a['mediaMetadata']['width']*$ts/max($a['mediaMetadata']['height'],1)),'height'=>$ts , 'type' => $a['mimeType']);
+			}
+			$o['content']= array('url' => $a['baseUrl'].'=w'.$ts.'-h'.$ts, 'type' => $a['mimeType']);
+		}
+		
+		
+		$l = array();
+		
+		$l['rel'] = 'self';
+		$l['type'] = 'application/atom+xml';
+		
+		$l['href'] = 'https://picasaweb.google.com/data/entry/api/user/'.$input_params['user_id'].'/albumid/'.$input_params['album_id'].'/photoid/'.$a['id'].'?alt=json';
+		
+		$o['link'][] = $l;
+		
+		$o['gphoto$id']['$t'] = $a['id'];
+		$o['gphoto$width']['$t'] = $a['mediaMetadata']['width'];
+		$o['gphoto$height']['$t'] = $a['mediaMetadata']['height'];
+		//$o['gphoto$size']['$t'] = round(0.044*$a['mediaMetadata']['width']*$a['mediaMetadata']['height']);
+		$o['gphoto$access']['$t'] = "only_you";
+		
+		$date = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z',preg_replace('/[0-9][0-9][0-9]Z$/', 'Z',$a['mediaMetadata']['creationTime']));
+		if ($date===FALSE){
+			$date = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z',$a['mediaMetadata']['creationTime']);
+		}
+		if ($date===FALSE){
+			$date = DateTime::createFromFormat('Y-m-d\TH:i:s\Z',$a['mediaMetadata']['creationTime']);
+		}
+		
+		if ($date===FALSE){
+			$o['gphoto$timestamp']['$t'] = 0;
+		}else{
+			$o['gphoto$timestamp']['$t'] = $date->format('U').'000';
+		}
+		$o['updated']['$t'] = $a['mediaMetadata']['creationTime'];
+		$o['gphoto$checksum']['$t'] = '';	
+		$o['gphoto$albumid']['$t'] = $input_params['album_id'];	
+		
+		
+		if (!isset($a['description'])){
+			$a['description'] = '';
+		}
+		if (!isset($a['filename'])){
+			$a['filename'] = $a['description'];
+		}
+		
+		$o['title']['$t'] = $a['filename'];
+		$o['media$group']['media$title']['$t'] =$a['filename'];
+
+		$o['summary']['$t'] = $a['description'];
+		$o['media$group']['media$description']['$t'] = $a['description'];
+		$o['subtitle']['$t'] = $a['description'];		
+	
+		$o['media$group']['media$credit'] = array( array( '$t' => $input_params['user_id']));
+	
+		//$o['gphoto$commentCount']['$t'] = 0;
+		//$o['gphoto$viewCount']['$t'] = 0;
+		
+		if (isset($a['mediaMetadata']['photo'])){
+			if (isset($a['mediaMetadata']['photo']['cameraMake'])){
+				$o['exif$tags']['exif$make']['$t'] = $a['mediaMetadata']['photo']['cameraMake'];
+			}
+			if (isset($a['mediaMetadata']['photo']['cameraModel'])){
+				$o['exif$tags']['exif$model']['$t'] = $a['mediaMetadata']['photo']['cameraModel'];
+			}
+			if (isset($a['mediaMetadata']['photo']['focalLength'])){
+				$o['exif$tags']['exif$focallength']['$t'] = $a['mediaMetadata']['photo']['focalLength'];
+			}
+			if (isset($a['mediaMetadata']['photo']['apertureFNumber'])){
+				$o['exif$tags']['exif$fstop']['$t'] = $a['mediaMetadata']['photo']['apertureFNumber'];
+			}
+			if (isset($a['mediaMetadata']['photo']['isoEquivalent'])){
+				$o['exif$tags']['exif$iso']['$t'] = $a['mediaMetadata']['photo']['isoEquivalent'];
+			}
+			if (isset($a['mediaMetadata']['photo']['exposureTime'])){
+				$o['exif$tags']['exif$exposure']['$t'] = $a['mediaMetadata']['photo']['exposureTime'];
+			}
+			$o['exif$tags']['exif$time'] = $o['gphoto$timestamp']['$t'];
+		}	
+		
+		return $o;
+	}
 	
 	function album_match($album,$allowed){
 		
@@ -259,7 +683,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			
 			$params = $item->params->toArray();
 			
-			$allowed_albums[] = !isset($params['albumvisibility']) || $params['albumvisibility']=='public'?$params['gallery_id']:$params['limitedalbum'];
+			$allowed_albums[] = $params['gallery_id'];
 			
 		}else{
 			$white_list = array();
@@ -281,7 +705,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			
 			//nano e jgallery
 			$kind=$item->params->get("ozio_nano_kind", "picasa");
-			$albumvisibility=$item->params->get("albumvisibility", "public");
+			$albumvisibility="public";
 			if ($kind=='picasa' && $albumvisibility=='limited'){
 				$allowed_albums[] = $item->params->get("limitedalbum", "");
 			}else if ($kind=='picasa'){
@@ -316,30 +740,6 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		return array('allowed_albums'=>$allowed_albums,'white_list'=>$white_list,'black_list'=>$black_list);
 	}
 	
-	function response_parse($response,$callback,&$callback_name){
-		$callback_name= '';
-		if ($callback){
-			$parti = explode("\n",$response);
-			foreach($parti as $p){
-				/*
-				// API callback
-jQuery1124012552826618160506_1487071237494(.*);
-
-preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_1487071237494(pie())ro);  ',$matches);var_export($matches);
-
-				*/
-				$matches = array();
-				if (preg_match ('/^ *(jQuery[^(]+)\((.*)\); *$/i',$p,$matches)){
-					$callback_name = $matches[1];
-					$response = $matches[2];
-				}
-				
-			}
-			
-			
-		}
-		return json_decode($response,true);
-	}
 	
 	
 	function refresh_token($credentials){
@@ -387,6 +787,42 @@ preg_match ('/^jQuery[^(]+\((.*)\); *$/i','jQuery1124012552826618160506_14870712
 		
 		
 	}
+	function gi_post($url,$postfields,$headers=array()){
+		
+		$timeout = null;
+
+		$headers['Content-Type'] = 'application/json; charset=utf-8';
+		
+		$data = json_encode($postfields);
+		
+		$options = new \Joomla\Registry\Registry;
+		$options->set('transport.curl',
+			array(
+				CURLOPT_SSL_VERIFYPEER => false,
+			)
+		);	
+		$options->set('follow_location',true);	
+		
+		try{
+			$response = JHttpFactory::getHttp($options)->post($url, $data, $headers, $timeout);
+		}
+		catch (UnexpectedValueException $e)
+		{
+			throw new RuntimeException('Could not send data to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (RuntimeException $e)
+		{
+			// There was an error connecting to the server or in the post request
+			throw new RuntimeException('Could not connect to remote server: ' . $e->getMessage(), 500);
+		}
+		catch (Exception $e)
+		{
+			// An unexpected error in processing; don't let this failure kill the site
+			throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
+		}
+		
+		return $response;
+	}		
 		
 		
 	function gi_post_form($url,$postfields,$headers=array()){

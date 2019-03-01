@@ -7,7 +7,7 @@ jQuery(document).ready(function ($)
 	
  	var photos=[];
  	var g_parameters=[];
- 	var g_list_nano_options=[];
+ 	//var g_list_nano_options=[];
  	var photos_per_album=1000;
  	var remainingphotos=0;
  	var max_remainingphotos=1;
@@ -44,7 +44,7 @@ jQuery(document).ready(function ($)
 
 	
 	
-	function load_album_data(i,start_index){
+	function load_album_data(i,start_index, next_token){
 		var obj={'album_index':i};
 		remainingphotos+=photos_per_album;
 		update_remainingphotos();
@@ -52,7 +52,7 @@ jQuery(document).ready(function ($)
 		GetAlbumData({
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
-				album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+				album:  g_parameters[i]['params']['gallery_id'],
 				authKey: g_parameters[i]['params']['limitedpassword'],
 				StartIndex: start_index,
 				beforeSend: OnBeforeSend,
@@ -67,6 +67,7 @@ jQuery(document).ready(function ($)
 				thumbCrop:false,
 				photoSize:"auto",
 				
+				pageToken: next_token,
 				
 				context:obj
 			});
@@ -199,6 +200,8 @@ jQuery(document).ready(function ($)
 		
 				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
 				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
+				
 				'&imgmax=d' +
 		
 		
@@ -251,8 +254,8 @@ jQuery(document).ready(function ($)
 		//alert(this.album_index);
 		//alert(this.photo_index);
 		var oz_gi_thumb_url = result.feed.media$group.media$thumbnail[0].url;
-		var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
-		seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+		var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("="));
+		seed = seed + "=";
 		
 		
 		var photodata={
@@ -260,7 +263,7 @@ jQuery(document).ready(function ($)
 				'summary':result.feed.media$group.media$description.$t,
 				'title':result.feed.title.$t,
 				'link':'#',
-				'thumb':seed+'h50/',
+				'thumb':seed+'w2048-h50',
 				'album_title':g_parameters[this.album_index].title,
 				'album_link':g_parameters[this.album_index].link
 				//'album_link':'../'+g_parameters[this.album_index].link+'&Itemid='+g_parameters[this.album_index].id//+'&tmpl=component'
@@ -292,7 +295,7 @@ jQuery(document).ready(function ($)
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
 		}else{
 			//altra chiamata per il rimanente
-			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t,result.feed.openSearch$nextPageToken.$t);
 		}
 		
 		

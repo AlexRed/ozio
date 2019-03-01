@@ -19,7 +19,7 @@
 			<field type="text" name="youtube_apikey" label="COM_OZIOGALLERY3_YOUTUBE_APIKEY_LBL" description="COM_OZIOGALLERY3_YOUTUBE_APIKEY_DSC" />
 			
 
-			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" autocomplete="off" default="110359559620842741677"/>
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY3_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY3_GOOGLE_USERID_DSC" autocomplete="off"/>
 			
 			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY3_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY3_GOOGLE_GALLERYID_DSC"> </field>
 

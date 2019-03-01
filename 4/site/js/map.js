@@ -64,10 +64,10 @@ jQuery(document).ready(function ($)
 			$g_parameters[]=array('skin'=>'lightgallery','params'=>$item->params->toArray(),'link'=>$link,'id'=>$item->id,'title'=>$item->title,'icon'=>$icon,'legend_icon'=>$legend_icon);
 		}else{
 			$kind=$item->params->get("ozio_nano_kind", "picasa");
-			$albumvisibility=$item->params->get("albumvisibility", "public");
+			$albumvisibility="public";
 			if ($kind=='picasa' && $albumvisibility=='limited'){
 				$p=array(
-					'userid'=>$item->params->get("ozio_nano_userID", "110359559620842741677"),
+					'userid'=>$item->params->get("ozio_nano_userID", ""),
 					'albumvisibility'=>'limited',
 					'limitedalbum'=>$item->params->get("limitedalbum", ""),
 					'limitedpassword'=>$item->params->get("limitedpassword", ""),
@@ -98,7 +98,7 @@ jQuery(document).ready(function ($)
 					locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 					skin: <?php echo json_encode(strpos($item->link, "&view=jgallery") === false?'nano':'jgallery'); ?>,
 					kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
-					userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+					userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "")); ?>,
 					blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 					whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
 					<?php
@@ -449,7 +449,7 @@ jQuery(document).ready(function ($)
       }
       google.maps.event.addDomListener(window, 'load', initialize);	
 	
-	function load_album_data(i,start_index){
+	function load_album_data(i,start_index,next_token){
 		var obj={'album_index':i};
 		remainingphotos+=photos_per_album;
 		update_remainingphotos();
@@ -457,7 +457,7 @@ jQuery(document).ready(function ($)
 				menu_id: g_parameters[i].hasOwnProperty('menu_id')?g_parameters[i]['menu_id']:g_parameters[i]['id'],
 				//mode: 'album_data',
 				username: g_parameters[i]['params']['userid'],
-				album:  (!g_parameters[i]['params'].hasOwnProperty('albumvisibility') || g_parameters[i]['params']['albumvisibility'] == "public" ? g_parameters[i]['params']['gallery_id'] : g_parameters[i]['params']['limitedalbum']),
+				album:  g_parameters[i]['params']['gallery_id'],
 				authKey: g_parameters[i]['params']['limitedpassword'],
 				StartIndex: start_index,
 				beforeSend: OnBeforeSend,
@@ -472,7 +472,7 @@ jQuery(document).ready(function ($)
 				thumbCrop:false,
 				photoSize:"auto",
 				
-				
+				pageToken: next_token,
 				context:obj
 			});
 		
@@ -537,6 +537,8 @@ jQuery(document).ready(function ($)
 		
 				((settings.album !== "") ? '&album_id=' + encodeURIComponent(settings.album) : "") +
 				
+				(settings.pageToken?'&pageToken='+ encodeURIComponent(settings.pageToken) : "") +
+				
 				'&imgmax=d' +
 				// '&kind=photo' + // https://developers.google.com/picasa-web/docs/2.0/reference#Kind
 				'&alt=json' + // https://developers.google.com/picasa-web/faq_gdata#alternate_data_formats
@@ -582,10 +584,10 @@ jQuery(document).ready(function ($)
 				
 				
 				var oz_gi_thumb_url = entry.media$group.media$thumbnail[0].url;
-				var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("/"));
-				seed = seed.substring(0, seed.lastIndexOf("/")) + "/";
+				var seed = oz_gi_thumb_url.substring(0, oz_gi_thumb_url.lastIndexOf("="));
+				seed = seed + "=";
 				
-				var thumb=seed+'h100/';
+				var thumb=seed+'w2048-h100';
 
 				//preload
 				imageObj = new Image();
@@ -694,7 +696,7 @@ jQuery(document).ready(function ($)
 			addAlbumMarker(this.album_index);
 		}else{
 			//altra chiamata per il rimanente
-			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t);
+			load_album_data(this.album_index,result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t,result.feed.openSearch$nextPageToken.$t);
 		}
 		
 		remainingphotos+=result.feed.entry.length;

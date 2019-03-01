@@ -174,15 +174,9 @@ jQuery(document).ready(function ($)
 				username:'<?php echo $item->params->get("userid"); ?>',
 				
 				<?php
-					if ($item->params->get("albumvisibility", "public") != "public"){
-						echo 'album: "'.$item->params->get("limitedalbum")."\",\n";
-					}else if (is_numeric($item->params->get("gallery_id",""))){
 						echo 'gallery_id: "'.$item->params->get("gallery_id","")."\",\n";
-					}else{
-						echo 'album: "'.$item->params->get("gallery_id","")."\",\n";
-					}
 				?>
-				authKey:"<?php echo $item->params->get("limitedpassword"); ?>",
+				authKey:"<?php echo ''; ?>",
 				//StartIndex: 1,
 				//MaxResults: 1,
 				beforeSend:OnBeforeSend,
@@ -226,7 +220,7 @@ jQuery(document).ready(function ($)
 //<?php }else{ /* nano */ ?>
 
 		var kind = <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>;
-		var albumvisibility = <?php echo json_encode($item->params->get("albumvisibility", "public")); ?>;
+		var albumvisibility = '<?php echo "public"; ?>';
 		if (kind=='picasa' && albumvisibility=='limited'){
 			
 			// Crea un nuovo sottocontenitore e lo appende al principale
@@ -250,9 +244,9 @@ jQuery(document).ready(function ($)
 					album_orig_sort:'<?php echo $item->orig_sort; ?>',
 
 					mode:'album_cover',
-					username:'<?php echo $item->params->get("ozio_nano_userID", "110359559620842741677"); ?>',
+					username:'<?php echo $item->params->get("ozio_nano_userID", ""); ?>',
 					album:'<?php echo $item->params->get("limitedalbum"); ?>',
-					authKey:"<?php echo $item->params->get("limitedpassword"); ?>",
+					authKey:"<?php echo ''; ?>",
 					StartIndex: 1,
 					MaxResults: 1,
 					beforeSend:OnBeforeSend,
@@ -307,7 +301,7 @@ jQuery(document).ready(function ($)
 				locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 				skin:<?php echo json_encode(strpos($item->link, "&view=jgallery") === false?"nano":"jgallery"); ?>,
 				kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
-				userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+				userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "")); ?>,
 				blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 				whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
 				<?php
@@ -671,9 +665,9 @@ jQuery(document).ready(function ($)
 
 			        if( ok && data.gphoto$numphotos.$t>0) {
 				            src=itemID;
-				            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('/'));
-				            s=s.substring(0, s.lastIndexOf('/')) + '/';
-				  			itemThumbURL=s+'s'+context.thumbSize+'-c/';
+				            var s=itemThumbURL.substring(0, itemThumbURL.lastIndexOf('='));
+				            s=s + '=';
+				  			itemThumbURL=s+'w'+context.thumbSize+'-h'+context.thumbSize+'-c';
 							
 			        		var deeplink='';
 			        		if (context.locationHash){

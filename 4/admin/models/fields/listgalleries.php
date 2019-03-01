@@ -48,7 +48,7 @@ class JFormFieldListGalleries extends JFormFieldList
 			$prefix = JUri::current() . "?option=" . $name . "&amp;view=loader";
 
 			// pwi
-			$document->addScript(JUri::root(true) . "/media/" . $name . "/js/jquery-pwi.js");
+			$document->addScript(JUri::root(true) . "/media/" . $name . "/js/jquery-pwi.js",array('version' => 'auto'));
 
 			// Alternative code: $type = strtolower($this->type);
 			$type = (string)$this->element["type"];
@@ -57,14 +57,14 @@ class JFormFieldListGalleries extends JFormFieldList
 				$document->addScript($prefix . "&amp;type=js&amp;filename=" . $type);
 
 			if (file_exists(JPATH_ADMINISTRATOR . "/components/" . $name . "/css/" . $type . ".css"))
-				$document->addStyleSheet(JUri::base(true) . "/components/" . $name . "/css/" . $type . ".css");
+				$document->addStyleSheet(JUri::base(true) . "/components/" . $name . "/css/" . $type . ".css",array('version' => 'auto'));
 
 			// per la compatibilità con Internet Explorer
-			$document->addScript(JURI::root(true) . "/media/" . $name . "/js/jQuery.XDomainRequest.js");
+			$document->addScript(JURI::root(true) . "/media/" . $name . "/js/jQuery.XDomainRequest.js",array('version' => 'auto'));
 
-			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js");
+			$document->addScript(JUri::base(true) . "/components/com_oziogallery3/js/get_id.js",array('version' => 'auto'));
 			$document->addScriptDeclaration("var g_ozio_admin_buttons=".json_encode($i18n).";");
-			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css");
+			$document->addStyleSheet(JUri::base(true) . "/components/com_oziogallery3/models/fields/fields.css",array('version' => 'auto'));
 		}
 
 		

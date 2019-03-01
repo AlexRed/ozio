@@ -57,12 +57,12 @@
 					if ( $row->link == 'index.php?option=com_oziogallery3&view=jgallery'){
 						$result = new JRegistry;
 						$result->loadString($row->params);
-						$albumvisibility=$result->get("albumvisibility", "public");
+						$albumvisibility='public';
 						if ($albumvisibility=='limited'){
 							//lo aggiungo come gli altri g_parameters
 							
 							$row->params=array(
-								'userid'=>$result->get("ozio_nano_userID", "110359559620842741677"),
+								'userid'=>$result->get("ozio_nano_userID", ""),
 								'albumvisibility'=>'limited',
 								'limitedalbum'=>$result->get("limitedalbum", ""),
 								'limitedpassword'=>$result->get("limitedpassword", "")
@@ -81,12 +81,12 @@
 						$result = new JRegistry;
 						$result->loadString($row->params);
 						$kind=$result->get("ozio_nano_kind", "picasa");
-						$albumvisibility=$result->get("albumvisibility", "public");
+						$albumvisibility="public";
 						if ($kind=='picasa' && $albumvisibility=='limited'){
 							//lo aggiungo come gli altri g_parameters
 							
 							$row->params=array(
-								'userid'=>$result->get("ozio_nano_userID", "110359559620842741677"),
+								'userid'=>$result->get("ozio_nano_userID", ""),
 								'albumvisibility'=>'limited',
 								'limitedalbum'=>$result->get("limitedalbum", ""),
 								'limitedpassword'=>$result->get("limitedpassword", "")
@@ -117,7 +117,7 @@
 						$result->loadString($item->params);
 						
 						$kind=$result->get("ozio_nano_kind", "picasa");
-						$albumvisibility=$result->get("albumvisibility", "public");
+						$albumvisibility="public";
 						if ($kind=='picasa' && $albumvisibility=='limited'){
 							//già aggiunto sopra
 						}else{
@@ -134,7 +134,7 @@
 											g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
 											locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 											kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
-											userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "110359559620842741677")); ?>,
+											userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "")); ?>,
 											blackList: <?php echo json_encode($item->params->get("ozio_nano_blackList", "Scrapbook|profil|2013-")); ?>,
 											whiteList: <?php echo json_encode($item->params->get("ozio_nano_whiteList", "")); ?>,
 											<?php

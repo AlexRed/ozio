@@ -49,6 +49,8 @@ eventer(messageEvent,function(e) {
 		}
 
 	}else if (e.data && e.data.substring(0, 11) == 'album_data:'){
+		
+		/*
 		var json = e.data.substring(11);
 		var obj = JSON.parse(json);
 		if (obj.status){
@@ -72,12 +74,12 @@ eventer(messageEvent,function(e) {
 				}
 			});			
 		}
-		
+		*/
 	}
 	
 },false);
 
-
+/*
 function ozio_album_list_handle_response(obj){
 	
 	var $table= jQuery('#oziogallery-modal table');
@@ -153,7 +155,6 @@ function ozio_album_list_handle_response(obj){
 			}
 	});
 }
-
 function ozio_new_access(obj,$tr,new_access){
 	var idx = parseInt($tr.attr('data-entryidx'),10);
 	
@@ -194,3 +195,4 @@ function ozio_new_access(obj,$tr,new_access){
 		}
 	});
 }
+*/

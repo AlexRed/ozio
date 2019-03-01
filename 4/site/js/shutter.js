@@ -276,9 +276,9 @@ gi_ozio_intenseViewer=false;
 						$(this).append(newdiv);
 						
 						if (bigdata == 0){
-							newdiv.attr('data-image',link + 's0/');
+							newdiv.attr('data-image',link + 'd');
 						}else{
-							newdiv.attr('data-image',link + 's'+bigdata+'/');
+							newdiv.attr('data-image',link + 'w'+bigdata+'-h'+bigdata);
 						}
 						newdiv.attr('data-title',api.getField('album'));
 						newdiv.attr('data-caption',api.getField('summary'));
@@ -397,8 +397,8 @@ gi_ozio_intenseViewer=false;
 			$('#photo-info .pi-fstop').text(api.getField('exif_fstop')==''?na:api.getField('exif_fstop'));
 
 			var link = api.getField('seed');
-			var dowload_url=link + 's0-d/';
-			var img_url=link + 's200/';
+			var dowload_url=link + 'd';
+			var img_url=link + 'w200-h200';
 			if ($('#photo-info .pi-dowload').length>0){
 				$('#photo-info .pi-dowload').attr('href',dowload_url);
 			}
