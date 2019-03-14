@@ -361,7 +361,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 				}
 				
 
-				$out['feed']['title']['$t'] = 'Album';
+				$out['feed']['title']['$t'] = $this->get_album_name($input_params['album_id'],$credentials);
 				
 				$out['feed']['id']['$t'] ='https://picasaweb.google.com/data/feed/user/'.$input_params['user_id'].'/albumid/'.$input_params['album_id'];
 				$out['feed']['subtitle']['$t']='';
@@ -515,6 +515,92 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		return;
         //parent::display($tpl);
     }
+		
+	function get_album_name($album_id,$credentials){
+		$url = 'https://photoslibrary.googleapis.com/v1/albums/'.$album_id;
+		
+		$http_header = array();
+		$library_params = array(
+			'access_token' => $credentials['access_token']
+		);
+		
+		$resp_obj = $this->gi_get($url."?".http_build_query($library_params,'','&'),$http_header);
+
+		$response = $resp_obj->body;
+		$json_resp = json_decode($response,true);
+		
+		
+		$already_refresh = false;
+		for ($ei = 0; $ei<5; $ei++){
+		
+			if ($json_resp===NULL){
+				http_response_code(500);
+				die();
+			}
+			
+			if (isset($json_resp['error'])){
+				
+				if ($json_resp['error']['code']==401){
+					//Nuovo access token
+					if ($already_refresh){
+						http_response_code($json_resp['error']['code']);
+						echo $response;
+						die();
+					}
+					
+					
+					$already_refresh = true;
+					$credentials = $this->refresh_token($credentials);
+					
+					$library_params['access_token'] = $credentials['access_token'];
+					
+					$resp_obj = $this->gi_get($url."?".http_build_query($library_params,'','&'),$http_header);
+					
+					$response = $resp_obj->body;
+					
+					$json_resp = json_decode($response,true);
+					
+				}else if ($json_resp['error']['code']==500 || $json_resp['error']['code']==503){
+					//Exponential backoff
+					
+					$s_sleep = mt_rand(1, pow(2,$ei+1));
+					sleep($s_sleep);
+					
+				}else{
+					http_response_code($json_resp['error']['code']);
+					echo $response;
+					die();
+				}
+				
+			}else{
+				break;
+			}
+		}
+		
+		
+		if ($json_resp===NULL){
+			http_response_code(500);
+			die();
+		}
+		if (isset($json_resp['error'])){
+			http_response_code($json_resp['error']['code']);
+			echo $response;
+			die();
+		}
+		
+		/*
+		(
+		  'id' => '',
+		  'title' => '',
+		  'productUrl' => '',
+		  'mediaItemsCount' => '2',
+		  'coverPhotoBaseUrl' => '',
+		  'coverPhotoMediaItemId' => '',
+		)		
+		*/
+
+		return $json_resp['title'];
+	}
 	
 	function media_item2entry($a,$picasa_params,$input_params){
 
