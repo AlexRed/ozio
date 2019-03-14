@@ -166,7 +166,7 @@ class Com_OzioGallery3InstallerScript
 			
 		}		
 
-		echo '<p>The component Ozio Gallery 4 Component for Joomla 3! has been uninstalled successfully.</p>';
+		echo '<p>The component Ozio Gallery 5 Component for Joomla 3! has been uninstalled successfully.</p>';
 	}
 
 
@@ -324,7 +324,7 @@ class Com_OzioGallery3InstallerScript
 
 	function message()
 	{
-		echo '<p>Congratulations! Ozio Gallery 4 Component for Joomla 3! has been installed successfully</p>';
+		echo '<p>Congratulations! Ozio Gallery 5 Component for Joomla 3! has been installed successfully</p>';
 		echo "<p><img src=\"https://www.opensourcesolutions.es/logo/responsive4.jpg" . "\"></p>";
 		echo "<p>Take a look to 'lightGallery': our new, VIDEO and Photo responsive, adaptive and zoom skin. <a href=\"http://www.opensourcesolutions.es/ext/ozio-gallery.html#Changelog\" target=\"_blank\">Read the new version Changelog.</a></p>";
 
