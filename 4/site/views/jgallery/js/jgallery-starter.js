@@ -11,7 +11,7 @@ $lang->load('com_oziogallery3',JPATH_ROOT . "/administrator/components/com_oziog
 jQuery( document ).ready(function( $ ) {
 	
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		var closelink=<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo json_encode($closelink); ?>;
 		jQuery('a.close_fullscreen').attr('href',closelink);
 		jQuery('a.close_fullscreen').css('left','15px');
 		jQuery('a.close_fullscreen').css('right','auto');
@@ -508,7 +508,7 @@ jQuery( document ).ready(function( $ ) {
 			
 			//aggiungo il nuovo album!
 
-			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
+			var photoSorting=<?php echo json_encode($this->Params->get("photoSorting", "normal")); ?>;
 			if (photoSorting=='random'){
 				g_parameters[this.album_index].slides=shuffle(g_parameters[this.album_index].slides);
 			}else if (photoSorting=='inverse'){
@@ -556,7 +556,7 @@ jQuery( document ).ready(function( $ ) {
 			}
 	
 			if (ozmaxres>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,ozmaxres);
-			var oz_max_num_photo = parseInt('<?php echo $this->Params->get("oz_max_num_photo", 0); ?>');
+			var oz_max_num_photo = parseInt(<?php echo json_encode($this->Params->get("oz_max_num_photo", 0)); ?>);
 			if (oz_max_num_photo>0)g_parameters[this.album_index].slides=g_parameters[this.album_index].slides.slice(0,oz_max_num_photo);
 			
 			var container_width=document.getElementById('jgallery').offsetWidth;

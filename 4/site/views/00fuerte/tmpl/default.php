@@ -27,7 +27,7 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 <?php } ?>
 
 <?php 
-$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='above') {  ?>
 	<div class="ozio_00fuerte_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
@@ -35,7 +35,7 @@ if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")
 <?php }?>
 
 
-<div class="fuertecontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>" id="fuertecontainer" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>; height:0;">
+<div class="fuertecontainer<?php echo $this->escape($this->Params->get("pageclass_sfx", "")); ?>" id="fuertecontainer" style="width:<?php echo $this->escape($this->gallerywidth["text"] . $this->gallerywidth["select"]); ?>; height:0;">
 
 	<!--Thumbnail Navigation-->
 	<div id="prevthumb"></div>
@@ -118,13 +118,13 @@ if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")
 </div>
 
 <!-- Thumbnails -->
-<div id="thumb-tray" class="load-item" style="width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
+<div id="thumb-tray" class="load-item" style="width:<?php echo $this->escape($this->gallerywidth["text"] . $this->gallerywidth["select"]); ?>;">
 	<div id="thumb-back"></div>
 	<div id="thumb-forward"></div>
 </div>
 
 
-<div id="ozio-pw-nano" class="ozio-pw-nano load-item" style="height:<?php echo $this->Params->get("photowall_height", 200);?>px;width:<?php echo $this->gallerywidth["text"] . $this->gallerywidth["select"]; ?>;">
+<div id="ozio-pw-nano" class="ozio-pw-nano load-item" style="height:<?php echo $this->escape($this->Params->get("photowall_height", 200));?>px;width:<?php echo $this->escape($this->gallerywidth["text"] . $this->gallerywidth["select"]); ?>;">
  <div class="ozio-pw-content">
 	<div id="photo-wall">
 	</div>
@@ -132,7 +132,7 @@ if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")
 </div>
 
 <?php 
-$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='under') {  ?>
 	<div class="ozio_00fuerte_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
@@ -142,7 +142,7 @@ if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")
  
  <?php if ($this->Params->get("info_button", false)==true) { ?>
 
-<div id="photo-info" class="nanoGalleryInfoBox ozio-00fuerte-white-info-box mfp-hide" style="background-image:url('<?php echo $this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200"); ?>');">
+<div id="photo-info" class="nanoGalleryInfoBox ozio-00fuerte-white-info-box mfp-hide" style="background-image:url(<?php echo json_encode($this->Params->get("infobox_bg_url", "https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200")); ?>);">
 	<div class="ozio-00fuerte-infobox-middle">
 		<dl class="odl-horizontal">
 			<dt></dt><dd><img class="oimg-polaroid pi-image" alt="preview"/></dd>

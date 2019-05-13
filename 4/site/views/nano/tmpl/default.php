@@ -28,16 +28,16 @@ $GLOBALS["enable_jquery_ozio_plugin"]=true;
 <h1><?php echo $this->escape($this->Params->get("page_heading")); ?></h1>
 <?php } ?>
 <?php 
-$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='above') {  ?>
 	<div class="ozio_nano_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
 	</div>
 <?php }?>
 
-<div id="nanoGallery" class="ozionanocontainer<?php echo $this->Params->get("pageclass_sfx", ""); ?>"></div>
+<div id="nanoGallery" class="ozionanocontainer<?php echo $this->escape($this->Params->get("pageclass_sfx", "")); ?>"></div>
 <?php 
-$testo_sotto_mappa=trim($this->Params->get("bottom_description", ""));
+$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='under') {  ?>
 	<div class="ozio_nano_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>

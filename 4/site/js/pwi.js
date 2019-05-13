@@ -10,7 +10,7 @@ jQuery(document).ready(function ($)
     g_flickrThumbAvailableSizes=new Array(75,100,150,240,500,640);        //,1024),
     g_flickrThumbAvailableSizesStr=new Array('sq','t','q','s','m','z');    //,'b'), --> b is not available for photos before 05.25.2010
 
-	var reqThumbSize='<?php echo $this->Params->get("images_size", 180); ?>';
+	var reqThumbSize=<?php echo json_encode($this->Params->get("images_size", 180)); ?>;
 	var g_flickrThumbSizeStr='z';
 	for (var i=0;i<g_flickrThumbAvailableSizes.length;i++){
 		if (g_flickrThumbAvailableSizes[i]>=reqThumbSize){
@@ -120,8 +120,8 @@ jQuery(document).ready(function ($)
 				album_local_url:'<?php echo JRoute::_($link); ?>',
 				title: <?php echo json_encode($item->title); ?>,
 				thumb_url: <?php echo json_encode("https://img.youtube.com/vi/".$video_ids[0]."/0.jpg"); ?>,
-				thumb_height: '<?php echo $this->Params->get("images_size", 180); ?>',
-				thumb_width: '<?php echo $this->Params->get("images_size", 180); ?>',
+				thumb_height: <?php echo json_encode($this->Params->get("images_size", 180)); ?>,
+				thumb_width: <?php echo json_encode($this->Params->get("images_size", 180)); ?>,
 				album_local_title: <?php echo json_encode($item->title); ?>,
 				numphotos: <?php echo count($video_ids); ?>,
 				manual_date: <?php echo json_encode($item->params->get("gallery_date", "")); ?>,
@@ -134,7 +134,7 @@ jQuery(document).ready(function ($)
 			authorVideo.data('ozio-data',{
 				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_id:'<?php echo $item->id; ?>',
-				album_orig_sort:'<?php echo $item->orig_sort; ?>'
+				album_orig_sort:<?php echo json_encode($item->orig_sort); ?>
 			});
 			
 			
@@ -155,7 +155,7 @@ jQuery(document).ready(function ($)
 		author.data('ozio-data',{
 			album_local_title:<?php echo json_encode($item->title); ?>,
 			album_id:'<?php echo $item->id; ?>',
-			album_orig_sort:'<?php echo $item->orig_sort; ?>'
+			album_orig_sort:<?php echo json_encode($item->orig_sort); ?>
 		});
 
 		// Imposta i parametri e innesca il caricamento
@@ -166,10 +166,10 @@ jQuery(document).ready(function ($)
 				album_local_url:'<?php echo JRoute::_($link); ?>',
 				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_id:'<?php echo $item->id; ?>',
-				album_orig_sort:'<?php echo $item->orig_sort; ?>',
+				album_orig_sort:<?php echo json_encode($item->orig_sort); ?>,
 
 				mode:'album_cover',
-				username:'<?php echo $item->params->get("userid"); ?>',
+				username:<?php echo json_encode($item->params->get("userid")); ?>,
 				
 				<?php
 						echo 'gallery_id: "'.$item->params->get("gallery_id","")."\",\n";
@@ -186,12 +186,12 @@ jQuery(document).ready(function ($)
 
 				showAlbumThumbs:true,
 				thumbAlign:true,
-				showAlbumdate:'<?php echo $this->Params->get("show_date", 1); ?>',
-				showAlbumPhotoCount:'<?php echo $this->Params->get("show_counter", 1); ?>',
+				showAlbumdate:<?php echo json_encode($this->Params->get("show_date", 1)); ?>,
+				showAlbumPhotoCount:<?php echo json_encode($this->Params->get("show_counter", 1)); ?>,
 				showAlbumTitle:false,
 				showCustomTitle:true,
-				albumThumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
-				thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+				albumThumbSize:<?php echo json_encode($this->Params->get("images_size", 180)); ?>,
+				thumbSize:<?php echo json_encode($this->Params->get("images_size", 180)); ?>,
 				albumCrop:true,
 				thumbCrop:true,
 
@@ -231,7 +231,7 @@ jQuery(document).ready(function ($)
 			author.data('ozio-data',{
 				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_id:'<?php echo $item->id; ?>',
-				album_orig_sort:'<?php echo $item->orig_sort; ?>'
+				album_orig_sort:<?php echo json_encode($item->orig_sort); ?>
 			});
 			
 			// Imposta i parametri e innesca il caricamento
@@ -242,11 +242,11 @@ jQuery(document).ready(function ($)
 					album_local_url:'<?php echo JRoute::_($link); ?>',
 					album_local_title:<?php echo json_encode($item->title); ?>,
 					album_id:'<?php echo $item->id; ?>',
-					album_orig_sort:'<?php echo $item->orig_sort; ?>',
+					album_orig_sort:<?php echo json_encode($item->orig_sort); ?>,
 
 					mode:'album_cover',
-					username:'<?php echo $item->params->get("ozio_nano_userID", ""); ?>',
-					album:'<?php echo $item->params->get("limitedalbum"); ?>',
+					username:<?php echo json_encode($item->params->get("ozio_nano_userID", "")); ?>,
+					album:<?php echo json_encode($item->params->get("limitedalbum")); ?>,
 					authKey:"<?php echo ''; ?>",
 					StartIndex: 1,
 					MaxResults: 1,
@@ -257,12 +257,12 @@ jQuery(document).ready(function ($)
 
 					showAlbumThumbs:true,
 					thumbAlign:true,
-					showAlbumdate:'<?php echo $this->Params->get("show_date", 1); ?>',
-					showAlbumPhotoCount:'<?php echo $this->Params->get("show_counter", 1); ?>',
+					showAlbumdate:<?php echo json_encode($this->Params->get("show_date", 1)); ?>,
+					showAlbumPhotoCount:<?php echo json_encode($this->Params->get("show_counter", 1)); ?>,
 					showAlbumTitle:false,
 					showCustomTitle:true,
-					albumThumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
-					thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+					albumThumbSize:<?php echo json_encode($this->Params->get("images_size", 180)); ?>,
+					thumbSize:<?php echo json_encode($this->Params->get("images_size", 180)); ?>,
 					albumCrop:true,
 					thumbCrop:true,
 
@@ -293,10 +293,10 @@ jQuery(document).ready(function ($)
 			
 			var album_nano_options={
 				album_id:'<?php echo $item->id; ?>',
-				album_orig_sort:'<?php echo $item->orig_sort; ?>',
+				album_orig_sort:<?php echo json_encode($item->orig_sort); ?>,
 				album_local_title:<?php echo json_encode($item->title); ?>,
 				album_local_url:'<?php echo JRoute::_($link); ?>',
-				thumbSize:'<?php echo $this->Params->get("images_size", 180); ?>',
+				thumbSize:<?php echo json_encode($this->Params->get("images_size", 180)); ?>,
 				g_flickrApiKey:"2f0e634b471fdb47446abcb9c5afebdc",
 				locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 				skin:<?php echo json_encode(strpos($item->link, "&view=jgallery") === false?"nano":"jgallery"); ?>,
@@ -430,7 +430,7 @@ jQuery(document).ready(function ($)
 			// Build main album container
 			var scAlbum = $(
 				"<div class='pwi_album' style='" +
-					"width:" + (parseInt('<?php echo $this->Params->get("images_size", 180); ?>') + 1) + "px;" +
+					"width:" + (parseInt(<?php echo json_encode($this->Params->get("images_size", 180)); ?>) + 1) + "px;" +
 					"'/>"
 			);
 

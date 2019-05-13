@@ -13,7 +13,7 @@ gi_ozio_intenseViewer=false;
 jQuery( document ).ready(function( $ ) {
 	
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		var closelink=<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo json_encode($closelink); ?>;
 		jQuery('a.close_fullscreen').attr('href',closelink);
 		jQuery('a.close_fullscreen').css('left','15px');
 		jQuery('a.close_fullscreen').css('right','auto');
@@ -240,7 +240,7 @@ jQuery( document ).ready(function( $ ) {
 			
 			//aggiungo il nuovo album!
 
-			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
+			var photoSorting=<?php echo json_encode($this->Params->get("photoSorting", "normal")); ?>;
 			if (photoSorting=='random'){
 				g_parameters[album_index].slides=shuffle(g_parameters[album_index].slides);
 			}else if (photoSorting=='inverse'){
@@ -290,7 +290,7 @@ jQuery( document ).ready(function( $ ) {
 	
 			if (ozmaxres>0)g_parameters[album_index].slides=g_parameters[album_index].slides.slice(0,ozmaxres);
 
-			var oz_max_num_photo = parseInt('<?php echo $this->Params->get("oz_max_num_photo", 0); ?>');
+			var oz_max_num_photo = parseInt(<?php echo json_encode($this->Params->get("oz_max_num_photo", 0)); ?>);
 			if (oz_max_num_photo>0)g_parameters[album_index].slides=g_parameters[album_index].slides.slice(0,oz_max_num_photo);
 			
 			container_width=$(window).width();
@@ -528,7 +528,7 @@ jQuery( document ).ready(function( $ ) {
 					intense:<?php echo json_encode($source_kind == 'photo'); ?>,
 					zoom:false,
 					
-					intense_big: '<?php echo $this->Params->get("big", ""); ?>',
+					intense_big: <?php echo json_encode($this->Params->get("big", "")); ?>,
 					data_loading_gif: <?php echo json_encode(JUri::base(true).'/media/com_oziogallery3/views/00fuerte/img/progress.gif'); ?>,
 					
 					

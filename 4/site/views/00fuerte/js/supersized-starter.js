@@ -7,10 +7,10 @@ jQuery(document).ready(function ($)
 {
 	var slides = [];
 	var ss = jQuery("#supersized");
-	var userid='<?php echo $this->Params->get("userid", ""); ?>';
+	var userid=<?php echo json_encode($this->Params->get("userid", "")); ?>;
 	<?php echo 'var ozmaxres = '.json_encode($GLOBALS["oziogallery3max"]).";\n"; ?>
 	if (typeof ozio_fullscreen != 'undefined'?ozio_fullscreen:0){
-		var closelink='<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo $closelink; ?>';
+		var closelink=<?php $closelink = trim( $this->Params->get("closelink","") ); if (empty($closelink)){$closelink=JURI::base();} echo json_encode($closelink); ?>;
 		jQuery('a.close_fullscreen').attr('href',closelink);
 	}
 
@@ -29,9 +29,9 @@ jQuery(document).ready(function ($)
 				
 				
 				mode: 'album_data',
-				username: '<?php echo $this->Params->get("userid", ""); ?>',
-				album: '<?php echo $this->Params->get("gallery_id", ""); ?>',
-				authKey: '<?php echo ""; ?>',
+				username: <?php echo json_encode($this->Params->get("userid", "")); ?>,
+				album: <?php echo json_encode($this->Params->get("gallery_id", "")); ?>,
+				authKey: '',
 				StartIndex: start_slide,
 				//MaxResults: length,
 				beforeSend: OnBeforeSend,
@@ -245,7 +245,7 @@ jQuery(document).ready(function ($)
 		});
 */
 		if (result.feed.openSearch$startIndex.$t+result.feed.openSearch$itemsPerPage.$t>=result.feed.openSearch$totalResults.$t){
-			var photoSorting='<?php echo $this->Params->get("photoSorting", "normal"); ?>';
+			var photoSorting=<?php echo json_encode($this->Params->get("photoSorting", "normal")); ?>;
 			if (photoSorting=='random'){
 				slides=shuffle(slides);
 			}else if (photoSorting=='inverse'){
@@ -292,7 +292,7 @@ jQuery(document).ready(function ($)
 				});
 			}
 			if (ozmaxres>0)slides=slides.slice(0,ozmaxres);
-			var oz_max_num_photo = parseInt('<?php echo $this->Params->get("oz_max_num_photo", 0); ?>');
+			var oz_max_num_photo = parseInt(<?php echo json_encode($this->Params->get("oz_max_num_photo", 0)); ?>);
 			if (oz_max_num_photo>0)slides=slides.slice(0,oz_max_num_photo);
 			
 	
@@ -304,18 +304,18 @@ jQuery(document).ready(function ($)
 					
 					// Functionality
 					slideshow: 1, // Slideshow on/off
-					autoplay: parseInt('<?php echo $this->Params->get("autoplay", 0); ?>'), // Slideshow starts playing automatically
+					autoplay: parseInt(<?php echo json_encode($this->Params->get("autoplay", 0)); ?>), // Slideshow starts playing automatically
 					start_slide: 1,			// Start slide (0 is random)
-					stop_loop: parseInt('<?php echo $this->Params->get("stop_loop", 0); ?>'), // Pauses slideshow on last slide
+					stop_loop: parseInt(<?php echo json_encode($this->Params->get("stop_loop", 0)); ?>), // Pauses slideshow on last slide
 					random: 0,			// Randomize slide order (Ignores start slide)
-					slide_interval: parseInt('<?php echo $this->Params->get("slide_interval", 3000); ?>'), // Length between transitions
-					transition: '<?php echo $this->Params->get("transition", "fade"); ?>', // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-					transition_speed: parseInt('<?php echo $this->Params->get("transition_speed", 1000); ?>'), // Speed of transition
+					slide_interval: parseInt(<?php echo json_encode($this->Params->get("slide_interval", 3000)); ?>), // Length between transitions
+					transition: <?php echo json_encode($this->Params->get("transition", "fade")); ?>, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+					transition_speed: parseInt(<?php echo json_encode($this->Params->get("transition_speed", 1000)); ?>), // Speed of transition
 					new_window: 1,			// Image links open in new window/tab
-					pause_hover: parseInt('<?php echo $this->Params->get("pause_hover", 0); ?>'), // Pause slideshow on hover
+					pause_hover: parseInt(<?php echo json_encode($this->Params->get("pause_hover", 0)); ?>), // Pause slideshow on hover
 					keyboard_nav: 1,			// Keyboard navigation on/off
 					performance: 1,			// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-					image_protect: parseInt('<?php echo $this->Params->get("image_protect", 0); ?>'),			// Disables image dragging and right click with Javascript
+					image_protect: parseInt(<?php echo json_encode($this->Params->get("image_protect", 0)); ?>),			// Disables image dragging and right click with Javascript
 	
 					// Size & Position
 					min_width: 0,			// Min width allowed (in pixels)
@@ -329,29 +329,29 @@ jQuery(document).ready(function ($)
 					// Components
 					slide_links: 'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 					thumb_links: 1,			// Individual thumb links for each slide
-					thumbnail_navigation: typeof ozio_fullscreen != 'undefined'?parseInt('<?php echo $this->Params->get("thumbnail_navigation", 0); ?>'):0, // Thumbnail navigation
-					thumbnail_show: !parseInt('<?php echo $this->Params->get("hide_thumbnails", 0); ?>') && !parseInt('<?php echo $this->Params->get("show_photowall", 0); ?>'),
-					photowall_show: typeof ozio_fullscreen != 'undefined'?0:parseInt('<?php echo $this->Params->get("show_photowall", 0); ?>'),
+					thumbnail_navigation: typeof ozio_fullscreen != 'undefined'?parseInt(<?php echo json_encode($this->Params->get("thumbnail_navigation", 0)); ?>):0, // Thumbnail navigation
+					thumbnail_show: !parseInt(<?php echo json_encode($this->Params->get("hide_thumbnails", 0)); ?>) && !parseInt(<?php echo json_encode($this->Params->get("show_photowall", 0)); ?>),
+					photowall_show: typeof ozio_fullscreen != 'undefined'?0:parseInt(<?php echo json_encode($this->Params->get("show_photowall", 0)); ?>),
 	
 					slides: slides,
 					slide_total: slides.length,
 	
 					// Theme Options
-					progress_bar: parseInt('<?php echo $this->Params->get("progress_bar", 1); ?>'), // Timer for each slide
+					progress_bar: parseInt(<?php echo json_encode($this->Params->get("progress_bar", 1)); ?>), // Timer for each slide
 
-					hide_bottombar: parseInt('<?php echo $this->Params->get("hide_bottombar", 0); ?>'),
+					hide_bottombar: parseInt(<?php echo json_encode($this->Params->get("hide_bottombar", 0)); ?>),
 					mouse_scrub: 0,
 	
-					username: '<?php echo $this->Params->get("userid", ""); ?>',
-					album: '<?php echo $this->Params->get("gallery_id", ""); ?>',
-					authKey: '<?php echo ""; ?>',
-					square: '<?php echo $this->Params->get("square", ""); ?>',
-					big: '<?php echo $this->Params->get("big", ""); ?>',
+					username: <?php echo json_encode($this->Params->get("userid", "")); ?>,
+					album: <?php echo json_encode($this->Params->get("gallery_id", "")); ?>,
+					authKey: '',
+					square: <?php echo json_encode($this->Params->get("square", "")); ?>,
+					big: <?php echo json_encode($this->Params->get("big", "")); ?>,
 					base_jurl: '<?php echo JURI::root(true); ?>',
-					fixedheight: parseInt('<?php echo $this->Params->get("fixedheight", 0); ?>'),
-					galleryheight: parseInt('<?php echo $this->Params->get("galleryheight", 250); ?>'),
+					fixedheight: parseInt(<?php echo json_encode($this->Params->get("fixedheight", 0)); ?>),
+					galleryheight: parseInt(<?php echo json_encode($this->Params->get("galleryheight", 250)); ?>),
 
-					use_deeplink: !parseInt('<?php echo $this->Params->get("disable_deeplink", 0); ?>')
+					use_deeplink: !parseInt(<?php echo json_encode($this->Params->get("disable_deeplink", 0)); ?>)
 
 
 				});
