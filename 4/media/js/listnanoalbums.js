@@ -7,7 +7,7 @@ function OnMarkersIconChange()
 	}
 	document.getElementById("ozio_markerpreview").src='../media/com_oziogallery3/views/map/img/markers/icons/'+value;
 }
-var g_flickrApiKey="2f0e634b471fdb47446abcb9c5afebdc";
+var g_flickrApiKey="f7fff840722ba3e40a37f89f9504d810";
 var g_picasaThumbSize=64;
 var non_printable_separator="\x16";
 var new_non_printable_separator="|!|";

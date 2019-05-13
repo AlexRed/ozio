@@ -780,7 +780,7 @@ nanoGALLERY v5.10.3 release notes.
       photoSize : 'sq',
       photoAvailableSizes : new Array(75,100,150,240,500,640,1024,1024,1600,2048),
       photoAvailableSizesStr : new Array('sq','t','q','s','m','z','b','l','h','k'),
-      ApiKey : "2f0e634b471fdb47446abcb9c5afebdc"
+      ApiKey : "f7fff840722ba3e40a37f89f9504d810"
     };
 
     // Color schemes - Gallery
