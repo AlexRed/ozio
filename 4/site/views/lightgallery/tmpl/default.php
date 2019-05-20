@@ -241,7 +241,7 @@ $this->document->addStyleDeclaration($css_custom_style);
 
 <?php 
 
-$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
+$testo_sotto_mappa=trim(strip_tags($this->Params->get("bottom_description", ""),'<a><b><blockquote><code><del><dd><dl><dt><em><h1><h2><h3><i><kbd><li><ol><p><pre><s><sup><sub><strong><strike><ul><br><hr>'));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='above') {  ?>
 	<div class="ozio_lightgallery_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
@@ -258,7 +258,7 @@ if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")
 
 <?php 
 
-$testo_sotto_mappa=trim($this->escape($this->Params->get("bottom_description", "")));
+$testo_sotto_mappa=trim(strip_tags($this->Params->get("bottom_description", ""),'<a><b><blockquote><code><del><dd><dl><dt><em><h1><h2><h3><i><kbd><li><ol><p><pre><s><sup><sub><strong><strike><ul><br><hr>'));
 if (!empty($testo_sotto_mappa) && $this->Params->get("description_pos", "under")=='under') {  ?>
 	<div class="ozio_lightgallery_bottom_description">
 	<?php echo $testo_sotto_mappa; ?>
