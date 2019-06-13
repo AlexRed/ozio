@@ -783,7 +783,7 @@ nanoGALLERY v5.10.3 release notes.
       photoAvailableSizes : new Array(75,100,150,240,320,500,640,800,1024,1024,1600,2048),
       photoAvailableSizesStr : new Array('sq','t','q','s','n','m','z','c','b','l','h','k'),
 	  
-      ApiKey : "f7fff840722ba3e40a37f89f9504d810"
+      ApiKey : ""
     };
 
 	

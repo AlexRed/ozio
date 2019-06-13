@@ -16,6 +16,9 @@
 				<option value="picasa">COM_OZIOGALLERY3_OZIO_NANO_KIND_PICASA</option>
 				<option value="flickr">COM_OZIOGALLERY3_OZIO_NANO_KIND_FLICKR</option>
 			</field>
+			
+			<field name="ozio_flickr_api_key" type="text" label="COM_OZIOGALLERY3_FLICKR_API_KEY_LBL" description="COM_OZIOGALLERY3_FLICKR_API_KEY_DSC"/>
+			
 
 			<field type="textimproved" name="ozio_nano_userID" label="COM_OZIOGALLERY3_OZIO_NANO_USERID_LBL" description="COM_OZIOGALLERY3_OZIO_NANO_USERID_DSC" required="true" autocomplete="off"/>
  
@@ -366,7 +369,6 @@
 		</fieldset>			
 		<fieldset name="advanced">
 		
-			<field name="ozio_flickr_api_key" type="text" label="COM_OZIOGALLERY3_FLICKR_API_KEY_LBL" description="COM_OZIOGALLERY3_FLICKR_API_KEY_DSC"/>
 		
 			<field name="api_key" type="text" label="COM_OZIOGALLERY3_MAP_API_KEY_LBL" description="COM_OZIOGALLERY3_MAP_API_KEY_DSC"/>
 			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY3_LOAD_CSS_BOOTSTRAP_DSC" default="0">

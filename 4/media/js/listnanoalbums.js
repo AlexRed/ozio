@@ -7,7 +7,6 @@ function OnMarkersIconChange()
 	}
 	document.getElementById("ozio_markerpreview").src='../media/com_oziogallery3/views/map/img/markers/icons/'+value;
 }
-var g_flickrApiKey="f7fff840722ba3e40a37f89f9504d810";
 var g_picasaThumbSize=64;
 var non_printable_separator="\x16";
 var new_non_printable_separator="|!|";
@@ -29,6 +28,9 @@ jQuery( document ).ready(function( $ ) {
 		gi_update_listnanoalbums();
 	});
 	jQuery('#jform_params_ozio_nano_userID').keypress(function( event ) {
+		gi_update_listnanoalbums();
+	});
+	jQuery('#jform_params_ozio_flickr_api_key').change(function() {
 		gi_update_listnanoalbums();
 	});
 
@@ -53,10 +55,14 @@ jQuery( document ).ready(function( $ ) {
 			//jQuery('#jform_params_albumvisibility').closest('.control-group').show();
 			//albumvisibility=jQuery('#jform_params_albumvisibility').val();
 			jQuery('.ozio-buttons-frame').show();
+			
+			jQuery('#jform_params_ozio_flickr_api_key').closest('.control-group').hide();
+			
 		}else{
 			//jQuery('#jform_params_albumvisibility').closest('.control-group').hide();
 			jQuery('.ozio-buttons-frame').hide();
 			
+			jQuery('#jform_params_ozio_flickr_api_key').closest('.control-group').show();
 		}
 		if (albumvisibility=='public'){
 			//jQuery('#jform_params_limitedalbum').closest('.control-group').hide();
@@ -118,6 +124,14 @@ jQuery( document ).ready(function( $ ) {
 		jQuery('#jform_params_ozio_nano_albumList').trigger('liszt:updated');
 	}	
   function FlickrRetrieveItems(userID) {
+	  var g_flickrApiKey = jQuery('#jform_params_ozio_flickr_api_key').val();
+	  
+	  if (g_flickrApiKey==''){
+		gi_update_albumList_msg('');
+		gi_update_listnanoalbums_callback([]);
+		return;
+	  }
+	  
 	var url = "https://api.flickr.com/services/rest/?&method=flickr.photosets.getList&api_key=" + g_flickrApiKey + "&user_id="+userID+"&primary_photo_extras=tags&format=json&jsoncallback=?";
 	jQuery.ajaxSetup({ cache: false });
 	jQuery.support.cors = true;

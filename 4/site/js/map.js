@@ -94,7 +94,7 @@ jQuery(document).ready(function ($)
 					album_local_url:'<?php echo $link; ?>',
 					icon:<?php echo json_encode($icon); ?>,
 					legend_icon:<?php echo json_encode($legend_icon); ?>,
-					g_flickrApiKey:<?php echo json_encode($item->params->get("ozio_flickr_api_key", "f7fff840722ba3e40a37f89f9504d810")); ?>,
+					g_flickrApiKey:<?php echo json_encode($item->params->get("ozio_flickr_api_key", "")); ?>,
 					locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 					skin: <?php echo json_encode(strpos($item->link, "&view=jgallery") === false?'nano':'jgallery'); ?>,
 					kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
