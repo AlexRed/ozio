@@ -775,14 +775,19 @@ nanoGALLERY v5.10.3 release notes.
       },
       thumbSize:'sq',
       thumbSizeX2 : 'sq',
-      thumbAvailableSizes : new Array(75,100,150,240,500,640),
-      thumbAvailableSizesStr : new Array('sq','t','q','s','m','z'),
+	  
+	  
+     thumbAvailableSizes : new Array(75,100,150,240,320,500,640),
+      thumbAvailableSizesStr : new Array('sq','t','q','s','n','m','z'),
       photoSize : 'sq',
-      photoAvailableSizes : new Array(75,100,150,240,500,640,1024,1024,1600,2048),
-      photoAvailableSizesStr : new Array('sq','t','q','s','m','z','b','l','h','k'),
+      photoAvailableSizes : new Array(75,100,150,240,320,500,640,800,1024,1024,1600,2048),
+      photoAvailableSizesStr : new Array('sq','t','q','s','n','m','z','c','b','l','h','k'),
+	  
       ApiKey : "f7fff840722ba3e40a37f89f9504d810"
     };
 
+	
+	
     // Color schemes - Gallery
     G.colorScheme_default = {
       navigationbar : { background:'none', borderTop:'1px solid #555', borderBottom:'1px solid #555', borderRight:'', borderLeft:'', color:'#ccc', colorHover:'#fff' },
@@ -977,6 +982,7 @@ nanoGALLERY v5.10.3 release notes.
           tnImg.src=this.thumbs.url[G.curNavLevel][G.curWidth];
           tnImg.width=this.thumbs.width[G.curNavLevel][G.curWidth];
           tnImg.height=this.thumbs.height[G.curNavLevel][G.curWidth];
+		  
           return tnImg;
         },
 
@@ -1014,8 +1020,35 @@ nanoGALLERY v5.10.3 release notes.
     				var target_size=Math.max(img_w,img_h);
     				var suffix='';
     				//http://www.flickr.com/services/api/misc.urls.html
-    				var flickrThumbAvailableSizes=new Array(100,240,320);
-    				var flickrThumbAvailableSizesStr=new Array('t','m','n');
+					
+					
+					/*
+					
+					si può usare solo mstzb
+https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
+					
+t	miniatura, 100 sul lato più lungo
+m	piccolo, 240 sul lato più lungo
+n	small, 320 on longest side
+-	medio, 500 sul lato più lungo
+z	medio 640, 640 sul lato più lungo
+
+c	medio 800, 800 sul lato più lungo†
+b	grande, 1024 sul lato più lungo*
+h	grandi 1600, 1600 nel lato più lungo†
+k	grandi 2048, 2048 nel lato più lungo†
+
+* Prima del 25 maggio 2010 le foto di grandi dimensioni 1024 esistevano solo per immagini originali molto grandi.
+† Foto medie 800, grandi 1600, e grandi 2048 esistono solamente dal 1 marzo 2012.
+					*/
+					
+    				//var flickrThumbAvailableSizes=new Array(100,240,320,500, 640,800, 1024, 1600, 2048);
+    				//var flickrThumbAvailableSizesStr=new Array('t','m','n','-','z','c','b', 'h','k');
+
+
+    				var flickrThumbAvailableSizes=new Array(100,240,640,1024);
+    				var flickrThumbAvailableSizesStr=new Array('t','m','z','b');
+
     				
     				for( i=0; i<flickrThumbAvailableSizes.length; i++) {
     				  if( target_size < flickrThumbAvailableSizes[i] ) {
@@ -1062,6 +1095,12 @@ nanoGALLERY v5.10.3 release notes.
 
 
       G.O = params;
+	  
+	  
+	  if (typeof G.O.flickrApiKey!=='undefined' && G.O.flickrApiKey){
+			G.flickr.ApiKey = G.O.flickrApiKey;
+	  }
+	  
       // thumbnails - label
       G.O.thumbnailLabel.get = function( opt ) {
         if( G.curNavLevel == 'l1' && G.O.thumbnailL1Label !== undefined && G.O.thumbnailL1Label[opt] !== undefined ) {
@@ -3409,18 +3448,18 @@ nanoGALLERY v5.10.3 release notes.
       if( G.I[albumIdx].GetID() == 0 ) {
         // albums
         //url = G.flickr.url() + "?&method=flickr.photosets.getList&api_key=" + G.flickr.ApiKey + "&user_id="+G.O.userID+"&primary_photo_extras=url_"+G.flickr.thumbSize+"&format=json&jsoncallback=?";
-        url = G.flickr.url() + "?&method=flickr.photosets.getList&api_key=" + G.flickr.ApiKey + "&user_id="+G.O.userID+"&per_page=500&primary_photo_extras=url_o,url_sq,url_t,url_q,url_s,url_m,url_l,url_z,url_b,url_h,url_k&format=json&jsoncallback=?";
+        url = G.flickr.url() + "?&method=flickr.photosets.getList&api_key=" + G.flickr.ApiKey + "&user_id="+G.O.userID+"&per_page=500&primary_photo_extras=url_o,url_sq,url_t,url_q,url_s,url_m,url_l,url_z,url_b,url_h,url_k,url_n,url_-,url_c&format=json&jsoncallback=?";
       }
       else {
         // photos
         if( G.I[albumIdx].GetID() == 'none' ) {
           // get photos from full photostream
-          url = G.flickr.url() + "?&method=flickr.people.getPublicPhotos&api_key=" + G.flickr.ApiKey + "&user_id="+G.O.userID+"&extras=description,views,url_o,url_sq,url_t,url_q,url_s,url_m,url_z,url_b,url_h,url_k&per_page=500&format=json&jsoncallback=?";
+          url = G.flickr.url() + "?&method=flickr.people.getPublicPhotos&api_key=" + G.flickr.ApiKey + "&user_id="+G.O.userID+"&extras=description,views,url_o,url_sq,url_t,url_q,url_s,url_m,url_z,url_b,url_h,url_k,url_n,url_-,url_c&per_page=500&format=json&jsoncallback=?";
         }
         else {
           // photos from one specific photoset
           //url = G.flickr.url() + "?&method=flickr.photosets.getPhotos&api_key=" + G.flickr.ApiKey + "&photoset_id="+G.I[albumIdx].GetID()+"&extras=description,views,url_o,url_z,url_"+G.flickr.photoSize+",url_"+G.flickr.thumbSize+"&format=json&jsoncallback=?";
-          url = G.flickr.url() + "?&method=flickr.photosets.getPhotos&api_key=" + G.flickr.ApiKey + "&photoset_id="+G.I[albumIdx].GetID()+"&extras=description,views,url_o,url_sq,url_t,url_q,url_s,url_m,url_l,url_z,url_b,url_h,url_k&format=json&jsoncallback=?";
+          url = G.flickr.url() + "?&method=flickr.photosets.getPhotos&api_key=" + G.flickr.ApiKey + "&photoset_id="+G.I[albumIdx].GetID()+"&extras=description,views,url_o,url_sq,url_t,url_q,url_s,url_m,url_l,url_z,url_b,url_h,url_k,url_n,url_-,url_c&format=json&jsoncallback=?";
         }
         kind='image';
       }
@@ -3696,6 +3735,10 @@ nanoGALLERY v5.10.3 release notes.
 			});
 			break;				  
       }
+	  
+		if (G.O.ozmaxres>0)source=source.slice(0,G.O.ozmaxres);
+		if (G.O.oz_max_num_photo>0)source=source.slice(0,G.O.oz_max_num_photo);
+	  
 
       var albumID=G.I[albumIdx].GetID(),
       nb=0;
@@ -3706,12 +3749,17 @@ nanoGALLERY v5.10.3 release notes.
         itemDescription=item.description._content;    // Get the description
 
         var imgUrl=item.url_sq;  //fallback size
+		/*
         for(var i=G.flickr.photoSize; i>=0; i-- ) {
           if( item['url_'+G.flickr.photoAvailableSizesStr[i]] != undefined ) {
             imgUrl=item['url_'+G.flickr.photoAvailableSizesStr[i]];
             break;
           }
         }
+		*/
+		
+		
+		
 
         var sizes = {};
         for (var p in item) {
@@ -3729,14 +3777,48 @@ nanoGALLERY v5.10.3 release notes.
 				'img_orig_height':0
 			  };
 		  if( item.url_o !== undefined ) {
-			  flickrSpecificData.img_orig_width=item.width_o;
-			  flickrSpecificData.img_orig_height=item.height_o;
+			  flickrSpecificData.img_orig_width=parseInt(item.width_o,10);
+			  flickrSpecificData.img_orig_height=parseInt(item.height_o,10);
 		  }
 		  else {
-			  flickrSpecificData.img_orig_width=item.width_z;
-			  flickrSpecificData.img_orig_height=item.height_z;
+			  flickrSpecificData.img_orig_width=parseInt(item.width_z,10);
+			  flickrSpecificData.img_orig_height=parseInt(item.height_z,10);
 		  }	  
 			  
+			  
+			  
+		var container_width=0;
+		var container_height=0;
+		if (G.$E.vwContent){
+			container_width=G.$E.vwContent.width();
+			container_height=G.$E.vwContent.height();
+		}
+		if (container_width==0 || container_height==0){
+			container_width=jQuery(window).width();
+			container_height=jQuery(window).height();
+		}
+		var img_w=container_width;
+		var img_h=flickrSpecificData.img_orig_height*container_width/flickrSpecificData.img_orig_width;
+		if (img_h>container_height){
+			var img_h=container_height;
+			var img_w=flickrSpecificData.img_orig_width*container_height/flickrSpecificData.img_orig_height;
+		}
+		
+		var sizes_to_test = [];
+        for(var i=0; i<G.flickr.photoAvailableSizesStr.length; i++ ) {
+			sizes_to_test.push(G.flickr.photoAvailableSizesStr[i]);
+		}
+		sizes_to_test.push('o');
+		
+		
+        for(var i=0; i<sizes_to_test.length; i++ ) {
+			if( item['url_'+sizes_to_test[i]] != undefined ) {
+				imgUrl=item['url_'+sizes_to_test[i]];
+				if (img_w<=parseInt(item['width_'+sizes_to_test[i]],10) && img_h<=parseInt(item['height_'+sizes_to_test[i]],10)){
+					break;
+				}
+			}
+        }
 		  
 		  var newItem=NGAddItem(itemTitle, '', imgUrl, itemDescription, '', 'image', '', itemID, albumID,'flickr', flickrSpecificData );
 

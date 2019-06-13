@@ -131,7 +131,7 @@
 									g_list_nano_options[g_list_nano_options.length]={
 											thumbSize:64,
 											album_local_url:<?php echo json_encode($link); ?>,
-											g_flickrApiKey:"f7fff840722ba3e40a37f89f9504d810",
+											g_flickrApiKey:<?php echo json_encode($item->params->get("ozio_flickr_api_key", "f7fff840722ba3e40a37f89f9504d810")); ?>,
 											locationHash: <?php echo json_encode(intval($item->params->get("ozio_nano_locationHash", "1"))); ?>,
 											kind: <?php echo json_encode($item->params->get("ozio_nano_kind", "picasa")); ?>,
 											userID: <?php echo json_encode($item->params->get("ozio_nano_userID", "")); ?>,
