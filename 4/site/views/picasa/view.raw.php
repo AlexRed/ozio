@@ -165,6 +165,10 @@ class OzioGalleryViewPicasa extends JViewLegacy
 
 			$library_params['pageSize'] = 50;
 			if (!empty($input_params['pageToken'])){
+				if (mb_substr($input_params['pageToken'],0,4)=='S---'){
+					$input_params['pageToken']=mb_substr($input_params['pageToken'],4);
+					$url = 'https://photoslibrary.googleapis.com/v1/sharedAlbums';
+				}
 				$library_params['pageToken'] = $input_params['pageToken'];
 			}
 			
@@ -200,6 +204,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			) 
 		);
 		
+		$albums_ids = array();
 		
 		for ($pagina=0;$pagina<10;$pagina++){
 			
@@ -275,9 +280,23 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			}
 			
 			if ($picasa_req_type=='get_albums'){
+				
+				if (mb_strpos($url, 'sharedAlbums')!==FALSE){
+					$json_resp['albums'] = $json_resp['sharedAlbums'];
+				}
 					
 				foreach ($json_resp['albums'] as $a){
 					$o = array();
+
+					if (isset($albums_ids[$a['id']])){
+						continue;
+					}
+					$albums_ids[$a['id']] = true;
+
+					if (!isset($a['mediaItemsCount'])){
+						$a['mediaItemsCount'] = 0;
+					}
+
 					
 					$o['gphoto$numphotos']['$t'] = $a['mediaItemsCount'];
 					$o['media$group']['media$title']['$t'] = $a['title'];
@@ -342,22 +361,33 @@ class OzioGalleryViewPicasa extends JViewLegacy
 				unset($out['feed']['openSearch$nextPageToken']['$t']);
 				if (isset($json_resp['nextPageToken'])){
 					$out['feed']['openSearch$totalResults']['$t'] = $out['feed']['openSearch$totalResults']['$t'] + 50;
-					$out['feed']['openSearch$nextPageToken']['$t'] = $json_resp['nextPageToken'];
+					$out['feed']['openSearch$nextPageToken']['$t'] = mb_strpos($url, 'sharedAlbums')===FALSE?$json_resp['nextPageToken']:'S---'.$json_resp['nextPageToken'];
 				}
 				
 				
 				if (isset($json_resp['nextPageToken'])){
 					$library_params['pageToken'] = $json_resp['nextPageToken'];
 				}else{
-					break;
+					if (mb_strpos($url, 'sharedAlbums')===FALSE){
+						//devo provare anche la chiamata a sharedAlbums
+						$pagina=0;//resetto la pagina.
+						$url = 'https://photoslibrary.googleapis.com/v1/sharedAlbums';
+						$library_body = array();
+						unset($library_params['pageToken']);
+						
+					}else{
+						break;
+					}
 				}
 			}else if ($picasa_req_type=='get_photos'){
 					
-				foreach ($json_resp['mediaItems'] as $a){
-					
-					$o = $this->media_item2entry($a,$picasa_params, $input_params);
-					
-					$out['feed']['entry'][] = $o;
+				if (!empty($json_resp['mediaItems'])){
+					foreach ($json_resp['mediaItems'] as $a){
+						
+						$o = $this->media_item2entry($a,$picasa_params, $input_params);
+						
+						$out['feed']['entry'][] = $o;
+					}
 				}
 				
 
