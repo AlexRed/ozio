@@ -299,9 +299,9 @@ class OzioGalleryViewPicasa extends JViewLegacy
 
 					
 					$o['gphoto$numphotos']['$t'] = $a['mediaItemsCount'];
-					$o['media$group']['media$title']['$t'] = $a['title'];
+					$o['media$group']['media$title']['$t'] = isset($a['title'])?$a['title']:'';
 					$o['media$group']['media$description']['$t'] = '';
-					$o['title']['$t'] = $a['title'];
+					$o['title']['$t'] = isset($a['title'])?$a['title']:'';
 					$o['summary']['$t'] = '';
 					$o['author']=array(array('name' =>array('$t'=>'')));
 					$o['id']['$t'] = 'https://picasaweb.google.com/data/entry/user/'.$input_params['user_id'].'/albumid/'.$a['id'];
@@ -629,7 +629,7 @@ class OzioGalleryViewPicasa extends JViewLegacy
 		)		
 		*/
 
-		return $json_resp['title'];
+		return isset($json_resp['title'])?$json_resp['title']:'';
 	}
 	
 	function media_item2entry($a,$picasa_params,$input_params){
@@ -725,8 +725,8 @@ class OzioGalleryViewPicasa extends JViewLegacy
 			$a['filename'] = $a['description'];
 		}
 		
-		$o['title']['$t'] = $a['filename'];
-		$o['media$group']['media$title']['$t'] =$a['filename'];
+		$o['title']['$t'] = isset($a['filename'])?$a['filename']:'';
+		$o['media$group']['media$title']['$t'] =isset($a['filename'])?$a['filename']:'';
 
 		$o['summary']['$t'] = $a['description'];
 		$o['media$group']['media$description']['$t'] = $a['description'];
