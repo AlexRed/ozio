@@ -283,7 +283,12 @@ class OzioViewPicasa extends JViewLegacy
 			if ($picasa_req_type=='get_albums'){
 					
 				if (mb_strpos($url, 'sharedAlbums')!==FALSE){
-					$json_resp['albums'] = $json_resp['sharedAlbums'];
+					$json_resp['albums'] = isset($json_resp['sharedAlbums'])?$json_resp['sharedAlbums']:array();
+				}
+				
+				if (isset($json_resp['albums']) && is_array($json_resp['albums'])){
+				}else{
+					$json_resp['albums'] = array();
 				}
 					
 				foreach ($json_resp['albums'] as $a){
