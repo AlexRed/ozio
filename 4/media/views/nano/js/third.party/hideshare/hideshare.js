@@ -54,7 +54,7 @@
       facebook: true,
       twitter: true,
       pinterest: true,
-      googleplus: true,
+      googleplus: false,
       linkedin: true,
       position: "bottom",
       speed: 100
@@ -83,7 +83,6 @@
           facebookTemplate = '<li><a class="hideshare-facebook" href="#"><i class="fa fa-facebook-square fa-2x"></i><span>Facebook</span></a></li>',
           twitterTemplate = '<li><a class="hideshare-twitter" href="#"><i class="fa fa-twitter-square fa-2x"></i><span>Twitter</span></a></li>',
           pinterestTemplate = '<li><a class="hideshare-pinterest" href="#" data-pin-do="buttonPin" data-pin-config="above"><i class="fa fa-pinterest-square fa-2x"></i><span>Pinterest</span></a></li>',
-          googleplusTemplate = '<li><a class="hideshare-google-plus" href="#"><i class="fa fa-google-plus-square fa-2x"></i><span>Google Plus</span></a></li>',
           linkedinTemplate = '<li><a class="hideshare-linkedin" href="#"><i class="fa fa-linkedin-square fa-2x"></i><span>Linked In</span></a></li>';
 
 		  
@@ -104,13 +103,6 @@
       }
       if (this.config.pinterest) {
         output += pinterestTemplate;
-        liWidth += 30;
-      } else {
-        output = output;
-        liWidth = liWidth;
-      }
-      if (this.config.googleplus) {
-        output += googleplusTemplate;
         liWidth += 30;
       } else {
         output = output;
@@ -205,9 +197,6 @@
       var sharePinterest = function() {
         window.open('//pinterest.com/pin/create/button/?url=' + encodeURIComponent(elemento.data('link')) + '&media=' + encodeURIComponent(elemento.data('media')) + '&description=' + encodeURIComponent(elemento.data('title')),'Pinterest','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
       };
-      var shareGooglePlus = function() {
-        window.open('//plus.google.com/share?url=' + encodeURIComponent(elemento.data('link')),'GooglePlus','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-      };
       var shareLinkedIn = function() {
         window.open('//www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(elemento.data('link')) + '&title=' + encodeURIComponent(elemento.data('title')) + '&source=' + encodeURIComponent(elemento.data('link')),'LinkedIn','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
       };
@@ -227,12 +216,6 @@
       $(".hideshare-pinterest").on("touchstart click",function(e){ 
 		e.stopPropagation();
         sharePinterest();
-        return false;
-      });
-
-      $(".hideshare-google-plus").on("touchstart click",function(e){ 
-		e.stopPropagation();
-        shareGooglePlus();
         return false;
       });
 
