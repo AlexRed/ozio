@@ -14,16 +14,33 @@ html[dir="rtl"] input.selext {
 select.selext {
 }
 
+/*migration_changes
+	relace css for google button
+*/
+
+/*.ozio-buttons-frame {*/
+/*	height: 22px;*/
+/*	border-radius: 10px;*/
+/*	border: 1px solid #E0E0E0;*/
+/*	display: inline-block;*/
+/*	padding-right: 5px;*/
+/*	margin-left: 8px;*/
+/*	vertical-align: middle;*/
+/*}*/
+
+
 
 .ozio-buttons-frame {
-	height: 22px;
-	border-radius: 10px;
-	border: 1px solid #E0E0E0;
+	height: auto;
+	width: auto;
+	position: absolute;
 	display: inline-block;
 	padding-right: 5px;
 	margin-left: 8px;
 	vertical-align: middle;
 }
+
+
 
 .ozio-buttons-frame div:hover {
 	filter:alpha(opacity=100);
