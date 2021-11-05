@@ -44,7 +44,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     }
     window.onload = function () {
         google.accounts.id.initialize({
-            client_id: "963659971752-aic2ikc019t5vb9gi1o39n67i5pc5at9.apps.googleusercontent.com",
+            client_id: "522128536465-4qenhkv3hfvnjpdcbot7vlvuuktti9ct.apps.googleusercontent.com",
             callback: handleCredentialResponse
         });
         google.accounts.id.renderButton(
