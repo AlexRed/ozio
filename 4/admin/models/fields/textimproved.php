@@ -53,7 +53,11 @@ class JFormFieldTextImproved extends JFormField
 		
 		$buttons = '';
 		$buttons .= '<div class="ozio-buttons-frame">';
-		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:30px;height:22px;overflow:hidden;" src="https://www.opensourcesolutions.es/get_id.html"></iframe>';
+		/*migration_changes
+		relace iframe opensourcesolutions with local index.php?option=com_oziogallery3&amp;view=one_tap&amp;tmpl=one_tap
+		*/
+		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:500px;height:250px;overflow:hidden;" src="https://www.opensourcesolutions.es/get_id.html"></iframe>';
+//		$buttons .= '<iframe style="margin:0;padding:0;border:0;width:500px;height:250px;overflow:hidden;" src="index.php?option=com_oziogallery3&amp;view=one_tap&amp;tmpl=one_tap"></iframe>';
 		$buttons .= '</div>';
 
 

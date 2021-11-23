@@ -19,8 +19,10 @@ jQuery(document).ready(function ($)
 			//authorize button
 			//delete button
 			
-			var $auth_btn = $(' <button class="btn btn-success" type="button"><i class="icon-user icon-white"></i></button>');
-			
+			var $auth_btn = $(' <button class="btn btn-success" id="auth_btn" type="button"><i class="icon-user icon-white"></i></button>');
+			/*migration_changes
+			relace iframe with google sign button
+			*/
 			//var $auth_btn = $('<iframe src="index.php?option=com_oziogallery3&amp;view=setup_auth&amp;tmpl=component&amp;credentials_id='+item.id+'"></iframe>');
 			
 			var $delete_btn = $(' <button class="btn btn-warning" type="button"><i class="icon-trash icon-white"></i></button>');
@@ -59,9 +61,9 @@ jQuery(document).ready(function ($)
 			
 			$auth_btn.on('click',function(){
 				$('#ozio_auth_modal .modal-body').empty();
-				
-				
-				$('#ozio_auth_modal .modal-body').append('<iframe src="index.php?option=com_oziogallery3&amp;view=setup_auth&amp;tmpl=component&amp;credentials_id='+item.id+'"></iframe>');
+			//
+			//
+				$('#ozio_auth_modal .modal-body').append('<iframe src="index.php?option=com_oziogallery3&amp;view=setup_auth&amp;tmpl=component&amp;credentials_id='+item.id+'" style="margin:0;padding:0;border:0;width:100%;height:250px;overflow:hidden;"></iframe>');
 				$('#ozio_auth_modal').modal({
 					keyboard: false
 				});

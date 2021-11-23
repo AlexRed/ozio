@@ -26,7 +26,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <div id="ozio_setup_messages">
 </div>
 
-
-<button id="ozio_setup_auth" class="btn btn-primary" type="button"><?php echo JText::_('COM_OZIOGALLERY3_AUTH_CREDENTIALS');?></button>
+<div id="buttonDiv"></div>
+<!--/*migration_changes
+			relace iframe with google sign button
+			*/-->
+<!--<button id="ozio_setup_auth" class="btn btn-primary" type="button">--><?php //echo JText::_('COM_OZIOGALLERY3_AUTH_CREDENTIALS');?><!--</button>-->
 
 
