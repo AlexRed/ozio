@@ -71,10 +71,6 @@
 	<templates>
 		<template folder="templates" template="oziofullscreen" />
 	</templates>
-	<install>
-	</install>
-	<uninstall>
-	</uninstall>
 	<updateservers>
 		<server type="extension" priority="1" name="Ozio Gallery3 update site"><![CDATA[http://www.opensourcesolutions.es/download/oziogallery4.xml]]></server>
 	</updateservers>
