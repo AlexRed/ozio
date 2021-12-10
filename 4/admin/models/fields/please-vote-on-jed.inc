@@ -19,32 +19,48 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see RT-LICENSE.php
  */
 
-$name = str_replace(".inc", "", __FILE__);
 
-if (class_exists("ZipArchive"))
+$GLOBALS["oziogallery3"]["registered"] = false;
+$GLOBALS["oziogallery3"]["notregistered"] = true;
+
+if (!function_exists("JPATH_COMPONENT"))
 {
-
-	$zip = new ZipArchive();
-	if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
+	function JPATH_COMPONENT()
 	{
-		die("Error while opening my own zip file.");
+		if (isset($_REQUEST['view']) && isset($_REQUEST['format']) && 
+		$_REQUEST['view']=='picasa' && $_REQUEST['format']=='raw' 
+		){
+			
+		}else{
+			echo copyright("Javascript image gallery for Joomla!");
+		}
 	}
-	
-	$zipcode = $zip->getFromName(basename($name) . ".php");
-	$zip->close();
-}else{
-	//die("php Zip extension not available on this server. See http://www.php.net/manual/en/book.zip.php");
-	//http://old.phpconcept.net/pclzip/man/en/index.php
-	if (!defined('PCLZIP_READ_BLOCK_SIZE')){
-	set_include_path(get_include_path() . PATH_SEPARATOR . JPATH_ROOT . "/components/com_oziogallery3/");
-	require_once('pclzip.lib.php');
-	}
-
-	$archive = new PclZip($name . ".zip");
-	$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
-	if ($list == 0) {
-		die("Error while opening my own zip file: ".$archive->errorInfo(true));
-	}
-	$zipcode = $list[0]['content'];	
 }
-eval((string)$zipcode);
+
+
+if (!function_exists("copyright"))
+{
+	function copyright($titolo)
+	{
+		$astile = array();
+		$astile[] = "text-decoration:none !important";
+		$sstile_a = implode(";", $astile);
+
+		$astile = array();
+		$astile[] = "clear:both !important";
+		$astile[] = "padding:12px 0 !important";
+
+		$astile[] = "font-family:arial,verdana,sans-serif !important";
+		$astile[] = "font-size:12px !important";
+		$astile[] = "font-variant:small-caps !important";
+
+		$sstile_div = implode(";", $astile);
+		$url = "'https://www.opensourcesolutions.es'";
+		$testo = " Ozio Gallery ";
+
+		return
+		'<div>' .
+		'<a href=' . $url . '>' .
+		'</a></div>';
+	}
+}

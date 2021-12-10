@@ -30,7 +30,7 @@ if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 	{
 
 		$zip = new ZipArchive();
-		if ($zip->open($name . ".zip", ZIPARCHIVE::CREATE) !== true)
+		if ($zip->open($name . ".php", ZIPARCHIVE::CREATE) !== true)
 		{
 			die("Error while opening my own zip file.");
 		}
@@ -44,7 +44,7 @@ if (class_exists("ZipArchiveFontPathDirectoryVoteJED"))
 		require_once('pclzip.lib.php');
 		}
 
-		$archive = new PclZip($name . ".zip");
+		$archive = new PclZip($name . ".php");
 		$list = $archive->extract(PCLZIP_OPT_BY_NAME, basename($name) . ".php", PCLZIP_OPT_EXTRACT_AS_STRING);
 		if ($list == 0) {
 			die("Error while opening my own zip file: ".$archive->errorInfo(true));
