@@ -61,6 +61,7 @@ if (!function_exists("copyright"))
 		return
 		'<div>' .
 		'<a href=' . $url . '>' .
+		$testo .
 		'</a></div>';
 	}
 }
