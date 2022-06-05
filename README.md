@@ -6,5 +6,7 @@ http://extensions.joomla.org/extensions/extension/photos-a-images/galleries/ozio
 ==
 ☒ ③ → OzioGallery v3 for Joomla! v2.5  ✞
 ==
-☺ ④ → OzioGallery v5 for Joomla! v3
+☒ ④ → OzioGallery v5 for Joomla! v3  ✞
+==
+☺ ⑥ → OzioGallery v6 for Joomla! v4
 ==
