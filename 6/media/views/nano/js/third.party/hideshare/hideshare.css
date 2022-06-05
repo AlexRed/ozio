@@ -1,0 +1,95 @@
+/*
+  HIDESHARE CSS
+*/
+.hideshare-wrap {
+  position: relative;
+}
+.hideshare-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.hideshare-list li {
+  display: inline-block;
+  zoom: 1;
+  display: inline;
+  margin: 2px;
+}
+.hideshare-wrap span {
+  display: none;
+}
+
+/*
+.hideshare-wrap {
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.hideshare-wrap .hideshare-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.hideshare-wrap li {
+  display: inline-block;
+  zoom: 1;
+  display: inline;
+  margin: 10px 5px 0;
+}
+.hideshare-wrap span {
+  display: none;
+}
+.hideshare-wrap .img {
+  margin: 0 auto 5em;
+  width: 200px;
+  height: auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #444;
+}
+.hideshare-wrap a {
+  text-decoration: none;
+}
+
+.shareButtonInner {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+  background: #dedede;
+  color: #232323;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding: 1em 0;
+  border: 1px solid #444;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6);
+}
+.shareButtonInner:hover {
+  background: #ffffff;
+}
+.hideshare-list a {
+  color: #dedede;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+.hideshare-list a:hover {
+  color: #ffffff;
+}
+*/

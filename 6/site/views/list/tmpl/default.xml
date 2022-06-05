@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY4_LIST_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY4_LIST_VIEW_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="params" addfieldpath="/administrator/components/com_oziogallery4/models/fields">
+
+		<fieldset name="basic">
+			<field name="list_style" type="list" default="default" label="COM_OZIOGALLERY4_LIST_STYLE_LBL" description="COM_OZIOGALLERY4_LIST_STYLE_DSC">
+				<option value="default">COM_OZIOGALLERY4_LIST_STYLE_DEFAULT</option>
+				<option value="hovereffect">COM_OZIOGALLERY4_LIST_STYLE_HOVEREFFECT</option>
+			</field>
+
+			<field name="images_size" type="text" label="COM_OZIOGALLERY4_IMAGES_SIZE_LBL" description="COM_OZIOGALLERY4_IMAGES_SIZE_DSC" default="180" />
+
+			<field name="show_title" type="radio" label="COM_OZIOGALLERY4_SHOW_TITLE_LBL" description="COM_OZIOGALLERY4_SHOW_TITLE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_date" type="radio" label="COM_OZIOGALLERY4_SHOW_DATE_LBL" description="COM_OZIOGALLERY4_SHOW_DATE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_counter" type="radio" label="COM_OZIOGALLERY4_SHOW_COUNTER_LBL" description="COM_OZIOGALLERY4_SHOW_COUNTER_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field name="nano_albums" type="radio" label="COM_OZIOGALLERY4_NANO_ALBUMS_LBL" description="COM_OZIOGALLERY4_NANO_ALBUMS_DSC" default="all">
+				<option value="all">COM_OZIOGALLERY4_NANO_ALBUMS_ALL</option>
+				<option value="last">COM_OZIOGALLERY4_NANO_ALBUMS_LAST</option>
+			</field>
+
+			<field name="album_title_from" type="list" default="menutitle" label="COM_OZIOGALLERY4_ALBUM_TITLE_FROM_LBL" description="COM_OZIOGALLERY4_ALBUM_TITLE_FROM_DSC">
+				<option value="menutitle">COM_OZIOGALLERY4_ALBUM_TITLE_FROM_MENUTITLE</option>
+				<option value="albumtitle">COM_OZIOGALLERY4_ALBUM_TITLE_FROM_ALBUMTITLE</option>
+			</field>
+			
+			<field name="menuitems_filter_type" type="list" default="0" label="COM_OZIOGALLERY4_FILTERINGTYPE_LBL" description="COM_OZIOGALLERY4_FILTERINGTYPE_DSC">
+				<option value="IN">COM_OZIOGALLERY4_INCLUSIVE</option>
+				<option value="NOT IN">COM_OZIOGALLERY4_EXCLUSIVE</option>
+				<option value="0">JDISABLED</option>
+			</field>
+
+			<field name="menuitems_filter_items" type="menuitemslist" multiple="true" size="5" label="COM_OZIOGALLERY4_MENUITEMLIST_LBL" description="COM_OZIOGALLERY4_MENUITEMLIST_DSC"
+				component="com_oziogallery4">
+			</field>
+
+			<field name="list_orderby" type="list" default="menu" label="COM_OZIOGALLERY4_LIST_ORDERBY_LBL" description="COM_OZIOGALLERY4_LIST_ORDERBY_DSC">
+				<option value="menu">COM_OZIOGALLERY4_LIST_ORDERBY_MENU</option>
+				<option value="title">COM_OZIOGALLERY4_LIST_ORDERBY_TITLE</option>
+				<option value="id">COM_OZIOGALLERY4_LIST_ORDERBY_ID</option>
+			</field>
+			<field name="list_orderdir" type="list" default="asc" label="COM_OZIOGALLERY4_LIST_ORDERDIR_LBL" description="COM_OZIOGALLERY4_LIST_ORDERDIR_DSC">
+				<option value="asc">COM_OZIOGALLERY4_LIST_ORDERDIR_ASC</option>
+				<option value="desc">COM_OZIOGALLERY4_LIST_ORDERDIR_DESC</option>
+			</field>
+
+		</fieldset>
+		<fieldset name="advanced">
+			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+
+	</fields>
+</metadata>

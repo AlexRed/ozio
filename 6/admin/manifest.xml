@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+	<name>com_oziogallery4</name>
+	<creationDate>2022</creationDate>
+	<author>Parbat Pithiya</author>
+	<authorEmail>info@opensourcesolutions.es</authorEmail>
+	<authorUrl>http://www.opensourcesolutions.es</authorUrl>
+	<copyright>(C) 2008 - 2022 - TOT The Ozio Team</copyright>
+	<license>GNU/GPL - http://www.gnu.org/copyleft/gpl.html</license>
+	<version>11.1.2</version>
+	<description>Ozio Gallery for Joomla! 4</description>
+
+	<scriptfile>file.script.php</scriptfile>
+	
+
+	<install>
+		<sql><file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file></sql>
+	</install>
+
+	<uninstall>
+		<sql><file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file></sql>
+	</uninstall>
+	
+	<update>
+		<schemas><schemapath type="mysql">sql/updates/mysql</schemapath></schemas>
+	</update>	
+	
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>oziogallery4.php</filename>
+		<filename>oziogallery.inc</filename>
+		<filename>pclzip.lib.php</filename>
+		<filename>controller.php</filename>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>lib</folder>
+		<folder>skin</folder>
+		<folder>views</folder>
+	</files>
+	<media folder="media" destination="com_oziogallery4">
+		<folder>assets</folder>
+		<folder>js</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+	</media>	
+	
+	<administration>
+		<menu img="components/com_oziogallery4/assets/images/oziogallery4.png">com_oziogallery4</menu>
+		<files folder="admin">
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>oziogallery4.php</filename>
+			<folder>assets</folder>
+			<folder>css</folder>
+			<folder>js</folder>
+			<folder>img</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<folder>language</folder>
+			<folder>sql</folder>
+		</files>
+
+	</administration>
+	<plugins>
+		<plugin folder="plugins/content" plugin="ozio" name="OzioGallery into articles" group="content" />
+		<plugin folder="plugins/editors-xtd" plugin="oziogallery" name="OzioGallery" group="editors-xtd" />
+	</plugins>
+	<templates>
+		<template folder="templates" template="oziofullscreen" />
+	</templates>
+	<updateservers>
+		<server type="extension" priority="1" name="Ozio Gallery4 update site"><![CDATA[https://www.opensourcesolutions.es/download/oziogallery4.xml]]></server>
+	</updateservers>
+</extension>

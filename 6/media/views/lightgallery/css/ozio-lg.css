@@ -1,0 +1,258 @@
+#lg-ozio-infobtn-button {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.ozio_lightgallery_loading{
+	background: url("../../00fuerte/img/tb_preload.gif") no-repeat scroll 50% 50%; 
+	min-height: 66px;
+}
+/*
+.lightgallery.lightgallery-standard{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#lightgallery > div.album{
+	display:none;
+}
+#lightgallery > a{
+	display:none;
+}
+#lightgallery > img{
+	display:none;
+}
+
+*/
+
+.ozio-lightgallery-white-info-box, .ozio-lightgallery-white-info-box-with-gmap {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  
+  margin: 20px auto;
+}
+.ozio-lightgallery-white-info-box{max-width: 500px;}
+.ozio-lightgallery-white-info-box-with-gmap {max-width: 1000px;}
+
+
+
+/*.pi-map-container #nano-gmap-viewer{
+	float:left;
+}*/
+
+
+.LightGalleryInfoBox .pi-map-container
+{
+	display:inline-block;
+	vertical-align: top;
+}
+.LightGalleryInfoBox .pi-map-container
+{
+	width:100%;
+	max-width:500px;
+}
+.LightGalleryInfoBox #nano-gmap-viewer{
+	float:left;
+}
+
+
+.LightGalleryInfoBox #nano-gmap-viewer img { 
+	max-width: none; 
+	height: auto; 
+}
+
+.LightGalleryInfoBox .pi-photo-buttons{
+	clear:both;
+}
+
+.LightGalleryInfoBox .pi-photo-buttons a{
+	width:96px;
+}
+
+
+
+.LightGalleryInfoBox dl {
+    margin-bottom: 18px;
+	max-width:500px;
+	width:100%;
+	float:left;
+}
+.LightGalleryInfoBox dt, .LightGalleryInfoBox dd {
+    line-height: 18px;
+}
+.LightGalleryInfoBox dt {
+    font-weight: bold;
+}
+.LightGalleryInfoBox dd {
+    margin-left: 9px;
+}
+.LightGalleryInfoBox .odl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+.LightGalleryInfoBox .odl-horizontal dd {
+    margin-left: 130px;
+}
+
+.LightGalleryInfoBox .oimg-polaroid {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+}
+
+.mfp-close{
+line-height:22px;
+height:22px;
+width:22px;
+}
+
+
+.ozio-lightgallery-container > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;  
+}
+.ozio-lightgallery-container > ul > li {
+	float: left;
+	/*
+	margin-bottom: 15px;
+	margin-right: 20px;
+	width: 200px;
+	*/
+	/*
+	width: 25%;
+	min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;	
+	*/
+}
+.ozio-lightgallery-container > ul > li a {
+  border: 3px solid #FFF;
+  border-radius: 3px;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  float: left;
+  /*
+  text-decoration: none;
+  background-color: transparent;
+  */
+}
+.ozio-lightgallery-container > ul > li a > img {
+  -webkit-transition: -webkit-transform 0.15s ease 0s;
+  -moz-transition: -moz-transform 0.15s ease 0s;
+  -o-transition: -o-transform 0.15s ease 0s;
+  transition: transform 0.15s ease 0s;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  height: 100%;
+  width: 100%;
+  /*
+  display: block;
+  max-width: 100%;
+  vertical-align: middle;
+  border: 0 none;
+  */
+}
+.ozio-lightgallery-container > ul > li a:hover > img {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+.ozio-lightgallery-container > ul > li a:hover .ozio-light-gallery-poster > img {
+  opacity: 1;
+}
+.ozio-lightgallery-container > ul > li a .ozio-light-gallery-poster {
+  background-color: rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: background-color 0.15s ease 0s;
+  -o-transition: background-color 0.15s ease 0s;
+  transition: background-color 0.15s ease 0s;
+}
+.ozio-lightgallery-container > ul > li a .ozio-light-gallery-poster > img {
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+.ozio-lightgallery-container > ul > li a:hover .ozio-light-gallery-poster {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.ozio-lightgallery-container .ozio-lg-justified > a > img {
+  -webkit-transition: -webkit-transform 0.15s ease 0s;
+  -moz-transition: -moz-transform 0.15s ease 0s;
+  -o-transition: -o-transform 0.15s ease 0s;
+  transition: transform 0.15s ease 0s;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  height: 100%;
+  width: 100%;
+}
+.ozio-lightgallery-container .ozio-lg-justified > a:hover > img {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+.ozio-lightgallery-container .ozio-lg-justified > a:hover .ozio-light-gallery-poster > img {
+  opacity: 1;
+}
+.ozio-lightgallery-container .ozio-lg-justified > a .ozio-light-gallery-poster {
+  background-color: rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: background-color 0.15s ease 0s;
+  -o-transition: background-color 0.15s ease 0s;
+  transition: background-color 0.15s ease 0s;
+}
+.ozio-lightgallery-container .ozio-lg-justified > a .ozio-light-gallery-poster > img {
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+.ozio-lightgallery-container .ozio-lg-justified > a:hover .ozio-light-gallery-poster {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.ozio-lightgallery-container .ozio-lg-video .ozio-light-gallery-poster img {
+  height: 48px;
+  margin-left: -24px;
+  margin-top: -24px;
+  opacity: 0.8;
+  width: 48px;
+}
+.ozio-lightgallery-container.dark > ul > li a {
+  border: 3px solid #04070a;
+}
+
+
+
+.ozio_lightgallery_bottom_description{
+ clear: both;
+}
+
+.ozio-thumb-list-sub-title{
+	text-align:center;
+}

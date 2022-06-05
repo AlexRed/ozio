@@ -1,0 +1,65 @@
+#oziomap-container {
+    /*padding: 6px;*/
+    /*width: 600px;*/
+    position:relative;
+}
+
+#oziomap-container > .oziomap_border {
+    border-color: #CCCCCC #CCCCCC #999999;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 2px 5px rgba(64, 64, 64, 0.1);
+    position:relative;
+}
+#oziomap-container .progress{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	margin: 6px;
+}
+
+.oziomap_map_container{
+	position:absolute;
+	bottom:24px;
+	top:0px;
+	left:0;
+	right:0;
+	margin: 6px;
+}
+
+#oziomap {
+	height:100%;
+}
+
+#oziomap-container #oziomap img {
+    height: auto;
+    max-width: none;
+}
+
+.oziomap-checkcontainer{
+	margin-right:30px;
+	white-space: nowrap;
+}
+.oziomap-checkcontainer .icon-camera{
+	font-size: 25px;
+	margin-left:5px;
+	width: 28px;
+	padding-top:8px;
+	padding-bottom:10px;
+}
+
+.oziomap-checkcontainer > span {
+    vertical-align: middle;
+}
+.oziomap-checkcontainer > img {
+    margin-left:5px;
+    margin-right:3px;
+}
+.oziomap-checkcontainer > .checkbox{
+	margin:0;
+}
+
+#oziomap-container-album, #oziomap-container-maker{
+	margin-top:5px;
+}

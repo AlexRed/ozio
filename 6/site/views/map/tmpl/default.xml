@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY4_MAP_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OZIOGALLERY4_MAP_VIEW_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="params" addfieldpath="/administrator/components/com_oziogallery4/models/fields">
+
+		<fieldset name="basic">
+
+
+
+				<field type="ossheader" default="COM_OZIOGALLERY4_MAP_MAP_LAYOUT" icon="map-16.png"/>
+				<field name="map_width" type="text" size="6" label="COM_OZIOGALLERY4_MAP_WIDTH" description="COM_OZIOGALLERY4_MAP_MAPWIDTH_DSC" default="100" required="true"/>
+				<field name="map_width_unit" type="list" label="COM_OZIOGALLERY4_MAP_UNITS_LBL" default="%">
+					<option value="px">COM_OZIOGALLERY4_MAP_PIXELS</option>
+					<option value="%">COM_OZIOGALLERY4_MAP_PERCENT</option>
+				</field>
+				<field name="map_height" type="text" size="6" label="COM_OZIOGALLERY4_MAP_HEIGHT" description="COM_OZIOGALLERY4_MAP_MAPHEIGHT_DSC" default="400" required="true"/>
+				<field name="zoom" type="list" label="COM_OZIOGALLERY4_MAP_ZOOM_LBL" description="COM_OZIOGALLERY4_MAP_ZOOM_DSC" default="0">
+					<option value="0">COM_OZIOGALLERY4_MAP_AUTOMATIC</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+				</field>
+				<field name="center" type="text" label="COM_OZIOGALLERY4_MAP_CENTER_LBL" description="COM_OZIOGALLERY4_MAP_CENTER_DSC" />
+
+				<field name="map_type" type="list" label="COM_OZIOGALLERY4_MAP_MAPTYPE_LBL" default="ROADMAP">
+					<option value="ROADMAP">COM_OZIOGALLERY4_MAP_MAPTYPE_ROADMAP</option>
+					<option value="SATELLITE">COM_OZIOGALLERY4_MAP_MAPTYPE_SATELLITE</option>
+					<option value="HYBRID">COM_OZIOGALLERY4_MAP_MAPTYPE_HYBRID</option>
+					<option value="TERRAIN">COM_OZIOGALLERY4_MAP_MAPTYPE_TERRAIN</option>
+				</field>
+				
+				<field name="kml_url" type="url" default="" label="COM_OZIOGALLERY4_MAP_KML_URL_LBL" description="COM_OZIOGALLERY4_MAP_KML_URL_DSC" />
+				
+
+				<field type="ossheader" default="COM_OZIOGALLERY4_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
+				<field name="markers_action" type="list" label="COM_OZIOGALLERY4_MAP_MARKERS_ACTION_LBL" description="COM_OZIOGALLERY4_MAP_MARKERS_ACTION_DSC" default="infowindow">
+					<option value="infowindow">COM_OZIOGALLERY4_MAP_MARKERS_ACTION_BALLOON</option>
+					<option value="redirect">COM_OZIOGALLERY4_MAP_MARKERS_ACTION_REDIRECT</option>
+				</field>
+				<field name="cluster" type="list" label="COM_OZIOGALLERY4_MAP_MARKERS_CLUSTER_LBL" description="COM_OZIOGALLERY4_MAP_MARKERS_CLUSTER_DSC" default="1">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+                <field name="showDirectionsMarker" type="list" label="COM_OZIOGALLERY4_MAP_MARKERS_SHOW_DIRECTIONS_LBL" default="0">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="showAlbumFilter" type="list" label="COM_OZIOGALLERY4_MAP_SHOW_ALBUM_FILTER_LBL" default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+				
+				
+				<field type="ossheader" default="COM_OZIOGALLERY4_MAP_INFOWINDOWS" icon="infowindow-16.png"/>
+				<field name="infowindow_event" type="list" default="click" label="COM_OZIOGALLERY4_MAP_INFOWINDOW_ACTION_LBL" description="COM_OZIOGALLERY4_MAP_INFOWINDOW_ACTION_DSC">
+					<option value="click">COM_OZIOGALLERY4_MAP_INFOWINDOW_ACTION_CLICK</option>
+					<option value="mouseover">COM_OZIOGALLERY4_MAP_INFOWINDOW_ACTION_MOUSEOVER</option>
+					<option value="never">JDISABLED</option>
+				</field>
+				<!-- Infowindow maxWidth doesn't work as expected -->
+				<field name="infowindow_width" type="text" size="26" label="COM_OZIOGALLERY4_MAP_WIDTH" description="COM_OZIOGALLERY4_MAP_INFOWINDOWWIDTH_DSC" default="400"/>
+
+				<field name="show_title" type="list" default="1" label="JGLOBAL_SHOW_TITLE_LABEL" description="JGLOBAL_SHOW_TITLE_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="link_titles" type="list" default="1" label="JGLOBAL_LINKED_TITLES_LABEL" description="JGLOBAL_LINKED_TITLES_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="link_target" type="list" label="COM_OZIOGALLERY4_MAP_INFOWINDOW_TARGET_LBL" description="COM_OZIOGALLERY4_MAP_INFOWINDOW_TARGET_DSC" default="_self">
+					<option value="_self">COM_OZIOGALLERY4_MAP_TARGET_SELF</option>
+					<option value="_blank">COM_OZIOGALLERY4_MAP_TARGET_BLANK</option>
+					<option value="_parent">COM_OZIOGALLERY4_MAP_TARGET_PARENT</option>
+					<option value="_top">COM_OZIOGALLERY4_MAP_TARGET_TOP</option>
+				</field>
+				<field name="show_image" type="list" default="1" label="COM_OZIOGALLERY4_MAP_INFOWINDOW_SHOWIMAGE_LBL" description="COM_OZIOGALLERY4_MAP_INFOWINDOW_SHOWIMAGE_DSC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="show_created" type="list" default="0" label="COM_OZIOGALLERY4_MAP_INFOWINDOW_SHOWDATE_LBL">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="show_intro" type="list" default="1" label="JGLOBAL_SHOW_INTRO_LABEL">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="introtext_size" type="text" size="6" label="COM_OZIOGALLERY4_MAP_INFOWINDOW_TEXT_SIZE_LBL" description="COM_OZIOGALLERY4_MAP_INFOWINDOW_TEXT_SIZE_DSC" default="300" />
+
+
+				<!--			<fieldset name="filtering" label="COM_OZIOGALLERY4_MAP_FILTERING_OPTIONS_LBL"> -->
+				<field type="ossheader" default="COM_OZIOGALLERY4_MAP_FILTERING_OPTIONS_LBL" icon="filter-16.png"/>
+
+				<field name="camera_filter" type="list" default="1" label="COM_OZIOGALLERY4_MAP_CAMERA_FILTER_LBL" description="COM_OZIOGALLERY4_MAP_CAMERA_FILTER_DSC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="menuitems_filter_type" type="list" default="0" label="COM_OZIOGALLERY4_FILTERINGTYPE_LBL" description="COM_OZIOGALLERY4_FILTERINGTYPE_DSC">
+					<option value="IN">COM_OZIOGALLERY4_INCLUSIVE</option>
+					<option value="NOT IN">COM_OZIOGALLERY4_EXCLUSIVE</option>
+					<option value="0">JDISABLED</option>
+				</field>
+
+				<field name="menuitems_filter_items" type="menuitemslist" multiple="true" size="5" label="COM_OZIOGALLERY4_MAP_SELECT_ITEMS_DSC" description="COM_OZIOGALLERY4_MAP_SELECT_ITEMS_DSC"
+					component="com_oziogallery4">
+				</field>
+				
+				
+
+		</fieldset>
+
+		
+		
+			<fieldset name="advanced">
+				<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_DSC" default="0">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="api_key" type="text" label="COM_OZIOGALLERY4_MAP_API_KEY_LBL" description="COM_OZIOGALLERY4_MAP_API_KEY_DSC"/>
+
+			</fieldset>
+		
+		
+	</fields>
+</metadata>

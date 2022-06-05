@@ -1,0 +1,330 @@
+/**
+ * BASED ON:
+ *
+ * jQuery MiniColors: A tiny color picker built on jQuery
+ *
+ * Copyright Cory LaViska for A Beautiful Site, LLC. (http://www.abeautifulsite.net/)
+ *
+ * Dual-licensed under the MIT and GPL Version 2 licenses
+ *
+*/
+.oziominicolors {
+	position: relative;
+	display: inline-block;
+	z-index: 11;
+}
+
+.oziominicolors-focus {
+	z-index: 12;
+}
+
+.oziominicolors.oziominicolors-theme-default .oziominicolors-input {
+	margin: 0px;
+	margin-right: 3px;
+	border: solid 1px #CCC;
+	font: 14px sans-serif;
+	width: 65px;
+	height: 16px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+	-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+	padding: 2px;
+	margin-right: -1px;
+}
+
+.oziominicolors-theme-default.oziominicolors .oziominicolors-input {
+	vertical-align: middle;
+	outline: none;
+}
+
+.oziominicolors-theme-default.oziominicolors-swatch-left .oziominicolors-input {
+	margin-left: -1px;
+	margin-right: auto;
+}
+
+.oziominicolors-theme-default.oziominicolors-focus .oziominicolors-input,
+.oziominicolors-theme-default.oziominicolors-focus .oziominicolors-swatch {
+	border-color: #999;
+}
+
+.oziominicolors-hidden {
+	position: absolute;
+	left: -9999em;
+}
+
+.oziominicolors-swatch {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	background: url(../img/jquery.oziominicolors.png) -80px 0;
+	border: solid 1px #CCC;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.oziominicolors-swatch span {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: none;
+	-webkit-box-shadow: inset 0 9px 0 rgba(255, 255, 255, .1);
+	-moz-box-shadow: inset 0 9px 0 rgba(255, 255, 255, .1);
+	box-shadow: inset 0 9px 0 rgba(255, 255, 255, .1);
+	display: inline-block;
+}
+
+/* Panel */
+.oziominicolors-panel {
+	position: absolute;
+	top: 26px;
+	left: 0;
+	width: 173px;
+	height: 152px;
+	background: white;
+	border: solid 1px #CCC;
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+	display: none;
+}
+
+.oziominicolors-position-top .oziominicolors-panel {
+	top: -156px;
+}
+
+.oziominicolors-position-left .oziominicolors-panel {
+	left: -83px;
+}
+
+.oziominicolors-position-left.oziominicolors-with-opacity .oziominicolors-panel {
+	left: -104px;
+}
+
+.oziominicolors-with-opacity .oziominicolors-panel {
+	width: 194px;
+}
+
+.oziominicolors .oziominicolors-grid {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	width: 150px;
+	height: 150px;
+	background: url(../img/jquery.oziominicolors.png) -120px 0;
+	cursor: crosshair;
+}
+
+.oziominicolors .oziominicolors-grid-inner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 150px;
+	background: none;
+}
+
+.oziominicolors-slider-saturation .oziominicolors-grid {
+	background-position: -420px 0;
+}
+
+.oziominicolors-slider-saturation .oziominicolors-grid-inner {
+	background: url(../img/jquery.oziominicolors.png) -270px 0;
+}
+
+.oziominicolors-slider-brightness .oziominicolors-grid {
+	background-position: -570px 0;
+}
+
+.oziominicolors-slider-brightness .oziominicolors-grid-inner {
+	background: black;
+}
+
+.oziominicolors-slider-wheel .oziominicolors-grid {
+	background-position: -720px 0;
+}
+
+.oziominicolors-slider,
+.oziominicolors-opacity-slider {
+	position: absolute;
+	top: 1px;
+	left: 152px;
+	width: 20px;
+	height: 150px;
+	background: #ffffff url(../img/jquery.oziominicolors.png) 0 0;
+	cursor: crosshair;
+}
+
+.oziominicolors-slider-saturation .oziominicolors-slider {
+	background-position: -60px 0;
+}
+
+.oziominicolors-slider-brightness .oziominicolors-slider {
+	background-position: -20px 0;
+}
+
+.oziominicolors-slider-wheel .oziominicolors-slider {
+	background-position: -20px 0;
+}
+
+.oziominicolors-opacity-slider {
+	left: 173px;
+	background-position: -40px 0;
+	display: none;
+}
+
+.oziominicolors-with-opacity .oziominicolors-opacity-slider {
+	display: block;
+}
+
+/* Pickers */
+.oziominicolors-grid .oziominicolors-picker {
+	position: absolute;
+	top: 70px;
+	left: 70px;
+	width: 10px;
+	height: 10px;
+	border: solid 1px black;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin-top: -6px;
+	margin-left: -6px;
+	background: none;
+}
+
+.oziominicolors-grid .oziominicolors-picker span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 6px;
+	height: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	border: solid 2px white;
+}
+
+.oziominicolors-picker {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 18px;
+	height: 2px;
+	background: white;
+	border: solid 1px black;
+	margin-top: -2px;
+}
+
+/* Inline controls */
+.oziominicolors-inline .oziominicolors-input,
+.oziominicolors-inline .oziominicolors-swatch {
+	display: none;
+}
+
+.oziominicolors-inline .oziominicolors-panel {
+	position: relative;
+	top: auto;
+	left: auto;
+	display: inline-block;
+}
+
+/*
+ * Bootstrap Theme (theme: 'bootstrap')
+ *
+ */
+
+/* Input styles */
+.oziominicolors-theme-bootstrap .oziominicolors-input {
+	padding: 4px 6px;
+	padding-left: 30px;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	font-size: 14px;
+	height: 19px;
+	width: 65px;
+	margin: 0px;
+}
+.oziominicolors-theme-bootstrap .hex{
+	width: 65px;
+}
+.oziominicolors-theme-bootstrap .hex-keywords{
+	width: 100px;
+}
+.oziominicolors-theme-bootstrap .rgba{
+	width: auto;
+}
+
+/* When the input is disabled */
+.oziominicolors-theme-bootstrap .oziominicolors-input[disabled] {
+	background-color: #eee;
+}
+
+/* Swatch styles */
+.oziominicolors-theme-bootstrap .oziominicolors-swatch {
+	cursor: pointer;
+	position: absolute;
+	left: 4px;
+	top: 4px;
+	z-index: 12;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+/* Handle swatch position (left = default / right) */
+.oziominicolors-theme-bootstrap.oziominicolors-swatch-position-right .oziominicolors-input {
+	padding-left: 6px;
+	padding-right: 30px;
+}
+
+.oziominicolors-theme-bootstrap.oziominicolors-swatch-position-right .oziominicolors-swatch {
+	left: auto;
+	right: 4px;
+}
+
+/* Panel styles */
+.oziominicolors-theme-bootstrap .oziominicolors-panel {
+	top: -68px;
+	left: 100%;
+	z-index: 13;
+	padding: 5px;
+	border: 1px solid #dddddd;
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+}
+
+.oziominicolors-theme-bootstrap .oziominicolors-slider,
+.oziominicolors-theme-bootstrap .oziominicolors-opacity-slider {
+    top: 6px;
+    margin-left: 5px;
+}
+
+.oziominicolors-theme-bootstrap .oziominicolors-grid {
+	top: 6px;
+	left: 6px;
+}
+
+.oziominicolors-theme-bootstrap.oziominicolors-position-left .oziominicolors-panel {
+	right: 100%;
+	left: auto;
+}
+.oziominicolors-theme-bootstrap.oziominicolors-position-top .oziominicolors-panel {
+	top: -164px;
+	left: -6px;
+}
+.oziominicolors-theme-bootstrap.oziominicolors-position-bottom .oziominicolors-panel {
+	left: -6px;
+	top: 30px;
+}

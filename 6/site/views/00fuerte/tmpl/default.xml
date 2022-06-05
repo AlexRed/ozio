@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_OZIOGALLERY4_00FUERTE_VIEW_DEFAULT_TITLE">
+		<message>COM_OZIOGALLERY4_00FUERTE_VIEW_DEFAULT_DESC</message>
+	</layout>
+
+	<fields name="params" addfieldpath="administrator/components/com_oziogallery4/models/fields">
+		<fieldset name="basic">
+			<field type="ossheader" default="COM_OZIOGALLERY4_INFORMATION_FUERTE" icon="information.png"/>
+			<field type="ossheader" default="COM_OZIOGALLERY4_REQUIRED_SETTINGS" icon="main.png"/>
+			<field type="textimproved" name="userid" label="COM_OZIOGALLERY4_GOOGLE_USERID_LBL" description="COM_OZIOGALLERY4_GOOGLE_USERID_DSC" required="true" autocomplete="off"/>
+			
+			<field type="listgalleries" name="gallery_id" label="COM_OZIOGALLERY4_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY4_GOOGLE_GALLERYID_DSC"> </field>
+
+<!--			<field type="text" name="gallery_id" label="COM_OZIOGALLERY4_GOOGLE_GALLERYID_LBL" description="COM_OZIOGALLERY4_GOOGLE_GALLERYID_DSC" required="true"/> -->
+			<field type="text" name="gallery_date" label="COM_OZIOGALLERY4_GALLERY_DATE_LBL" description="COM_OZIOGALLERY4_GALLERY_DATE_DSC" />
+
+			<field type="selext" name="gallerywidth" label="COM_OZIOGALLERY4_WIDTH_LBL" description="COM_OZIOGALLERY4_WIDTH_DSC" size="4" default="100|%">
+				<option value="px">COM_OZIOGALLERY4_PIXELS</option>
+				<option value="%">COM_OZIOGALLERY4_PERCENT</option>
+			</field>
+			
+			<field type="list" name="fixedheight" label="COM_OZIOGALLERY4_FIXEDHEIGHT_LBL" description="COM_OZIOGALLERY4_FIXEDHEIGHT_DSC" default="0" onchange="OnFixedHeightChange()">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="text" name="galleryheight" label="COM_OZIOGALLERY4_HEIGHT_LBL" description="COM_OZIOGALLERY4_HEIGHT_DSC" size="6" default="250"/>
+			
+			<field type="list" name="photoSorting" label="COM_OZIOGALLERY4_PHOTOSORTING_LBL" description="COM_OZIOGALLERY4_PHOTOSORTING_DSC" default="normal">
+				<option value="normal">COM_OZIOGALLERY4_PHOTOSORTING_NORMAL</option>
+				<option value="random">COM_OZIOGALLERY4_PHOTOSORTING_RANDOM</option>
+				<option value="inverse">COM_OZIOGALLERY4_PHOTOSORTING_INVERSE</option>
+				
+				<option value="titleAsc">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_TITLEASC</option>
+				<option value="titleDesc">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_TITLEDESC</option>
+				<option value="fileAsc">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_FILEASC</option>
+				<option value="fileDesc">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_FILEDESC</option>
+				<option value="id">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_ID_ASC</option>
+				<option value="idDesc">COM_OZIOGALLERY4_OZIO_NANO_PHOTOSORTING_ID_DESC</option>
+				
+			</field>
+
+			<field type="text" name="oz_max_num_photo" label="COM_OZIOGALLERY4_MAX_NUM_PHOTO_LBL" description="COM_OZIOGALLERY4_MAX_NUM_PHOTO_DSC" size="6" default="0"/>			
+
+			<field type="list" name="description_pos" label="COM_OZIOGALLERY4_DESCRIPTION_POS_LBL" description="COM_OZIOGALLERY4_DESCRIPTION_POS_DSC" default="under">
+				<option value="above">COM_OZIOGALLERY4_DESCRIPTION_POS_ABOVE</option>
+				<option value="under">COM_OZIOGALLERY4_DESCRIPTION_POS_UNDER</option>
+			</field>
+			
+			<field name="bottom_description" type="textarea" default="" label="COM_OZIOGALLERY4_BOTTOM_DESCRIPTION_LBL" description="COM_OZIOGALLERY4_BOTTOM_DESCRIPTION_DSC" rows="10" cols="5" filter="raw" />
+			
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY4_EFFECTS_SETTINGS" icon="effects.png"/>
+<!--
+			<field type="list" name="viewmode" label="COM_OZIOGALLERY4_VIEWMODE_LBL" description="COM_OZIOGALLERY4_VIEWMODE_DSC">
+				<option value="0">COM_OZIOGALLERY4_NORMAL</option>
+				<option value="1">COM_OZIOGALLERY4_FULLSCREEN</option>
+			</field>
+-->
+			<field type="list" name="transition" label="COM_OZIOGALLERY4_TRANSITION_LBL" description="COM_OZIOGALLERY4_TRANSITION_DSC" default="fade">
+				<option value="none">COM_OZIOGALLERY4_TRANSITION_NONE</option>
+				<option value="fade">COM_OZIOGALLERY4_TRANSITION_FADE</option>
+				<option value="slideTop">COM_OZIOGALLERY4_TRANSITION_SLIDETOP</option>
+				<option value="slideRight">COM_OZIOGALLERY4_TRANSITION_SLIDERIGHT</option>
+				<option value="slideBottom">COM_OZIOGALLERY4_TRANSITION_SLIDEBOTTOM</option>
+				<option value="slideLeft">COM_OZIOGALLERY4_TRANSITION_SLIDELEFT</option>
+				<option value="carouselRight">COM_OZIOGALLERY4_TRANSITION_CAROUSELRIGHT</option>
+				<option value="carouselLeft">COM_OZIOGALLERY4_TRANSITION_CAROUSELLEFT</option>
+			</field>
+			<field type="text" name="transition_speed" label="COM_OZIOGALLERY4_TRANSITION_SPEED_LBL" description="COM_OZIOGALLERY4_TRANSITION_SPEED_DSC" default="1000"/>
+
+		  <field type="ossheader" default="COM_OZIOGALLERY4_SLIDESHOW_SETTINGS" icon="slideshow.png"/>
+			<field type="list" name="play_button" label="COM_OZIOGALLERY4_PLAYBUTTON_LBL" description="COM_OZIOGALLERY4_PLAYBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="autoplay" label="COM_OZIOGALLERY4_AUTOPLAY_LBL" description="COM_OZIOGALLERY4_AUTOPLAY_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="stop_loop" label="COM_OZIOGALLERY4_STOPLOOP_LBL" description="COM_OZIOGALLERY4_STOPLOOP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="text" name="slide_interval" label="COM_OZIOGALLERY4_SLIDE_INTERVAL_LBL" description="COM_OZIOGALLERY4_SLIDE_INTERVAL_DSC" size="6" default="3000"/>
+			<field type="list" name="progress_bar" label="COM_OZIOGALLERY4_PROGRESSBAR_LBL" description="COM_OZIOGALLERY4_PROGRESSBAR_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="pause_hover" label="COM_OZIOGALLERY4_PAUSEHOVER_LBL" description="COM_OZIOGALLERY4_PAUSEHOVER_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="fullsize_button" label="COM_OZIOGALLERY4_FULLSIZEBUTTON_LBL" description="COM_OZIOGALLERY4_FULLSIZEBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="info_button" label="COM_OZIOGALLERY4_INFOBUTTON_LBL" description="COM_OZIOGALLERY4_INFOBUTTON_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+
+			<field name="infobox_bg_url" type="url" default="https://lh4.googleusercontent.com/nr01-F6eM6Mb09CuDZBLvnxzpyRMpWQ0amrS593Rb7Q=w1200" label="COM_OZIOGALLERY4_INFOBOX_BG_URL_LBL" description="COM_OZIOGALLERY4_INFOBOX_BG_URL_DSC" />
+						
+			<field type="list" name="show_album" label="COM_OZIOGALLERY4_SHOWALBUM_LBL" description="COM_OZIOGALLERY4_SHOWALBUM_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="show_summary" label="COM_OZIOGALLERY4_SHOWSUMMARY_LBL" description="COM_OZIOGALLERY4_SHOWSUMMARY_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="image_protect" label="COM_OZIOGALLERY4_IMAGEPROTECT_LBL" description="COM_OZIOGALLERY4_IMAGEPROTECT_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="square" label="COM_OZIOGALLERY4_SQUARE_LBL" description="COM_OZIOGALLERY4_SQUARE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="text" name="big" label="COM_OZIOGALLERY4_BIG_LBL" description="COM_OZIOGALLERY4_BIG_DSC" size="6" default="0"/>
+			<field type="list" name="hide_thumbnails" label="COM_OZIOGALLERY4_HIDE_THUMBNAILS_LBL" description="COM_OZIOGALLERY4_HIDE_THUMBNAILS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field type="list" name="show_photowall" label="COM_OZIOGALLERY4_SHOW_PHOTOWALL_LBL" description="COM_OZIOGALLERY4_SHOW_PHOTOWALL_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field type="text" name="photowall_height" label="COM_OZIOGALLERY4_PHOTOWALL_HEIGHT_LBL" description="COM_OZIOGALLERY4_PHOTOWALL_HEIGHT_DSC" size="6" default="200"/>
+			
+			
+			
+		  	<field type="list" name="hide_bottombar" label="COM_OZIOGALLERY4_HIDE_BOTTOMBAR_LBL" description="COM_OZIOGALLERY4_HIDE_BOTTOMBAR_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY4_INFOBOX_SETTINGS" icon="information.png"/>
+		  	<field type="list" name="hide_infobox_album" label="COM_OZIOGALLERY4_HIDE_INFOBOX_ALBUM_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_ALBUM_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_photo" label="COM_OZIOGALLERY4_HIDE_INFOBOX_PHOTO_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_PHOTO_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_date" label="COM_OZIOGALLERY4_HIDE_INFOBOX_DATE_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_DATE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_width_height" label="COM_OZIOGALLERY4_HIDE_INFOBOX_DIMENSIONS_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_DIMENSIONS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_file_name" label="COM_OZIOGALLERY4_HIDE_INFOBOX_FILENAME_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_FILENAME_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_file_size" label="COM_OZIOGALLERY4_HIDE_INFOBOX_FILESIZE_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_FILESIZE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_model" label="COM_OZIOGALLERY4_HIDE_INFOBOX_CAMERA_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_CAMERA_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_focallength" label="COM_OZIOGALLERY4_HIDE_INFOBOX_FOCALLENGTH_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_FOCALLENGTH_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_exposure" label="COM_OZIOGALLERY4_HIDE_INFOBOX_EXPOSURE_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_EXPOSURE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_fstop" label="COM_OZIOGALLERY4_HIDE_INFOBOX_FSTOP_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_FSTOP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_iso" label="COM_OZIOGALLERY4_HIDE_INFOBOX_ISO_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_ISO_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_make" label="COM_OZIOGALLERY4_HIDE_INFOBOX_CAMERAMAKE_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_CAMERAMAKE_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_flash" label="COM_OZIOGALLERY4_HIDE_INFOBOX_FLASH_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_FLASH_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_views" label="COM_OZIOGALLERY4_HIDE_INFOBOX_VIEWS_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_VIEWS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_comments" label="COM_OZIOGALLERY4_HIDE_INFOBOX_COMMENTS_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_COMMENTS_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_link" label="COM_OZIOGALLERY4_HIDE_INFOBOX_LINK_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_LINK_DSC" default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="hide_infobox_download" label="COM_OZIOGALLERY4_HIDE_INFOBOX_DOWNLOAD_LBL" description="COM_OZIOGALLERY4_HIDE_INFOBOX_DOWNLOAD_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+		  <field type="ossheader" default="COM_OZIOGALLERY4_FULLSCREEN_SETTINGS" icon="information.png"/>
+				<field name="closelink"  type="text" default=""
+					label="COM_OZIOGALLERY4_FIELD_CLOSELINK_LABEL"
+					description="COM_OZIOGALLERY4_FIELD_CLOSELINK_DESC"
+					size="48"
+					 />
+			<field type="list" name="thumbnail_navigation" label="COM_OZIOGALLERY4_THUMBNAIL_NAVIGATION_LBL" description="COM_OZIOGALLERY4_THUMBNAIL_NAVIGATION_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			<field type="ossheader" default="COM_OZIOGALLERY4_MAP_MARKERS_OPTIONS" icon="marker-16.png"/>
+			<field name="markers_icon" type="filelist" label="COM_OZIOGALLERY4_MAP_MARKERS_ICON_LBL" description="COM_OZIOGALLERY4_MAP_MARKERS_ICON_DSC" default="" hide_none="true" directory="media/com_oziogallery4/views/map/img/markers/icons" filter="\.png$" exclude="" stripext=""  onchange="OnMarkersIconChange()"/>
+	        <field name="markers_preview" type="markerpreview" label="COM_OZIOGALLERY4_MAP_MARKERS_PREVIEW"/>
+			
+		</fieldset>
+		<fieldset name="advanced">
+			<field name="api_key" type="text" label="COM_OZIOGALLERY4_MAP_API_KEY_LBL" description="COM_OZIOGALLERY4_MAP_API_KEY_DSC"/>
+			<field type="list" name="load_css_bootstrap" label="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_LBL" description="COM_OZIOGALLERY4_LOAD_CSS_BOOTSTRAP_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="list" name="disable_deeplink" label="COM_OZIOGALLERY4_DISABLE_DEEPLINK_LBL" description="COM_OZIOGALLERY4_DISABLE_DEEPLINK_DSC" default="0">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+		</fieldset>
+		
+	</fields>
+</metadata>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" version="3.0" method="upgrade">
+	<name>plg_content_ozio</name>
+	<author>Vamba</author>
+	<creationDate>2013</creationDate>
+	<copyright>Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>info@opensourcesolutions.es</authorEmail>
+	<authorUrl>www.opensourcesolutions.es</authorUrl>
+	<version>4.5.0</version>
+	<description>COM_OZIOGALLERY4_PLG_OZIO_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="ozio">ozio.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+		</fields>
+	</config>
+</extension>

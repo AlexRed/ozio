@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.0" method="upgrade" group="editors-xtd">
+	<name>plg_editors-xtd_oziogallery</name>
+	<creationDate>2013</creationDate>
+	<author>Open Source Solutions</author>
+	<authorEmail>demis@opensourcesolutions.es</authorEmail>
+	<authorUrl>http://www.opensourcesolutions.es/</authorUrl>
+	<copyright>Open Source Solutions</copyright>
+	<license>GNU/GPLv3</license>
+	<version>4.5.0</version>
+	<description>PLG_EDITORS-XTD_OZIOGALLERY_DESCRIPTION</description>
+
+	<files>
+		<filename plugin="oziogallery">oziogallery.php</filename>
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>language</folder>
+		<folder>sql</folder>
+	</files>
+
+	<install>
+		<sql><file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file></sql>
+	</install>
+
+	
+	<update>
+		<schemas><schemapath type="mysql">sql/updates/mysql</schemapath></schemas>
+	</update>
+
+</extension>
