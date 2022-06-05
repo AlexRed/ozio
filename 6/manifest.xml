@@ -70,6 +70,6 @@
 		<template folder="templates" template="oziofullscreen" />
 	</templates>
 	<updateservers>
-		<server type="extension" priority="1" name="Ozio Gallery4 update site"><![CDATA[https://www.opensourcesolutions.es/download/oziogallery4-v6.xml]]></server>
+		<server type="extension" priority="1" name="Ozio Gallery 6 update site"><![CDATA[https://www.opensourcesolutions.es/download/oziogallery4-v6.xml]]></server>
 	</updateservers>
 </extension>
